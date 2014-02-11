@@ -11,6 +11,8 @@ School project
 #####Instellingen
 De database instellingen zitten een beetje verborgen maar je kan ze vinden in: /PROJ/Classes/Helper/DoctrineHelper.php
 
+<br>
+
 #####Doctrine Database Commands
 Met doctrine heb je verschillende commands nodig om de database structuur te updaten. Deze kun je invoeren op /console.php
 
@@ -22,9 +24,14 @@ Dit command draai je altijd als eerste om te kijken of de SQL is wat je verwacht
 
 Als het dump-sql command geen errors terug geeft, kun je --force gebruiken om de changes naar de database op te slaan.
 
+<br>
 
 #####Debuggen
-Een doctrine entity **NOOIT** print_r of var_dumpen! Altijd de Debug functie hier voor gebruiken. \Doctrine\Common\Util\Debug::dump( )
+Een doctrine entity **NOOIT** print_r of var_dumpen! Altijd de Debug functie hier voor gebruiken.
+
+>\Doctrine\Common\Util\Debug::dump( )
+
+<br>
 
 #####Handige links
 * [Doctrine Mapping](http://docs.doctrine-project.org/en/2.0.x/reference/association-mapping.html)
