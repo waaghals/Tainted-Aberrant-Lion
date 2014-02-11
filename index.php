@@ -10,6 +10,12 @@ $classLoader->register();
 $classLoader = new \Doctrine\Common\ClassLoader(null, __DIR__.'/Classes');
 $classLoader->register(); 
 
+//POST & GET data opschonen
+foreach($_POST as $key=>$p)
+	$_POST[$key] = trim(strip_tags(htmlspecialchars($p)));
+foreach($_GET as $key=>$p)
+	$_GET[$key] = trim(strip_tags(htmlspecialchars($p)));
+
 //Parameters ophalen
 $requestURL = substr($_GET['r'],0,-1);
 $URLparameters = explode('/', $requestURL);
