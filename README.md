@@ -24,7 +24,7 @@ Als het dump-sql command geen errors terug geeft, kun je --force gebruiken om de
 
 
 #####Debuggen
-Een doctrine entity **NOOIT** print_r of var_dumpen! Altijd de Debug functie hier voor gebruiken. \Doctrine\Common\Util\Debug::dump(
+Een doctrine entity **NOOIT** print_r of var_dumpen! Altijd de Debug functie hier voor gebruiken. \Doctrine\Common\Util\Debug::dump( )
 
 #####Handige links
 * [Doctrine Mapping](http://docs.doctrine-project.org/en/2.0.x/reference/association-mapping.html)
