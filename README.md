@@ -23,6 +23,9 @@ Dit command draai je altijd als eerste om te kijken of de SQL is wat je verwacht
 Als het dump-sql command geen errors terug geeft, kun je --force gebruiken om de changes naar de database op te slaan.
 
 
+#####Debuggen
+Een doctrine entity **NOOIT** print_r of var_dumpen! Altijd de Debug functie hier voor gebruiken. \Doctrine\Common\Util\Debug::dump(
+
 #####Handige links
 * [Doctrine Mapping](http://docs.doctrine-project.org/en/2.0.x/reference/association-mapping.html)
 * [Doctrine Inheritance Mapping](http://docs.doctrine-project.org/en/2.0.x/reference/inheritance-mapping.html)
@@ -30,7 +33,7 @@ Als het dump-sql command geen errors terug geeft, kun je --force gebruiken om de
 
 
 ##Website
-Het handigste is als we MVC gaan gebruiken. Ik heb het project al zo opgezet dat dit makkelijk moet gaan. In /PROJ/Classes/Pages zet je de pagina's ie bij URL benaarderbaar moeten zijn. dus bijvoorbeeld {domain}/DemoPage/. De index zorgt er al voor dat deze automatisch aangeroepen worden. LET OP! Deze pagina's worden ALLEEN aangeroepen als ze de MainPage extenden! Anders krijg je een 404.
+Het handigste is als we MVC gaan gebruiken. Ik heb het project al zo opgezet dat dit makkelijk moet gaan. In /PROJ/Classes/Pages zet je de pagina's ie bij URL benaarderbaar moeten zijn. dus bijvoorbeeld {domain}/DemoPage/. De index zorgt er al voor dat deze automatisch aangeroepen worden. **LET OP!** Deze pagina's worden **ALLEEN** aangeroepen als ze de MainPage extenden! Anders krijg je een 404.
 
 In die paginas kun je dan de view aanroepen afhankelijk van overige url parameters ({domain}/DemoPage/Parm1/Parm2/Parm3). 
 
