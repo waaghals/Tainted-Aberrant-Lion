@@ -26,6 +26,7 @@ Als het dump-sql command geen errors terug geeft, kun je --force gebruiken om de
 #####Handige links
 * [Doctrine Mapping](http://docs.doctrine-project.org/en/2.0.x/reference/association-mapping.html)
 * [Doctrine Inheritance Mapping](http://docs.doctrine-project.org/en/2.0.x/reference/inheritance-mapping.html)
+* [Doctrine Annotations](http://docs.doctrine-project.org/en/latest/reference/annotations-reference.html#annref-column)
 
 
 ##Website
