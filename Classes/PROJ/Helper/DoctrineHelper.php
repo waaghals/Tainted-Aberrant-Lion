@@ -6,15 +6,13 @@ namespace PROJ\Helper;
 use Doctrine\ORM\EntityManager,
     Doctrine\ORM\Configuration;
 
-class DoctrineHelper
-{
+class DoctrineHelper{
     private static $instance;
     /**
      *
      * @return \PROJ\Helper\DoctrineHelper instance
      */
-    public static function instance()
-    {
+    public static function instance() {
         if( self::$instance == null )
             self::$instance = new self();
 
@@ -23,13 +21,11 @@ class DoctrineHelper
 
     private $EntityManager;
 
-    private function __construct()
-    {
+    private function __construct() {
         $this->initialize();
     }
 
-    private function initialize()
-    {
+    private function initialize() {
         $applicationMode = "development";
 
         if ($applicationMode == "development") {
@@ -73,8 +69,7 @@ class DoctrineHelper
      *
      * @return \Doctrine\ORM\EntityManager $entityManager
      */
-    public function getEntityManager()
-    {
+    public function getEntityManager() {
         return $this->EntityManager;
     }
 }

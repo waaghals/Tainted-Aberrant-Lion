@@ -10,16 +10,14 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\Output;
 use Symfony\Component\Console\Output\ConsoleOutput;
 
-class CodeConsoleRunner
-{
+class CodeConsoleRunner {
     /**
      * Run console with the given helperset.
      *
      * @param \Symfony\Component\Console\Helper\HelperSet $helperSet
      * @return void
      */
-    static public function run(HelperSet $helperSet, InputInterface $input, OutputInterface $output )
-    {
+    static public function run(HelperSet $helperSet, InputInterface $input, OutputInterface $output ) {
         $cli = new Application('Doctrine Command Line Interface', \Doctrine\ORM\Version::VERSION);
         $cli->setCatchExceptions(false);
         $cli->setHelperSet($helperSet);
@@ -31,8 +29,7 @@ class CodeConsoleRunner
     /**
      * @param Application $cli
      */
-    static public function addCommands(Application $cli)
-    {
+    static public function addCommands(Application $cli) {
         $cli->addCommands(array(
             // DBAL Commands
             new \Doctrine\DBAL\Tools\Console\Command\RunSqlCommand(),

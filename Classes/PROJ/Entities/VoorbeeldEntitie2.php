@@ -4,8 +4,7 @@ namespace PROJ\Entities;
 /** 
  * @Entity 
  */
-class VoorbeeldEntitie2
-{
+class VoorbeeldEntitie2 {
      /**
      * @Id @Column(type="integer")
      * @GeneratedValue

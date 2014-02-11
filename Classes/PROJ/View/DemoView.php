@@ -1,9 +1,9 @@
 <?php
 namespace PROJ\View;
 
-class Header {
+class DemoView {
     public function getContent() {
-    	return "=== Header ===<br><br>";
+    	return "CONTENT<br><br>";
     }
 }
 ?>
