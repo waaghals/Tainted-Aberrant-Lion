@@ -16,13 +16,17 @@ De database instellingen zitten een beetje verborgen maar je kan ze vinden in: /
 #####Doctrine Database Commands
 Met doctrine heb je verschillende commands nodig om de database structuur te updaten. Deze kun je invoeren op /console.php
 
+> orm:validate-schema
+
+Dit commando kun je gebruiken om je Entities (de relaties daartussen) te valideren. Dit commando geeft ook precies aan wat de fouten zijn.
+
 > orm:schema-tool:update --dump-sql
 
-Dit command draai je altijd als eerste om te kijken of de SQL is wat je verwacht en om te kijken of je geen errors krijgt.
+Dit commando draai je altijd als eerste om te kijken of de SQL is wat je verwacht en om te kijken of je geen errors krijgt.
 
 > orm:schema-tool:update --force
 
-Als het dump-sql command geen errors terug geeft, kun je --force gebruiken om de changes naar de database op te slaan.
+Als het dump-sql commando geen errors terug geeft, kun je --force gebruiken om de changes naar de database op te slaan.
 
 <br>
 
