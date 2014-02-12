@@ -1,30 +1,28 @@
 <?php
+
 namespace PROJ\Controller;
 
 class DemoController {
+
     private static $instance;
-    
+
     /**
      * @return \PROJ\Controller\DemoController
      */
-    public static function instance()
-    {
-        if(self::$instance == null){
+    public static function instance() {
+        if (self::$instance == null) {
             self::$instance = new self();
         }
-        
+
         return self::$instance;
     }
 
     public function DoDemo() {
         $r = null;
-        
-    	/** URL parameters opvragen:       **/
-        /** print_r($this->parameters)      **/
 
-
-
-        /** Nieuwe entry maken in de database **/
+        /** URL parameters opvragen:       * */
+        /** print_r($this->parameters)      * */
+        /** Nieuwe entry maken in de database * */
         //Entitie Manager ophalen
         $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
 
@@ -51,73 +49,73 @@ class DemoController {
 
 
 
-        /** Opvragen van alle entities uit een tabel **/
+        /** Opvragen van alle entities uit een tabel * */
         $a = $em->getRepository('PROJ\Entities\VoorbeeldEntitie1')->findAll();
 
         //Hier kun je dan gewoon doorheen loopen
         $r .= '<br><b>FindAll:</b><br>';
-        foreach($a as $entity) {
+        foreach ($a as $entity) {
             $r .= $entity->getName() . ' - ' . $entity->getINTwaarde() . '<br>';
         }
 
 
 
-        /** Opvragen van specefieke entries uit een tabel (geen ingewikkelde query's) **/
-        $a = $em->getRepository('PROJ\Entities\VoorbeeldEntitie1')->findBy(array('name'=>'TEST', 'id'=>1));
+        /** Opvragen van specefieke entries uit een tabel (geen ingewikkelde query's) * */
+        $a = $em->getRepository('PROJ\Entities\VoorbeeldEntitie1')->findBy(array('name' => 'TEST', 'id' => 1));
 
         //Hier kun je dan gewoon doorheen loopen
         $r .= '<br><b>FindBy:</b><br>';
-        foreach($a as $entity) {
+        foreach ($a as $entity) {
             $r .= $entity->getName() . ' - ' . $entity->getINTwaarde() . '<br>';
         }
 
 
 
-        /** Doctrine query opbouwen **/
+        /** Doctrine query opbouwen * */
         //Eerst een query Builder maken
         $qb = $em->createQueryBuilder();
-        $qb->select('e1')                                       
-        ->from('\PROJ\Entities\VoorbeeldEntitie1', 'e1')
-        ->where($qb->expr()->eq('e1.name', $qb->expr()->literal('TEST')))   //$qb->expr()->literal() geeft aan dat het om een letterlijke string gaat
-        ->orderBy('e1.name', 'ASC')
-        ->setMaxResults(4);
+        $qb->select('e1')
+                ->from('\PROJ\Entities\VoorbeeldEntitie1', 'e1')
+                ->where($qb->expr()->eq('e1.name', $qb->expr()->literal('TEST')))   //$qb->expr()->literal() geeft aan dat het om een letterlijke string gaat
+                ->orderBy('e1.name', 'ASC')
+                ->setMaxResults(4);
 
         //Bovenstaande is gelijk aan:
         //SELECT e1.*
         //FROM \PROJ\Entities\Voorbeeldentitie1 AS e1
         //WHERE e1.name = 'TEST'
         //ORDER BY e1.name ASC
-
         //Results ophalen
         $res = $qb->getQuery()->getResult();
 
         //Hier kun je dan gewoon doorheen loopen
         $r .= '<br><b>Query Builder:</b><br>';
-        foreach($res as $entity) {
+        foreach ($res as $entity) {
             $r .= $entity->getName() . ' - ' . $entity->getINTwaarde() . '<br>';
         }
 
 
 
-        /** Entitie relatie selecteren **/
+        /** Entitie relatie selecteren * */
         $r .= '<br><b>Relatie naam:</b><br>';
         $r .= $e->getOneToOneRelation()->getName();
 
 
-        /** Entitie Updaten **/
+        /** Entitie Updaten * */
         $temp = $e->getOneToOneRelation()->setName("TEST 123");
         $em->persist($temp);
         $em->flush();
 
 
-        /** Entitie uit de database removen **/
+        /** Entitie uit de database removen * */
         //Eerst zorg je dat je op een of andere manier een entitie geselect hebt.
         //Ik pak hier de nieuw aangemaakte entitie hierboven.
-
         //$em->remove($e);
         //$em->flush();
 
         return $r;
     }
+
 }
+
 ?>

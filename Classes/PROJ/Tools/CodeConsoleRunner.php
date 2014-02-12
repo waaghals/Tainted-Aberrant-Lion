@@ -11,19 +11,20 @@ use Symfony\Component\Console\Output\Output;
 use Symfony\Component\Console\Output\ConsoleOutput;
 
 class CodeConsoleRunner {
+
     /**
      * Run console with the given helperset.
      *
      * @param \Symfony\Component\Console\Helper\HelperSet $helperSet
      * @return void
      */
-    static public function run(HelperSet $helperSet, InputInterface $input, OutputInterface $output ) {
+    static public function run(HelperSet $helperSet, InputInterface $input, OutputInterface $output) {
         $cli = new Application('Doctrine Command Line Interface', \Doctrine\ORM\Version::VERSION);
         $cli->setCatchExceptions(false);
         $cli->setHelperSet($helperSet);
         $cli->setAutoExit(false);
         self::addCommands($cli);
-        $cli->run($input,$output);
+        $cli->run($input, $output);
     }
 
     /**
@@ -34,7 +35,6 @@ class CodeConsoleRunner {
             // DBAL Commands
             new \Doctrine\DBAL\Tools\Console\Command\RunSqlCommand(),
             new \Doctrine\DBAL\Tools\Console\Command\ImportCommand(),
-
             // ORM Commands
             new \Doctrine\ORM\Tools\Console\Command\ClearCache\MetadataCommand(),
             new \Doctrine\ORM\Tools\Console\Command\ClearCache\ResultCommand(),
@@ -52,5 +52,7 @@ class CodeConsoleRunner {
             new \Doctrine\ORM\Tools\Console\Command\ValidateSchemaCommand(),
         ));
     }
+
 }
+
 ?>
