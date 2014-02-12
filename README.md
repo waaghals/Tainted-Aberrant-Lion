@@ -30,6 +30,11 @@ Als het dump-sql commando geen errors terug geeft, kun je --force gebruiken om d
 
 <br>
 
+#####Proxy's
+Alles wat in \Classes\PROJ\Proxies staat moet je niet editen. Je kan het wel doen maar Doctrine genereerd die shit vanzelf. Alles wat je doet wordt dus gewoon overschreven.
+
+<br>
+
 #####Debuggen
 Een doctrine entity **NOOIT** print_r of var_dumpen! Altijd de Debug functie hier voor gebruiken.
 
