@@ -39,3 +39,8 @@ if ($ref->getParentClass() != null) {
     header("HTTP/1.0 404 Not Found");
 }
 ?>
+<?php
+use GoogleMap;
+
+getHtml();
+?>
