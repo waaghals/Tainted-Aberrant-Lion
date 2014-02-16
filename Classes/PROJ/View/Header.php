@@ -5,7 +5,12 @@ namespace PROJ\View;
 class Header {
 
     public function getContent() {
-        return "=== Header ===<br><br>";
+        return '<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="/css/main.css">
+        <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    </head>
+    <body>';
     }
 
 }
