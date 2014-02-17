@@ -2,3 +2,23 @@
     margin: 0px;
     padding: 0px;
 }
+
+#blackout{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 9999;
+    background-image: url('/images/semitrans.png');
+    display:none;
+}
+
+#blackout_content{
+    width: 700px;
+    height: 800px;
+    position: absolute;
+    left:50%;
+    top: 50%;
+    margin-left: -350px;
+    margin-top: -400px;
+    background-color: #FFFFFF;
+}

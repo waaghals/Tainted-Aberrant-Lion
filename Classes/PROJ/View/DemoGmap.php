@@ -14,7 +14,11 @@ class DemoGmap {
             $gmap->setMarkerURL("/GoogleMap/");
             $gmap->setAllowStreetView(false);
 
-            return $gmap->getHtml();
+            $sHtml = null;
+            $sHtml .= '<div id="blackout"><div id="blackout_content"></div></div>';
+            $sHtml .= $gmap->getHtml();
+            
+            return $sHtml;
         }else{
             //Markers terug geven
             $mc = new \PROJ\Classes\MarkerCollection();
@@ -35,7 +39,7 @@ class DemoGmap {
                 $demoMarker->setLat($rev[0]->getLat());
                 $demoMarker->setLong($rev[0]->getLong());
                 $demoMarker->setHtml("<div style='width:400px; height:200px;'><h4>".$rev[0]->getNaam()."</h4><br>"
-                        . "Gemiddelde Score: ".number_format($rev['AVGSCORE'], 1)."</div>");
+                        . "Gemiddelde Score: ".number_format($rev['AVGSCORE'], 1)."<br><br><a href='#' class='AllReviews' instantie='".$rev[0]->getId()."'>Alle Reviews Bekijken</a></div>");
                 $demoMarker->setTitle("Avans Hogeschool");
 
                 $mc->addMarkerLocation("Avans Hogeschool", $demoMarker);
