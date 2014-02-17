@@ -19,16 +19,27 @@ class DemoGmap {
             //Markers terug geven
             $mc = new \PROJ\Classes\MarkerCollection();
 
-            $demoMarker = new \PROJ\Classes\Marker();
-            $demoMarker->setLat(51.688945);
-            $demoMarker->setLong(5.287256);
-            $demoMarker->setHtml("<b>Avans</b> Hogeschool Den Bosch<br>
-                Onderwijsboulevard 256<br>
-                5223 DJ 's-Hertogenbosch<br>
-                073 629 5295");
-            $demoMarker->setTitle("Avans Hogeschool");
+            //Alle Instellingen ophalen
+            $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
+            $reviews = $em->getRepository('\PROJ\Entities\Instelling')->findAll();
+            $qb = $em->createQueryBuilder();
+            $qb->select('instelling, avg(review.rating) as AVGSCORE')
+                    ->from('\PROJ\Entities\Instelling', 'instelling')
+                    ->leftJoin('instelling.stages', 'stage')
+                    ->leftJoin('stage.review', 'review');
+            
+            $reviews = $qb->getQuery()->getResult();
+            
+            foreach($reviews as $rev) {
+                $demoMarker = new \PROJ\Classes\Marker();
+                $demoMarker->setLat($rev[0]->getLat());
+                $demoMarker->setLong($rev[0]->getLong());
+                $demoMarker->setHtml("<div style='width:400px; height:200px;'><h4>".$rev[0]->getNaam()."</h4><br>"
+                        . "Gemiddelde Score: ".number_format($rev['AVGSCORE'], 1)."</div>");
+                $demoMarker->setTitle("Avans Hogeschool");
 
-            $mc->addMarkerLocation("Avans Hogeschool", $demoMarker);
+                $mc->addMarkerLocation("Avans Hogeschool", $demoMarker);
+            }
             return $mc->generateMarkerJSON();
         }
     }

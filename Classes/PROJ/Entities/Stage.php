@@ -14,16 +14,6 @@ class Stage {
     private $id;
 
     /**
-     * @Column(type="text")
-     */
-    private $instelling;
-
-    /**
-     * @Column(type="integer")
-     */
-    private $student;
-
-    /**
      * @Column(type="date")
      */
     private $startdatum;
@@ -34,38 +24,27 @@ class Stage {
     private $einddatum;
 
     /**
-     * @OneToMany(targetEntity="\PROJ\Entities\Review", mappedBy="stage", cascade={"remove"})
+     * @OneToOne(targetEntity="\PROJ\Entities\Review", mappedBy="stage", cascade={"remove"})
      */
-    private $reviews;
+    private $review;
 
     /**
-     * @OneToMany(targetEntity="\PROJ\Entities\Student", mappedBy="stage", cascade={"remove"})
+     * @ManyToOne(targetEntity="\PROJ\Entities\Instelling", inversedBy="stages")
      */
-    private $studenten;
+    private $instelling;
+
+    /**
+     * @OneToOne(targetEntity="\PROJ\Entities\Student", inversedBy="stage")
+     */
+    private $student;
 
     function __construct() {
         $this->OneToManyRelation = new \Doctrine\Common\Collections\ArrayCollection;
         $this->ManyToManyRelation = new \Doctrine\Common\Collections\ArrayCollection;
     }
-
+    
     public function getId() {
         return $this->id;
-    }
-
-    public function getInstelling() {
-        return $this->instelling;
-    }
-
-    public function getStudent() {
-        return $this->student;
-    }
-
-    public function setInstelling($instelling) {
-        $this->instelling = $instelling;
-    }
-
-    public function setStudent($student) {
-        $this->student = $student;
     }
 
     public function getStartdatum() {
@@ -76,6 +55,18 @@ class Stage {
         return $this->einddatum;
     }
 
+    public function getReview() {
+        return $this->review;
+    }
+
+    public function getInstelling() {
+        return $this->instelling;
+    }
+
+    public function getStudent() {
+        return $this->student;
+    }
+
     public function setStartdatum($startdatum) {
         $this->startdatum = $startdatum;
     }
@@ -83,6 +74,20 @@ class Stage {
     public function setEinddatum($einddatum) {
         $this->einddatum = $einddatum;
     }
+
+    public function setReview($review) {
+        $this->review = $review;
+    }
+
+    public function setInstelling($instelling) {
+        $this->instelling = $instelling;
+    }
+
+    public function setStudent($student) {
+        $this->student = $student;
+    }
+
+
 
 }
 

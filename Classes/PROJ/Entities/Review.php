@@ -24,7 +24,7 @@ class Review {
     private $rating;
 
     /**
-     * @ManyToOne(targetEntity="\PROJ\Entities\Stage", inversedBy="reviews")
+     * @OneToOne(targetEntity="\PROJ\Entities\Stage", inversedBy="review")
      */
     private $stage;
 
@@ -45,32 +45,16 @@ class Review {
         return $this->rating;
     }
 
-    public function getStudent() {
-        return $this->student;
-    }
-
-    public function getInstelling() {
-        return $this->instelling;
-    }
-
     public function getStage() {
         return $this->stage;
     }
-
+    
     public function setText($text) {
         $this->text = $text;
     }
 
     public function setRating($rating) {
         $this->rating = $rating;
-    }
-
-    public function setStudent($student) {
-        $this->student = $student;
-    }
-
-    public function setInstelling($instelling) {
-        $this->instelling = $instelling;
     }
 
     public function setStage($stage) {
