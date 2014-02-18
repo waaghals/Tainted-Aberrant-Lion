@@ -5,7 +5,7 @@ namespace PROJ\View;
 class DemoGmap {
 
     public function getContent() {
-       if(@!strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+        if (@!strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
             //Map weergeven
             $gmap = new \PROJ\Classes\GoogleMap();
             $gmap->setCenterLocation("Hilversum");
@@ -14,21 +14,68 @@ class DemoGmap {
             $gmap->setMarkerURL("/GoogleMap/");
             $gmap->setAllowStreetView(false);
 
-            return $gmap->getHtml();
-        }else{
+            $sHtml = null;
+            $sHtml .= '<div id="blackout">'
+                    . '     <div id="blackout_content"></div>'
+                    . '</div>'
+                    . '<div id="legenda">'
+                    . '     <h3 style="margin-bottom:5px;">Legend:</h3>'
+                    . '     <table>'
+                    . '         <tr>'
+                    . '             <td><img src="http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|FE7569"></td>'
+                    . '             <td style="padding-left:10px; padding-right:40px;">Internship</td>'
+                    . '         </tr><tr>'
+                    . '             <td><img src="http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|58D2FF"></td>'
+                    . '             <td style="padding-left:10px; padding-right:40px;">Minor</td>'
+                    . '         </tr><tr>'
+                    . '             <td><img src="http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|58E579"></td>'
+                    . '             <td style="padding-left:10px; padding-right:40px;">Internship & Minor</td>'
+                    . '         </tr>'
+                    . '     </table>'
+                    . '</div>';
+            $sHtml .= $gmap->getHtml();
+
+            return $sHtml;
+        } else {
             //Markers terug geven
             $mc = new \PROJ\Classes\MarkerCollection();
 
-            $demoMarker = new \PROJ\Classes\Marker();
-            $demoMarker->setLat(51.688945);
-            $demoMarker->setLong(5.287256);
-            $demoMarker->setHtml("<b>Avans</b> Hogeschool Den Bosch<br>
-                Onderwijsboulevard 256<br>
-                5223 DJ 's-Hertogenbosch<br>
-                073 629 5295");
-            $demoMarker->setTitle("Avans Hogeschool");
+            //Alle Instellingen ophalen
+            $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
+            $reviews = $em->getRepository('\PROJ\Entities\Instelling')->findAll();
 
-            $mc->addMarkerLocation("Avans Hogeschool", $demoMarker);
+            foreach ($reviews as $rev) {
+                //Gemiddelde score berekenen
+                $qb = $em->createQueryBuilder();
+                $qb->select('avg(review.rating) as AVGSCORE, count(review.id) as AANTALREVIEWS')
+                        ->from('\PROJ\Entities\Instelling', 'instelling')
+                        ->leftJoin('instelling.stages', 'stage')
+                        ->leftJoin('stage.review', 'review')
+                        ->where($qb->expr()->eq('instelling.id', $qb->expr()->literal($rev->getId())));
+                $avg = $qb->getQuery()->getResult();
+
+
+
+                $demoMarker = new \PROJ\Classes\Marker();
+                $demoMarker->setLat($rev->getLat());
+                $demoMarker->setLong($rev->getLong());
+                if ($rev->getType() == "Minor")
+                    $demoMarker->setColor('58D2FF');
+                elseif ($rev->getType() == "Both")
+                    $demoMarker->setColor('58E579');
+
+                $markerHtml = "<div style='width:400px; height:200px;'><h4>" . $rev->getNaam() . "</h4><br>"
+                        . "Gemiddelde Score: " . number_format($avg[0]['AVGSCORE'], 1);
+                if($avg[0]['AANTALREVIEWS'] == 0)
+                    $markerHtml .= "<br><br>Er zijn nog geen reviews geschreven voor " . $rev->getNaam() . "</div>";
+                else
+                    $markerHtml .= "<br><br><a href='#' class='AllReviews' instantie='".$rev->getId()."'>Alle (".$avg[0]['AANTALREVIEWS'].") Reviews Bekijken</a></div>";
+
+                $demoMarker->setHtml($markerHtml);
+                $demoMarker->setTitle($rev->getNaam());
+
+                $mc->addMarkerLocation($rev->getNaam(), $demoMarker);
+            }
             return $mc->generateMarkerJSON();
         }
     }

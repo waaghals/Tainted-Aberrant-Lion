@@ -23,10 +23,17 @@ $requestURL = substr($_GET['r'], 0, -1);
 $URLparameters = explode('/', $requestURL);
 
 //Pagina laden & Checken of deze class weergegeven mag worden
-$ref = new ReflectionClass('PROJ\Pages\\' . $URLparameters[0]);
+//Checken voor ajax
+if($URLparameters[0] == "ajax")
+    $ref = new ReflectionClass('PROJ\Pages\Ajax\\' . $URLparameters[1]);
+else
+    $ref = new ReflectionClass('PROJ\Pages\\' . $URLparameters[0]);
 if ($ref->getParentClass() != null) {
     if ($ref->getParentClass()->getName() == 'PROJ\Pages\MainPage') {
-        $classname = 'PROJ\Pages\\' . $URLparameters[0];
+        if($URLparameters[0] == "ajax")
+            $classname = 'PROJ\Pages\Ajax\\' . $URLparameters[1];
+        else
+            $classname = 'PROJ\Pages\\' . $URLparameters[0];
 
         //Class maken & Parameters meegeven
         $class = new $classname();
