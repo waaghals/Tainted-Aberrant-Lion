@@ -12,7 +12,7 @@ class GoogleMap extends MainPage {
     }
     
     function isHtml() {
-        if(@!strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest')
+        if(@!$_POST['markerRequest'] == 'true')
             return true;
         else
             return false;

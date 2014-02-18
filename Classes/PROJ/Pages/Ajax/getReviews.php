@@ -6,7 +6,7 @@ class getReviews extends \PROJ\Pages\MainPage {
 
     public function getContent() {
         $r = null;
-        if($_POST['instantie'] != "") {
+        if(@$_POST['instantie'] != "") {
             $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
             $stages = $em->getRepository('\PROJ\Entities\Instelling')->find($_POST['instantie'])->getStages();
             

@@ -5,7 +5,7 @@ namespace PROJ\View;
 class DemoGmap {
 
     public function getContent() {
-        if (@!strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+        if(@!$_POST['markerRequest'] == 'true') {
             //Map weergeven
             $gmap = new \PROJ\Classes\GoogleMap();
             $gmap->setCenterLocation("Hilversum");

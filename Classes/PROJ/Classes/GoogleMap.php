@@ -393,7 +393,8 @@ class GoogleMap {
         if ($this->markerURL != "") {
             $sHtml .= '
                 
-            $.getJSON( "' . $this->markerURL . '", function( data ) {
+            $.post( "' . $this->markerURL . '", {markerRequest: "true"}, function( nonJson ) {
+                var data = jQuery.parseJSON(nonJson);
                 $.each( data, function( key, val ) {
                     var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld="+val.MarkerObj.Sign+"|"+val.MarkerObj.Color,
                         new google.maps.Size(21, 34),

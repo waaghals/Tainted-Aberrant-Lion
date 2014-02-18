@@ -38,11 +38,11 @@ class DoctrineHelper{
         $config = new Configuration;
         $config->setMetadataCacheImpl($cache);
         $driverImpl = $config->newDefaultAnnotationDriver(array(
-                'classes/'.$standard_namespace.'/Entities'
+                'Classes/'.$standard_namespace.'/Entities'
             ) );
         $config->setMetadataDriverImpl($driverImpl);
         $config->setQueryCacheImpl($cache);
-        $config->setProxyDir('classes/'.$standard_namespace.'/Proxies');
+        $config->setProxyDir('Classes/'.$standard_namespace.'/Proxies');
         $config->setProxyNamespace( $standard_namespace.'\Proxies');
 
         if ($applicationMode == "development") {
