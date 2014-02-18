@@ -395,6 +395,15 @@ class GoogleMap {
                 
             $.getJSON( "' . $this->markerURL . '", function( data ) {
                 $.each( data, function( key, val ) {
+                    var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld="+val.MarkerObj.Sign+"|"+val.MarkerObj.Color,
+                        new google.maps.Size(21, 34),
+                        new google.maps.Point(0,0),
+                        new google.maps.Point(10, 34));
+                    var pinShadow = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_shadow",
+                        new google.maps.Size(40, 37),
+                        new google.maps.Point(0, 0),
+                        new google.maps.Point(12, 35));
+                        
                     var marker = new google.maps.Marker({
                         position: new google.maps.LatLng(val.GeoLocation.lat, val.GeoLocation.lng),
                         map: forMap,
@@ -407,15 +416,6 @@ class GoogleMap {
                     MarkerArrayEntry[0] = marker;
                     MarkerArrayEntry[1] = val.MarkerObj.Html;
                     GMapsMarkerArray["' . $this->mapName . '"][key] = MarkerArrayEntry; 
-                        
-                    var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld="+val.MarkerObj.Sign+"|"+val.MarkerObj.Color,
-                        new google.maps.Size(21, 34),
-                        new google.maps.Point(0,0),
-                        new google.maps.Point(10, 34));
-                    var pinShadow = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_shadow",
-                        new google.maps.Size(40, 37),
-                        new google.maps.Point(0, 0),
-                        new google.maps.Point(12, 35));
                         
                     google.maps.event.addListener(GMapsMarkerArray["' . $this->mapName . '"][key][0], \'click\', function(event) { 
                         GMapsArray["' . $this->mapName . '"].setCenter(new google.maps.LatLng(GMapsMarkerArray["' . $this->mapName . '"][key][0].position.lat(), GMapsMarkerArray["' . $this->mapName . '"][key][0].position.lng())); 

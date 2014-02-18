@@ -22,3 +22,12 @@
     margin-top: -400px;
     background-color: #FFFFFF;
 }
+
+#legenda{
+    padding:10px 20px;
+    position: absolute;
+    right:10px;
+    bottom:10px;
+    z-index: 9998;
+    background-color:#FFFFFF;
+}

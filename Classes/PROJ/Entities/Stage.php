@@ -24,6 +24,11 @@ class Stage {
     private $einddatum;
 
     /**
+     * @Column(type="string")
+     */
+    private $type;
+
+    /**
      * @OneToOne(targetEntity="\PROJ\Entities\Review", mappedBy="stage", cascade={"remove"})
      */
     private $review;

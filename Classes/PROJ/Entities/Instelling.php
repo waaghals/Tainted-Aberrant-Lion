@@ -2,8 +2,6 @@
 
 namespace PROJ\Entities;
 
-//TODO: School & Bedrijf over-erven van Instelling.
-
 /**
  * @Entity 
  */
@@ -19,6 +17,11 @@ class Instelling {
      * @Column(type="string")
      */
     private $naam;
+
+    /**
+     * @Column(type="string")
+     */
+    private $type;  //Internship, Minor, Both
 
     /**
      * @Column(type="float")
@@ -69,6 +72,14 @@ class Instelling {
 
     public function setStages($stages) {
         $this->stages = $stages;
+    }
+    
+    public function getType() {
+        return $this->type;
+    }
+
+    public function setType($type) {
+        $this->type = $type;
     }
 
 }
