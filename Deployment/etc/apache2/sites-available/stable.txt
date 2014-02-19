@@ -1,0 +1,4 @@
+<VirtualHost *:80>
+        ServerName stable.toip.nl
+        DocumentRoot /var/www/tal/stable
+</VirtualHost>
