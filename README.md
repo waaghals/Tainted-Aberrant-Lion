@@ -3,6 +3,10 @@ Tainted-Aberrant-Lion
 
 School project
 
+##Versie
+Huidige versie is 0.1 na de eerste sprint. Deze is getagd als `Eerste Sprint` met git.
+
+
 ##Pagina's
 * [Scrumboard](https://huboard.com/waaghals/Tainted-Aberrant-Lion)
 * [Burndown chart](http://radekstepan.com/github-burndown-chart/#!/waaghals/Tainted-Aberrant-Lion)
