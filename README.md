@@ -58,3 +58,17 @@ Het handigste is als we MVC gaan gebruiken. Ik heb het project al zo opgezet dat
 In die paginas kun je dan de view aanroepen afhankelijk van overige url parameters ({domain}/DemoPage/Parm1/Parm2/Parm3). 
 
 Probeer database handelingen zoveel mogelijk in een controller te doen. Het makkelijkste is om hier een Singleton van te maken (Zie DemoController.php in /PROJ/Classes/Controller/)
+
+<br>
+##Defenition of Done
+
+
+Het gemaakte werk moet voldoen aan de acceptatie criteria van de user story
+de broncode  van het gemaakte werk heeft unit tests 
+De broncode wordt gereviewd door twee anderen teamleden die het te reviewen werk niet gemaakt hebben.
+Deployement script is getest en werkend met de nieuwe functionalitiet. 
+Database wordt ook geupdate
+Documentatie is bijgewerkt. 
+Zodra een nieuwe functie voldoet aan de DOD mag de nieuwe functionaliteit in de DEV Branch worden gemerged 
+
+<br>
