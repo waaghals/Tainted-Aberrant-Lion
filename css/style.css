@@ -1,0 +1,74 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 23-feb-2014, 22:57:38
+    Author     : Patrick
+*/
+
+
+/* Layout
+   ========================================================================== */
+/* Use border-box as default boz-sizing. */
+*, *:before, *:after {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+/* Small screens (default) */
+html {
+    font: 100%/1.5 "Open Sans", sans-serif;
+    font-weight: 400;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Medium screens (640px) */
+@media (min-width: 40rem) { 
+    html { font-size: 112%; }
+
+    .column {
+        float: left;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .column.full { width: 100%; }
+    .column.two-thirds { width: 66.7%; }
+    .column.half { width: 50%; }
+    .column.third { width: 33.3%; }
+    .column.fourth { width: 24.95%; }
+    .column.flow-opposite { float: right; }   
+}
+
+/* Large screens (1024px) */
+@media (min-width: 64rem) { 
+    html { font-size: 120%; }
+}
+
+.container {
+    margin: 0 auto;
+    max-width: 64rem;
+    width: 95%;
+}
+
+/* Clearfix */
+.clearfix:before,
+.clearfix:after {
+    content: " ";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+.clearfix {
+    *zoom: 1;
+}
+
+/* <Styles>
+   ========================================================================== */
