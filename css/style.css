@@ -11,6 +11,7 @@ and open the template in the editor.
 
 /* Layout
    ========================================================================== */
+
 /* Use border-box as default boz-sizing. */
 *, *:before, *:after {
     -moz-box-sizing: border-box;
@@ -18,13 +19,23 @@ and open the template in the editor.
     box-sizing: border-box;
 }
 
-/* Small screens (default) */
+/* Small screens (default) 
+   Note the lack of column definitions
+   making all the columns stack for mobile viewing. */
 html {
     font: 100%/1.5 "Open Sans", sans-serif;
     font-weight: 400;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
 }
+
+aside {
+    width: 200px;
+}
+aside.closed {
+    left: -160px;
+}
+.column { width: 100%; }
 
 /* Medium screens (640px) */
 @media (min-width: 40rem) { 
@@ -36,23 +47,38 @@ html {
         padding-right: 1rem;
     }
 
-    .column .full { width: 100%; }
-    .column .two-thirds { width: 66.7%; }
-    .column .half { width: 50%; }
-    .column .third { width: 33.3%; }
-    .column .fourth { width: 24.95%; }
-    .column .flow-opposite { float: right; }
+    .column.full { width: 100%; }
+    .column.two-thirds { width: 66.7%; }
+    .column.half { width: 50%; }
+    .column.third { width: 33.3%; }
+    .column.fourth { width: 24.95%; }
+    .column.flow-opposite { float: right; }
+
+    aside { width: 450px; }
+
+    aside.closed {
+        left: -410px;
+    }
 }
 
 /* Large screens (1024px) */
 @media (min-width: 64rem) { 
     html { font-size: 120%; }
+    aside { width: 600px; }
+    aside.closed {
+        left: -540px;
+    }
+}
+
+
+
+html, body, .container {
+    height: 100%;
 }
 
 .container {
     margin: 0 auto;
-    max-width: 64rem;
-    width: 95%;
+    width: 100%;
 }
 
 /* Clearfix */
@@ -72,8 +98,45 @@ html {
 
 /* <Styles>
    ========================================================================== */
-
 #map {
     height: 100%;
+}
+
+aside {
+    background-color: white;
+    position: absolute;
+    top: 75px;
+    max-height: 100%;
+}
+
+header {
+    position: fixed;
+    top: 0;
     width: 100%;
+    z-index: 1;
+    background-color: white;
+}
+
+.scrollable {
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+}
+
+.shadow {
+    -webkit-box-shadow: 2px 5px 10px 0px rgba(50, 50, 50, 0.75);
+    -moz-box-shadow:    2px 5px 10px 0px rgba(50, 50, 50, 0.75);
+    box-shadow:         2px 5px 10px 0px rgba(50, 50, 50, 0.75);
+}
+
+/* Menu
+   ========================================================================== */
+#swipeline {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 50px;
+    height: 100%;
+    border-right: 1px solid red;
+    z-index:10;
 }
