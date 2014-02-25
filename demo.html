@@ -7,17 +7,56 @@
 
         <link rel="stylesheet" href="css/normalize.css" type="text/css">
         <link rel="stylesheet" href="css/style.css" type="text/css">
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 
         <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+        <script type="text/javascript" src="http://eightmedia.github.io/hammer.js/dist/jquery.hammer.js"></script>
+        
         <script type="text/javascript">
+            $(document).ready(function() {
 
+                function openSidebar() {
+                    $("aside").removeClass('closed');
+                }
+
+                function closeSidebar() {
+                    $("aside").addClass('closed');
+                }
+
+                $('aside').hammer().on('dragright', function(e) {
+                    e.preventDefault();
+                    openSidebar();
+                });
+
+                $('aside').on('dragleft', function(e) {
+                    if (!$('aside').hasClass('closed')) {
+                        e.preventDefault();
+                        closeSidebar();
+                    }
+                });
+
+                $('#swipeline').on('click', function(e) {
+                    e.stopPropagation();
+                    e.preventDefault();
+
+                    if (!$('aside').hasClass('close')) {
+                        closeSidebar();
+                    } else {
+                        openSidebar();
+                    }
+
+                });
+
+
+            });
             //subtrackt the header size from the map canvas, removing the scrollbar
             function correctHeaderOffset() {
                 var h = $(window).height();
                 var headerHeight = $('header').height();
 
                 $('#map').css('height', (h - headerHeight));
+                $('aside').css('height', (h - headerHeight));
             }
 
             function initialize() {
@@ -46,7 +85,7 @@
             }
 
             google.maps.event.addDomListener(window, 'load', initialize);
-               
+
             //Register the correctHeaderOffset callback on windows resizing.
             $(window).resize(correctHeaderOffset).resize();
         </script>
@@ -54,23 +93,80 @@
     </head>
     <body>
         <div class="container">
-            <header class="row clearfix">
-                <nav class="column full">
+            <header class="shadow">
+                <nav>
                     <button>Home</button>
                 </nav>
             </header>
-            <div class="row clearfix">
+            <main class="row clearfix">
+                <div id="map" class="column full">
 
-                <main id="map" class="column two-thirds">
+                </div>
 
-                </main>
-
-                <aside class="column third flow-opposite">
-                    <h1>School</h1>
-                    <p>test</p>
+                <aside class="closed scrollable shadow">
+                    <div class="row clearfix">
+                        <div class="column full">
+                            <h2>Universiteit van Ljubljana</h2>
+                            <i>Ljubljana, Slovenië</i>
+                            <h3>Opzetten website</h2>
+                        </div>
+                        <div class="column two-thirds">
+                            <i>Stage</i>
+                        </div>
+                        <img class="column third" src="http://blog.sweetiq.com/wp-content/uploads/2012/07/3-5-stars.png" />
+                    </div>
+                    <div class="row clearfix">
+                        <div class="column two-thirds">
+                            <h4>Werkzaamheden</h4>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                                Etiam a enim fermentum, tempor enim pretium, luctus erat.
+                                Aliquam vitae elit purus. Sed volutpat arcu a mi ultrices, 
+                                et condimentum metus vestibulum. Cras vitae commodo tortor. 
+                                Morbi semper metus id erat laoreet fringilla. 
+                                Aenean sit amet orci risus. 
+                                Mauris malesuada nibh quis porttitor congue. 
+                                Nam ante nunc, imperdiet eget felis vitae, porta gravida tortor. 
+                                Proin eleifend at diam aliquet pellentesque.
+                            </p>
+                            <h4>Huisvesting</h4>
+                            <p>
+                                Maecenas erat nibh, blandit ut lacinia vitae, tincidunt lobortis metus. 
+                                Nam vel arcu vel nibh feugiat rutrum id porttitor erat. 
+                                Donec tempus hendrerit mi. Donec porttitor libero nec faucibus interdum. 
+                                Fusce sollicitudin sapien ac neque dignissim, vel varius purus congue. 
+                                Ut nec orci non orci adipiscing sodales sit amet sed nibh. 
+                                Cras vel justo id felis dignissim ultrices. 
+                                Duis pellentesque facilisis accumsan. 
+                                In varius iaculis magna, vitae varius erat commodo volutpat. 
+                                Vestibulum imperdiet pretium leo, eget varius velit condimentum eu. 
+                                Suspendisse potenti. 
+                                Aliquam dapibus metus nisl, id dignissim leo molestie ut. 
+                                Donec diam nisi, convallis eu lectus sed, aliquam varius eros. 
+                                Integer at vestibulum ante, et tempus nunc. 
+                                Donec congue nibh non nulla porttitor feugiat.
+                            </p>
+                        </div>
+                        <div class="third">
+                            <h5>Patrick Berenschot</h5>
+                            <img src="http://m.c.lnkd.licdn.com/mpr/pub/image-tEpOllUkvAV__dsH809yTY8e_17efvHVq29LhlmO_x-1rktKtEpLWxxk_KuKrNkqRkAM/patrick-berenschot.jpg" />
+                            <p>Tweedejaars Software-Engineering student.</p>
+                            <h6>Neem contact op</h6>
+                            <ul>
+                                <li>
+                                    <i class="fa fa-twitter"></i>@Waaghals
+                                </li>
+                                <li>
+                                    <i class="fa fa-linkedin"></i>Patrick Berenschot
+                                </li>
+                                <li>
+                                    <i class="fa fa-github"></i>Waaghals
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </aside>
-
-            </div> <!-- end row -->
+            </main> <!-- end row -->
         </div>
     </body>
 </html>
