@@ -72,7 +72,7 @@ class VoorbeeldEntitie2 {
         return $this->INTwaarde;
     }
 
-    public function setINTwaarde($INTwaarde) {
+    public function setINTparameter($INTwaarde) {
         $this->INTwaarde = $INTwaarde;
 
         return $this;

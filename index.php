@@ -18,12 +18,12 @@ foreach ($_POST as $key => $p)
 foreach ($_GET as $key => $p)
     $_GET[$key] = trim(strip_tags(htmlspecialchars($p)));
 
-//Parameters ophalen
+//get parameters
 $requestURL = substr($_GET['r'], 0, -1);
 $URLparameters = explode('/', $requestURL);
 
-//Pagina laden & Checken of deze class weergegeven mag worden
-//Checken voor ajax
+//Load page and check if this class is allowed to be displayed
+//Check for ajax
 if($URLparameters[0] == "ajax")
     $ref = new ReflectionClass('PROJ\Pages\Ajax\\' . $URLparameters[1]);
 else
@@ -35,7 +35,7 @@ if ($ref->getParentClass() != null) {
         else
             $classname = 'PROJ\Pages\\' . $URLparameters[0];
 
-        //Class maken & Parameters meegeven
+        //create class and parameters
         $class = new $classname();
         $class->setURLParameters($URLparameters);
         echo $class->show();
