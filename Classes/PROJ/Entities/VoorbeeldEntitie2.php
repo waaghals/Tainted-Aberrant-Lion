@@ -21,7 +21,7 @@ class VoorbeeldEntitie2 {
     /**
      * @Column(type="integer")
      */
-    private $INTwaarde;
+    private $INTparameter;
 
     /**
      * @OneToOne(targetEntity="\PROJ\Entities\VoorbeeldEntitie1", mappedBy="OneToOneRelation")
@@ -68,12 +68,12 @@ class VoorbeeldEntitie2 {
         return $this;
     }
 
-    public function getINTwaarde() {
-        return $this->INTwaarde;
+    public function getINTparameter() {
+        return $this->INTparameter;
     }
 
-    public function setINTparameter($INTwaarde) {
-        $this->INTwaarde = $INTwaarde;
+    public function setINTparameter($INTparameter) {
+        $this->INTparameter = $INTparameter;
 
         return $this;
     }

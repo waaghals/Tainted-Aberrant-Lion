@@ -16,12 +16,12 @@ class Stage {
     /**
      * @Column(type="date")
      */
-    private $startdatum;
+    private $startdate;
 
     /**
      * @Column(type="date")
      */
-    private $einddatum;
+    private $enddate;
 
     /**
      * @Column(type="string")
@@ -36,7 +36,7 @@ class Stage {
     /**
      * @ManyToOne(targetEntity="\PROJ\Entities\Instelling", inversedBy="stages")
      */
-    private $instelling;
+    private $institute;
 
     /**
      * @OneToOne(targetEntity="\PROJ\Entities\Student", inversedBy="stage")
@@ -52,40 +52,40 @@ class Stage {
         return $this->id;
     }
 
-    public function getStartdatum() {
-        return $this->startdatum;
+    public function getStartdate() {
+        return $this->startedate;
     }
 
-    public function getEinddatum() {
-        return $this->einddatum;
+    public function getEnddate() {
+        return $this->enddate;
     }
 
     public function getReview() {
         return $this->review;
     }
 
-    public function getInstelling() {
-        return $this->instelling;
+    public function getInstitute() {
+        return $this->institute;
     }
 
     public function getStudent() {
         return $this->student;
     }
 
-    public function setStartdatum($startdatum) {
-        $this->startdatum = $startdatum;
+    public function setStartdate($startdate) {
+        $this->startdate = $startdate;
     }
 
-    public function setEinddatum($einddatum) {
-        $this->einddatum = $einddatum;
+    public function setEnddate($enddate) {
+        $this->enddate = $enddate;
     }
 
     public function setReview($review) {
         $this->review = $review;
     }
 
-    public function setInstelling($instelling) {
-        $this->instelling = $instelling;
+    public function setInstitute($institute) {
+        $this->institute = $institute;
     }
 
     public function setStudent($student) {
