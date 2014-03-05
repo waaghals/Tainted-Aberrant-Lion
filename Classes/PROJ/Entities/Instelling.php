@@ -16,7 +16,7 @@ class Instelling {
     /**
      * @Column(type="string")
      */
-    private $naam;
+    private $name;
 
     /**
      * @Column(type="string")
@@ -42,12 +42,12 @@ class Instelling {
         return $this->id;
     }
 
-    public function getNaam() {
-        return $this->naam;
+    public function getName() {
+        return $this->name;
     }
 
-    public function setNaam($naam) {
-        $this->naam = $naam;
+    public function setName($name) {
+        $this->name = $name;
     }
 
     public function getLat() {
