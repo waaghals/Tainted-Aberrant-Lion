@@ -30,11 +30,11 @@ html {
 }
 
 body {
-   font-size: 18px;
+    font-size: 18px;
 }
 
 h1,h2,h3,h4,h5,h6,p {
-   line-height: 1.45;
+    line-height: 1.45;
 }
 
 h1 { font-size: 4em; }
@@ -52,7 +52,7 @@ aside.closed {
 .column { width: 100%; }
 
 /* Medium screens (640px) */
-@media (min-width: 40rem) { 
+@media (min-width: 40rem) {
     .column {
         float: left;
         padding-left: 1rem;
@@ -78,6 +78,14 @@ aside.closed {
     aside { width: 600px; }
     aside.closed {
         left: -540px;
+    }
+}
+
+/* Huge screens (1200px) */
+@media (min-width: 85rem) { 
+    aside { width: 800px; }
+    aside.closed {
+        left: -740px;
     }
 }
 
@@ -149,6 +157,9 @@ header {
     color: #d11d40;
 }
 
+ul {
+    list-style-type: none;
+}
 
 /* Nav
    ========================================================================== */
