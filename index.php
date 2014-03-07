@@ -13,7 +13,7 @@ $classLoader = new \Doctrine\Common\ClassLoader(null, __DIR__ . '/Classes');
 $classLoader->register();
 
 //POST & GET data opschonen
-foreach ($_POST as $key => $p)
+/*foreach ($_POST as $key => $p)
     $_POST[$key] = trim(strip_tags(htmlspecialchars($p)));
 foreach ($_GET as $key => $p)
     $_GET[$key] = trim(strip_tags(htmlspecialchars($p)));
@@ -24,6 +24,8 @@ $URLparameters = explode('/', $requestURL);
 
 //Pagina laden & Checken of deze class weergegeven mag worden
 //Checken voor ajax
+
+
 if($URLparameters[0] == "ajax")
     $ref = new ReflectionClass('PROJ\Pages\Ajax\\' . $URLparameters[1]);
 else
@@ -45,4 +47,10 @@ if ($ref->getParentClass() != null) {
 } else {
     header("HTTP/1.0 404 Not Found");
 }
-?>
+*/
+
+//Perform the router magic, call the correct controller and action
+//based on the uri
+$req = new \PROJ\Tools\Request();
+PROJ\Tools\Router::match($req);
+
