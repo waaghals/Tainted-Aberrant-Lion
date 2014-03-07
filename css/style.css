@@ -23,11 +23,25 @@ and open the template in the editor.
    Note the lack of column definitions
    making all the columns stack for mobile viewing. */
 html {
-    font: 100%/1.5 "Open Sans", sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-weight: 400;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
 }
+
+body {
+   font-size: 18px;
+}
+
+h1,h2,h3,h4,h5,h6,p {
+   line-height: 1.45;
+}
+
+h1 { font-size: 4em; }
+h2 { font-size: 3em; }
+h2 { font-size: 2em; }
+h2 { font-size: 1.5em; }
+
 
 aside {
     width: 200px;
@@ -39,8 +53,6 @@ aside.closed {
 
 /* Medium screens (640px) */
 @media (min-width: 40rem) { 
-    html { font-size: 112%; }
-
     .column {
         float: left;
         padding-left: 1rem;
@@ -63,7 +75,6 @@ aside.closed {
 
 /* Large screens (1024px) */
 @media (min-width: 64rem) { 
-    html { font-size: 120%; }
     aside { width: 600px; }
     aside.closed {
         left: -540px;
@@ -105,7 +116,7 @@ html, body, .container {
 aside {
     background-color: white;
     position: absolute;
-    top: 75px;
+    top 75;
     max-height: 100%;
 }
 
