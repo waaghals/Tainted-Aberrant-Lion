@@ -116,7 +116,6 @@ html, body, .container {
 aside {
     background-color: white;
     position: absolute;
-    top 75;
     max-height: 100%;
 }
 
@@ -145,6 +144,11 @@ header {
     -moz-box-shadow:    2px 5px 10px 0px rgba(50, 50, 50, 0.75);
     box-shadow:         2px 5px 10px 0px rgba(50, 50, 50, 0.75);
 }
+
+.highlight {
+    color: #d11d40;
+}
+
 
 /* Nav
    ========================================================================== */

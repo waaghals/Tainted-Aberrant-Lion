@@ -63,7 +63,7 @@
 
                 //Force fill screen, strange bug with maps
                 $('#map').css('height', h);
-                //$('aside').css('height', (h - headerHeight));
+                $('aside').css('top', headerHeight);
             }
 
             function initialize() {
@@ -121,7 +121,9 @@
                         <div class="column two-thirds">
                             <i>Stage</i>
                         </div>
-                        <img class="column third" src="http://blog.sweetiq.com/wp-content/uploads/2012/07/3-5-stars.png" />
+                        <div>
+                            <span class="highlight">&#10032;</span><span class="highlight">&#10032;</span><span class="highlight">&#10032;</span><span>&#10032;</span><span>&#10032;</span>
+                        </div>
                     </div>
                     <div class="row clearfix">
                         <div class="column two-thirds">
