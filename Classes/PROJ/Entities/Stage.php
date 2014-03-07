@@ -39,7 +39,7 @@ class Stage {
     private $instelling;
 
     /**
-     * @OneToOne(targetEntity="\PROJ\Entities\Student", inversedBy="stage")
+     * @ManyToOne(targetEntity="\PROJ\Entities\Student", inversedBy="stage")
      */
     private $student;
 

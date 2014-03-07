@@ -54,7 +54,7 @@ class Student {
     private $account;
 
     /**
-     * @OneToOne(targetEntity="\PROJ\Entities\Stage", mappedBy="student", cascade={"remove"})
+     * @OneToMany(targetEntity="\PROJ\Entities\Stage", mappedBy="student", cascade={"remove"})
      */
     private $stage;
 
