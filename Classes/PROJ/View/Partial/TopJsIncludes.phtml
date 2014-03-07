@@ -1,0 +1,87 @@
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="http://eightmedia.github.io/hammer.js/dist/jquery.hammer.js"></script>
+<script type="text/javascript" src="js/flowtype.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('body').flowtype({
+            minimum: 500,
+            maximum: 1200,
+            fontRatio: 50
+        });
+        function openSidebar() {
+            $("aside").removeClass('closed');
+        }
+
+        function closeSidebar() {
+            $("aside").addClass('closed');
+        }
+
+        $('aside').hammer().on('dragright', function(e) {
+            e.preventDefault();
+            openSidebar();
+        });
+
+        $('aside').on('dragleft', function(e) {
+            if (!$('aside').hasClass('closed')) {
+                e.preventDefault();
+                closeSidebar();
+            }
+        });
+
+        $('#swipeline').on('click', function(e) {
+            e.stopPropagation();
+            e.preventDefault();
+
+            if (!$('aside').hasClass('close')) {
+                closeSidebar();
+            } else {
+                openSidebar();
+            }
+
+        });
+
+
+    });
+    //subtrackt the header size from the map canvas, removing the scrollbar
+    function correctHeaderOffset() {
+        var h = $(window).height();
+        var headerHeight = $('header').height();
+
+        //Force fill screen, strange bug with maps
+        $('#map').css('height', h);
+        $('aside').css('top', headerHeight);
+        $('aside').css('height', h - headerHeight);
+    }
+
+    function initialize() {
+        var mapOptions = {
+            center: new google.maps.LatLng(-34.397, 150.644),
+            zoom: 8,
+            styles: [{"featureType": "all", "elementType": "all", "stylers": [{"hue": "#d11d40"}]}, {"featureType": "road", "elementType": "labels", "stylers": [{"visibility": "off"}]}, {"featureType": "road", "elementType": "geometry", "stylers": [{"visibility": "simplified"}, {"lightness": 100}]}, {"featureType": "water", "elementType": "geometry.fill", "stylers": [{"invert_lightness": false}, {"color": "#d11d40"}, {"saturation": 0}]}, {"featureType": "water", "elementType": "labels.text", "stylers": [{"visibility": "off"}]}, {"featureType": "poi.park", "elementType": "labels", "stylers": [{"visibility": "off"}]}, {"featureType": "poi.business", "elementType": "labels", "stylers": [{"visibility": "off"}]}, {"featureType": "water", "elementType": "geometry.fill", "stylers": [{"visibility": "on"}, {"invert_lightness": false}, {"weight": 0.1}, {"saturation": -50}, {"lightness": 0}]}]
+        };
+        var map = new google.maps.Map(document.getElementById("map"),
+                mapOptions);
+
+        //Force absolute positioning after map tiles are loaded
+        google.maps.event.addListener(map, 'tilesloaded', function() {
+            document.getElementById('map').style.position = 'absolute';
+        });
+
+        //Correct the height of the map after resizing
+        google.maps.event.addListener(map, 'resize', function() {
+            var mainHeight = $('main').height();
+            var headerHeight = $('header').height();
+
+            $('#map').css('height', (mainHeight - headerHeight));
+        });
+
+        //Force a recalculation of the map height
+        correctHeaderOffset();
+    }
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+
+    //Register the correctHeaderOffset callback on windows resizing.
+    $(window).resize(correctHeaderOffset).resize();
+</script>
