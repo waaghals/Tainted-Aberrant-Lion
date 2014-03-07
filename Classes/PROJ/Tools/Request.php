@@ -55,11 +55,11 @@ class Request {
     }
 
     public function getController() {
-        return $this->controller . "Controller";
+        return $this->controller;
     }
 
     public function getAction() {
-        return $this->action . "Action";
+        return $this->action;
     }
 
     /**
