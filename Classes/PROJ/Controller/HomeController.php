@@ -16,7 +16,9 @@ namespace PROJ\Controller;
 class HomeController extends BaseController {
     
     public function indexAction($val = "default") {
-        die("Home - Index Value:" . $val);
+        $mapView = new \PROJ\Tools\Template("MainMapView");
+        
+        echo $mapView;
     }
     
     public function otherAction() {
