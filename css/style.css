@@ -64,6 +64,10 @@ aside.closed {
     .column.half { width: 50%; }
     .column.third { width: 33.3%; }
     .column.fourth { width: 24.95%; }
+    .column.fifth { width: 20%; }
+    .column.two-fifth { width: 40%; }
+    .column.three-fifth { width: 60%; }
+    .column.four-fifth { width: 80%; }
     .column.flow-opposite { float: right; }
 
     aside { width: 450px; }
@@ -161,5 +165,11 @@ ul {
     list-style-type: none;
 }
 
+
+.italic {
+    font-style: italic;
+}
+
+.hidden { display:none; }
 /* Nav
    ========================================================================== */
