@@ -31,3 +31,17 @@
     z-index: 9998;
     background-color:#FFFFFF;
 }
+
+.center{
+    margin-left:auto;
+    margin-right:auto;
+    text-align:center; 
+}
+
+.alert {
+    background: #fff6bf 15px center no-repeat;
+    text-align: center;
+    padding: 10px 20px 10px 50px;
+    border-top: 2px solid #ffd324;
+    border-bottom: 2px sollid #ffd324;
+}
