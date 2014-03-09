@@ -2,7 +2,7 @@
 
 namespace PROJ\Controller;
 
-class DemoController {
+class DemoController extends BaseController{
 
     private static $instance;
 
@@ -17,7 +17,7 @@ class DemoController {
         return self::$instance;
     }
 
-    public function DoDemo() {
+    public function DoDemoAction() {
         $r = null;
 
         /** URL parameters opvragen:       * */
@@ -113,7 +113,7 @@ class DemoController {
         //$em->remove($e);
         //$em->flush();
 
-        return $r;
+        echo $r;
     }
 
 }

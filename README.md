@@ -52,12 +52,12 @@ Een doctrine entity **NOOIT** print_r of var_dumpen! Altijd de Debug functie hie
 * [Doctrine Annotations](http://docs.doctrine-project.org/en/latest/reference/annotations-reference.html#annref-column)
 
 
-##Website
-Het handigste is als we MVC gaan gebruiken. Ik heb het project al zo opgezet dat dit makkelijk moet gaan. In /PROJ/Classes/Pages zet je de pagina's ie bij URL benaarderbaar moeten zijn. dus bijvoorbeeld {domain}/DemoPage/. De index zorgt er al voor dat deze automatisch aangeroepen worden. **LET OP!** Deze pagina's worden **ALLEEN** aangeroepen als ze de MainPage extenden! Anders krijg je een 404.
+##MVC
+Het handigste is als we MVC gaan gebruiken. Ik heb het project al zo opgezet dat dit makkelijk moet gaan. In /PROJ/Classes/Controller zet je de controllers die bij URL benaarderbaar moeten zijn. dus bijvoorbeeld {domain}/DemoPage/. De index zorgt er al voor dat deze automatisch aangeroepen worden. **LET OP!** Deze pagina's worden **ALLEEN** aangeroepen als ze de BaseController extenden! Anders krijg je een 404.
 
-In die paginas kun je dan de view aanroepen afhankelijk van overige url parameters ({domain}/DemoPage/Parm1/Parm2/Parm3). 
+In die paginas kun je dan de view aanroepen afhankelijk van overige url parameters ({domain}/Controller/Action/Parm1=Value1/Parm2=Value2). 
 
-Probeer database handelingen zoveel mogelijk in een controller te doen. Het makkelijkste is om hier een Singleton van te maken (Zie DemoController.php in /PROJ/Classes/Controller/)
+Probeer database handelingen zoveel mogelijk in een model te doen. Het makkelijkste is om hier een Singleton van te maken (Zie DemoController.php in /PROJ/Classes/Controller/)
 
 <br>
 ##Defenition of Done
