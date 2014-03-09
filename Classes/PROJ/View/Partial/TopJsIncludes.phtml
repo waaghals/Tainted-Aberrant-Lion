@@ -22,6 +22,8 @@
             maximum: 1200,
             fontRatio: 50
         });
+
+        var lastLoadedJson;
         function openSidebar() {
             $("aside").removeClass('closed');
         }
@@ -53,7 +55,7 @@
             e.preventDefault();
             toggleSidebar();
         });
-        
+
         function loadJsonMarkers() {
             $.getJSON('/tal/ajax/allLocations/', function(data) {
                 $.each(data.locations, function(i, location) {
@@ -68,44 +70,86 @@
                     google.maps.event.addListener(marker, 'click', function() {
                         map.setZoom(13);
                         map.setCenter(marker.getPosition());
-                        //TODO open sidebar with info
-                        loadLocation();
+                        loadLocation(marker.id);
+                        openSidebar();
                     });
                 });
             });
         }
 
-        function loadLocation() {
+        function loadLocation(locationId) {
             var sidebar = $('aside');
-            
-            $.getJSON('/tal/ajax/locationReview/loc=1/', function(data) {
+
+            $.getJSON('/tal/ajax/locationReview/loc=' + locationId + '/', function(data) {
+                lastLoadedJson = data;
                 sidebar.text("");
                 sidebarHeader = $('<div class="row clearfix"/>');
                 sidebarHeader.append("<h2 class=\"column full highlight\">" + data.name + "</h2>");
                 sidebarHeader.append("<h3 class=\"column half italic\">" + data.place + "</h3>");
                 sidebarHeader.append("<h3 class=\"column half\">" + data.type + "</h3>");
                 sidebar.append(sidebarHeader);
-                sidebarHeader.append("<p class=\"column half\">Door</h3>");
-                sidebarHeader.append("<p class=\"column half\">Beoordeling</h3>");
+                sidebarHeader.append("<p class=\"column half\">Door</p>");
+                sidebarHeader.append("<p class=\"column half\">Beoordeling</p>");
 
                 var row;
                 for (var i = 0; i < data.reviews.length; i++) {
-                    sidebar.append("<div class=\"row clearfix\"/><span class=\"column full\">" + data.reviews[i].reviewer.name + "</span></div>");
-                    
-                    row = $('<p class="row clearfix"/>');
-                    row.append("<span class=\"column half italic\">" + data.reviews[i].type + "</span>");
+                    var review = data.reviews[i];
+                    sidebar.append("<div class=\"row clearfix reviewLink\" data-review-id=\"" + i + "\"><span class=\"column full\">" + review.author.name + "</span></div>");
+
+
+                    row = $("<p class=\"row clearfix\">");
+                    row.append("<span class=\"column half italic\">" + review.type + "</span>");
+
                     var stars = $("<span class=\"column half\"/>");
-                    for (var j = 0; j < 5; j++) { //5 max rating
-                        if(data.reviews[i].rating > j){
-                            stars.append("<span class=\"highlight\">&#10032;</span>");
-                        } else {
-                            stars.append("<span>&#10032;</span>");
-                        }
-                    }
+                    stars.append(getStars(review.rating));
+
                     row.append(stars);
+
                     sidebar.append(row);
                 }
             });
+        }
+
+
+
+        function loadReview(reviewIndex) {
+            var data = lastLoadedJson;
+
+            var sidebar = $('aside');
+            sidebar.text("");
+            sidebarHeader = $('<div class="row clearfix"/>');
+            sidebarHeader.append("<h2 class=\"column full highlight\">" + data.name + "</h2>");
+            sidebarHeader.append("<h3 class=\"column half italic\">" + data.place + "</h3>");
+            sidebarHeader.append("<h3 class=\"column half\">" + data.type + "</h3>");
+            sidebar.append(sidebarHeader);
+
+            var container;
+            var review = data.reviews[reviewIndex];
+            var author = review.author;
+
+            container = $("<div class=\"row clearfix\">");
+            container.append("<div class=\"column two-thirds\">" + review.text + "</div>");
+
+            var sideContent = $("<div class=\"column third\"/>");
+            sideContent.append("<p>Door: " + author.name + "</p>");
+            sideContent.append("<p>Type: " + review.type + "</p>");
+            sideContent.append("<p>Beoordeling: " + getStars(review.rating).html() + "</p>");
+            container.append(sideContent);
+
+            sidebar.append(container);
+        }
+
+        function getStars(score) {
+
+            var stars = $("<span />");
+            for (var i = 0; i < 5; i++) { //5 max rating
+                if (score > i) {
+                    stars.append("<span class=\"highlight\">&#10032;</span>");
+                } else {
+                    stars.append("<span>&#10032;</span>");
+                }
+            }
+            return stars;
         }
 
         //subtrackt the header size from the map canvas, removing the scrollbar
@@ -162,6 +206,11 @@
         google.maps.event.addDomListener(window, 'load', initialize);
         //Register the correctHeaderOffset callback on windows resizing.
         $(window).resize(correctHeaderOffset).resize();
+
+        $(document).on("click", ".reviewLink", function(e) {
+            var rid = $(this).data('review-id');
+            loadReview(rid);
+        });
     });
 
 
