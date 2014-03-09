@@ -7,7 +7,7 @@ class Hashing {
 		$bytes = openssl_random_pseudo_bytes(64, $cstrong);
 		$salt = bin2hex($bytes);
 		if($cstrong){
-			return hash('sha512', $password . $salt);
+			return hash('sha512', $password . $salt) . ";" . $salt;
 		} else {
 			return null;
 		}
