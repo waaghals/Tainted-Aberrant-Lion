@@ -1,4 +1,6 @@
 <?php
+//start session
+session_start();
 
 //Init Doctrine
 use Doctrine\Common\ClassLoader;

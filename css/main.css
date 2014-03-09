@@ -31,3 +31,15 @@
     z-index: 9998;
     background-color:#FFFFFF;
 }
+
+.login_left_col{
+    width:100px;
+    padding:3px;
+    clear:left;
+    float:left;
+}
+
+.login_right_col{
+    padding:3px;
+    float:left;
+}
