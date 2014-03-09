@@ -2,14 +2,14 @@
 
 //Init Doctrine
 use Doctrine\Common\ClassLoader;
-
+use PROJ\Helper;
 require __DIR__ . '/Doctrine/Common/ClassLoader.php';
 
-$classLoader = new \Doctrine\Common\ClassLoader('Doctrine', __DIR__ . '/');
+$classLoader = new ClassLoader('Doctrine', __DIR__ . '/');
 $classLoader->register();
-$classLoader = new \Doctrine\Common\ClassLoader('Symfony', __DIR__ . '/Doctrine');
+$classLoader = new ClassLoader('Symfony', __DIR__ . '/Doctrine');
 $classLoader->register();
-$classLoader = new \Doctrine\Common\ClassLoader(null, __DIR__ . '/Classes');
+$classLoader = new ClassLoader(null, __DIR__ . '/Classes');
 $classLoader->register();
 
 //POST & GET data opschonen
@@ -51,6 +51,11 @@ if ($ref->getParentClass() != null) {
 
 //Perform the router magic, call the correct controller and action
 //based on the uri
-$req = new \PROJ\Tools\Request();
+try {
+    $req = new \PROJ\Tools\Request();
 PROJ\Tools\Router::match($req);
-
+} catch (\PROJ\Exceptions\ServerException $e) {
+    echo sprintf("<h1>Error: %s</h1>", Helper\HeaderHelper::getStatus($e->getCode()));
+    echo sprintf("<p>Message: %s</p>", $e->getMessage());
+    Helper\HeaderHelper::show($e->getCode());
+}
