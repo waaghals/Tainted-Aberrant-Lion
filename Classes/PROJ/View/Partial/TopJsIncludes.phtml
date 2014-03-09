@@ -1,12 +1,12 @@
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
 <script type="text/javascript" src="http://eightmedia.github.io/hammer.js/dist/jquery.hammer.js"></script>
-<script type="text/javascript" src="/tal/js/flowtype.js"></script>
+<script type="text/javascript" src="/js/flowtype.js"></script>
 
 <script type="text/javascript">
     $(document).ready(function() {
         var map; /* Main map variable */
-        var iconBase = '/tal/images/';
+        var iconBase = '/images/';
         var icons = {
             university: {
                 icon: iconBase + 'university.png'
@@ -55,7 +55,7 @@
         });
 
         function loadJsonMarkers() {
-            $.getJSON('/tal/ajax/allLocations/', function(data) {
+            $.getJSON('/ajax/allLocations/', function(data) {
                 $.each(data.locations, function(i, location) {
                     var marker = new google.maps.Marker({
                         position: new google.maps.LatLng(location.lat, location.lng),
@@ -78,7 +78,7 @@
         function loadLocation(locationId) {
             var sidebar = $('aside');
 
-            $.getJSON('/tal/ajax/locationReview/loc=' + locationId + '/', function(data) {
+            $.getJSON('/ajax/locationReview/loc=' + locationId + '/', function(data) {
                 lastLoadedJson = data;
                 sidebar.text("");
                 sidebarHeader = $('<div class="row clearfix"/>');
@@ -167,7 +167,7 @@
                 $.ajax({
                     'async': false,
                     'global': false,
-                    'url': "/tal/js/mapStyle.json",
+                    'url': "/js/mapStyle.json",
                     'dataType': "json",
                     'success': function(data) {
                         json = data;
