@@ -43,3 +43,19 @@
     padding:3px;
     float:left;
 }
+
+.review_left_col{
+    width:300px;
+    padding:3px;
+    clear:left;
+    float:left;
+}
+
+.review_right_col{
+    padding:3px;
+    float:left;
+}
+
+textarea{
+    resize: none;
+}
