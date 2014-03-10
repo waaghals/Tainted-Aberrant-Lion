@@ -5,34 +5,35 @@ namespace PROJ\Controller;
 class RegisterController {
 
     //put your code here
-    public function validate_input() {
-        if (empty($_POST['username']) || empty($_POST['password']) || empty($_POST['passwordagain'])
-                || empty($_POST['firstname']) || empty($_POST['surname']) || empty($_POST['city']) 
-                || empty($_POST['zipcode']) || empty($_POST['street']) || 
-                empty($_POST['streetnumber'])) {
+    public function validate_input($data) {
+        if (empty($data['username']) || empty($data['password']) || empty($data['passwordagain'])
+                || empty($data['firstname']) || empty($data['surname']) || empty($data['city']) 
+                || empty($data['zipcode']) || empty($data['street']) || 
+                empty($data['streetnumber'])) {
             return "Not everything is filled in";
         }
-        foreach($_POST as $input){
-            if($input == $_POST['streetnumber'])
+        foreach($data as $input){
+            if($input == $data['streetnumber'])
                 break;
             if(strlen($input) > 254)
                 return "Some fieldes are too long.";
+            if(!preg_match('/^[A-Za-z0-9. -_]{1,31}$/', $input))
+                return "No special characters allowed" . $input;
         }
-        if(!(filter_var($_POST['streetnumber'], FILTER_VALIDATE_INT)))
+        if(!(filter_var($data['streetnumber'], FILTER_VALIDATE_INT)))
                 return "Streetnumber is not a number";
-        if(!($_POST['password'] === $_POST['passwordagain']))
+        if(!($data['password'] === $data['passwordagain']))
             return "Passwords did not match";
-        
         
         return "Registration succeeded!";
     }
     
-    public function create_account(){
+    public function create_account($data){
         $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
         $hashing = new \PROJ\Classes\Hashing();
         $account = new \PROJ\Entities\Account();
-        $passwordsalt = split(';', $hashing->create_hash($_POST['password']));
-        $account->setUsername($_POST['username']);
+        $passwordsalt = split(';', $hashing->create_hash($data['password']));
+        $account->setUsername($data['username']);
         $account->setPassword($passwordsalt[0]);
         $account->setSalt($passwordsalt[1]);
         $em->persist($account);
@@ -40,17 +41,17 @@ class RegisterController {
         return $account;
     }
     
-    public function create_student($account){
+    public function create_student($account, $data){
         $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
         $student = new \PROJ\Entities\Student();
-        $student->setVoornaam($_POST['firstname']);
-        $student->setAchternaam($_POST['surname']);
-        $student->setPostcode($_POST['zipcode']);
-        $student->setStraat($_POST['street']);
-        $student->setHuisnummer($_POST['streetnumber']);
-        if(isset($_POST['addition']))
-            $student->setToevoeging($_POST['addition']);
-        $student->setWoonplaats($_POST['city']);
+        $student->setVoornaam($data['firstname']);
+        $student->setAchternaam($data['surname']);
+        $student->setPostcode($data['zipcode']);
+        $student->setStraat($data['street']);
+        $student->setHuisnummer($data['streetnumber']);
+        if(isset($data['addition']))
+            $student->setToevoeging($data['addition']);
+        $student->setWoonplaats($data['city']);
         $student->setAccount($account);
         $em->persist($student);
         $em->flush();
