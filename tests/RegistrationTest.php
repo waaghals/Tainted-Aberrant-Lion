@@ -1,7 +1,5 @@
 <?php
 
-namespace PROJ\Entities;
-
 require("../Classes/PROJ/Controller/RegisterController.php");
 require("../Classes/PROJ/Pages/Register.php");
 
@@ -47,6 +45,8 @@ class RegistrationTest extends \PHPUnit_Framework_TestCase {
         
         $this->assertNotEquals($RegisterController->validate_input($dummydata), "Registration succeeded!");
     }
+    
+    
 
 }
 ?>
