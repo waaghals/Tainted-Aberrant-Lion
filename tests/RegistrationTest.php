@@ -2,6 +2,7 @@
 
 require("../Classes/PROJ/Controller/RegisterController.php");
 require("../Classes/PROJ/Pages/Register.php");
+require("../Classes/PROJ/Pages/MainPage.php");
 
 class RegistrationTest extends \PHPUnit_Framework_TestCase {
 
