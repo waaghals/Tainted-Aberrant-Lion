@@ -9,8 +9,19 @@ $classLoader = new ClassLoader('Doctrine', __DIR__ . '/');
 $classLoader->register();
 $classLoader = new ClassLoader('Symfony', __DIR__ . '/Doctrine');
 $classLoader->register();
-$classLoader = new ClassLoader(null, __DIR__ . '/Classes');
+$classLoader = new ClassLoader('PROJ', __DIR__ . '/Classes');
 $classLoader->register();
+
+/**
+ * @def (string) DS - Directory separator.
+ */
+define("DS","/",true);
+
+/**
+ * @def (resource) BASE_PATH - get a base path.
+ */
+define('BASE_PATH',realpath(dirname(__FILE__)).DS,true);
+
 
 //POST & GET data opschonen
 /*foreach ($_POST as $key => $p)

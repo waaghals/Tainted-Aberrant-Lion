@@ -15,7 +15,7 @@ class Router {
      */
     public static function match($req) {
         if(!is_a($req, "\PROJ\Tools\Request")){
-            throw new \Exception("Router::Match did not receive a valid request");
+            throw new \InvalidArgumentException("Router::Match did not receive a valid request object");
         }
         
         $controllerPath = sprintf("PROJ\Controller\%s", $req->getController());
