@@ -253,7 +253,7 @@ class VoorbeeldEntitie2 extends \PROJ\Entities\VoorbeeldEntitie2 implements \Doc
     /**
      * {@inheritDoc}
      */
-    public function setINTwaarde($INTwaarde)
+    public function setINTparameter($INTwaarde)
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setINTwaarde', array($INTwaarde));

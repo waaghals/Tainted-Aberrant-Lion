@@ -20,39 +20,39 @@ class DemoController {
     public function DoDemo() {
         $r = null;
 
-        /** URL parameters opvragen:       * */
+        /** Request url parameters:       * */
         /** print_r($this->parameters)      * */
-        /** Nieuwe entry maken in de database * */
+        /** create new entry in database * */
         //Entitie Manager ophalen
         $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
 
-        //Entitie aanmaken & Vullen
+        // Create entity & fill it
         $e = new \PROJ\Entities\VoorbeeldEntitie1();
         $e->setName("TEST");
-        $e->setINTwaarde(2);
+        $e->setINTparameter(2);
 
-        //2e entitie aanmaken voor test One to One relation
+        //create 2nd entity to test One to One relation
         $e2 = new \PROJ\Entities\VoorbeeldEntitie2();
         $e2->setName("TEST2");
-        $e2->setINTwaarde(99);
+        $e2->setINTparameter(99);
 
-        //Eerst de 2e entitie persisten
+        //first the first one persist
         $em->persist($e2);
 
-        //Entitie 2 aan 1 toevoegen
+        //Add entity 2 to 1 
         $e->setOneToOneRelation($e2);
         $em->persist($e);
 
-        //Opslaan naar de database
+        //Save to database
         $em->flush();
 
 
 
 
-        /** Opvragen van alle entities uit een tabel * */
+        /** Request all entity's from table * */
         $a = $em->getRepository('PROJ\Entities\VoorbeeldEntitie1')->findAll();
 
-        //Hier kun je dan gewoon doorheen loopen
+        //Can loop trough here
         $r .= '<br><b>FindAll:</b><br>';
         foreach ($a as $entity) {
             $r .= $entity->getName() . ' - ' . $entity->getINTwaarde() . '<br>';
@@ -60,19 +60,19 @@ class DemoController {
 
 
 
-        /** Opvragen van specefieke entries uit een tabel (geen ingewikkelde query's) * */
+        /** request specific entry's from a table(no hard query's) * */
         $a = $em->getRepository('PROJ\Entities\VoorbeeldEntitie1')->findBy(array('name' => 'TEST', 'id' => 1));
 
-        //Hier kun je dan gewoon doorheen loopen
+        //just a loop
         $r .= '<br><b>FindBy:</b><br>';
         foreach ($a as $entity) {
-            $r .= $entity->getName() . ' - ' . $entity->getINTwaarde() . '<br>';
+            $r .= $entity->getName() . ' - ' . $entity->getINTparameter() . '<br>';
         }
 
 
 
-        /** Doctrine query opbouwen * */
-        //Eerst een query Builder maken
+        /** Doctrine query build-up * */
+        //create a querry builder first
         $qb = $em->createQueryBuilder();
         $qb->select('e1')
                 ->from('\PROJ\Entities\VoorbeeldEntitie1', 'e1')
@@ -80,34 +80,34 @@ class DemoController {
                 ->orderBy('e1.name', 'ASC')
                 ->setMaxResults(4);
 
-        //Bovenstaande is gelijk aan:
+        //the above is the same as:
         //SELECT e1.*
         //FROM \PROJ\Entities\Voorbeeldentitie1 AS e1
         //WHERE e1.name = 'TEST'
         //ORDER BY e1.name ASC
-        //Results ophalen
+        //get results
         $res = $qb->getQuery()->getResult();
 
-        //Hier kun je dan gewoon doorheen loopen
+        //|Just a loop 
         $r .= '<br><b>Query Builder:</b><br>';
         foreach ($res as $entity) {
-            $r .= $entity->getName() . ' - ' . $entity->getINTwaarde() . '<br>';
+            $r .= $entity->getName() . ' - ' . $entity->getINTparameter() . '<br>';
         }
 
 
 
-        /** Entitie relatie selecteren * */
-        $r .= '<br><b>Relatie naam:</b><br>';
+        /** Select entity relation * */
+        $r .= '<br><b>Relation name:</b><br>';
         $r .= $e->getOneToOneRelation()->getName();
 
 
-        /** Entitie Updaten * */
+        /** Update entity * */
         $temp = $e->getOneToOneRelation()->setName("TEST 123");
         $em->persist($temp);
         $em->flush();
 
 
-        /** Entitie uit de database removen * */
+        /** Remote entity from database * */
         //Eerst zorg je dat je op een of andere manier een entitie geselect hebt.
         //Ik pak hier de nieuw aangemaakte entitie hierboven.
         //$em->remove($e);
