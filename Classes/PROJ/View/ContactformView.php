@@ -18,13 +18,13 @@ class ContactformView {
         
     }
     
-    public function makeMailForm($email) {
+    public function makeMailForm() {
         $c = new \PROJ\Controller\ContactformController();
 
         if (!isset($_POST['submit'])) {
             return "<div id='contact'>"
                         ."<form action='stable.toip.nl/Contact.php' method='GET'>"
-                                ."To:<input type='email' name='mailTo' value='".$email."' disabled><br>"
+                                ."To:<input type='email' name='mailTo' value='".$c->getName()."' disabled><br>"
                                 ."From:<input type='email' name='mailFrom' value='' autofocus><br><br>"
                                 ."Subject:<input type='text' name='subject' value=''><br>"
                                 ."<textarea rows='25' cols='50' name='mailContent'></textarea><br><br>"

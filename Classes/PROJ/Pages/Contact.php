@@ -14,10 +14,10 @@ namespace PROJ\Pages;
  */
 class Contact extends MainPage{
     
-    public function getContent($email) {
+    public function getContent() {
         $v = new \PROJ\View\ContactformView();
         
-        $r = $v->makeMailForm($email);
+        $r = $v->makeMailForm();
 
         return $r;
     }

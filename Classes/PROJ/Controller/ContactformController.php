@@ -13,9 +13,17 @@ namespace PROJ\Controller;
  * @author Sam
  */
 class ContactformController {
-        
+    
+    
     function __construct() {
         
+    }
+    
+    public function getName()
+    {
+        $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
+        $s = $em->getRepository('/PROJ/Entities/Student')->find(1);
+        return $s->getVoornaam()." ".$s->getAchternaam();
     }
     
     public function getMail()
@@ -27,7 +35,7 @@ class ContactformController {
     
     public function sendMail()
     {
-        mail($_POST['mailTo'], $_POST['subject'], $_POST['mailContent'], 'From: '.$_POST['mailFrom']);
+        mail($this->getMail(), $_POST['subject'], filter_var($_POST['mailContent'], FILTER_SANITIZE_FULL_SPECIAL_CHARS), 'From: '.$_POST['mailFrom']);
     }
     
 }
