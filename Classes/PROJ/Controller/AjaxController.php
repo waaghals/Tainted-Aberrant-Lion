@@ -1,12 +1,9 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 namespace PROJ\Controller;
+
+use PROJ\Exceptions\ServerException;
+use PROJ\Helper\DoctrineHelper;
 
 /**
  * Description of HomeController
@@ -57,24 +54,26 @@ class AjaxController extends BaseController {
         echo $mc->generateMarkerJSON();
     }
 
-    public function allLocationsAction($type = "all") {
-        switch ($type) {
-            case "minor":
-                break;
-            case "internship":
-                break;
-            case "esp":
-                break;
-            case "all":
-            default:
-                echo file_get_contents(__DIR__ . "/../../../js/tempTestMarkers.json");
-                break;
-        }
+    public function allLocationsAction() {
+        $em = DoctrineHelper::instance()->getEntityManager();
+        $instances = $em->getRepository('\PROJ\Entities\Instelling')->findAll();
+        
+        echo json_encode($instances);
     }
 
     public function locationReviewAction($lid = 1) {
+        $lid = intval($lid);
+
+        if (!is_int($lid)) {
+            $msg = "Not a valid location id.";
+            throw new ServerException($msg, ServerException::SERVER_ERROR);
+        }
+
+        $em = DoctrineHelper::instance()->getEntityManager();
+        $instances = $em->getRepository('\PROJ\Entities\Instelling')->find($lid);
         //TODO get location base on $lid (location id)
-        echo file_get_contents(__DIR__ . "/../../../js/testReviews.json");
+        echo json_encode($instances);
+        //echo file_get_contents(BASE_PATH . "/js/testReviews.json");
     }
 
 }

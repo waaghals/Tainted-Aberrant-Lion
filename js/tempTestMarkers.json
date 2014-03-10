@@ -4,14 +4,14 @@
             "lat": -33.9,
             "lng": 151.2,
             "type": "university",
-            "title": "Test Marker"
+            "name": "Test Marker"
         },
         {
             "id": 2,
             "lat": -32.9,
             "lng": 140.2,
             "type": "business",
-            "title": "Test Marker 2"
+            "name": "Test Marker 2"
         }
     ]
 }

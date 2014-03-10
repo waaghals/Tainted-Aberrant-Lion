@@ -5,7 +5,7 @@ namespace PROJ\Entities;
 /**
  * @Entity 
  */
-class Instelling {
+class Instelling implements \JsonSerializable {
 
     /**
      * @Id @Column(type="integer")
@@ -73,7 +73,7 @@ class Instelling {
     public function setStages($stages) {
         $this->stages = $stages;
     }
-    
+
     public function getType() {
         return $this->type;
     }
@@ -82,6 +82,16 @@ class Instelling {
         $this->type = $type;
     }
 
+    public function jsonSerialize() {
+        return array(
+            "type" => $this->getType(),
+            "name" => $this->getNaam(),
+            "lat" => $this->getLat(),
+            "long" => $this->getLong(),
+            "id" => $this->getId(),
+            "stages" => $this->getStages()
+        );
+    }
 }
 
 ?>

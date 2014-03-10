@@ -5,7 +5,7 @@ namespace PROJ\Entities;
 /**
  * @Entity 
  */
-class Stage {
+class Stage implements \JsonSerializable{
 
     /**
      * @Id @Column(type="integer")
@@ -92,7 +92,9 @@ class Stage {
         $this->student = $student;
     }
 
-
+    public function jsonSerialize() {
+        return $this;
+    }
 
 }
 

@@ -6,15 +6,21 @@
 <script type="text/javascript">
     $(document).ready(function() {
         var map; /* Main map variable */
-        var iconBase = '/images/';
-        var icons = {
-            university: {
-                icon: iconBase + 'university.png'
-            },
-            business: {
-                icon: iconBase + 'business.png'
+
+        function getIconPath(iconName) {
+            var iconBase = '/images/';
+            switch (iconName)
+            {
+                case "education":
+                    return iconBase + "university.png";
+                case "business":
+                    return iconBase + "business.png";
+                default:
+                    console.log("Error: Invalid icon name");
+                    return "";
             }
-        };
+        }
+
         $('aside').flowtype({
             minimum: 500,
             maximum: 1200,
@@ -55,14 +61,17 @@
         });
 
         function loadJsonMarkers() {
+            console.log("loadJsonMarkers called");
             $.getJSON('/ajax/allLocations/', function(data) {
-                $.each(data.locations, function(i, location) {
+                console.log("json received");
+                $.each(data, function(i, location) {
+                    console.log(location.name);
                     var marker = new google.maps.Marker({
-                        position: new google.maps.LatLng(location.lat, location.lng),
+                        position: new google.maps.LatLng(location.lat, location.long),
                         map: map,
-                        icon: icons[location.type].icon,
+                        icon: getIconPath(location.type),
                         animation: google.maps.Animation.NONE,
-                        title: location.title,
+                        title: location.name,
                         id: location.id
                     });
                     google.maps.event.addListener(marker, 'click', function() {
