@@ -18,8 +18,14 @@ class Template {
      * @param string $template Name of the template file to use
      */
     public function __construct($template) {
-        $this->viewLocation = realpath(__DIR__ . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "View");
-        $this->template = $this->viewLocation . DIRECTORY_SEPARATOR . $template . ".phtml";
+        $this->viewLocation = BASE_PATH . "Classes" . DS . "PROJ" . DS . "View";
+        $this->template = $this->viewLocation . DS . $template . ".phtml";
+
+        if (!file_exists($this->template)) {
+            $msgString = "No valid viewFile exists. Tried to find \"%s\" using path \"%s\".";
+            $msg = sprintf($msgString, $template, $this->template);
+            throw new \Exception($msg);
+        }
     }
 
     public function __get($key) {
@@ -40,7 +46,7 @@ class Template {
         chdir(dirname($this->template));
         ob_start();
 
-        include basename($this->template);
+        include $this->template;
 
         return ob_get_clean();
     }
