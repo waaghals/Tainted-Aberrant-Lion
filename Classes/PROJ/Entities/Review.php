@@ -24,9 +24,9 @@ class Review {
     private $rating;
 
     /**
-     * @OneToOne(targetEntity="\PROJ\Entities\Stage", inversedBy="review")
+     * @OneToOne(targetEntity="\PROJ\Entities\Internship", inversedBy="review")
      */
-    private $stage;
+    private $internship;
 
     function __construct() {
         $this->OneToManyRelation = new \Doctrine\Common\Collections\ArrayCollection;
@@ -45,8 +45,8 @@ class Review {
         return $this->rating;
     }
 
-    public function getStage() {
-        return $this->stage;
+    public function getInternship() {
+        return $this->internship;
     }
     
     public function setText($text) {
@@ -57,8 +57,8 @@ class Review {
         $this->rating = $rating;
     }
 
-    public function setStage($stage) {
-        $this->stage = $stage;
+    public function setInternship($internship) {
+        $this->internship = $internship;
     }
 
 }

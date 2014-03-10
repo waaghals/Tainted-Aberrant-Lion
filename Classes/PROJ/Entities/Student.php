@@ -41,7 +41,7 @@ class Student {
     /**
      * @Column(type="integer")
      */
-    private $address;
+    private $houseNumber;
 
     /**
      * @Column(type="string")
@@ -54,7 +54,7 @@ class Student {
     private $account;
 
     /**
-     * @OneToMany(targetEntity="\PROJ\Entities\Stage", mappedBy="student", cascade={"remove"})
+     * @OneToMany(targetEntity="\PROJ\Entities\Internship", mappedBy="student", cascade={"remove"})
      */
     private $internship;
 
@@ -78,12 +78,12 @@ class Student {
         return $this->zipcode;
     }
 
-    public function getStreett() {
+    public function getStreet() {
         return $this->street;
     }
 
-    public function getAddress() {
-        return $this->address;
+    public function gethouseNumber() {
+        return $this->houseNumber;
     }
 
     public function getAdditation() {
@@ -110,8 +110,8 @@ class Student {
         $this->street = $street;
     }
 
-    public function setAdress($address) {
-        $this->address = $address;
+    public function sethouseNumber($houseNumber) {
+        $this->houseNumber = $houseNumber;
     }
 
     public function setAdditation($additation) {

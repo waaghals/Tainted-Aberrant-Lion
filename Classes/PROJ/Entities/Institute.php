@@ -5,7 +5,7 @@ namespace PROJ\Entities;
 /**
  * @Entity 
  */
-class Instelling {
+class Institute {
 
     /**
      * @Id @Column(type="integer")
@@ -34,7 +34,7 @@ class Instelling {
     private $long;
 
     /**
-     * @OneToMany(targetEntity="\PROJ\Entities\Stage", mappedBy="instelling", cascade={"remove"})
+     * @OneToMany(targetEntity="\PROJ\Entities\Stage", mappedBy="institute", cascade={"remove"})
      */
     private $stages;
 

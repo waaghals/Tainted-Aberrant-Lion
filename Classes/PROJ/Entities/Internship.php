@@ -5,7 +5,7 @@ namespace PROJ\Entities;
 /**
  * @Entity 
  */
-class Stage {
+class Internship {
 
     /**
      * @Id @Column(type="integer")
@@ -29,12 +29,12 @@ class Stage {
     private $type;
 
     /**
-     * @OneToOne(targetEntity="\PROJ\Entities\Review", mappedBy="stage", cascade={"remove"})
+     * @OneToOne(targetEntity="\PROJ\Entities\Review", mappedBy="internship", cascade={"remove"})
      */
     private $review;
 
     /**
-     * @ManyToOne(targetEntity="\PROJ\Entities\Instelling", inversedBy="stages")
+     * @ManyToOne(targetEntity="\PROJ\Entities\Institute", inversedBy="stages")
      */
     private $institute;
 
