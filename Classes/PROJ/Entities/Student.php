@@ -44,7 +44,7 @@ class Student {
     private $huisnummer;
 
     /**
-     * @Column(type="string")
+     * @Column(type="string", nullable=true)
      */
     private $toevoeging;
 
@@ -117,6 +117,14 @@ class Student {
     public function setToevoeging($toevoeging) {
         $this->toevoeging = $toevoeging;
     }
+    public function getAccount() {
+        return $this->account;
+    }
+
+    public function setAccount($account) {
+        $this->account = $account;
+    }
+
 
 }
 
