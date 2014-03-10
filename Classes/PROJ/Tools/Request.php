@@ -50,7 +50,7 @@ class Request {
      * @return boolean False when the part is not valid
      */
     private function isValidPart($part) {
-        if($part == trim(Config::BASEPATH, "/")) {
+        if($part == trim(BASE_PATH, "/")) {
             return false;
         }
         return true;
