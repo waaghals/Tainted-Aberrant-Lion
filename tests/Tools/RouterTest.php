@@ -2,7 +2,6 @@
 
 namespace Tests\Tools;
 
-use PROJ\Controller\HomeController;
 use PROJ\Tools\Router;
 
 /**
@@ -30,8 +29,8 @@ class RouterTest extends \PHPUnit_Framework_TestCase {
 
         $method = array('callAction', 'newInstance');
         $args = array($existingController);
-        
-        
+
+
         $reflectionMock = $this->getMock("\ReflectionClass", $method, $args);
 
         $reflectionMock->expects($this->once())
@@ -58,7 +57,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase {
      * @expectedExceptionMessage Controller "FailController" isn't a valid controller.
      */
     public function testInvalidControllerWithoutBaseController() {
-        $mock = $this->getMock("\PROJ\Tools\Request");
+        $mock = $this->getMock("\PROJ\Tools\Request", array("getController"));
 
         $mock->expects($this->any())
                 ->method("getController")
