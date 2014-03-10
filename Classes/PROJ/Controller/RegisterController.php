@@ -4,7 +4,11 @@ namespace PROJ\Controller;
 
 class RegisterController {
 
-    //put your code here
+    /*
+     * Validates if the input is correct
+     * 
+     * returns the message that will be shown to the user.
+     */
     public function validate_input($data) {
         if (empty($data['username']) || empty($data['password']) || empty($data['passwordagain'])
                 || empty($data['firstname']) || empty($data['surname']) || empty($data['city']) 
@@ -28,6 +32,9 @@ class RegisterController {
         return "Registration succeeded!";
     }
     
+    /*
+     * Creates a new account according to the data provided return the new account
+     */
     public function create_account($data){
         $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
         $hashing = new \PROJ\Classes\Hashing();
@@ -41,6 +48,10 @@ class RegisterController {
         return $account;
     }
     
+    /*
+     * Creates a new student according to the data provided
+     * A relation will also be made with the provided account
+     */
     public function create_student($account, $data){
         $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
         $student = new \PROJ\Entities\Student();

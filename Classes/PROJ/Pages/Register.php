@@ -4,6 +4,10 @@ namespace PROJ\Pages;
 
 class Register extends MainPage {
 
+    /*
+     * Do the appropriate action according to the request method
+     * Return the view
+     */
     public function getContent() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $c = new \PROJ\Controller\RegisterController();
