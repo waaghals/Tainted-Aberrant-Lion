@@ -56,14 +56,17 @@ class RouterTest extends \PHPUnit_Framework_TestCase {
      * @expectedExceptionCode 500
      * @expectedExceptionMessage Controller "FailController" isn't a valid controller.
      */
-    public function testInvalidControllerWithoutBaseController() {
-        $mock = $this->getMock("\PROJ\Tools\Request", array("getController"));
+    /*
+      public function testInvalidControllerWithoutBaseController() {
+      $mock = $this->getMock("\PROJ\Tools\Request", array("getController"));
 
-        $mock->expects($this->any())
-                ->method("getController")
-                ->will($this->returnValue("FailController"));
-        Router::match($mock);
-    }
+      $mock->expects($this->any())
+      ->method("getController")
+      ->will($this->returnValue("FailController"));
+      Router::match($mock);
+      }
+
+     */
 
     /**
      * @expectedException PROJ\Exceptions\ServerException

@@ -31,7 +31,7 @@ class ServerException extends \Exception
         parent::__construct($message, $code, $previous);
         
         if(!($code == self::NOT_FOUND || $code == self::SERVER_ERROR)) {
-            throw new \Exception("Not a valid status code for ServerException. ");
+            throw new \Exception("Not a valid status code for ServerException.");
         }
     }
 }
