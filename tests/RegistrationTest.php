@@ -47,7 +47,23 @@ class RegistrationTest extends \PHPUnit_Framework_TestCase {
         $this->assertNotEquals($RegisterController->validate_input($dummydata), "Registration succeeded!");
     }
     
+    public function RegistraionInputValidationInputLengthFail(){
+        $this->ResetData();
+        
+        $dummydata['username'] = "";
+        // string length = 321
+        $dummydata['firstname'] = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        
+        $this->assertNotEquals($RegisterController->validate_input($dummydata), "Registration succeeded!");
+    }
     
-
+    public function RegistraionInputValidationNoInput(){
+        $this->ResetData();
+        
+        foreach($dummydata as $data)
+            $data = "";
+        
+        $this->assertNotEquals($RegisterController->validate_input($dummydata), "Registration succeeded!");
+    }
 }
 ?>
