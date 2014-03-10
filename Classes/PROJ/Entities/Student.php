@@ -117,6 +117,22 @@ class Student {
     public function setToevoeging($toevoeging) {
         $this->toevoeging = $toevoeging;
     }
+    
+    public function getAccount() {
+        return $this->account;
+    }
+
+    public function getStage() {
+        return $this->stage;
+    }
+
+    public function setAccount($account) {
+        $this->account = $account;
+    }
+
+    public function setStage($stage) {
+        $this->stage = $stage;
+    }
 
 }
 

@@ -42,11 +42,6 @@ class Stage implements \JsonSerializable{
      * @OneToOne(targetEntity="\PROJ\Entities\Student", inversedBy="stage")
      */
     private $student;
-
-    function __construct() {
-        $this->OneToManyRelation = new \Doctrine\Common\Collections\ArrayCollection;
-        $this->ManyToManyRelation = new \Doctrine\Common\Collections\ArrayCollection;
-    }
     
     public function getId() {
         return $this->id;

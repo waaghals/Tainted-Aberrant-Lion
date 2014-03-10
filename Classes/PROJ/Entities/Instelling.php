@@ -37,6 +37,11 @@ class Instelling implements \JsonSerializable {
      * @OneToMany(targetEntity="\PROJ\Entities\Stage", mappedBy="instelling", cascade={"remove"})
      */
     private $stages;
+    
+    
+    function __construct() {
+        $this->stages = new \Doctrine\Common\Collections\ArrayCollection;
+    }
 
     public function getId() {
         return $this->id;
@@ -72,6 +77,11 @@ class Instelling implements \JsonSerializable {
 
     public function setStages($stages) {
         $this->stages = $stages;
+    }
+
+    public function addStages($stages) {
+        $this->stages->add($stages);
+        $stages->setInstelling($this);
     }
 
     public function getType() {
