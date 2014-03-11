@@ -56,9 +56,23 @@ class AjaxController extends BaseController {
 
     public function allLocationsAction() {
         $em = DoctrineHelper::instance()->getEntityManager();
-        $instances = $em->getRepository('\PROJ\Entities\Instelling')->findAll();
-        
-        echo json_encode($instances);
+
+        $dql = "SELECT i FROM \PROJ\Entities\Instelling i JOIN i.stages s";
+        $q = $em->createQuery($dql);
+
+        $res = $q->getArrayResult();
+        \Doctrine\Common\Util\Debug::dump($res, 3);
+/*
+        foreach ($res as $row) {
+           $row = array_map(function($stage) {
+                return array(
+                    "start" => $stage->startDatum()
+                );
+            }, $row->getStages()); 
+            \Doctrine\Common\Util\Debug::dump($row->getStages(), 3);
+            echo json_encode($row);
+        } 
+        */
     }
 
     public function locationReviewAction($lid = 1) {
@@ -71,9 +85,8 @@ class AjaxController extends BaseController {
 
         $em = DoctrineHelper::instance()->getEntityManager();
         $instances = $em->getRepository('\PROJ\Entities\Instelling')->find($lid);
-        //TODO get location base on $lid (location id)
+
         echo json_encode($instances);
-        //echo file_get_contents(BASE_PATH . "/js/testReviews.json");
     }
 
 }

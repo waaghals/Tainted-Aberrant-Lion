@@ -5,7 +5,7 @@ namespace PROJ\Entities;
 /**
  * @Entity 
  */
-class Stage implements \JsonSerializable{
+class Stage implements \JsonSerializable {
 
     /**
      * @Id @Column(type="integer")
@@ -42,7 +42,7 @@ class Stage implements \JsonSerializable{
      * @OneToOne(targetEntity="\PROJ\Entities\Student", inversedBy="stage")
      */
     private $student;
-    
+
     public function getId() {
         return $this->id;
     }
@@ -88,7 +88,11 @@ class Stage implements \JsonSerializable{
     }
 
     public function jsonSerialize() {
-        return $this;
+        return array(
+            
+            "review" => $this->getReview(),
+            "author" => $this->getStudent()
+        );
     }
 
 }
