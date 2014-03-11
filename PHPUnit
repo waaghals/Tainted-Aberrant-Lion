@@ -1,0 +1,25 @@
+Gebruik PHPUnit
+-	Zet alle test bestanden in het mapje “tests”.
+-	Bij elke test moet de volgende namespace gebruikt worden: namespace PROJ\Entities;
+-	De klasse die je wilt testen moet gerequired worden in het test bestand. Voorbeeld: require("../Classes/PROJ/Entities/Account.php");. Zorg dat dit pad relatief is.
+-	De test klasse moet het volgende extenden: extends \PHPUnit_Framework_TestCase 
+-	Het laatste wat gedaan moet worden is de test method maken. Dit doe je door een nieuwe functie aan te maken en dan Arrange, Act, Assert toe te passen. Een voorbeeld:
+        public function test()
+ {
+        // Arrange
+        $t = new Account();
+
+        // Act
+        $t->setUsername("username");
+        $t->setPassword("password");
+
+        // Assert
+        $this->assertEquals("username", $t->getUsername());
+        $this->assertEquals("password", $t->getUsername());
+}
+
+Om alle tests uit te voeren voer je het volgende commando uit: 
+cd /var/www/tal/dev/tests && phpunit . (niet de spatie en punt vergeten achter phpunit)
+
+Voor vragen kun je altijd bij mij terecht. (Jelle)
+
