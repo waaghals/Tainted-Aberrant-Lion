@@ -6,6 +6,8 @@
 
 namespace PROJ\Classes;
 
+use PROJ\Helper;
+
 class GoogleMap {
 
     private static $mapTypes = array("ROADMAP", "SATELLITE", "HYBRID", "TERRAIN");
@@ -27,6 +29,7 @@ class GoogleMap {
     private $allowMapTypeControl;
     private $isDraggable;
     private $markerURL;
+    private $style;
 
     function __construct() {
         $this->showOwnMarker = false;
@@ -254,7 +257,7 @@ class GoogleMap {
      * @param string $css
      * @throws exception 
      */
-    public function setStyle($css) {
+    public function setInlineStyle($css) {
         if (gettype($css) == "string")
             $this->css = $css;
         else
@@ -350,7 +353,8 @@ class GoogleMap {
                         zoomControl: ' . ($this->allowManualZoom ? 'true' : 'false') . ',
                         panControl: ' . ($this->allowPanning ? 'true' : 'false') . ',
                         mapTypeControl: ' . ($this->allowMapTypeControl ? 'true' : 'false') . ',
-                        draggable: ' . ($this->isDraggable ? 'true' : 'false') . '
+                        draggable: ' . ($this->isDraggable ? 'true' : 'false') . ',
+                        styles: ' . ($this->style) . '
                     }
                     ' . $this->mapName . ' = new google.maps.Map(document.getElementById("' . $this->mapName . '"), myOptions);
                     
@@ -453,6 +457,26 @@ class GoogleMap {
         }
 
         return $sHtml;
+    }
+
+    /**
+     * Returns the json string for the map style
+     * @return string
+     */
+    public function getStyle() {
+        return $this->style;
+    }
+
+    /**
+     * Set a json string as the style for the map
+     * @param strign $style
+     * @throws \exception
+     */
+    public function setStyle($style) {
+        if (!JsonHelper::isJson($style)) {
+            throw new \exception('Style is not a valid JSON string.');
+        }
+        $this->style = $style;
     }
 
 }

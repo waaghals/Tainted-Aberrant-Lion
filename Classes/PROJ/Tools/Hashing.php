@@ -1,9 +1,9 @@
 <?php
 
-namespace PROJ\Classes;
+namespace PROJ\Tools;
 
 class Hashing {
-	function create_hash($password){
+	function createHash($password){
 		$bytes = openssl_random_pseudo_bytes(64, $cstrong);
 		$salt = bin2hex($bytes);
 		if($cstrong){
@@ -14,7 +14,7 @@ class Hashing {
 		return $salt;
 	}
 
-	function slow_equals($a, $b){
+	function slowEquals($a, $b){
 		$diff = strlen($a) ^ strlen($b);
 		for($i = 0; $i < strlen($a) && $i < strlen($b); $i++){
 			$diff |= ord($a[$i]) ^ ord($b[$i]);
