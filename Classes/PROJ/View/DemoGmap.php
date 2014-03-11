@@ -10,7 +10,7 @@ class DemoGmap {
             $gmap = new \PROJ\Classes\GoogleMap();
             $gmap->setCenterLocation("Hilversum");
             $gmap->setZoom(9);
-            $gmap->setStyle("width:100%; height:100%;");
+            $gmap->setInlineStyle("width:100%; height:100%;");
             $gmap->setMarkerURL("/GoogleMap/");
             $gmap->setAllowStreetView(false);
 

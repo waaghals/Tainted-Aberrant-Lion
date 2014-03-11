@@ -1,0 +1,186 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 23-feb-2014, 22:57:38
+    Author     : Patrick
+*/
+
+
+/* Layout
+   ========================================================================== */
+
+/* Use border-box as default boz-sizing. */
+*, *:before, *:after {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+/* Small screens (default) 
+   Note the lack of column definitions
+   making all the columns stack for mobile viewing. */
+html {
+    font-family: "Open Sans", sans-serif;
+    font-weight: 400;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    font-size: 18px;
+}
+
+h1,h2,h3,h4,h5,h6,p {
+    line-height: 1.45;
+}
+
+h1 { font-size: 4em; }
+h2 { font-size: 3em; }
+h2 { font-size: 2em; }
+h2 { font-size: 1.5em; }
+
+
+aside {
+    width: 200px;
+}
+aside.closed {
+    left: -160px;
+}
+.column { width: 100%; }
+
+/* Medium screens (640px) */
+@media (min-width: 40rem) {
+    .column {
+        float: left;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .column.full { width: 100%; }
+    .column.two-thirds { width: 66.7%; }
+    .column.half { width: 50%; }
+    .column.third { width: 33.3%; }
+    .column.fourth { width: 24.95%; }
+    .column.fifth { width: 20%; }
+    .column.two-fifth { width: 40%; }
+    .column.three-fifth { width: 60%; }
+    .column.four-fifth { width: 80%; }
+    .column.flow-opposite { float: right; }
+
+    aside { width: 450px; }
+
+    aside.closed {
+        left: -410px;
+    }
+}
+
+/* Large screens (1024px) */
+@media (min-width: 64rem) { 
+    aside { width: 600px; }
+    aside.closed {
+        left: -540px;
+    }
+}
+
+/* Huge screens (1200px) */
+@media (min-width: 85rem) { 
+    aside { width: 800px; }
+    aside.closed {
+        left: -740px;
+    }
+}
+
+
+
+html, body, .container {
+    height: 100%;
+}
+
+.container {
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Clearfix */
+.clearfix:before,
+.clearfix:after {
+    content: " ";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+.clearfix {
+    *zoom: 1;
+}
+
+/* <Styles>
+   ========================================================================== */
+#map {
+    height: 100%;
+}
+
+aside {
+    background-color: white;
+    position: absolute;
+    max-height: 100%;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+    background: #ffffff; /* Old browsers */
+    background: -moz-linear-gradient(top, #ffffff 0%, #e5e5e5 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e5e5e5)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #ffffff 0%,#e5e5e5 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #ffffff 0%,#e5e5e5 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #ffffff 0%,#e5e5e5 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #ffffff 0%,#e5e5e5 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */
+}
+
+.scrollable {
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+}
+
+.shadow {
+    -webkit-box-shadow: 2px 5px 10px 0px rgba(50, 50, 50, 0.75);
+    -moz-box-shadow:    2px 5px 10px 0px rgba(50, 50, 50, 0.75);
+    box-shadow:         2px 5px 10px 0px rgba(50, 50, 50, 0.75);
+}
+
+.highlight {
+    color: #d11d40;
+}
+
+ul {
+    list-style-type: none;
+}
+
+
+.italic {
+    font-style: italic;
+}
+
+.hidden { display:none; }
+
+/*.reviewLink {
+    background: rgba(255,255,255,1);
+    background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(255,255,255,1)), color-stop(47%, rgba(246,246,246,1)), color-stop(100%, rgba(237,237,237,1)));
+    background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%);
+    background: -o-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%);
+    background: -ms-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%);
+    background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed', GradientType=0 );
+}*/
+/* Nav
+   ========================================================================== */
