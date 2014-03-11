@@ -76,5 +76,9 @@ class HeaderHelper {
 
         return $errorCode . ' ' . $codes[$errorCode];
     }
+    
+    public static function redirect($loc = "/") {
+        \header($loc);
+    }
 
 }
