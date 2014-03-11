@@ -43,3 +43,32 @@
     padding:3px;
     float:left;
 }
+
+.review_left_col{
+    width:300px;
+    padding:3px;
+    clear:left;
+    float:left;
+}
+
+.review_right_col{
+    padding:3px;
+    float:left;
+}
+
+textarea{
+    resize: none;
+}
+.center{
+    margin-left:auto;
+    margin-right:auto;
+    text-align:center; 
+}
+
+.alert {
+    background: #fff6bf 15px center no-repeat;
+    text-align: center;
+    padding: 10px 20px 10px 50px;
+    border-top: 2px solid #ffd324;
+    border-bottom: 2px sollid #ffd324;
+}
