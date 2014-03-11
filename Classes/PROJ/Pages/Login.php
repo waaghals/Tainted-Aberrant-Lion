@@ -19,6 +19,7 @@ class Login extends MainPage {
         }
         
         //Check for login
+        
         if(isset($_SESSION['user']))
             if($_SESSION['user']->getId() != null)
                 header("Location: /GoogleMap/");    //Logged in
