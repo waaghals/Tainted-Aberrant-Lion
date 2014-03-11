@@ -56,7 +56,10 @@ class AjaxController extends BaseController {
 
     public function allLocationsAction() {
         $em = DoctrineHelper::instance()->getEntityManager();
+        $instances = $em->getRepository('\PROJ\Entities\Instelling')->findAll();
 
+        echo json_encode($instances);
+        return;
         $dql = "SELECT i FROM \PROJ\Entities\Instelling i JOIN i.stages s";
         $q = $em->createQuery($dql);
 

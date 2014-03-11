@@ -95,7 +95,7 @@ class Instelling implements \JsonSerializable {
     public function jsonSerialize() {
         return array(
             "type" => $this->getType(),
-            "name" => $this->getNaam(),
+            "name" => $this->getName(),
             "lat" => $this->getLat(),
             "long" => $this->getLong(),
             "id" => $this->getId(),
