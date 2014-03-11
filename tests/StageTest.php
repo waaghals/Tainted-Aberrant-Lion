@@ -2,9 +2,7 @@
 
 namespace PROJ\Entities;
 
-require("../Classes/PROJ/Entities/Stage.php");
-
-class InstellingTest extends \PHPUnit_Framework_TestCase {
+class StageTest extends \PHPUnit_Framework_TestCase {
 
     public function test() {
         // Arrange

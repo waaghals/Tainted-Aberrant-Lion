@@ -1,9 +1,7 @@
 <?php
 
-namespace PROJ\Entities;
-
-require("../Classes/PROJ/Entities/Instelling.php");
-
+namespace PROJ\Tests;
+use PROJ\Entities\Instelling;
 class InstellingTest extends \PHPUnit_Framework_TestCase {
 
     public function test() {

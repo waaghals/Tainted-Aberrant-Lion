@@ -78,7 +78,7 @@ class HeaderHelper {
     }
     
     public static function redirect($loc = "/") {
-        \header($loc);
+        \header(sprintf("Location: %s", $loc));
     }
 
 }

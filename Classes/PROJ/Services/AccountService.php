@@ -26,7 +26,6 @@ class AccountService {
     public function doLogin($username) {
         $em = DoctrineHelper::instance()->getEntityManager();
 
-
         $user = $em->getRepository('PROJ\Entities\Account')->findOneBy(array('username' => $username));
         if ($user != null) { //Just to be sure
             $_SESSION['user'] = $user;
@@ -51,7 +50,7 @@ class AccountService {
         if (!($data['password'] === $data['passwordagain']))
             return "Passwords did not match";
 
-        return true;
+        return "Registration succeeded!";
     }
 
     public function createAccount($data) {
@@ -83,8 +82,12 @@ class AccountService {
         $em->flush();
     }
 
-    public static function isLoggedIn() {
-        //TODO
+    public function isLoggedIn() {
+        if (isset($_SESSION['user']))
+            if ($_SESSION['user']->getId() != null)
+                return true;
+
+        return false;
     }
 
 }
