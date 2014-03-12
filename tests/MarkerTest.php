@@ -16,7 +16,8 @@ class MarkerTest extends \PHPUnit_Framework_TestCase {
         $t->setHtml("html");
         $t->setLong("long");
         $t->setLat("lat");
-
+        $s = $t->generateMarker();
+        
         // Assert
         $this->assertEquals("color", $t->getColor());
         $this->assertEquals("sign", $t->getSign());
@@ -24,6 +25,8 @@ class MarkerTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals("html", $t->getHtml());
         $this->assertEquals("long", $t->getLong());
         $this->assertEquals("lat", $t->getLat());
+        $this->assertNotNull($s);
+        
     }
 
 }
