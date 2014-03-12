@@ -50,8 +50,16 @@ class AccountService {
             return "Streetnumber is not a number";
         if (!($data['password'] === $data['passwordagain']))
             return "Passwords did not match";
-
+        if($this->checkUsernameExists($data['username']))
+            return "This username is already in use";
+        
         return true;
+    }
+    
+    public function checkUsernameExists($username){
+        $em = DoctrineHelper::instance()->getEntityManager();
+        $user = $em->getRepository('PROJ\Entities\Account')->findOneBy(array('username' => $username));
+        return $user != null;
     }
 
     public function createAccount($data) {
