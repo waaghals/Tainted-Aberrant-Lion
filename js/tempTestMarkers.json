@@ -1,0 +1,17 @@
+{
+    "locations": [{
+            "id": 1,
+            "lat": -33.9,
+            "lng": 151.2,
+            "type": "university",
+            "name": "Test Marker"
+        },
+        {
+            "id": 2,
+            "lat": -32.9,
+            "lng": 140.2,
+            "type": "business",
+            "name": "Test Marker 2"
+        }
+    ]
+}

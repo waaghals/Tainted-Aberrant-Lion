@@ -54,7 +54,7 @@ class Student {
     private $account;
 
     /**
-     * @OneToOne(targetEntity="\PROJ\Entities\Stage", mappedBy="student", cascade={"remove"})
+     * @OneToMany(targetEntity="\PROJ\Entities\Stage", mappedBy="student", cascade={"remove"})
      */
     private $stage;
 
@@ -117,14 +117,22 @@ class Student {
     public function setToevoeging($toevoeging) {
         $this->toevoeging = $toevoeging;
     }
+
     public function getAccount() {
         return $this->account;
+    }
+
+    public function getStage() {
+        return $this->stage;
     }
 
     public function setAccount($account) {
         $this->account = $account;
     }
 
+    public function setStage($stage) {
+        $this->stage = $stage;
+    }
 
 }
 

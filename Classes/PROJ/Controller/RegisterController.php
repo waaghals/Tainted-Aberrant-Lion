@@ -39,7 +39,7 @@ class RegisterController {
         $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
         $hashing = new \PROJ\Classes\Hashing();
         $account = new \PROJ\Entities\Account();
-        $passwordsalt = split(';', $hashing->create_hash($data['password']));
+        $passwordsalt = split(';', $hashing->createHash($data['password']));
         $account->setUsername($data['username']);
         $account->setPassword($passwordsalt[0]);
         $account->setSalt($passwordsalt[1]);

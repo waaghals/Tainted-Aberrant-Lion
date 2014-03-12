@@ -14,7 +14,7 @@ class Account {
     private $id;
 
     /**
-     * @Column(type="string")
+     * @Column(type="string", unique=true)
      */
     private $username;
 

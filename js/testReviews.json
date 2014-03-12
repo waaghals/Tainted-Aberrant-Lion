@@ -1,0 +1,46 @@
+{
+    "type": "education",
+    "name": "Universiteit van Ljubljana",
+    "place": "Ljubljana, Slovenië",
+    "reviews": [
+        {
+            "type": "minor",
+            "rating": 4,
+            "task": "App Development",
+            "text": "Markdown",
+            "author": {
+                "name": "Patrick Berenschot",
+                "contact": {
+                    "email": "patrick@example.com",
+                    "twitter": "@waaghals"
+                }
+            }
+        },
+        {
+            "type": "internship",
+            "rating": 2,
+            "task": "Website ontwikkelen",
+            "text": "Markdown",
+            "author": {
+                "name": "Thijs Dalmaijer",
+                "contact": {
+                    "email": "thijs@example.com",
+                    "linkedin": "http://linkedin.com/thijs"
+                }
+            }
+        },
+        {
+            "type": "european project semester",
+            "rating": 5,
+            "task": "Stagekaart ontwikkelen",
+            "text": "Markdown",
+            "author": {
+                "name": "Dennis Dolman",
+                "contact": {
+                    "email": "dennis@example.com",
+                    "github": "War0n"
+                }
+            }
+        }
+    ]
+}

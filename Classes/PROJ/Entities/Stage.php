@@ -5,7 +5,7 @@ namespace PROJ\Entities;
 /**
  * @Entity 
  */
-class Stage {
+class Stage implements \JsonSerializable {
 
     /**
      * @Id @Column(type="integer")
@@ -39,15 +39,10 @@ class Stage {
     private $instelling;
 
     /**
-     * @OneToOne(targetEntity="\PROJ\Entities\Student", inversedBy="stage")
+     * @ManyToOne(targetEntity="\PROJ\Entities\Student", inversedBy="stage")
      */
     private $student;
 
-    function __construct() {
-        $this->OneToManyRelation = new \Doctrine\Common\Collections\ArrayCollection;
-        $this->ManyToManyRelation = new \Doctrine\Common\Collections\ArrayCollection;
-    }
-    
     public function getId() {
         return $this->id;
     }
@@ -92,7 +87,13 @@ class Stage {
         $this->student = $student;
     }
 
-
+    public function jsonSerialize() {
+        return array(
+            
+            "review" => $this->getReview(),
+            "author" => $this->getStudent()
+        );
+    }
 
 }
 
