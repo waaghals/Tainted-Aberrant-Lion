@@ -1,7 +1,9 @@
 <?php
 
 namespace PROJ\Controller;
-use PROJ\Exceptions;
+
+use PROJ\Exceptions\ServerException;
+
 /**
  * Description of baseController
  *
@@ -17,10 +19,10 @@ abstract class BaseController {
      */
     public function callAction($actionName, array $arguments = array()) {
         try {
-             $reflection = new \ReflectionMethod($this, $actionName);
+            $reflection = new \ReflectionMethod($this, $actionName);
         } catch (\Exception $e) {
             $msg = sprintf("Action \"%s\" does not exist.", $actionName);
-            throw new Exceptions\ServerException($msg, Exceptions\ServerException::NOT_FOUND);
+            throw new ServerException($msg, ServerException::NOT_FOUND);
         }
 
         $pass = array();
@@ -30,9 +32,12 @@ abstract class BaseController {
             $key = $param->getName();
 
             if (isset($arguments[$key])) {
-                $pass[] = $arguments[$key];
+                $pass[] = $arguments[$key]; //Named argument is set, use it.
+            } elseif (!$param->isOptional()) {
+                $msg = sprintf("Missing non optional parameter for argument: %s", $key);
+                throw new ServerException($msg, ServerException::BAD_REQUEST);
             } else {
-                $pass[] = $param->getDefaultValue();
+                $pass[] = $param->getDefaultValue(); //Use the default value
             }
         }
 
