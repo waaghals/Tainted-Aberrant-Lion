@@ -22,7 +22,7 @@ class Request {
         $cleanParts = \array_filter($parts, array($this, "isValidPart"));
         $this->parseParts($cleanParts);
     }
-    
+
     /**
      * Parse the parts in a controller, action and any arguments remaining.
      * @param array $parts
@@ -34,11 +34,15 @@ class Request {
         $this->action = ($a = array_shift($parts)) ? $a : 'index';
         if (is_array($parts)) {
             foreach ($parts as $part) {
-                list($key, $value) = explode("=", $part);
+                
+                //Ignore the argument if there isn't a "="
+                if (strpos($part, '=') !== false) {
+                    list($key, $value) = explode("=", $part);
 
-                //Ignore any keys that were already present in the uri
-                if (!isset($this->arguments[$key])) {
-                    $this->arguments[$key] = $value;
+                    //Ignore any keys that were already present in the uri
+                    if (!isset($this->arguments[$key])) {
+                        $this->arguments[$key] = $value;
+                    }
                 }
             }
         }
@@ -50,7 +54,7 @@ class Request {
      * @return boolean False when the part is not valid
      */
     private function isValidPart($part) {
-        if($part == trim(BASE_PATH, "/")) {
+        if ($part == trim(BASE_PATH, "/")) {
             return false;
         }
         return true;
@@ -63,7 +67,7 @@ class Request {
     public function getAction() {
         return $this->action . "Action";
     }
-    
+
     public function getArguments() {
         return $this->arguments;
     }
