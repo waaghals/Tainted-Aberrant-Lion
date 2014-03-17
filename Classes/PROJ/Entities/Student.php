@@ -52,7 +52,7 @@ class Student {
      * @Column(type="string")
      */
     private $email;
-    
+
     /**
      * @OneToOne(targetEntity="\PROJ\Entities\Account", inversedBy="student")
      */
@@ -94,7 +94,7 @@ class Student {
     public function getToevoeging() {
         return $this->toevoeging;
     }
-    
+
     public function getEmail() {
         return $this->email;
     }
@@ -126,11 +126,10 @@ class Student {
     public function setToevoeging($toevoeging) {
         $this->toevoeging = $toevoeging;
     }
-    
+
     public function setEmail($email) {
         $this->email = $email;
     }
-
 
     public function getAccount() {
         return $this->account;
@@ -146,6 +145,10 @@ class Student {
 
     public function setStage($stage) {
         $this->stage = $stage;
+    }
+
+    public function getFullName() {
+        return sprintf("%s %s", $this->voornaam, $this->achternaam);
     }
 
 }

@@ -19,14 +19,14 @@ class ContactController extends BaseController {
     }
 
     public function sendAction($studentId) {
-        if (!isset($_POST['submit'])) {
-            //Form was not submitted, nothing to send.
+        if (!isset($_POST['submit'])) { 
+           //Form was not submitted, nothing to send.
             $msg = "No post data was sent to the server.";
             throw new ServerException($msg, ServerException::BAD_REQUEST);
         }
-        
+
         $student = $this->service->getStudentById($studentId);
-        
+
         $this->service->sendMail($student->getEmail());
         echo "Email send.";
     }
@@ -36,8 +36,9 @@ class ContactController extends BaseController {
 
         $t = new \PROJ\Tools\Template("ContactForm");
         $t->studentId = $studentId;
-        $t->studentName = $student->getName();
-        
+        $t->studentName = $student->getFullName();
+
         echo $t;
     }
+
 }

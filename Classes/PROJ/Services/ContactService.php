@@ -22,17 +22,20 @@ class ContactService {
         }
 
         $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
-        $student = $em->getRepository('/PROJ/Entities/Student')->find($studentId);
-
-        if (!is_a($student, "Student")) {
-            $msg = "A unexpected object was returned from the database.";
-            throw new ServerException($msg, ServerException::SERVER_ERROR);
-        }
+        $student = $em->getRepository('\PROJ\Entities\Student')->find($studentId);
 
         if ($student == null) {
             $msg = sprintf("A student with id: %s does not exists in the database.", $studentId);
             throw new ServerException($msg, ServerException::NOT_FOUND);
         }
+        
+        if (!is_a($student, "\PROJ\Entities\Student")) {
+            \Doctrine\Common\Util\Debug::dump($student);
+            $msg = "A unexpected object was returned from the database.";
+            throw new ServerException($msg, ServerException::SERVER_ERROR);
+        }
+
+        
 
         //Student is valid
         return $student;
