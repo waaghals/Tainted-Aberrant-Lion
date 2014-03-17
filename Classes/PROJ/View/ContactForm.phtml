@@ -1,0 +1,9 @@
+<div id='contact'>
+    <form action='/contact/send/studentId=<?php echo $studentId; ?>' method='POST'>
+        To:<input type='text' name='mailTo' value='<?php echo $studentName; ?>' disabled><br>
+        From:<input type='email' name='mailFrom' autofocus><br><br>
+        Subject:<input type='text' name='subject' ><br>
+        <textarea rows='25' cols='50' name='mailContent'></textarea><br><br>
+        <input type='submit' name='submit' value='Send'>
+    </form>
+</div>
