@@ -49,6 +49,11 @@ class Student {
     private $toevoeging;
 
     /**
+     * @Column(type="string")
+     */
+    private $email;
+    
+    /**
      * @OneToOne(targetEntity="\PROJ\Entities\Account", inversedBy="student")
      */
     private $account;
@@ -89,6 +94,10 @@ class Student {
     public function getToevoeging() {
         return $this->toevoeging;
     }
+    
+    public function getEmail() {
+        return $this->email;
+    }
 
     public function setVoornaam($voornaam) {
         $this->voornaam = $voornaam;
@@ -117,6 +126,11 @@ class Student {
     public function setToevoeging($toevoeging) {
         $this->toevoeging = $toevoeging;
     }
+    
+    public function setEmail($email) {
+        $this->email = $email;
+    }
+
 
     public function getAccount() {
         return $this->account;
