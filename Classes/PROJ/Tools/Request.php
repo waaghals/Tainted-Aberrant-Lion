@@ -2,6 +2,8 @@
 
 namespace PROJ\Tools;
 
+use PROJ\Exceptions\ServerException;
+
 /**
  * Description of Request
  *
@@ -34,16 +36,21 @@ class Request {
         $this->action = ($a = array_shift($parts)) ? $a : 'index';
         if (is_array($parts)) {
             foreach ($parts as $part) {
-                
-                //Ignore the argument if there isn't a "="
-                if (strpos($part, '=') !== false) {
-                    list($key, $value) = explode("=", $part);
 
-                    //Ignore any keys that were already present in the uri
-                    if (!isset($this->arguments[$key])) {
-                        $this->arguments[$key] = $value;
-                    }
+                //throw exception if there isn't a "="
+                if (strpos($part, '=') === false) {
+                    $msg = sprintf("Missing value for parameter \"%s\" or it doesn't contain a \"=\"", $part);
+                    throw new ServerException($msg, ServerException::BAD_REQUEST);
                 }
+
+                list($key, $value) = explode("=", $part);
+
+                //throw exception if the same parameter is set multiple times in the uri.
+                if (isset($this->arguments[$key])) {
+                    $msg = sprintf("Duplicated value for parameter \"%s\".", $key);
+                    throw new ServerException($msg, ServerException::BAD_REQUEST);
+                }
+                $this->arguments[$key] = $value;
             }
         }
     }
