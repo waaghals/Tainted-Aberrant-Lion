@@ -3,7 +3,7 @@
 namespace Tests\Tools;
 
 use PROJ\Tools\Router;
-
+use PROJ\Tools\Request;
 /**
  * Description of Router
  *
@@ -56,17 +56,14 @@ class RouterTest extends \PHPUnit_Framework_TestCase {
      * @expectedExceptionCode 500
      * @expectedExceptionMessage Controller "FailController" isn't a valid controller.
      */
-    /*
-      public function testInvalidControllerWithoutBaseController() {
-      $mock = $this->getMock("\PROJ\Tools\Request", array("getController"));
+    public function testInvalidControllerWithoutBaseController() {
+        $mock = $this->getMock("\PROJ\Tools\Request", array("getController"));
 
-      $mock->expects($this->any())
-      ->method("getController")
-      ->will($this->returnValue("FailController"));
-      Router::match($mock);
-      }
-
-     */
+        $mock->expects($this->any())
+                ->method("getController")
+                ->will($this->returnValue("FailController"));
+        Router::match($mock);
+    }
 
     /**
      * @expectedException PROJ\Exceptions\ServerException
@@ -80,6 +77,14 @@ class RouterTest extends \PHPUnit_Framework_TestCase {
                 ->will($this->returnValue("thisControllerDoesntExistController"));
 
         Router::match($mock);
+    }
+
+    /**
+     * @expectedException PROJ\Exceptions\ServerException
+     */
+    public function testMissingNonOptionalParameter() {
+        $_SERVER['REQUEST_URI'] = "/test/nonOptionalParameter/";
+        Router::match(new Request());
     }
 
 }
