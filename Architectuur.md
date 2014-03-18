@@ -55,9 +55,17 @@ Het `Voorbeeld.phtml` bestand.
 Om onderscheid te houden tussen data en het verwerken van data hebben we een extra laag toegebracht. De _services_ laag. Hierin wordt er met de _models_ gecommuniceert en/of wordt er validaties gedaan. Door de meeste business logic in de _services_ te stoppen blijven de controllers overzichtelijk.
 
 ##4. Doctrine
+Om de code vrij te houden van SQL code hebben we gekozen voor een ORM, een ORM heeft een snellere instap dan SQL laag zelf netjes te implementeren.
 
+Vervolgens is er gekozen voor __Doctrine__ als ORM aangezien hiermee de meeste ervaring is in het team. Er is verder niet gekeken naar andere ORM's. Het is niet handig om een totaal andere ORM aan te leren als er al ervaring is met __Doctrine__.
 ###4.1 Autoloader
+__Doctrine__ heeft een autoloader nodig om er makkelijk mee te werken. Standaard heeft __Doctrine__ een eigen autoloader waarvan wij gebruik maken. Deze autoloader implementeert de PSR-0 standaard. Hierdoor is hij makkelijk uitwisselbaar.
 
 ## Bestand structuur
 ### Folders
+Klassen bevinden zich in de map classes zodat de autoloader ze kan vinden. Hierin heeft alles een eigen _vendor_ map, voor ons project is `PROJ` de _vendor_ map. In de root staan verder nog de mappen `Dcotrine` en `Symphoby` welke de ORM verzorgen. 
+
+Alle publieke assets zoals javascript en css bestanden bevinden zich in de mappan `js` en `css` in de root map.
+
 ### Namespaces
+Namespaces dienen altijd de folder structuur aan te houden. Dus een voorbeeld entitie `Student` bevind zich in de namespace `\PROJ\Entities`. De klasse zijn altijd enkelvoudige woorden, de namespace waar ze zich in bevinden zijn in het meervoud. De map waar de voorbeelde klasse zich bevind is dan `\Classes\PROJ\Entities`
