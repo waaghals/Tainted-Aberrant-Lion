@@ -8,7 +8,7 @@
 * Action, Specifiece methodes welke worden aangeroepen a.d.h.v. de URI. Deze eindige altijd op Action zodat niet zomaar alle functies kunnen worden aangeroepen.
 
 ##1. Entry point
-Het entry point is `./index.php`. Door middel van URL reqriting worden alle request welke geen bestand zijn
+Het entry point is `./index.php`. Door middel van URL rewriting worden alle request welke geen bestand zijn
 doorgestuurd naar apache. Hierin vind de __bootstrapping__ (zie punt 2.) plaats.
 
 Daarna wordt een nieuw klasse `Request` gemaakt welke de URI onderdelen splitst
@@ -63,7 +63,7 @@ __Doctrine__ heeft een autoloader nodig om er makkelijk mee te werken. Standaard
 
 ## Bestand structuur
 ### Folders
-Klassen bevinden zich in de map classes zodat de autoloader ze kan vinden. Hierin heeft alles een eigen _vendor_ map, voor ons project is `PROJ` de _vendor_ map. In de root staan verder nog de mappen `Dcotrine` en `Symphoby` welke de ORM verzorgen. 
+Klassen bevinden zich in de map classes zodat de autoloader ze kan vinden. Hierin heeft alles een eigen _vendor_ map, voor ons project is `PROJ` de _vendor_ map. In de root staan verder nog de mappen `Dcotrine` en `Symphoby` welke de ORM verzorgen.
 
 Alle publieke assets zoals javascript en css bestanden bevinden zich in de mappan `js` en `css` in de root map.
 
