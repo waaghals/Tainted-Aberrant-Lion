@@ -91,5 +91,11 @@ class AjaxController extends BaseController {
 
         echo json_encode($instances);
     }
+    
+    public function getProjectInfo($tag){
+        $tag = filter_var($tag, FILTER_SANITIZE_STRING);
+        $em = DoctrineHelper::instance()->getEntityManager();
+        $results = $em->getRepository('\PROJ\Entities\Project');
+    }
 
 }
