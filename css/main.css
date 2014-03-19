@@ -35,13 +35,42 @@
     border-bottom: 2px sollid #ffd324;
 }
 
-textarea{
+#contact {
+    padding: 5px;
+}
+
+#left_col {
+    float: left;
+}
+
+#left_col #to {
+    margin-right: 139px;
+}
+
+#left_col #from {
+    margin-right: 140px;
+}
+
+#left_col #subject {
+    margin-right: 81px;
+}
+
+#left_col #message {
+    margin-right: 114px;
+}
+
+#right_col input {
+    width: 421px;
+}
+
+#right_col textarea {
     resize: none;
 }
 
-@media (max-width: 420px) {
-    textarea{
+@media (max-width: 445px) {
+    #right_col textarea, #right_col input  {
         resize: none;
         width: 100%;
-    }   
+        
+    }
 }

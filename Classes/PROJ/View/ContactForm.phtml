@@ -7,10 +7,14 @@ echo $header;
 
 <div id="contact">
     <form action="/contact/send/studentId=<?php echo $studentId; ?>/" method="post">
-        To:<input type="text" name="mailTo" value="<?php echo $studentName; ?>" disabled><br>
-        From:<input type="email" name="mailFrom" autofocus><br><br>
-        Subject:<input type="text" name="subject" ><br>
-        <textarea rows="25" cols="50" name="mailContent"></textarea><br><br>
+        <div id="left_col"><label id="to">Aan:</label></div>
+        <div id="right_col"><input type="text" name="mailTo" value="<?php echo $studentName; ?>" disabled></div>
+        <div id="left_col"><label id="from">Van:</label></div>
+        <div id="right_col"><input type="email" name="mailFrom" autofocus></div>
+        <div id="left_col"><label id="subject">Onderwerp:</label></div>
+        <div id="right_col"><input type="text" name="subject" ></div>
+        <div id="left_col"><label id="message">Bericht:</label></div>
+        <div id="right_col"><textarea rows="25" cols="50" name="mailContent"></textarea></div>
         <input type="submit" name="submit" value="Send">
     </form>
 </div>
