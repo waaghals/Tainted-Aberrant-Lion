@@ -55,9 +55,20 @@
     padding:3px;
     float:left;
 }
+@media (max-width: 420px) {
+textarea{
+    resize: none;
+    width: 100%;
+
+}
+}
+@media (min-width: 1200px) {
+
+}
 
 textarea{
     resize: none;
+
 }
 .center{
     margin-left:auto;
