@@ -69,3 +69,7 @@ Alle publieke assets zoals javascript en css bestanden bevinden zich in de mappa
 
 ### Namespaces
 Namespaces dienen altijd de folder structuur aan te houden. Dus een voorbeeld entitie `Student` bevind zich in de namespace `\PROJ\Entities`. De klasse zijn altijd enkelvoudige woorden, de namespace waar ze zich in bevinden zijn in het meervoud. De map waar de voorbeelde klasse zich bevind is dan `\Classes\PROJ\Entities`
+
+## Response design
+Er is een stylesheet gemaakt welke css classes heeft voor resposive design.
+Dit is afgeleid vanaf ["A simple guide to responsive design."](http://www.adamkaplan.me/grid
