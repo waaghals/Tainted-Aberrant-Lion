@@ -1,6 +1,6 @@
 <?php
 
-namespace PROJ\View;
+namespace PROJ\Views;
 
 class Register {
 

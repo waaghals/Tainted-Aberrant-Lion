@@ -1,6 +1,6 @@
 <?php
 
-namespace PROJ\Controller;
+namespace PROJ\Controllers;
 
 use PROJ\Services\AccountService;
 use PROJ\Helper\HeaderHelper;
@@ -15,7 +15,7 @@ use PROJ\Tools\Template;
 class AccountController extends BaseController {
 
     public function loginAction() {
-        $l = new \PROJ\View\Login();
+        $l = new \PROJ\Views\Login();
         $accountService = new AccountService();
 
         $loggedIn = $accountService->isLoggedIn();

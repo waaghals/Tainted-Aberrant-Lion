@@ -5,10 +5,10 @@ namespace PROJ\Pages;
 class DemoPage extends MainPage {
 
     public function getContent() {
-        $v = new \PROJ\View\DemoView();
+        $v = new \PROJ\Views\DemoView();
         $r = $v->getContent();
 
-        $DC = \PROJ\Controller\DemoController::instance();
+        $DC = \PROJ\Controllers\DemoController::instance();
         $r .= $DC->DoDemo();
 
         return $r;

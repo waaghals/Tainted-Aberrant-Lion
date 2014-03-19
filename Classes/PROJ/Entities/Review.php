@@ -24,7 +24,7 @@ class Review {
     private $rating;
 
     /**
-     * @OneToOne(targetEntity="project", inversedBy="review")
+     * @OneToOne(targetEntity="\PROJ\Entities\Project", inversedBy="review")
      */
     private $project;
 

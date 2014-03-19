@@ -2,7 +2,7 @@
 
 namespace Tests\Tools;
 
-use PROJ\Controller\HomeController;
+use PROJ\Controllers\HomeController;
 
 /**
  * Description of Router

@@ -1,5 +1,5 @@
 <?php
-namespace PROJ\Controller;
+namespace PROJ\Controllers;
 
 /**
  * Description of failController

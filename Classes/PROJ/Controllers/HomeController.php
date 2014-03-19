@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace PROJ\Controller;
+namespace PROJ\Controllers;
 
 /**
  * Description of HomeController
