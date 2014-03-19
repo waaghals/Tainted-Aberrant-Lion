@@ -18,7 +18,7 @@ class Template {
      * @param string $template Name of the template file to use
      */
     public function __construct($template) {
-        $this->viewLocation = BASE_PATH . "Classes" . DS . "PROJ" . DS . "View";
+        $this->viewLocation = BASE_PATH . "Classes" . DS . "PROJ" . DS . "Views";
         $this->template = $this->viewLocation . DS . $template . ".phtml";
 
         if (!file_exists($this->template)) {

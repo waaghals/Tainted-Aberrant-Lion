@@ -1,6 +1,6 @@
 <?php
 
-namespace PROJ\Controller;
+namespace PROJ\Controllers;
 
 class RegisterController {
 
@@ -55,14 +55,14 @@ class RegisterController {
     public function create_student($account, $data){
         $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
         $student = new \PROJ\Entities\Student();
-        $student->setVoornaam($data['firstname']);
-        $student->setAchternaam($data['surname']);
-        $student->setPostcode($data['zipcode']);
-        $student->setStraat($data['street']);
-        $student->setHuisnummer($data['streetnumber']);
+        $student->setFirstname($data['firstname']);
+        $student->setSurname($data['surname']);
+        $student->setZipcode($data['zipcode']);
+        $student->setStreet($data['street']);
+        $student->setHousenumber($data['streetnumber']);
         if(isset($data['addition']))
-            $student->setToevoeging($data['addition']);
-        $student->setWoonplaats($data['city']);
+            $student->setAddition($data['addition']);
+        $student->setCity($data['city']);
         $student->setAccount($account);
         $em->persist($student);
         $em->flush();

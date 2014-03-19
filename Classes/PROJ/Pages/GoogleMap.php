@@ -5,7 +5,7 @@ namespace PROJ\Pages;
 class GoogleMap extends MainPage {
 
     public function getContent() {
-        $v = new \PROJ\View\DemoGmap();
+        $v = new \PROJ\Views\DemoGmap();
         $r = $v->getContent();
 
         return $r;

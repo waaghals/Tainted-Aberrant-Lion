@@ -1,6 +1,6 @@
 <?php
 
-namespace PROJ\View;
+namespace PROJ\Views;
 
 class Login {
     private $loginError = null;
@@ -10,7 +10,7 @@ class Login {
         if($this->loginError != null)
             $r .= "<b>".$this->loginError."</b><br><br>";
         
-        $r .= "<form name='login' action='/Login/' method='post'>"
+        $r .= "<form name='login' method='post'>"
                 . "<div class='login_left_col'>"
                 . "Username:"
                 . "</div>"

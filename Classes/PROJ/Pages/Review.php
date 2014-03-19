@@ -5,7 +5,7 @@ namespace PROJ\Pages;
 class Review extends MainPage {
 
     public function getContent() {
-        $review = new \PROJ\View\Review;
+        $review = new \PROJ\Views\Review;
 
         if (isset($_POST['reviewButton'])) {
 

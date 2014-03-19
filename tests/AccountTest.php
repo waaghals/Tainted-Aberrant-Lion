@@ -1,8 +1,7 @@
 <?php
 
-namespace PROJ\Entities;
-
-require("../Classes/PROJ/Entities/Account.php");
+namespace PROJ\Tests;
+use PROJ\Entities\Account;
 
 class AccountTest extends \PHPUnit_Framework_TestCase {
 
@@ -16,7 +15,7 @@ class AccountTest extends \PHPUnit_Framework_TestCase {
 
         // Assert
         $this->assertEquals("username", $t->getUsername());
-        $this->assertEquals("password", $t->getUsername());
+        $this->assertEquals("password", $t->getPassword());
     }
 
 }

@@ -1,5 +1,4 @@
 <?php
-
 $header = new \PROJ\Tools\Template("Partial/Header");
 $header->title = "Stagekaart";
 
@@ -11,6 +10,13 @@ echo $header;
         <nav>
             <a href="#">Stage kaart</a>
         </nav>
+        <?php
+        $ac = new PROJ\Services\AccountService();
+        if ($ac->isLoggedIn()):
+
+            echo sprintf("<nav><p>%s</p></nav>", $_SESSION['user']->getName());
+        endif;
+        ?>
     </header>
     <main class="row clearfix">
         <div id="map" class="column full">
@@ -87,3 +93,4 @@ echo $header;
 
 <?php
 echo new \PROJ\Tools\Template("Partial/Footer");
+?>

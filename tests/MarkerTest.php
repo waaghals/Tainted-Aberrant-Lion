@@ -1,8 +1,7 @@
 <?php
 
-namespace PROJ\Entities;
-
-require("../Classes/PROJ/Classes/Marker.php");
+namespace PROJ\Tests;
+use PROJ\Classes\Marker;
 
 class MarkerTest extends \PHPUnit_Framework_TestCase {
 

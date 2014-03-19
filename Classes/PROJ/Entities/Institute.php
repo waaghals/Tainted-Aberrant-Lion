@@ -5,7 +5,7 @@ namespace PROJ\Entities;
 /**
  * @Entity 
  */
-class Instelling implements \JsonSerializable {
+class Institute implements \JsonSerializable {
 
     /**
      * @Id @Column(type="integer")
@@ -34,13 +34,13 @@ class Instelling implements \JsonSerializable {
     private $long;
 
     /**
-     * @OneToMany(targetEntity="\PROJ\Entities\Stage", mappedBy="instelling", cascade={"remove"})
+     * @OneToMany(targetEntity="\PROJ\Entities\Project", mappedBy="institute", cascade={"remove"})
      */
-    private $stages;
+    private $projects;
     
     
     function __construct() {
-        $this->stages = new \Doctrine\Common\Collections\ArrayCollection;
+        $this->projects = new \Doctrine\Common\Collections\ArrayCollection;
     }
 
     public function getId() {
@@ -63,8 +63,8 @@ class Instelling implements \JsonSerializable {
         return $this->long;
     }
 
-    public function getStages() {
-        return $this->stages;
+    public function getProjects() {
+        return $this->projects;
     }
 
     public function setLat($lat) {
@@ -75,13 +75,13 @@ class Instelling implements \JsonSerializable {
         $this->long = $long;
     }
 
-    public function setStages($stages) {
-        $this->stages = $stages;
+    public function setProjects($projects) {
+        $this->projects = $projects;
     }
 
-    public function addStages($stages) {
-        $this->stages->add($stages);
-        $stages->setInstelling($this);
+    public function addProjects($projects) {
+        $this->projects->add($projects);
+        $projects->setInstitute($this);
     }
 
     public function getType() {
@@ -99,7 +99,7 @@ class Instelling implements \JsonSerializable {
             "lat" => $this->getLat(),
             "long" => $this->getLong(),
             "id" => $this->getId(),
-            "stages" => $this->getStages()
+            "projects" => $this->getProjects()
         );
     }
 }
