@@ -18,7 +18,7 @@ class Router {
             throw new \InvalidArgumentException("Router::Match did not receive a valid request object");
         }
         
-        $controllerPath = sprintf("PROJ\Controller\%s", $req->getController());
+        $controllerPath = sprintf("PROJ\Controllers\%s", $req->getController());
         
         /*
          * can't catch the exception from the ReflectionClass because the
@@ -36,7 +36,7 @@ class Router {
             
         $ref =  new \ReflectionClass($controllerPath);
 
-        if(!$ref->isSubclassOf("\PROJ\Controller\BaseController")){
+        if(!$ref->isSubclassOf("\PROJ\Controllers\BaseController")){
             $msg = sprintf("Controller \"%s\" isn't a valid controller.", $req->getController());
             throw new Exceptions\ServerException($msg, Exceptions\ServerException::SERVER_ERROR);
         }

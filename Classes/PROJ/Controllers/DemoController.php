@@ -1,13 +1,13 @@
 <?php
 
-namespace PROJ\Controller;
+namespace PROJ\Controllers;
 
 class DemoController extends BaseController{
 
     private static $instance;
 
     /**
-     * @return \PROJ\Controller\DemoController
+     * @return \PROJ\Controllers\DemoController
      */
     public static function instance() {
         if (self::$instance == null) {

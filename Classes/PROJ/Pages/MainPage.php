@@ -44,12 +44,12 @@ abstract class MainPage {
     }
 
     function getHeader() {
-        $header = new \PROJ\View\Header();
+        $header = new \PROJ\Views\Header();
         return $header->getContent();
     }
 
     function getFooter() {
-        $footer = new \PROJ\View\Footer();
+        $footer = new \PROJ\Views\Footer();
         return $footer->getContent();
     }
 
