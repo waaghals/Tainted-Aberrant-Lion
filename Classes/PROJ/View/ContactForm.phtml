@@ -1,3 +1,10 @@
+<?php
+$header = new \PROJ\Tools\Template("Partial/Header");
+$header->title = "Contact Formulier";
+
+echo $header;
+?>
+
 <div id="contact">
     <form action="/contact/send/studentId=<?php echo $studentId; ?>/" method="post">
         To:<input type="text" name="mailTo" value="<?php echo $studentName; ?>" disabled><br>

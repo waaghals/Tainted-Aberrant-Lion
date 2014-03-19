@@ -39,3 +39,14 @@
     border-top: 2px solid #ffd324;
     border-bottom: 2px sollid #ffd324;
 }
+
+textarea{
+    resize: none;
+}
+
+@media (max-width: 420px) {
+    textarea{
+        resize: none;
+        width: 100%;
+    }   
+}
