@@ -11,8 +11,8 @@ use PROJ\Exceptions\ServerException;
  */
 class ContactService {
 
-    public function sendMail($toEmail) {
-        mail($toEmail, $_POST['subject'], filter_var($_POST['mailContent'], FILTER_SANITIZE_FULL_SPECIAL_CHARS), 'From: ' . $_POST['mailFrom']);
+    public function sendMail($toEmail) {       
+        mail($toEmail, filter_var($_POST['subject'], FILTER_SANITIZE_FULL_SPECIAL_CHARS), filter_var($_POST['mailContent'], FILTER_SANITIZE_FULL_SPECIAL_CHARS), 'From: ' . filter_var($_POST['mailFrom'], FILTER_SANITIZE_FULL_SPECIAL_CHARS));
     }
 
     public function getStudentById($studentId) {
