@@ -63,9 +63,9 @@ __Doctrine__ heeft een autoloader nodig om er makkelijk mee te werken. Standaard
 
 ## Bestand structuur
 ### Folders
-Klassen bevinden zich in de map classes zodat de autoloader ze kan vinden. Hierin heeft alles een eigen _vendor_ map, voor ons project is `PROJ` de _vendor_ map. In de root staan verder nog de mappen `Dcotrine` en `Symphoby` welke de ORM verzorgen.
+Klassen bevinden zich in de map classes zodat de autoloader ze kan vinden. Hierin heeft alles een eigen _vendor_ map, voor ons project is `PROJ` de _vendor_ map. In de root staan verder nog de mappen `Doctrine` en `Symphony` welke de ORM verzorgen.
 
-Alle publieke assets zoals javascript en css bestanden bevinden zich in de mappan `js` en `css` in de root map.
+Alle publieke assets zoals javascript en css bestanden bevinden zich in de mappen `js` en `css` in de root map.
 
 ### Namespaces
 Namespaces dienen altijd de folder structuur aan te houden. Dus een voorbeeld entitie `Student` bevind zich in de namespace `\PROJ\Entities`. De klasse zijn altijd enkelvoudige woorden, de namespace waar ze zich in bevinden zijn in het meervoud. De map waar de voorbeelde klasse zich bevind is dan `\Classes\PROJ\Entities`
