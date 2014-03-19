@@ -17,16 +17,16 @@ class AjaxController extends BaseController {
 
         //Alle Instellingen ophalen
         $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
-        $reviews = $em->getRepository('\PROJ\Entities\Instelling')->findAll();
+        $reviews = $em->getRepository('\PROJ\Entities\Institute')->findAll();
 
         foreach ($reviews as $rev) {
             //Gemiddelde score berekenen
             $qb = $em->createQueryBuilder();
             $qb->select('avg(review.rating) as AVGSCORE, count(review.id) as AANTALREVIEWS')
-                    ->from('\PROJ\Entities\Instelling', 'instelling')
-                    ->leftJoin('instelling.stages', 'stage')
-                    ->leftJoin('stage.review', 'review')
-                    ->where($qb->expr()->eq('instelling.id', $qb->expr()->literal($rev->getId())));
+                    ->from('\PROJ\Entities\Institute', 'institute')
+                    ->leftJoin('institute.projects', 'project')
+                    ->leftJoin('project.review', 'review')
+                    ->where($qb->expr()->eq('institute.id', $qb->expr()->literal($rev->getId())));
             $avg = $qb->getQuery()->getResult();
 
 
@@ -47,35 +47,25 @@ class AjaxController extends BaseController {
                 $markerHtml .= "<br><br><a href='#' class='AllReviews' instantie='" . $rev->getId() . "'>Alle (" . $avg[0]['AANTALREVIEWS'] . ") Reviews Bekijken</a></div>";
 
             $demoMarker->setHtml($markerHtml);
-            $demoMarker->setTitle($rev->getNaam());
+            $demoMarker->setTitle($rev->getName());
 
-            $mc->addMarkerLocation($rev->getNaam(), $demoMarker);
+            $mc->addMarkerLocation($rev->getName(), $demoMarker);
         }
         echo $mc->generateMarkerJSON();
     }
 
     public function allLocationsAction() {
         $em = DoctrineHelper::instance()->getEntityManager();
-        $instances = $em->getRepository('\PROJ\Entities\Instelling')->findAll();
+        $instances = $em->getRepository('\PROJ\Entities\Institute')->findAll();
 
         echo json_encode($instances);
         return;
-        $dql = "SELECT i FROM \PROJ\Entities\Instelling i JOIN i.stages s";
+        $dql = "SELECT i FROM \PROJ\Entities\Institute i JOIN i.projects s";
         $q = $em->createQuery($dql);
 
         $res = $q->getArrayResult();
         \Doctrine\Common\Util\Debug::dump($res, 3);
-/*
-        foreach ($res as $row) {
-           $row = array_map(function($stage) {
-                return array(
-                    "start" => $stage->startDatum()
-                );
-            }, $row->getStages()); 
-            \Doctrine\Common\Util\Debug::dump($row->getStages(), 3);
-            echo json_encode($row);
-        } 
-        */
+
     }
 
     public function locationReviewAction($lid = 1) {
@@ -87,7 +77,7 @@ class AjaxController extends BaseController {
         }
 
         $em = DoctrineHelper::instance()->getEntityManager();
-        $instances = $em->getRepository('\PROJ\Entities\Instelling')->find($lid);
+        $instances = $em->getRepository('\PROJ\Entities\Institute')->find($lid);
 
         echo json_encode($instances);
     }
