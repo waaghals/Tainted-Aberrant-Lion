@@ -32,7 +32,6 @@
     background-color:#FFFFFF;
 }
 
-<<<<<<< HEAD
 .login_left_col{
     width:100px;
     padding:3px;
@@ -72,13 +71,12 @@ textarea{
     padding: 10px 20px 10px 50px;
     border-top: 2px solid #ffd324;
     border-bottom: 2px sollid #ffd324;
-=======
-#contact{
+   
+} 
+contact {
     padding-left: 15%;
     width: 400px;
 }
+mailSend{
 
-#mailSend{
-    
->>>>>>> f/Contact
 }

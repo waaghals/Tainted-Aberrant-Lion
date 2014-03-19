@@ -1,9 +1,7 @@
 <?php
 
-namespace PROJ\Controller;
-
-use PROJ\Exceptions\ServerException;
-
+namespace PROJ\Controllers;
+use PROJ\Exceptions;
 /**
  * Description of baseController
  *
@@ -45,4 +43,5 @@ abstract class BaseController {
         return $reflection->invokeArgs($this, $pass);
     }
 
-}
+}   
+?>

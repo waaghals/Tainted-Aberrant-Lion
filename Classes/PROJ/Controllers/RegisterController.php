@@ -1,6 +1,6 @@
 <?php
 
-namespace PROJ\Controller;
+namespace PROJ\Controllers;
 
 class RegisterController {
 

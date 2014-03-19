@@ -5,7 +5,7 @@ namespace PROJ\Entities;
 /**
  * @Entity 
  */
-class Stage implements \JsonSerializable {
+class Project implements \JsonSerializable {
 
     /**
      * @Id @Column(type="integer")
@@ -16,12 +16,12 @@ class Stage implements \JsonSerializable {
     /**
      * @Column(type="date")
      */
-    private $startdatum;
+    private $startdate;
 
     /**
      * @Column(type="date")
      */
-    private $einddatum;
+    private $enddate;
 
     /**
      * @Column(type="string")
@@ -29,17 +29,17 @@ class Stage implements \JsonSerializable {
     private $type;
 
     /**
-     * @OneToOne(targetEntity="\PROJ\Entities\Review", mappedBy="stage", cascade={"remove"})
+     * @OneToOne(targetEntity="\PROJ\Entities\Review", mappedBy="project", cascade={"remove"})
      */
     private $review;
 
     /**
-     * @ManyToOne(targetEntity="\PROJ\Entities\Instelling", inversedBy="stages")
+     * @ManyToOne(targetEntity="\PROJ\Entities\Institute", inversedBy="projects")
      */
-    private $instelling;
+    private $institute;
 
     /**
-     * @ManyToOne(targetEntity="\PROJ\Entities\Student", inversedBy="stage")
+     * @ManyToOne(targetEntity="\PROJ\Entities\Student", inversedBy="project")
      */
     private $student;
 
@@ -47,40 +47,40 @@ class Stage implements \JsonSerializable {
         return $this->id;
     }
 
-    public function getStartdatum() {
-        return $this->startdatum;
+    public function getStartdate() {
+        return $this->startdate;
     }
 
-    public function getEinddatum() {
-        return $this->einddatum;
+    public function getEnddate() {
+        return $this->enddate;
     }
 
     public function getReview() {
         return $this->review;
     }
 
-    public function getInstelling() {
-        return $this->instelling;
+    public function getInstitute() {
+        return $this->institute;
     }
 
     public function getStudent() {
         return $this->student;
     }
 
-    public function setStartdatum($startdatum) {
-        $this->startdatum = $startdatum;
+    public function setStartdate($startdatum) {
+        $this->startdate = $startdatum;
     }
 
-    public function setEinddatum($einddatum) {
-        $this->einddatum = $einddatum;
+    public function setendDate($enddate) {
+        $this->enddate = $enddate;
     }
 
     public function setReview($review) {
         $this->review = $review;
     }
 
-    public function setInstelling($instelling) {
-        $this->instelling = $instelling;
+    public function setInstitute($institute) {
+        $this->institute = $institute;
     }
 
     public function setStudent($student) {

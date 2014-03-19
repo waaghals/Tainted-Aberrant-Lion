@@ -16,37 +16,37 @@ class Student {
     /**
      * @Column(type="string")
      */
-    private $voornaam;
+    private $firstname;
 
     /**
      * @Column(type="string")
      */
-    private $achternaam;
+    private $surname;
 
     /**
      * @Column(type="string")
      */
-    private $woonplaats;
+    private $city;
 
     /**
      * @Column(type="string")
      */
-    private $postcode;
+    private $zipcode;
 
     /**
      * @Column(type="string")
      */
-    private $straat;
+    private $street;
 
     /**
      * @Column(type="integer")
      */
-    private $huisnummer;
+    private $housenumber;
 
     /**
      * @Column(type="string", nullable=true)
      */
-    private $toevoeging;
+    private $addition;
 
     /**
      * @Column(type="string")
@@ -59,72 +59,72 @@ class Student {
     private $account;
 
     /**
-     * @OneToMany(targetEntity="\PROJ\Entities\Stage", mappedBy="student", cascade={"remove"})
+     * @OneToMany(targetEntity="\PROJ\Entities\Project", mappedBy="student", cascade={"remove"})
      */
-    private $stage;
+    private $project;
 
     public function getId() {
         return $this->id;
     }
 
-    public function getVoornaam() {
-        return $this->voornaam;
+    public function getFirstname() {
+        return $this->firstname;
     }
 
-    public function getAchternaam() {
-        return $this->achternaam;
+    public function getSurname() {
+        return $this->surname;
     }
 
-    public function getWoonplaats() {
-        return $this->woonplaats;
+    public function getCity() {
+        return $this->city;
     }
 
-    public function getPostcode() {
-        return $this->postcode;
+    public function getZipcode() {
+        return $this->zipcode;
     }
 
-    public function getStraat() {
-        return $this->straat;
+    public function getStreet() {
+        return $this->street;
     }
 
-    public function getHuisnummer() {
-        return $this->huisnummer;
+    public function getHousenumber() {
+        return $this->housenumber;
     }
 
-    public function getToevoeging() {
-        return $this->toevoeging;
+    public function getAddition() {
+        return $this->addition;
     }
     
     public function getEmail() {
         return $this->email;
     }
 
-    public function setVoornaam($voornaam) {
-        $this->voornaam = $voornaam;
+    public function setFirstname($firstname) {
+        $this->firstname = $firstname;
     }
 
-    public function setAchternaam($achternaam) {
-        $this->achternaam = $achternaam;
+    public function setSurname($surname) {
+        $this->surname = $surname;
     }
 
-    public function setWoonplaats($woonplaats) {
-        $this->woonplaats = $woonplaats;
+    public function setCity($city) {
+        $this->city = $city;
     }
 
-    public function setPostcode($postcode) {
-        $this->postcode = $postcode;
+    public function setZipcode($zipcode) {
+        $this->zipcode = $zipcode;
     }
 
-    public function setStraat($straat) {
-        $this->straat = $straat;
+    public function setStreet($street) {
+        $this->street = $street;
     }
 
-    public function setHuisnummer($huisnummer) {
-        $this->huisnummer = $huisnummer;
+    public function setHousenumber($housenumber) {
+        $this->housenumber = $housenumber;
     }
 
-    public function setToevoeging($toevoeging) {
-        $this->toevoeging = $toevoeging;
+    public function setAddition($addition) {
+        $this->addition = $addition;
     }
     
     public function setEmail($email) {
@@ -136,16 +136,16 @@ class Student {
         return $this->account;
     }
 
-    public function getStage() {
-        return $this->stage;
+    public function getProject() {
+        return $this->project;
     }
 
     public function setAccount($account) {
         $this->account = $account;
     }
 
-    public function setStage($stage) {
-        $this->stage = $stage;
+    public function setProject($project) {
+        $this->project = $project;
     }
 
 }
