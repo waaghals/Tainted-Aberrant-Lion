@@ -28,11 +28,6 @@ class Review {
      */
     private $stage;
 
-    function __construct() {
-        $this->OneToManyRelation = new \Doctrine\Common\Collections\ArrayCollection;
-        $this->ManyToManyRelation = new \Doctrine\Common\Collections\ArrayCollection;
-    }
-
     public function getId() {
         return $this->id;
     }

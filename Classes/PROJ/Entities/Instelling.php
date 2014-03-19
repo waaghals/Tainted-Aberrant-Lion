@@ -5,7 +5,7 @@ namespace PROJ\Entities;
 /**
  * @Entity 
  */
-class Instelling {
+class Instelling implements \JsonSerializable {
 
     /**
      * @Id @Column(type="integer")
@@ -16,7 +16,7 @@ class Instelling {
     /**
      * @Column(type="string")
      */
-    private $naam;
+    private $name;
 
     /**
      * @Column(type="string")
@@ -37,17 +37,22 @@ class Instelling {
      * @OneToMany(targetEntity="\PROJ\Entities\Stage", mappedBy="instelling", cascade={"remove"})
      */
     private $stages;
+    
+    
+    function __construct() {
+        $this->stages = new \Doctrine\Common\Collections\ArrayCollection;
+    }
 
     public function getId() {
         return $this->id;
     }
 
-    public function getNaam() {
-        return $this->naam;
+    public function getName() {
+        return $this->name;
     }
 
-    public function setNaam($naam) {
-        $this->naam = $naam;
+    public function setName($name) {
+        $this->name = $name;
     }
 
     public function getLat() {
@@ -73,7 +78,12 @@ class Instelling {
     public function setStages($stages) {
         $this->stages = $stages;
     }
-    
+
+    public function addStages($stages) {
+        $this->stages->add($stages);
+        $stages->setInstelling($this);
+    }
+
     public function getType() {
         return $this->type;
     }
@@ -82,6 +92,16 @@ class Instelling {
         $this->type = $type;
     }
 
+    public function jsonSerialize() {
+        return array(
+            "type" => $this->getType(),
+            "name" => $this->getName(),
+            "lat" => $this->getLat(),
+            "long" => $this->getLong(),
+            "id" => $this->getId(),
+            "stages" => $this->getStages()
+        );
+    }
 }
 
 ?>

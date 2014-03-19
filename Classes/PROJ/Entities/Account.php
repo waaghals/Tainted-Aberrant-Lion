@@ -14,7 +14,7 @@ class Account {
     private $id;
 
     /**
-     * @Column(type="string")
+     * @Column(type="string", unique=true)
      */
     private $username;
 
@@ -22,7 +22,12 @@ class Account {
      * @Column(type="string")
      */
     private $password;
-
+    
+    /**
+     * @Column(type="string")
+     */
+    private $salt;    
+    
     /**
      * @OneToOne(targetEntity="\PROJ\Entities\Student", mappedBy="account")
      */
@@ -47,7 +52,13 @@ class Account {
     public function setPassword($password) {
         $this->password = $password;
     }
+    public function getSalt() {
+        return $this->salt;
+    }
 
+    public function setSalt($salt) {
+        $this->salt = $salt;
+    }
 }
 
 ?>

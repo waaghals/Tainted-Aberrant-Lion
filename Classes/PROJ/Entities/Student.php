@@ -44,17 +44,22 @@ class Student {
     private $huisnummer;
 
     /**
-     * @Column(type="string")
+     * @Column(type="string", nullable=true)
      */
     private $toevoeging;
 
+    /**
+     * @Column(type="string")
+     */
+    private $email;
+    
     /**
      * @OneToOne(targetEntity="\PROJ\Entities\Account", inversedBy="student")
      */
     private $account;
 
     /**
-     * @OneToOne(targetEntity="\PROJ\Entities\Stage", mappedBy="student", cascade={"remove"})
+     * @OneToMany(targetEntity="\PROJ\Entities\Stage", mappedBy="student", cascade={"remove"})
      */
     private $stage;
 
@@ -89,6 +94,10 @@ class Student {
     public function getToevoeging() {
         return $this->toevoeging;
     }
+    
+    public function getEmail() {
+        return $this->email;
+    }
 
     public function setVoornaam($voornaam) {
         $this->voornaam = $voornaam;
@@ -116,6 +125,27 @@ class Student {
 
     public function setToevoeging($toevoeging) {
         $this->toevoeging = $toevoeging;
+    }
+    
+    public function setEmail($email) {
+        $this->email = $email;
+    }
+
+
+    public function getAccount() {
+        return $this->account;
+    }
+
+    public function getStage() {
+        return $this->stage;
+    }
+
+    public function setAccount($account) {
+        $this->account = $account;
+    }
+
+    public function setStage($stage) {
+        $this->stage = $stage;
     }
 
 }

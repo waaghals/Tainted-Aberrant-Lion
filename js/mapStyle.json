@@ -1,0 +1,95 @@
+[
+    {
+        "featureType": "all",
+        "elementType": "all",
+        "stylers": [
+            {
+                "hue": "#d11d40"
+            }
+        ]
+    },
+    {
+        "featureType": "road",
+        "elementType": "labels",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "road",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "visibility": "simplified"
+            },
+            {
+                "lightness": 100
+            }
+        ]
+    },
+    {
+        "featureType": "water",
+        "elementType": "geometry.fill",
+        "stylers": [
+            {
+                "invert_lightness": false
+            },
+            {
+                "color": "#d11d40"
+            },
+            {
+                "saturation": 0
+            }
+        ]
+    },
+    {
+        "featureType": "water",
+        "elementType": "labels.text",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.park",
+        "elementType": "labels",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.business",
+        "elementType": "labels",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "water",
+        "elementType": "geometry.fill",
+        "stylers": [
+            {
+                "visibility": "on"
+            },
+            {
+                "invert_lightness": false
+            },
+            {
+                "weight": 0.1
+            },
+            {
+                "saturation": -50
+            },
+            {
+                "lightness": 0
+            }
+        ]
+    }
+]
