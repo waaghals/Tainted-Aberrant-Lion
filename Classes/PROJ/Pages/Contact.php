@@ -15,7 +15,7 @@ namespace PROJ\Pages;
 class Contact extends MainPage{
     
     public function getContent() {
-        $v = new \PROJ\View\ContactformView();
+        $v = new \PROJ\Views\ContactformView();
         
         $r = $v->makeMailForm();
 
