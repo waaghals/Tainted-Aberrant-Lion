@@ -52,6 +52,9 @@ class AccountService {
             return "Passwords did not match";
         if($this->checkUsernameExists($data['username']))
             return "This username is already in use";
+        if(!(filter_var($data['email'], FILTER_VALIDATE_EMAIL)))
+                return "The email address is not valid.";
+        
         
         return true;
     }
