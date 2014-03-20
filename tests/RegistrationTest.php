@@ -1,6 +1,7 @@
 <?php
 
 namespace PROJ\Tests;
+
 use PROJ\Services\AccountService;
 
 class RegistrationTest extends \PHPUnit_Framework_TestCase
@@ -17,6 +18,9 @@ class RegistrationTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
+        $mock = $this->getMockBuilder('AccountService')
+                ->setMethods(array('checkUsernameExists', 'true'))
+                ->getMock();
         $this->dummydata['username'] = "Dummy";
         $this->dummydata['password'] = "Dummy";
         $this->dummydata['passwordagain'] = "Dummy";
@@ -31,6 +35,7 @@ class RegistrationTest extends \PHPUnit_Framework_TestCase
 
     public function testRegistrationInputValidationCheckPass()
     {
+
         $this->assertTrue($this->service->validateInput($this->dummydata));
     }
 
@@ -48,25 +53,21 @@ class RegistrationTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEquals($this->service->validateInput($this->dummydata), true);
     }
 
-    public function RegistraionInputValidationInputLengthFail()
+    public function testRegistraionInputValidationInputLengthFail()
     {
-        $this->ResetData();
-
-        $dummydata['username'] = "";
+        $this->dummydata['username'] = "";
         // string length = 321
         $dummydata['firstname'] = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-        $this->assertNotEquals($this->service->validate_input($dummydata), true);
+        $this->assertNotEquals($this->service->validateInput($this->dummydata), true);
     }
 
-    public function RegistraionInputValidationNoInput()
+    public function testRegistraionInputValidationNoInput()
     {
-        $this->ResetData();
-
-        foreach ($dummydata as $data)
+        foreach ($this->dummydata as $data)
             $data = "";
 
-        $this->assertNotEquals($this->service->validate_input($dummydata), true);
+        $this->assertNotEquals($this->service->validateInput($this->dummydata), true);
     }
 
     public function __toString()
@@ -75,4 +76,3 @@ class RegistrationTest extends \PHPUnit_Framework_TestCase
     }
 
 }
-    
