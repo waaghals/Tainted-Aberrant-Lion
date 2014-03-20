@@ -17,6 +17,7 @@ $ac = new PROJ\Services\AccountService();
             echo '<button id="headerbutton" onclick=location.href="Account/Login">Log in</button>';
             endif; ?>
             <button id="headerbutton" onclick=location.href="Account/Register">Registreren</button>
+            <input id="searchbar" type="text" onchange="SendSearch()" placeholder="Search">
         </nav>
         <?php
         

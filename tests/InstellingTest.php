@@ -1,12 +1,12 @@
 <?php
 
 namespace PROJ\Tests;
-use PROJ\Entities\Instelling;
-class InstellingTest extends \PHPUnit_Framework_TestCase {
+use PROJ\Entities\Institute;
+class InstituteTest extends \PHPUnit_Framework_TestCase {
 
     public function test() {
         // Arrange
-        $t = new Instelling();
+        $t = new Institute();
 
         // Act
         $t->setName("name");
