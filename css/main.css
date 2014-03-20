@@ -80,3 +80,11 @@ contact {
 mailSend{
 
 }
+#headerbutton{
+    font-size: 12px;
+    margin-top: 3px;
+    margin-right: 5px;
+    margin-bottom: 3px;
+    float:right;
+    
+}
