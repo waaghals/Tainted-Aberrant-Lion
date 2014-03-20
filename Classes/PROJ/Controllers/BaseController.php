@@ -1,7 +1,7 @@
 <?php
 
 namespace PROJ\Controllers;
-use PROJ\Exceptions;
+use PROJ\Exceptions\ServerException;
 /**
  * Description of baseController
  *
