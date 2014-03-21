@@ -10,9 +10,11 @@ use PROJ\Helper\DoctrineHelper;
  *
  * @author Patrick
  */
-class AjaxController extends BaseController {
+class AjaxController extends BaseController
+{
 
-    public function allMarkersAction() {
+    public function allMarkersAction()
+    {
         $mc = new \PROJ\Classes\MarkerCollection();
 
         //Alle Instellingen ophalen
@@ -54,7 +56,8 @@ class AjaxController extends BaseController {
         echo $mc->generateMarkerJSON();
     }
 
-    public function allLocationsAction() {
+    public function allLocationsAction()
+    {
         $em = DoctrineHelper::instance()->getEntityManager();
         $instances = $em->getRepository('\PROJ\Entities\Institute')->findAll();
 
@@ -65,10 +68,10 @@ class AjaxController extends BaseController {
 
         $res = $q->getArrayResult();
         \Doctrine\Common\Util\Debug::dump($res, 3);
-
     }
 
-    public function locationReviewAction($lid = 1) {
+    public function locationReviewAction($lid = 1)
+    {
         $lid = intval($lid);
 
         if (!is_int($lid)) {
@@ -81,15 +84,24 @@ class AjaxController extends BaseController {
 
         echo json_encode($instances);
     }
-    
-    public function getProjectInfoAction($tag){
-        $tag = filter_var($tag, FILTER_SANITIZE_STRING);
+
+    public function getProjectInfoAction()
+    {
+        $tag = filter_var($_POST['tag'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $em = DoctrineHelper::instance()->getEntityManager();
         $qb = $em->createQueryBuilder();
-        $qb->select('review.text')
-                ->from('\PROJ\Entities\Review', 'review')
+        $qb->select(array('review.text', 'institute.lat', 'institute.long'))
+                ->from('\PROJ\Entities\Review', 'review')->leftJoin('review.project', 'project')->leftJoin('project.institute', 'institute')
                 ->where($qb->expr()->like("review.text", $qb->expr()->literal("%" . $tag . "%")));
+
         $result = $qb->getQuery()->getResult();
-        return json_encode($result);
+ 
+
+        for ($i = 0; $i < count($result); $i++) {
+            $result[$i]["text"] = substr($result[$i]["text"], 0, 50);
+        }
+
+        echo json_encode($result);
     }
+
 }
