@@ -1,0 +1,32 @@
+<div>
+    <h1>Review</h1>
+    <form method="post">
+        <div class='review_left_col'>
+            Review de instantie:
+        </div>
+        <div class='review_right_col'>
+            <textarea name='review' cols='50' rows='10' required autofocus><?php echo $text; ?></textarea>
+        </div>
+        <div class='review_left_col'>
+            Geef de instantie een cijfer:
+        </div>
+        <div class='login_right_col'>
+            <select name='rating'>
+                <?php
+                for ($i = 1; $i <= 5; $i++) {
+                    if ($i == $grade) {
+                        echo "<option value='" . $i . "' selected='selected'>" . $i . "</option>";
+                    } else {
+                        echo "<option value='" . $i . "'>" . $i . "</option>";
+                    }
+                }
+                ?>
+            </select>
+        </div>
+        <div class='review_left_col'>
+        </div>
+        <div class='review_right_col'>
+            <input type='submit' name='reviewButton'>
+        </div>
+    </form> 
+</div>
