@@ -82,7 +82,7 @@ class AjaxController extends BaseController {
         echo json_encode($instances);
     }
     
-    public function getProjectInfoAction($tag = "test"){
+    public function getProjectInfoAction($tag){
         $tag = filter_var($tag, FILTER_SANITIZE_STRING);
         $em = DoctrineHelper::instance()->getEntityManager();
         $qb = $em->createQueryBuilder();
@@ -90,7 +90,6 @@ class AjaxController extends BaseController {
                 ->from('\PROJ\Entities\Review', 'review')
                 ->where($qb->expr()->like("review.text", $qb->expr()->literal("%" . $tag . "%")));
         $result = $qb->getQuery()->getResult();
-        var_dump($result);
+        return json_encode($result);
     }
-
 }
