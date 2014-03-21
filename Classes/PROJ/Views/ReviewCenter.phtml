@@ -1,8 +1,62 @@
+<div>
+    <h1>Review</h1>
+    <div>
+        <table border='4px'>
+            <tr>
+                <th colspan="2">Gemaakte Reviews</th>
+            </tr>
+            <tr>
+                <th>Instelling</th>
+                <th>cijfer</th>
+            </tr>
+            <?php
+            $i = 0;
+            foreach ($projects as $project) {
+                if ($project->getReview() != null) {
+                    $i++;
+                    ?>
+                    <tr>
+                        <th><?php echo $project->getInstitute()->getName(); ?></th>
+                        <th><?php echo $project->getReview()->getRating(); ?></th>
+                        <th><a href='/Review/Edit/ReviewId=<?php echo $project->getReview()->getId(); ?>'>Edit</a></th>
+                    </tr>
+                    <?php
+                }
+            }
+            if ($i == 0) {
+                echo "<tr><th colspan='2'>Geen gemaakte reviews</th></tr>";
+            }
+            ?>
+        </table>
+    </div>
+    <br />
+    <div>
+        <table border='4px'>
+            <tr>
+                <th colspan="2">Openstaande Reviews</th>
+            </tr>
+            <tr>
+                <th>Instelling</th>
+                <th>cijfer</th>
+            </tr>
 <?php
-
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
+$i = 0;
+foreach ($projects as $project) {
+    if ($project->getReview() == null) {
+        $i++;
+        ?>
+                    <tr>
+                        <th><?php echo $project->getInstitute()->getName(); ?></th>
+                        <th><?php echo $project->getReview()->getRating(); ?></th>
+                        <th><a href='/Review/Add/ProjectId=<?php echo $project->getId(); ?>'>Add</a></th>
+                    </tr>
+        <?php
+    }
+}
+if ($i == 0) {
+                echo "<tr><th colspan='2'>Geen openstaande reviews</th></tr>";
+            }
+?>
+        </table>
+    </div>
+</div>
