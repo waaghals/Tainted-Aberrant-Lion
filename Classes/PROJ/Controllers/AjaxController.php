@@ -56,16 +56,12 @@ class AjaxController extends BaseController {
 
     public function allLocationsAction() {
         $em = DoctrineHelper::instance()->getEntityManager();
-        $instances = $em->getRepository('\PROJ\Entities\Institute')->findAll();
 
-        echo json_encode($instances);
-        return;
-        $dql = "SELECT i FROM \PROJ\Entities\Institute i JOIN i.projects s";
+        $dql = "SELECT i, p, r, s FROM \PROJ\Entities\Institute i LEFT JOIN i.projects p LEFT JOIN p.review r LEFT JOIN p.student s";
         $q = $em->createQuery($dql);
 
         $res = $q->getArrayResult();
-        \Doctrine\Common\Util\Debug::dump($res, 3);
-
+        echo json_encode($res);
     }
 
     public function locationReviewAction($lid = 1) {
