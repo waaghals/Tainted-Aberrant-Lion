@@ -5,7 +5,7 @@ namespace PROJ\Entities;
 /**
  * @Entity 
  */
-class Project implements \JsonSerializable {
+class Project {
 
     /**
      * @Id @Column(type="integer")
@@ -86,15 +86,6 @@ class Project implements \JsonSerializable {
     public function setStudent($student) {
         $this->student = $student;
     }
-
-    public function jsonSerialize() {
-        return array(
-            
-            "review" => $this->getReview(),
-            "author" => $this->getStudent()
-        );
-    }
-
 }
 
 ?>
