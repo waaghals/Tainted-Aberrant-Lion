@@ -49,7 +49,7 @@ $t->where = "world.jpg"
 Het `Voorbeeld.phtml` bestand.
 ```php
 <h1><?php echo $greeting; ?></h1>
-<img src="/img/><?php echo $world; ?>" />```
+<img src="/img/><?php echo $where; ?>" />```
 
 ###3.4. Services
 Om onderscheid te houden tussen data en het verwerken van data hebben we een extra laag toegebracht. De _services_ laag. Hierin wordt er met de _models_ gecommuniceert en/of wordt er validaties gedaan. Door de meeste business logic in de _services_ te stoppen blijven de controllers overzichtelijk.
