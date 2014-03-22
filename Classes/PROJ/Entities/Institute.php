@@ -31,7 +31,7 @@ class Institute implements \JsonSerializable {
     /**
      * @Column(type="float")
      */
-    private $long;
+    private $lng;
 
     /**
      * @OneToMany(targetEntity="\PROJ\Entities\Project", mappedBy="institute", cascade={"remove"})
@@ -60,7 +60,7 @@ class Institute implements \JsonSerializable {
     }
 
     public function getLong() {
-        return $this->long;
+        return $this->lng;
     }
 
     public function getProjects() {
@@ -72,7 +72,7 @@ class Institute implements \JsonSerializable {
     }
 
     public function setLong($long) {
-        $this->long = $long;
+        $this->lng = $long;
     }
 
     public function setProjects($projects) {

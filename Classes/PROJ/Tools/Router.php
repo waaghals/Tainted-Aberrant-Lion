@@ -1,8 +1,7 @@
 <?php
 
 namespace PROJ\Tools;
-
-use PROJ\Exceptions;
+use PROJ\Exceptions\ServerException;
 use Doctrine\Common\ClassLoader;
 
 /**
@@ -30,7 +29,7 @@ class Router {
         $classLoader = ClassLoader::getClassLoader($controllerPath);
         if ($classLoader == null) {
             $msg = sprintf("Controller \"%s\" doesn't exists", $req->getController());
-            throw new Exceptions\ServerException($msg, Exceptions\ServerException::NOT_FOUND);
+            throw new ServerException($msg, ServerException::NOT_FOUND);
         }
 
         $ref = new \ReflectionClass($controllerPath);
@@ -38,7 +37,7 @@ class Router {
         if (!$ref->isSubclassOf("\PROJ\Controllers\BaseController")) {
 
             $msg = sprintf("Controller \"%s\" isn't a valid controller.", $req->getController());
-            throw new Exceptions\ServerException($msg, Exceptions\ServerException::SERVER_ERROR);
+            throw new ServerException($msg, ServerException::SERVER_ERROR);
         }
 
         $controller = $ref->newInstance();

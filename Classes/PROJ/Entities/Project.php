@@ -66,6 +66,11 @@ class Project implements \JsonSerializable {
     public function getStudent() {
         return $this->student;
     }
+    public function getType() {
+        return $this->type;
+    }
+
+    
 
     public function setStartdate($startdatum) {
         $this->startdate = $startdatum;
@@ -85,6 +90,9 @@ class Project implements \JsonSerializable {
 
     public function setStudent($student) {
         $this->student = $student;
+    }
+    public function setType($type) {
+        $this->type = $type;
     }
 
     public function jsonSerialize() {

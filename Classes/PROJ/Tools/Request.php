@@ -40,7 +40,7 @@ class Request {
                 //throw exception if there isn't a "="
                 if (strpos($part, '=') === false) {
                     $msg = sprintf("Missing value for parameter \"%s\" or it doesn't contain a \"=\"", $part);
-                    throw new ServerException($msg, ServerException::BAD_REQUEST);
+                    throw new Exceptions\ServerException($msg, Exceptions\ServerException::BAD_REQUEST);
                 }
 
                 list($key, $value) = explode("=", $part);
@@ -48,7 +48,7 @@ class Request {
                 //throw exception if the same parameter is set multiple times in the uri.
                 if (isset($this->arguments[$key])) {
                     $msg = sprintf("Duplicated value for parameter \"%s\".", $key);
-                    throw new ServerException($msg, ServerException::BAD_REQUEST);
+                    throw new Exceptions\ServerException($msg, Exceptions\ServerException::BAD_REQUEST);
                 }
                 $this->arguments[$key] = $value;
             }
