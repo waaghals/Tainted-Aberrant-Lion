@@ -161,6 +161,7 @@
             sideContent.append("<p>Door: " + project.student.firstname + " " + project.student.surname + "</p>");
             sideContent.append("<p>Type: " + project.type + "</p>");
             sideContent.append("<p>Beoordeling: " + getStars(project.review.rating).html() + "</p>");
+            sideContent.append("<p>Neem contact op met : <a href=\"/contact/show/studentId=" + project.student.id + "/\">" + project.student.firstname + "</a></p>");
             container.append(sideContent);
 
             sidebar.append(container);

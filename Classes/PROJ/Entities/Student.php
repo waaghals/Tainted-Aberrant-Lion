@@ -148,7 +148,7 @@ class Student {
     }
 
     public function getFullName() {
-        return sprintf("%s %s", $this->voornaam, $this->achternaam);
+        return sprintf("%s %s", $this->firstname, $this->surname);
     }
 
 }
