@@ -15,8 +15,6 @@ window.onload = init; //or $(document).ready(init); - for jQuery
 function lookup(key_count) {
 
     if (key_count == key_count_global) {
-
-
         // Do the ajax lookup here.
         var http = new XMLHttpRequest();
         var url = "Ajax/getProjectInfo/";
@@ -28,8 +26,15 @@ function lookup(key_count) {
         http.setRequestHeader("Connection", "close");
         http.onreadystatechange = function() {//Call a function when the state changes.
             if (http.readyState == 4 && http.status == 200) {
-                console.log(jQuery.parseJSON(http.responseText)[0]);
-                
+                // console.log(jQuery.parseJSON(http.responseText)[0]);
+                // var response = jQuery.parseJSON(http.responseText);
+                //var message = "Resultaat: \n";
+
+                //for (var i = 0; i < jQuery.parseJSON(http.responseText).length; i++) {
+                //   message += response[i]['id'] + ". text: " + response[i]['text'] + " long: " + response[i]['long'] + " lat: " + response[i]['lat'] + "\n";
+                //}
+                //alert(message);
+                window.open("Search", '_blank');
             }
         }
         http.send(params);
