@@ -32,6 +32,11 @@ class Institute {
      * @Column(type="float")
      */
     private $long;
+    
+    /**
+     * @Column(type="string")
+     */
+    private $place;
 
     /**
      * @OneToMany(targetEntity="\PROJ\Entities\Project", mappedBy="institute", cascade={"remove"})
@@ -92,6 +97,13 @@ class Institute {
         $this->type = $type;
     }
 
+    public function getPlace() {
+        return $this->place;
+    }
+
+    public function setPlace($place) {
+        $this->place = $place;
+    }
 }
 
 ?>
