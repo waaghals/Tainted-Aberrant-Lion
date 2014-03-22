@@ -26,15 +26,7 @@ function lookup(key_count) {
         http.setRequestHeader("Connection", "close");
         http.onreadystatechange = function() {//Call a function when the state changes.
             if (http.readyState == 4 && http.status == 200) {
-                // console.log(jQuery.parseJSON(http.responseText)[0]);
-                // var response = jQuery.parseJSON(http.responseText);
-                //var message = "Resultaat: \n";
-
-                //for (var i = 0; i < jQuery.parseJSON(http.responseText).length; i++) {
-                //   message += response[i]['id'] + ". text: " + response[i]['text'] + " long: " + response[i]['long'] + " lat: " + response[i]['lat'] + "\n";
-                //}
-                //alert(message);
-                window.open("Search", '_blank');
+                window.open("Search", '_blank', "height=500,width=500");
             }
         }
         http.send(params);

@@ -10,11 +10,9 @@ use PROJ\Helper\DoctrineHelper;
  *
  * @author Patrick
  */
-class AjaxController extends BaseController
-{
+class AjaxController extends BaseController {
 
-    public function allMarkersAction()
-    {
+    public function allMarkersAction() {
         $mc = new \PROJ\Classes\MarkerCollection();
 
         //Alle Instellingen ophalen
@@ -56,8 +54,7 @@ class AjaxController extends BaseController
         echo $mc->generateMarkerJSON();
     }
 
-    public function allLocationsAction()
-    {
+    public function allLocationsAction() {
         $em = DoctrineHelper::instance()->getEntityManager();
         $instances = $em->getRepository('\PROJ\Entities\Institute')->findAll();
 
@@ -70,8 +67,7 @@ class AjaxController extends BaseController
         \Doctrine\Common\Util\Debug::dump($res, 3);
     }
 
-    public function locationReviewAction($lid = 1)
-    {
+    public function locationReviewAction($lid = 1) {
         $lid = intval($lid);
 
         if (!is_int($lid)) {
@@ -85,13 +81,12 @@ class AjaxController extends BaseController
         echo json_encode($instances);
     }
 
-    public function getProjectInfoAction()
-    {
+    public function getProjectInfoAction() {
         $tag = filter_var($_POST['tag'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $em = DoctrineHelper::instance()->getEntityManager();
         $qb = $em->createQueryBuilder();
-        $qb->select(array('review.id','review.text','institute.name','review.rating', 'institute.lat', 'institute.long'))
-                ->from('\PROJ\Entities\Review', 'review')->leftJoin('review.project', 'project')->leftJoin('project.institute', 'institute')
+        $qb->select(array('student.firstname as studentname', 'student.surname as studentsurname', 'student.email', 'review.text', 'institute.name as institutename', 'review.rating', 'institute.lat', 'institute.long'))
+                ->from('\PROJ\Entities\Review', 'review')->leftJoin('review.project', 'project')->leftJoin('project.institute', 'institute')->leftJoin('project.student', 'student')
                 ->where($qb->expr()->like("review.text", $qb->expr()->literal("%" . $tag . "%")));
         $result = $qb->getQuery()->getResult();
         for ($i = 0; $i < count($result); $i++) {
@@ -100,4 +95,5 @@ class AjaxController extends BaseController
         $_SESSION['searchresult'] = $result;
         echo json_encode($result);
     }
+
 }
