@@ -77,4 +77,4 @@ Namespaces dienen altijd de folder structuur aan te houden. Dus een voorbeeld en
 
 ##6. Response design
 Er is een stylesheet gemaakt welke css classes heeft voor resposive design.
-
+Dit is afgeleid vanaf ["A simple guide to responsive design."](http://www.adamkaplan.me/grid)
