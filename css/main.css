@@ -64,6 +64,14 @@
     margin-right: 81px;
 }
 
+#left_col #text {
+    margin-right: 100px;
+}
+
+#left_col #rating {
+    margin-right: 41px;
+}
+
 #left_col #message {
     margin-right: 114px;
 }
@@ -81,13 +89,12 @@
     margin-right: 5px;
     margin-bottom: 3px;
     float:right;
+}
 
+@media (max-width: 445px) {
+    #right_col textarea, #right_col input  {
+        resize: none;
+        width: 100%;
 
-    @media (max-width: 445px) {
-        #right_col textarea, #right_col input  {
-            resize: none;
-            width: 100%;
-
-        }
     }
 }

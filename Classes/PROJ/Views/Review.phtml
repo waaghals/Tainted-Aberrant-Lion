@@ -1,17 +1,23 @@
-<div>
-    <h1>Review</h1>
-    <form method="post">
+<?php
+$header = new \PROJ\Tools\Template("Partial/Header");
+$header->title = "Contact Formulier";
+echo $header;
+?>
+
+<div class="container"> 
+    <h2>Review</h2>
+    <form method="post" class="review">
         <input type='hidden' name='id' value='<?php echo $id; ?>' />
-        <div class='review_left_col'>
-            Review de instantie:
+        <div id="left_col">
+            <label id="text">Review de instantie:</label>
         </div>
-        <div class='review_right_col'>
+        <div id="right_col">
             <textarea name='review' cols='50' rows='10' required autofocus><?php echo $text; ?></textarea>
         </div>
-        <div class='review_left_col'>
-            Geef de instantie een cijfer:
+        <div id="left_col">
+            <label id="rating">Geef de instantie een cijfer:</label>
         </div>
-        <div class='login_right_col'>
+        <div id="right_col">
             <select name='rating'>
                 <?php
                 for ($i = 1; $i <= 5; $i++) {
@@ -23,11 +29,6 @@
                 }
                 ?>
             </select>
-        </div>
-        <div class='review_left_col'>
-        </div>
-        <div class='review_right_col'>
-            <input type='submit' name='reviewButton'>
-        </div>
-    </form> 
+        </div><input type="submit" name="submit" value="Send">
+    </form>
 </div>
