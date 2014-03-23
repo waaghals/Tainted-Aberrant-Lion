@@ -24,11 +24,18 @@ class ContactController extends BaseController {
             $msg = "No post data was sent to the server.";
             throw new ServerException($msg, ServerException::BAD_REQUEST);
         }
+        
+        if (empty($_POST['mailFrom']) || !filter_var($_POST['mailFrom'], FILTER_SANITIZE_EMAIL))
+        {
+            header("Location: /contact/show/studentId=".$studentId."/");
+        }
+        else
+        {
+            $student = $this->service->getStudentById($studentId);
 
-        $student = $this->service->getStudentById($studentId);
-
-        $this->service->sendMail($student->getEmail());
-        echo "Email send.";
+            $this->service->sendMail($student->getEmail());
+            echo "Email send.";
+        }
     }
 
     public function showAction($studentId) {
