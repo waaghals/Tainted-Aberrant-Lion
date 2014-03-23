@@ -10,9 +10,9 @@ $ac = new PROJ\Services\AccountService();
         <?php else: ?>
         <button class="headerbutton" onclick=location.href="/Account/Login">Log in</button>
         <button class="headerbutton" onclick=location.href="/account/Register">Registreren</button>
+        <?php endif; ?>
         <?php if(isset($search)) { ?>
         <input id="searchbar" type="text" placeholder="Search">
         <?php } ?>
-        <?php endif; ?>
     </nav>
 </header>
