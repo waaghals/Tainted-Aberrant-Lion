@@ -10,15 +10,14 @@ use PROJ\Helper\HeaderHelper;
 class ReviewController extends BaseController {
 
     private $reviewService;
-    private $accountService;
 
     public function __construct() {
-        $this->accountService = new AccountService();
-        $this->accountService->doLogin("admin");
+        $accountService = new AccountService();
+        $accountService->doLogin("admin");
 
-        if (!$this->accountService->isLoggedIn())
-        #hier komt een error, maar niemand reageerde op vraag :P
-            HeaderHelper::redirect();
+        if (!$accountService->isLoggedIn()){
+            HeaderHelper::redirect("/Account/Login/");
+        }
 
         $this->reviewService = new ReviewService();
     }
