@@ -18,7 +18,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase {
 
     public function testGoodController() {
         $this->r = new Request();
-        $this->assertEquals($this->r->getController(), "homeController");
+        $this->assertEquals($this->r->getController(), "HomeController");
     }
 
     public function testGoodAction() {

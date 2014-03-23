@@ -1,8 +1,3 @@
-* {
-    margin: 0px;
-    padding: 0px;
-}
-
 #blackout{
     width: 100%;
     height: 100%;
@@ -32,37 +27,12 @@
     background-color:#FFFFFF;
 }
 
+
 .login_left_col{
     width:100px;
     padding:3px;
     clear:left;
     float:left;
-}
-
-.login_right_col{
-    padding:3px;
-    float:left;
-}
-
-.review_left_col{
-    width:300px;
-    padding:3px;
-    clear:left;
-    float:left;
-}
-
-.review_right_col{
-    padding:3px;
-    float:left;
-}
-
-textarea{
-    resize: none;
-}
-.center{
-    margin-left:auto;
-    margin-right:auto;
-    text-align:center; 
 }
 
 .alert {
@@ -71,12 +41,60 @@ textarea{
     padding: 10px 20px 10px 50px;
     border-top: 2px solid #ffd324;
     border-bottom: 2px sollid #ffd324;
-   
-} 
-contact {
+}
+
+#contact {
     padding-left: 15%;
     width: 400px;
 }
-mailSend{
 
+#left_col {
+    float: left;
+}
+
+#left_col #to {
+    margin-right: 139px;
+}
+
+#left_col #from {
+    margin-right: 140px;
+}
+
+#left_col #subject {
+    margin-right: 81px;
+}
+
+#left_col #text {
+    margin-right: 100px;
+}
+
+#left_col #rating {
+    margin-right: 41px;
+}
+
+#left_col #message {
+    margin-right: 114px;
+}
+
+#right_col input {
+    width: 421px;
+}
+
+#right_col textarea {
+    resize: none;
+}
+#headerbutton{
+    font-size: 12px;
+    margin-top: 3px;
+    margin-right: 5px;
+    margin-bottom: 3px;
+    float:right;
+}
+
+@media (max-width: 445px) {
+    #right_col textarea, #right_col input  {
+        resize: none;
+        width: 100%;
+
+    }
 }

@@ -5,7 +5,7 @@ namespace PROJ\Entities;
 /**
  * @Entity 
  */
-class Institute implements \JsonSerializable {
+class Institute {
 
     /**
      * @Id @Column(type="integer")
@@ -31,11 +31,18 @@ class Institute implements \JsonSerializable {
     /**
      * @Column(type="float")
      */
+
     private $lng;
+    
+    /**
+     * @Column(type="string")
+     */
+    private $place;
 
     /**
      * @OneToMany(targetEntity="\PROJ\Entities\Project", mappedBy="institute", cascade={"remove"})
      */
+    
     private $projects;
     
     
@@ -102,6 +109,8 @@ class Institute implements \JsonSerializable {
             "projects" => $this->getProjects()
         );
     }
+ public function setPlace($place) {
+        $this->place = $place;
+    }
 }
-
 ?>

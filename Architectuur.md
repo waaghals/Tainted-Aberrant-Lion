@@ -19,7 +19,7 @@ of de aangevraagde controller en action (methode) bestaat. Nadat zeker is dat de
 controller gemaakt en de actie aangeroepen. Als laatste bepaald de actie wat de body wordt van de request door deze te outputten.
 
 ##2. Bootstrapping
-In de index gebeuren een aantal dingen. Ten eerste wordt de __autoloader__ (zie punt 4.1.) geladen.
+In de index gebeuren een aantal dingen. Ten eerste wordt de __autoloader__ (zie punt 4.2.) geladen.
 Daarna worden er handige constants gedefineerd. Eventuele andere dingen die dienen te gebeuren voordat de controller en de bijbehorden action word aangeroepen kunnen hierworden georganiseerd.
 
 ##3. MVC
@@ -49,7 +49,7 @@ $t->where = "world.jpg"
 Het `Voorbeeld.phtml` bestand.
 ```php
 <h1><?php echo $greeting; ?></h1>
-<img src="/img/><?php echo $world; ?>" />```
+<img src="/img/><?php echo $where; ?>" />```
 
 ###3.4. Services
 Om onderscheid te houden tussen data en het verwerken van data hebben we een extra laag toegebracht. De _services_ laag. Hierin wordt er met de _models_ gecommuniceert en/of wordt er validaties gedaan. Door de meeste business logic in de _services_ te stoppen blijven de controllers overzichtelijk.
@@ -58,18 +58,23 @@ Om onderscheid te houden tussen data en het verwerken van data hebben we een ext
 Om de code vrij te houden van SQL code hebben we gekozen voor een ORM, een ORM heeft een snellere instap dan SQL laag zelf netjes te implementeren.
 
 Vervolgens is er gekozen voor __Doctrine__ als ORM aangezien hiermee de meeste ervaring is in het team. Er is verder niet gekeken naar andere ORM's. Het is niet handig om een totaal andere ORM aan te leren als er al ervaring is met __Doctrine__.
-###4.1 Autoloader
+
+###4.1. Entiteiten
+![EER](images/docs/EER.png)
+
+
+###4.2. Autoloader
 __Doctrine__ heeft een autoloader nodig om er makkelijk mee te werken. Standaard heeft __Doctrine__ een eigen autoloader waarvan wij gebruik maken. Deze autoloader implementeert de PSR-0 standaard. Hierdoor is hij makkelijk uitwisselbaar.
 
-## Bestand structuur
-### Folders
+##5. Bestand structuur
+###5.1. Folders
 Klassen bevinden zich in de map classes zodat de autoloader ze kan vinden. Hierin heeft alles een eigen _vendor_ map, voor ons project is `PROJ` de _vendor_ map. In de root staan verder nog de mappen `Doctrine` en `Symphony` welke de ORM verzorgen.
 
 Alle publieke assets zoals javascript en css bestanden bevinden zich in de mappen `js` en `css` in de root map.
 
-### Namespaces
+###5.2. Namespaces
 Namespaces dienen altijd de folder structuur aan te houden. Dus een voorbeeld entitie `Student` bevind zich in de namespace `\PROJ\Entities`. De klasse zijn altijd enkelvoudige woorden, de namespace waar ze zich in bevinden zijn in het meervoud. De map waar de voorbeelde klasse zich bevind is dan `\Classes\PROJ\Entities`
 
-## Response design
+##6. Response design
 Er is een stylesheet gemaakt welke css classes heeft voor resposive design.
-Dit is afgeleid vanaf ["A simple guide to responsive design."](http://www.adamkaplan.me/grid
+Dit is afgeleid vanaf ["A simple guide to responsive design."](http://www.adamkaplan.me/grid)

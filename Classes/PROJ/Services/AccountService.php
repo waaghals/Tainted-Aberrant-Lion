@@ -9,26 +9,49 @@ use PROJ\Helper\DoctrineHelper;
 
 class AccountService {
 
-    public function checkLoginCredentials($username, $password) {
+    public function Login($username, $password) {
         $em = DoctrineHelper::instance()->getEntityManager();
-
         $user = $em->getRepository('PROJ\Entities\Account')->findOneBy(array('username' => $username));
         if ($user != null) {
-            //Username exists
-            $passwordEntered = hash('sha512', $password . $user->getSalt());
-
-            if ($passwordEntered == $user->getPassword())    //Login correct
-                return true;
+            //Check bruteforce
+            if ($this->checkbruteforce($user->getId()) !== true) {
+                $passwordEntered = hash('sha512', $password . $user->getSalt());
+                if ($passwordEntered == $user->getPassword()) {
+                    $_SESSION['user'] = $user;
+                    $_SESSION['userID'] = $user->getId();
+                    $_SESSION['login_string'] = hash('sha512', $user->getPassword() . $_SERVER['HTTP_USER_AGENT'] . $_SERVER['REMOTE_ADDR']);
+                    
+                    return true;
+                }else{
+                    $la = new \PROJ\Entities\LoginAttempt();
+                    $la->setTime(time());
+                    $la->setAccount($user);
+                    
+                    $em->persist($la);
+                    $em->flush();
+                }
+            } 
         }
         return false;
     }
-
-    public function doLogin($username) {
+    
+    private function checkbruteforce($user_id) {
+        $now = time();
+        $valid_attempts = $now - (2 * 60 * 60); //Entry's laatste 2 uur
+        
+        
         $em = DoctrineHelper::instance()->getEntityManager();
-
-        $user = $em->getRepository('PROJ\Entities\Account')->findOneBy(array('username' => $username));
-        if ($user != null) { //Just to be sure
-            $_SESSION['user'] = $user;
+        $qb = $em->createQueryBuilder();
+        $qb->select('la')
+                ->from('\PROJ\Entities\LoginAttempt', 'la')
+                ->where($qb->expr()->gte('la.time', $qb->expr()->literal($valid_attempts)))
+                ->andWhere($qb->expr()->eq('la.account', $qb->expr()->literal($user_id)));
+       
+        //3 login attempts
+        if (count($qb->getQuery()->getResult()) > 3) {
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -50,7 +73,8 @@ class AccountService {
         if (!($data['password'] === $data['passwordagain']))
             return "Passwords did not match";
 
-        return "Registration succeeded!";
+        //return "Registration succeeded!";
+        return false;
     }
 
     public function createAccount($data) {
@@ -69,24 +93,33 @@ class AccountService {
     public function createStudent($account, $data) {
         $em = DoctrineHelper::instance()->getEntityManager();
         $student = new Student();
-        $student->setVoornaam($data['firstname']);
-        $student->setAchternaam($data['surname']);
-        $student->setPostcode($data['zipcode']);
-        $student->setStraat($data['street']);
-        $student->setHuisnummer($data['streetnumber']);
+        $student->setFirstname($data['firstname']);
+        $student->setSurname($data['surname']);
+        $student->setZipcode($data['zipcode']);
+        $student->setStreet($data['street']);
+        $student->setHousenumber($data['streetnumber']);
         if (isset($data['addition']))
-            $student->setToevoeging($data['addition']);
-        $student->setWoonplaats($data['city']);
+            $student->setAddition($data['addition']);
+        $student->setCity($data['city']);
         $student->setAccount($account);
         $em->persist($student);
         $em->flush();
     }
 
     public function isLoggedIn() {
-        if (isset($_SESSION['user']))
-            if ($_SESSION['user']->getId() != null)
-                return true;
-
+        $em = DoctrineHelper::instance()->getEntityManager();
+        if (isset($_SESSION['userID'], $_SESSION['user'], $_SESSION['login_string'])) {
+            $user_id = $_SESSION['userID'];
+            $login_string = $_SESSION['login_string'];
+            
+            $user = $em->getRepository('PROJ\Entities\Account')->findOneBy(array('id' => $user_id));
+            if ($user != null) {
+                $login_check = hash('sha512', $user->getPassword() . $_SERVER['HTTP_USER_AGENT'] . $_SERVER['REMOTE_ADDR']);
+                if ($login_check == $login_string) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 

@@ -5,7 +5,7 @@ namespace PROJ\Entities;
 /**
  * @Entity 
  */
-class Project implements \JsonSerializable {
+class Project {
 
     /**
      * @Id @Column(type="integer")
@@ -69,8 +69,6 @@ class Project implements \JsonSerializable {
     public function getType() {
         return $this->type;
     }
-
-    
 
     public function setStartdate($startdatum) {
         $this->startdate = $startdatum;

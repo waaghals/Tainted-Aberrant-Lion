@@ -3,18 +3,27 @@ $header = new \PROJ\Tools\Template("Partial/Header");
 $header->title = "Stagekaart";
 
 echo $header;
+$ac = new PROJ\Services\AccountService();
 ?>
 
 <div class="container">
     <header class="shadow">
         <nav>
-            <a href="#">Stage kaart</a>
+            <a href="#">Kaart</a>  
+            <?php
+            if($ac->isLoggedIn()):
+            echo '<button id="headerbutton" onclick=location.href="Account/Logout">Log uit</button>';
+            else:
+            echo '<button id="headerbutton" onclick=location.href="Account/Login">Log in</button>';
+            endif; ?>
+            <button id="headerbutton" onclick=location.href="Account/Register">Registreren</button>
+            <input id="searchbar" type="text" placeholder="Search">
         </nav>
         <?php
-        $ac = new PROJ\Services\AccountService();
+        
         if ($ac->isLoggedIn()):
 
-            echo sprintf("<nav><p>%s</p></nav>", $_SESSION['user']->getName());
+            echo sprintf("<nav><p>%s</p></nav>", $_SESSION['user']->getStudent()->getFirstname());
         endif;
         ?>
     </header>

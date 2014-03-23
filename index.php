@@ -1,10 +1,12 @@
 <?php
-//start session
-session_start();
+//Global Configs
+define("DEFAULT_MAP_LOCATION", "Netherlands", true);
+
 
 //Init Doctrine
 use Doctrine\Common\ClassLoader;
 use PROJ\Helper\HeaderHelper;
+use PROJ\Helper\SessionHelper;
 use PROJ\Tools\Request;
 use PROJ\Tools\Router;
 use PROJ\Exceptions\ServerException;
@@ -17,6 +19,9 @@ $classLoader = new ClassLoader('Symfony', __DIR__ . '/Doctrine');
 $classLoader->register();
 $classLoader = new ClassLoader('PROJ', __DIR__ . '/Classes');
 $classLoader->register();
+
+//Secure Start Session
+SessionHelper::secure_session_start();
 
 /**
  * @def (string) DS - Directory separator.

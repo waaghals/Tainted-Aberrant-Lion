@@ -1,0 +1,86 @@
+Test cases
+
+Inleiding
+
+Hier wordt beschreven wat er getest kan worden vanuit de gebruiker.
+
+Waar 'LET OP!!!' voor staat moet nog toegevoegd worden! 
+
+Wereldkaart
+1.	Laad de homepage http://localhost (Bezoeker moet een wereld map te zien krijgen)
+o	Er is een map zichtbaar
+2.	Vergroot en verklein het scherm
+o	Tekst dient kleiner te worden blij kleinere schermen.
+o	Er staan ongeveer tussen de 45 en 75 tekens op ��n regel
+o	Bij kleine schermen (zoals voor telefoons) komen meerdere kolommen tekst onder elkaar te staan.
+3.	Test of de kaart werkt (Bezoeker moet in en uit kunnen zoomen)
+o	Je kunt zoomen door te scrollen
+o	Je kunt zoomen door met twee vingers een zoom gebaar te maken.
+o	Je kan de kaart verslepen met de muis of vinger.
+4.	De sidebar kan geopend en gesloten worden
+o	Je kan de sidebar sluiten door deze naar links te slepen met de muis of vinger indien deze open is.
+o	Je kan de sidebar openen door deze naar rechts te slepen met de muis of vinger indien deze gesloten is.
+5.	Voer het database script uit om test data in de database te zetten.
+6.	Het toevoegen van een nieuwe marker.
+o	LET OP!!!: Wachten op het maken van een nieuwe marker
+7.	Controleer of de institute's op de kaart staan. (Bezoeker moet alle reviews of stages op de map te zien krijgen)
+o	Kijk of de marker uit de database ook op de kaart komen te staan.
+o	Een institute met type education dient een icoontje van een schoolhoedje te zijn.
+o	Een institute met type business dient een icoontje van een bedrijfsgebouw te zijn.
+o	Klik op een marker
+o	De sidebar wordt nu geopend.
+ 
+Login
+Correcte inlog:
+1.	Laad de homepage http://localhost/account/login/ (Bezoeker moet een loginscherm kunnen te zien krijgen)
+o	Er is een inlogscherm zichtbaar
+2.	Vul gebruikersnaam en wachtwoord in
+o	Gebruikersnaam en wachtwoord dienen goed overeen te komen met de gegevens in de database.
+3.	Het inloggen van een test gebruiker.
+o	Typ bij de username: Username.
+o	Typ bij de password: P@ssword.
+o	Klik op LET OP!!!: verzenden(moet �Log in� worden)
+o	U bent succesvol ingelogd!
+
+Foutieve inlog:
+1.	Laad de homepage http://localhost/account/login/ (Bezoeker moet een loginscherm kunnen te zien krijgen)
+o	Er is een inlogscherm zichtbaar
+2.	Vul gebruikersnaam en wachtwoord in
+o	Gebruikersnaam en wachtwoord dienen goed overeen te komen met de gegevens in de database.
+3.	Het inloggen van een test gebruiker.
+o	Typ bij de username: Username.
+o	Typ bij de password: 123456.
+o	Klik op LET OP!!!: verzenden(moet �Log in� worden)
+o	U bent NIET succesvol ingelogd!
+
+Registreren
+Correct registreren:
+1.	Laad de homepage http://localhost/account/register/ (Bezoeker moet een registreerscherm te zien krijgen)
+o	Er is een registreerscherm zichtbaar
+2.	Vul gegevens in
+o	Vul uw gegevens in de daarvoor bestemde plaatsen.
+o	U bent succesvol geregistreerd!
+
+Foutief registreren: ???
+
+Contact
+Correcte verzenden:
+1.	Laad de homepage http://localhost/contact/show/studentId=1 (Bezoeker moet een emailscherm te zien krijgen)
+o	Er is een contactformulier zichtbaar
+2.	Vul gegevens in
+o	Vul eigen e-mail in.
+o	Vul het onderwerp in.
+o	Vul een bericht in.
+o	Klik op de knop �Verzenden� om de mail te versturen.
+
+Zoeken
+Correct zoeken:
+1.	Laad de homepage http://localhost/
+o	Rechts boven is een zoekformulier zichtbaar.
+2. Vul een woord in waarop gezocht moet worden.
+o Er komt een pop-up.
+o In de pop-up staat "Er zijn geen reviews gevonden" als er geen review bestaat met het zoek woord erin.
+o In de pop-up staat informatie over de gevonden review als die is gevonden.
+
+
+Foutieve verzending: ???
