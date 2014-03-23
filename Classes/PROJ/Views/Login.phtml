@@ -1,0 +1,51 @@
+<?php
+$header = new \PROJ\Tools\Template("Partial/Header");
+$header->title = "Contact Formulier";
+$ac = new PROJ\Services\AccountService();
+
+echo $header;
+?>
+
+<header class="shadow">
+    <nav>
+        <a href="/">Kaart</a>  
+        <?php
+        if($ac->isLoggedIn()):
+        echo '<button id="headerbutton" onclick=location.href="/Account/Logout">Log uit</button>';
+        else:
+        echo '<button id="headerbutton" onclick=location.href="/Account/Login">Log in</button>';
+        endif; ?>
+        <button id="headerbutton" onclick=location.href="/account/Register">Registreren</button>
+    </nav>
+    <?php
+
+    if ($ac->isLoggedIn()):
+        echo sprintf("<nav><p>%s</p></nav>", $_SESSION['user']->getStudent()->getFirstname());
+    endif;
+    ?>
+</header>
+<div id="login_container">
+    <form name='login' method='post' enctype="multipart/form-data">
+        <img src="/images/login_top.png">
+        <div id="login_container_tophalf">
+            <p>Username:</p>
+            <input type="text" value="" name="username" style="margin-top: 10px;" />
+            <p style="margin-top:15px;">Password:</p>
+            <input type="password" value="" name="password" style="margin-top: 10px;" />
+        </div>
+        <img src="/images/login_split.png">
+        <div id="login_container_bottomhalf">
+            <div class="fancy_button" id="login_button" style="left: 335px; top: 160px;">
+                <img src="/images/btn_left.png" />
+                <p>Login</p>
+                <img src="/images/btn_right.png" />
+            </div>
+        </div>
+        <img src="/images/login_bottom.png">
+    </form>
+</div>
+
+<?php
+$footer = new \PROJ\Tools\Template("Partial/Footer");
+echo $footer;
+?>

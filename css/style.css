@@ -31,6 +31,7 @@ html {
 
 body {
     font-size: 18px;
+    background-color:#ecf0f2;
 }
 
 h1,h2,h3,h4,h5,h6,p {
@@ -178,3 +179,70 @@ ul {
 }
 /* Nav
    ========================================================================== */
+
+
+/* Login
+   ========================================================================== */
+#login_container p {
+    line-height: normal;
+    font-size:14px;
+}
+
+#login_container input {
+    line-height: normal;
+    font-size:14px;
+    width: 100%;
+    padding: 10px;
+}
+
+#login_container .fancy_button {
+    float:right;
+}
+
+#login_container{
+    width: 342px;
+    height: 270px;
+    left: 50%;
+    top: 50%;
+    margin-left: -171px;
+    margin-top: -135px;
+    position: absolute;
+    color:#444444;
+}
+
+#login_container *{
+    padding:0px;
+    margin: 0px;
+    float:left;
+}
+
+#login_container_tophalf {
+    width: 342px;
+    padding:20px 35px;
+    background-image: url('/images/login_center.png');
+}
+
+#login_container_bottomhalf {
+    width: 342px;
+    padding:13px 35px 10px;
+    background-image: url('/images/login_bottom_center.png');
+}
+
+div.fancy_button {
+    height:33px;
+    cursor: pointer;
+}
+
+div.fancy_button img {
+    float:left;
+}
+
+div.fancy_button p {
+    float:left;
+    line-height: 33px !important;
+    padding: 0px 10px;
+    margin: 0px;
+    background-image: url('/images/btn_center.png');
+    color: #FFF;
+    font-weight: bold;
+}

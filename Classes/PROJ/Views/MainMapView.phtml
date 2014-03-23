@@ -12,7 +12,7 @@ $ac = new PROJ\Services\AccountService();
             <a href="#">Kaart</a>  
             <?php
             if($ac->isLoggedIn()):
-            echo '<button id="headerbutton" onclick=location.href="Account/Loguit">Log uit</button>';
+            echo '<button id="headerbutton" onclick=location.href="Account/Logout">Log uit</button>';
             else:
             echo '<button id="headerbutton" onclick=location.href="Account/Login">Log in</button>';
             endif; ?>
@@ -22,7 +22,7 @@ $ac = new PROJ\Services\AccountService();
         
         if ($ac->isLoggedIn()):
 
-            echo sprintf("<nav><p>%s</p></nav>", $_SESSION['user']->getName());
+            echo sprintf("<nav><p>%s</p></nav>", $_SESSION['user']->getStudent()->getFirstname());
         endif;
         ?>
     </header>
