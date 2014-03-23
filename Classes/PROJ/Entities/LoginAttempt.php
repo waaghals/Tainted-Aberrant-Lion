@@ -5,59 +5,39 @@ namespace PROJ\Entities;
 /**
  * @Entity 
  */
-class Account {
+class LoginAttempt{
 
     /**
      * @Id @Column(type="integer")
      * @GeneratedValue
      */
     private $id;
-
-    /**
-     * @Column(type="string", unique=true)
-     */
-    private $username;
-
-    /**
-     * @Column(type="string")
-     */
-    private $password;
     
     /**
      * @Column(type="string")
      */
-    private $salt;    
-    
+    private $time;  
+
     /**
-     * @OneToOne(targetEntity="\PROJ\Entities\Student", mappedBy="account")
+     * @ManyToOne(targetEntity="\PROJ\Entities\Account", inversedBy="loginAttempts")
      */
-    private $student;
-
-    public function getId() {
-        return $this->id;
+    private $account;
+    
+    
+    public function getTime() {
+        return $this->time;
     }
 
-    public function getUsername() {
-        return $this->username;
+    public function getAccount() {
+        return $this->account;
     }
 
-    public function getPassword() {
-        return $this->password;
+    public function setTime($time) {
+        $this->time = $time;
     }
 
-    public function setUsername($username) {
-        $this->username = $username;
-    }
-
-    public function setPassword($password) {
-        $this->password = $password;
-    }
-    public function getSalt() {
-        return $this->salt;
-    }
-
-    public function setSalt($salt) {
-        $this->salt = $salt;
+    public function setAccount($account) {
+        $this->account = $account;
     }
 }
 

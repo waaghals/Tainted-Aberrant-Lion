@@ -31,8 +31,14 @@ class Account {
     /**
      * @OneToOne(targetEntity="\PROJ\Entities\Student", mappedBy="account")
      */
-    private $student;
+    private $student; 
+    
+    /**
+     * @OneToMany(targetEntity="\PROJ\Entities\LoginAttempt", mappedBy="account", cascade={"remove"})
+     */
+    private $loginAttempts;
 
+    
     public function getId() {
         return $this->id;
     }
@@ -58,6 +64,22 @@ class Account {
 
     public function setSalt($salt) {
         $this->salt = $salt;
+    }
+    
+    public function getStudent() {
+        return $this->student;
+    }
+
+    public function getLoginAttempt() {
+        return $this->loginAttempts;
+    }
+
+    public function setStudent($student) {
+        $this->student = $student;
+    }
+
+    public function setLoginAttempt($loginAttempts) {
+        $this->loginAttempts = $loginAttempst;
     }
 }
 

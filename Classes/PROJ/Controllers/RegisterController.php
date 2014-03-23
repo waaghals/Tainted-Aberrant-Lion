@@ -18,7 +18,7 @@ class RegisterController {
             if(strlen($input) > 254)
                 return "Some fieldes are too long.";
             if(!preg_match('/^[A-Za-z0-9. -_]{1,31}$/', $input))
-                return "No special characters allowed" . $input;
+                return "No special characters allowed";
         }
         if(!(filter_var($data['streetnumber'], FILTER_VALIDATE_INT)))
                 return "Streetnumber is not a number";
