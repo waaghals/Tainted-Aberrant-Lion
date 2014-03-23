@@ -2,29 +2,13 @@
 use PROJ\Helper\XssHelper;
 $header = new \PROJ\Tools\Template("Partial/Header");
 $header->title = "Contact Formulier";
-$ac = new PROJ\Services\AccountService();
 
 echo $header;
+
+$bar = new \PROJ\Tools\Template("Partial/TopBar");
+echo $bar;
 ?>
 
-<header class="shadow">
-    <nav>
-        <a href="/">Kaart</a>  
-        <?php
-        if($ac->isLoggedIn()):
-        echo '<button id="headerbutton" onclick=location.href="/Account/Logout">Log uit</button>';
-        else:
-        echo '<button id="headerbutton" onclick=location.href="/Account/Login">Log in</button>';
-        endif; ?>
-        <button id="headerbutton" onclick=location.href="/account/Register">Registreren</button>
-    </nav>
-    <?php
-
-    if ($ac->isLoggedIn()):
-        echo sprintf("<nav><p>%s</p></nav>", $_SESSION['user']->getStudent()->getFirstname());
-    endif;
-    ?>
-</header>
 <div id="register_container">
     <form name='register' method='post' enctype="multipart/form-data">
         <img src="/images/register_top.png">

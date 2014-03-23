@@ -1,0 +1,15 @@
+<?php
+$ac = new PROJ\Services\AccountService();
+?>
+<header class="shadow">
+    <nav>
+        <a href="/">Kaart</a>  
+        <?php if($ac->isLoggedIn()): ?>
+        <button id="headerbutton" onclick=location.href="/Account/Logout">Log uit</button>
+        <button id="headerbutton" >Welkom <?php echo sprintf("%s", $_SESSION['user']->getStudent()->getFirstname()); ?></button>
+        <?php else: ?>
+        <button id="headerbutton" onclick=location.href="/Account/Login">Log in</button>
+        <button id="headerbutton" onclick=location.href="/account/Register">Registreren</button>
+        <?php endif; ?>
+    </nav>
+</header>
