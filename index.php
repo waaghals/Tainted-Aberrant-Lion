@@ -1,4 +1,8 @@
 <?php
+//Global Configs
+define("DEFAULT_MAP_LOCATION", "Netherlands", true);
+
+
 //Init Doctrine
 use Doctrine\Common\ClassLoader;
 use PROJ\Helper\HeaderHelper;

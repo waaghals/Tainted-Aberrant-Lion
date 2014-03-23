@@ -209,13 +209,21 @@
             })();
             <?php
             //Ophalen van user location
-            $tags = get_meta_tags('http://www.geobytes.com/IpLocator.htm?GetLocation&template=php3.txt&IpAddress='.$_SERVER['REMOTE_ADDR']);
-            if($tags['known'] == true) {
-                //Dit vind ik te precies, Land ziet er netter uit maar even overleggen dit :)
-                //$loc = $tags['city'].', '.$tags['country'];
-                $loc = $tags['country'];
+            $ch = curl_init(); 
+            curl_setopt($ch, CURLOPT_URL, 'http://freegeoip.net/json/'.$_SERVER['REMOTE_ADDR']); 
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            $json = strip_tags(trim(curl_exec($ch))); 
+            curl_close($ch);  
+            
+            if(strpos($json,'Bad Request') === false && strpos($json,'Not Found') === false) {
+                $data = json_decode($json, true);
+                if($data['country_code'] != 'Reserved') {
+                    $loc = $data['country_name'];
+                }else{
+                    $loc = DEFAULT_MAP_LOCATION;
+                }
             }else{
-                $loc = 'United States';
+                $loc = DEFAULT_MAP_LOCATION;
             }
             ?>
             var geocoder;
