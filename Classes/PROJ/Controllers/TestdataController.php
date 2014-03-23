@@ -22,18 +22,20 @@ class TestdataController extends BaseController
     public function createAction(){
          $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
         $instituteE = new \PROJ\Entities\Institute(); 
-        $instituteE->setName("Avans");
+        $instituteE->setName("Avans Hogeschool");
         $instituteE->setType("education");
-        $instituteE->setLat(51);
-        $instituteE->setLong(5);
+        $instituteE->setPlace("`s-Hertogenbosch");
+        $instituteE->setLat(51.688946);
+        $instituteE->setLong(5.287256);
         $em->persist($instituteE);
         $em->flush();
         echo "Educational Institute test data has been added to the database successfully <br />";
         $instituteB = new \PROJ\Entities\Institute(); 
-        $instituteB->setName("Gateway");
+        $instituteB->setName("McDonald's");
         $instituteB->setType("business");
-        $instituteB->setLat(50);
-        $instituteB->setLong(6);
+        $instituteB->setPlace("Arnhem");
+        $instituteB->setLat(51.9635996);
+        $instituteB->setLong(5.8930421);
         $em->persist($instituteB);
         $em->flush();
         echo "Business Institute test data has been added to the database successfully <br />";
