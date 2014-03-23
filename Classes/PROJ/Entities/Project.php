@@ -66,6 +66,9 @@ class Project {
     public function getStudent() {
         return $this->student;
     }
+    public function getType() {
+        return $this->type;
+    }
 
     public function setStartdate($startdatum) {
         $this->startdate = $startdatum;
@@ -86,6 +89,18 @@ class Project {
     public function setStudent($student) {
         $this->student = $student;
     }
+    public function setType($type) {
+        $this->type = $type;
+    }
+
+    public function jsonSerialize() {
+        return array(
+            
+            "review" => $this->getReview(),
+            "author" => $this->getStudent()
+        );
+    }
+
 }
 
 ?>

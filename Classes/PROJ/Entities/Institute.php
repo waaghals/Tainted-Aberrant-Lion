@@ -31,7 +31,8 @@ class Institute {
     /**
      * @Column(type="float")
      */
-    private $long;
+
+    private $lng;
     
     /**
      * @Column(type="string")
@@ -41,6 +42,7 @@ class Institute {
     /**
      * @OneToMany(targetEntity="\PROJ\Entities\Project", mappedBy="institute", cascade={"remove"})
      */
+    
     private $projects;
     
     
@@ -65,7 +67,7 @@ class Institute {
     }
 
     public function getLong() {
-        return $this->long;
+        return $this->lng;
     }
 
     public function getProjects() {
@@ -77,7 +79,7 @@ class Institute {
     }
 
     public function setLong($long) {
-        $this->long = $long;
+        $this->lng = $long;
     }
 
     public function setProjects($projects) {
@@ -97,13 +99,18 @@ class Institute {
         $this->type = $type;
     }
 
-    public function getPlace() {
-        return $this->place;
+    public function jsonSerialize() {
+        return array(
+            "type" => $this->getType(),
+            "name" => $this->getName(),
+            "lat" => $this->getLat(),
+            "long" => $this->getLong(),
+            "id" => $this->getId(),
+            "projects" => $this->getProjects()
+        );
     }
-
-    public function setPlace($place) {
+ public function setPlace($place) {
         $this->place = $place;
     }
 }
-
 ?>
