@@ -61,7 +61,10 @@ class AjaxController extends BaseController {
         $q = $em->createQuery($dql);
 
         $res = $q->getArrayResult();
+
         echo json_encode($res);
+
+        \Doctrine\Common\Util\Debug::dump($res, 3);
     }
 
     public function locationReviewAction($lid = 1) {
@@ -76,6 +79,21 @@ class AjaxController extends BaseController {
         $instances = $em->getRepository('\PROJ\Entities\Institute')->find($lid);
 
         echo json_encode($instances);
+    }
+
+    public function getProjectInfoAction() {
+        $tag = filter_var($_POST['tag'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $em = DoctrineHelper::instance()->getEntityManager();
+        $qb = $em->createQueryBuilder();
+        $qb->select(array('student.firstname as studentname', 'student.surname as studentsurname', 'student.email', 'review.text', 'institute.name as institutename', 'review.rating', 'institute.lat', 'institute.long'))
+                ->from('\PROJ\Entities\Review', 'review')->leftJoin('review.project', 'project')->leftJoin('project.institute', 'institute')->leftJoin('project.student', 'student')
+                ->where($qb->expr()->like("review.text", $qb->expr()->literal("%" . $tag . "%")));
+        $result = $qb->getQuery()->getResult();
+        for ($i = 0; $i < count($result); $i++) {
+            $result[$i]["text"] = substr($result[$i]["text"], 0, 50);
+        }
+        $_SESSION['searchresult'] = $result;
+        echo json_encode($result);
     }
 
 }
