@@ -63,8 +63,6 @@ class AjaxController extends BaseController {
         $res = $q->getArrayResult();
 
         echo json_encode($res);
-
-        \Doctrine\Common\Util\Debug::dump($res, 3);
     }
 
     public function locationReviewAction($lid = 1) {
