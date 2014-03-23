@@ -19,7 +19,7 @@ class TestdataController extends BaseController
 
 {
   
-    public function createTestdataAction(){
+    public function createAction(){
          $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
         $instituteE = new \PROJ\Entities\Institute(); 
         $instituteE->setName("Avans");
@@ -28,7 +28,7 @@ class TestdataController extends BaseController
         $instituteE->setLong(5);
         $em->persist($instituteE);
         $em->flush();
-        echo "Educational Institute test data has been added to the database succesfully <br />";
+        echo "Educational Institute test data has been added to the database successfully <br />";
         $instituteB = new \PROJ\Entities\Institute(); 
         $instituteB->setName("Gateway");
         $instituteB->setType("business");
@@ -36,102 +36,68 @@ class TestdataController extends BaseController
         $instituteB->setLong(6);
         $em->persist($instituteB);
         $em->flush();
-        echo "Business Institute test data has been added to the database succesfully <br />";
-        $student = new \PROJ\Entities\Student(); 
-        $student->setFirstname("harry");
-        $student->setSurname("bakker");
-        $student->setCity("utrecht");
-        $student->setAccount(null);
-        $student->setStreet("teststraat");
-        $student->setHousenumber(15);
-        $student->setEmail("faggot@fag.nl");
-        $student->setZipcode("3500AB");
-        $em->persist($student);
+        echo "Business Institute test data has been added to the database successfully <br />";
+        $studentB = new \PROJ\Entities\Student(); 
+        $studentB->setFirstname("harry");
+        $studentB->setSurname("bakker");
+        $studentB->setCity("utrecht");
+        $studentB->setAccount(null);
+        $studentB->setStreet("teststraat");
+        $studentB->setHousenumber(15);
+        $studentB->setEmail("h.bakker@student.avans.nl");
+        $studentB->setZipcode("3500AB");
+        $em->persist($studentB);
         $em->flush();
-        echo "New student test data has been added to the database succesfully <br />";
-        $project = new \PROJ\Entities\Project(); 
-        $project->setInstitute(null);
-        $project->setStartdate("2014-03-17");
-        $project->setendDate("2014-05-17");
-        $project->setStudent(null);
-        $project->setType("internship");
-        $em->persist($project);
+        echo "New student with a business institute test data has been added to the database successfully <br />";
+        $studentE = new \PROJ\Entities\Student(); 
+        $studentE->setFirstname("Kees");
+        $studentE->setSurname("Jansen");
+        $studentE->setCity("eindhoven");
+        $studentE->setAccount(null);
+        $studentE->setStreet("teststraat");
+        $studentE->setHousenumber(15);
+        $studentE->setEmail("k.jansen@student.avans.nl");
+        $studentE->setZipcode("3500AB");
+        $em->persist($studentE);
         $em->flush();
-        echo "New project test data has been added to the database succesfully <br />";
-        $review = new \PROJ\Entities\Review(); 
-        $review->setProject(null);
-        $review->setRating(11);
-        $review->setText("Good things happend here");
-        $em->persist($review);
-        $em->flush();
-        echo "New review test data has been added to the database succesfully<br />";
-    }
-    
-    // each testdata for each table. 
-    public function createEduInstiTDAction(){
-        $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
-        $institute = new \PROJ\Entities\Institute(); 
-        $institute->setName("Avans");
-        $institute->setType("education");
-        $institute->setLat(51);
-        $institute->setLong(5);
-        $em->persist($institute);
-        $em->flush();
-        echo "Educational Institute test data has been added to the database succesfully \n";
+        echo "New student with a educational institute test data has been added to the database successfully <br />";
         
-    }
-    public function createBusinstiTDAction(){
-        $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
-        $institute = new \PROJ\Entities\Institute(); 
-        $institute->setName("Gateway");
-        $institute->setType("business");
-        $institute->setLat(50);
-        $institute->setLong(6);
-        $em->persist($institute);
+        $projectB = new \PROJ\Entities\Project(); 
+        $projectB->setInstitute($instituteB);
+        $projectB->setStartdate($startDate = new \DateTime('03/17/2014'));
+        $projectB->setendDate($endDate = new \DateTime('05/17/2014'));
+        $projectB->setStudent($studentB);
+        $projectB->setType("internship");
+        $em->persist($projectB);
         $em->flush();
-    echo "Business Institute test data has been added to the database succesfully \n";
-
-    }
-
-        public function createStudentAction(){
-        $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
-        $student = new \PROJ\Entities\Student(); 
-        $student->setFirstname("harry");
-        $student->setSurname("bakker");
-        $student->setCity("utrecht");
-        $student->setAccount(null);
-        $student->setStreet("teststraat");
-        $student->setHousenumber(15);
-        $student->setEmail("faggot@fag.nl");
-        $student->setZipcode("3500AB");
-        $em->persist($student);
+        echo "New project with a business institute test data has been added to the database succesfully <br />";
+        
+        $projectE = new \PROJ\Entities\Project(); 
+        $projectE->setInstitute($instituteE);
+        $projectE->setStartdate($startDate = new \DateTime('02/04/2014'));
+        $projectE->setendDate($endDate = new \DateTime('06/20/2014'));
+        $projectE->setStudent($studentE);
+        $projectE->setType("minor");
+        $em->persist($projectE);
         $em->flush();
-        echo "New student test data has been added to the database succesfully";
-
-    }
-    public function createProjectAction(){
-        $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
-        $project = new \PROJ\Entities\Project(); 
-        $project->setInstitute(1);
-        $project->setStartdate("2014-03-17");
-        $project->setendDate("2014-05-17");
-        $project->setStudent(1);
-        $em->persist($project);
+        echo "New project with a educational institute test data has been added to the database succesfully <br />";
+        
+        $reviewB = new \PROJ\Entities\Review(); 
+        $reviewB->setProject($projectB);
+        $reviewB->setRating(5);
+        $reviewB->setText("Good things happend here B");
+        $em->persist($reviewB);
         $em->flush();
-        echo "New project test data has been added to the database succesfully";
-
-    }
-    public function createReview(){
-        $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
-        $review = new \PROJ\Entities\Review(); 
-        $review->setProject(null);
-        $review->setRating(11);
-        $review->setText("Good things happend here");
-        $em->persist($review);
+        echo "New review with a business institute test data has been added to the database successfully<br />";
+        
+        $reviewE = new \PROJ\Entities\Review(); 
+        $reviewE->setProject($projectE);
+        $reviewE->setRating(4);
+        $reviewE->setText("Good things happend here");
+        $em->persist($reviewE);
         $em->flush();
-        echo "New review test data has been added to the database succesfully<br />";
-
-    }
+        echo "New review with a educational institute test data has been added to the database successfully<br />";
+    }   
 }
 ?>
 
