@@ -10,39 +10,25 @@ use PROJ\Tools\Template;
  * Description of AccountController
  *
  * @author Patrick
+ * @author Thijs
  */
-//session_destroy();
+
 class AccountController extends BaseController {
 
     public function loginAction() {
-        $l = new \PROJ\Views\Login();
         $accountService = new AccountService();
-
+        
+        $t = new Template("Login");
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $validCredentials = $accountService->Login($_POST['username'], $_POST['password']);
+        }
+        
         $loggedIn = $accountService->isLoggedIn();
-        var_dump($loggedIn);
         if ($loggedIn) {
             HeaderHelper::redirect("/");
             return;
         }
-
-        if (isset($_POST['loginBTN'])) {
-            //Login button pressed
-
-            $validCredentials = $accountService->checkLoginCredentials($_POST['username'], $_POST['password']);
-
-            if ($validCredentials) {
-                //Remove any broken sessions
-                session_destroy();
-                $accountService->doLogin($_POST['username']);
-                HeaderHelper::redirect("/");
-                return;
-            } else {
-                $l->setLoginError("Incorrect Credentials");
-            }
-        }
-
-        //Show login screen
-        echo $l->getContent();
+        echo $t;
     }
 
     public function logoutAction() {
@@ -57,8 +43,8 @@ class AccountController extends BaseController {
             //Form submitted
             $accountService = new AccountService();
             $error = $accountService->validateInput($_POST);
-            $hasErrors = ($error !== true);
-
+            $hasErrors = ($error !== false);
+            
             if (!$hasErrors) {
                 $account = $accountService->createAccount($_POST);
                 $accountService->createStudent($account, $_POST);

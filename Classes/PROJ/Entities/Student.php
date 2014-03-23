@@ -49,7 +49,7 @@ class Student {
     private $addition;
 
     /**
-     * @Column(type="string")
+     * @Column(type="string", nullable=true)
      */
     private $email;
 
@@ -63,6 +63,7 @@ class Student {
      */
     private $project;
 
+    
     public function getId() {
         return $this->id;
     }
