@@ -11,7 +11,7 @@ class RegistrationTest extends \PHPUnit_Framework_TestCase {
 
     public function __construct() {
        // $this->ResetData();
-        $$this->service = new AccountService();
+        $this->service = new AccountService();
     }
 
     public function ResetData() {
@@ -28,7 +28,7 @@ class RegistrationTest extends \PHPUnit_Framework_TestCase {
     public function testRegistrationInputValidationCheckPass() {
         $this->ResetData();
 
-        $this->assertEquals($$this->service->validateInput($this->dummydata), true);
+        $this->assertEquals($this->service->validateInput($this->dummydata), true);
     }
 
     public function testRegistraionInputValidationUsernameFail() {
@@ -36,7 +36,7 @@ class RegistrationTest extends \PHPUnit_Framework_TestCase {
 
         $this->dummydata['username'] = "<script>alert('hoi');</script>";
 
-        $this->assertNotEquals($$this->service->validateInput($this->dummydata), true);
+        $this->assertNotEquals($this->service->validateInput($this->dummydata), true);
     }
 
     public function testRegistraionInputValidationPasswordNotEquals() {
@@ -44,7 +44,7 @@ class RegistrationTest extends \PHPUnit_Framework_TestCase {
 
         $this->dummydata['passwordagain'] = "NotDummy";
 
-        $this->assertNotEquals($$this->service->validateInput($this->dummydata), true);
+        $this->assertNotEquals($this->service->validateInput($this->dummydata), true);
     }
     
     public function __toString() {
