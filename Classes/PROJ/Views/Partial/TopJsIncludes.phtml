@@ -70,7 +70,7 @@
                 $.each(data, function(i, location) {
                     console.log(location.name);
                     var marker = new google.maps.Marker({
-                        position: new google.maps.LatLng(location.lat, location.long),
+                        position: new google.maps.LatLng(location.lat, location.lng),
                         map: map,
                         icon: getIconPath(location.type),
                         animation: google.maps.Animation.NONE,
@@ -78,7 +78,7 @@
                         id: location.id
                     });
                     google.maps.event.addListener(marker, 'click', function() {
-                        map.setZoom(8);
+                        map.setZoom(16);
                         map.setCenter(marker.getPosition());
                         console.log("Clicked on marker for: " + marker.title);
                         loadLocation(marker.id);
