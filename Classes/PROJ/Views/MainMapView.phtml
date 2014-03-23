@@ -9,6 +9,7 @@ echo $header;
 <div class="container">
     <?php
     $bar = new \PROJ\Tools\Template("Partial/TopBar");
+    $bar->search = true;
     echo $bar;
     ?>
     <main class="row clearfix">

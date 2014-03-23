@@ -83,11 +83,11 @@
 #right_col textarea {
     resize: none;
 }
-#headerbutton{
+.headerbutton{
     font-size: 12px;
-    margin-top: 3px;
+    margin-top: 6px;
     margin-right: 5px;
-    margin-bottom: 3px;
+    margin-bottom: 7px;
     float:right;
 }
 

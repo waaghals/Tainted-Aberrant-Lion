@@ -5,11 +5,14 @@ $ac = new PROJ\Services\AccountService();
     <nav>
         <a href="/">Kaart</a>  
         <?php if($ac->isLoggedIn()): ?>
-        <button id="headerbutton" onclick=location.href="/Account/Logout">Log uit</button>
-        <button id="headerbutton" >Welkom <?php echo sprintf("%s", $_SESSION['user']->getStudent()->getFirstname()); ?></button>
+        <button class="headerbutton" onclick=location.href="/Account/Logout">Log uit</button>
+        <button class="headerbutton" >Welkom <?php echo sprintf("%s", $_SESSION['user']->getStudent()->getFirstname()); ?></button>
         <?php else: ?>
-        <button id="headerbutton" onclick=location.href="/Account/Login">Log in</button>
-        <button id="headerbutton" onclick=location.href="/account/Register">Registreren</button>
+        <button class="headerbutton" onclick=location.href="/Account/Login">Log in</button>
+        <button class="headerbutton" onclick=location.href="/account/Register">Registreren</button>
+        <?php if(isset($search)) { ?>
+        <input id="searchbar" type="text" placeholder="Search">
+        <?php } ?>
         <?php endif; ?>
     </nav>
 </header>
