@@ -37,11 +37,28 @@ class TestdataController extends BaseController
         $em->persist($instituteB);
         $em->flush();
         echo "Business Institute test data has been added to the database successfully <br />";
+        
+        $accountJ = new \PROJ\Entities\Account();
+        $accountJ->setPassword("password");
+        $accountJ->setUsername("kjansen");
+        $accountJ->setSalt("test");
+        $em->persist($accountJ);
+        $em->flush();
+        echo "New account Jansen test data has been added to the database successfully<br />";
+        
+        $accountB = new \PROJ\Entities\Account();
+        $accountB->setPassword("password");
+        $accountB->setUsername("hbakker");
+        $accountB->setSalt("test");
+        $em->persist($accountB);
+        $em->flush();
+        echo "New account Bakker test data has been added to the database successfully<br />";
+        
         $studentB = new \PROJ\Entities\Student(); 
         $studentB->setFirstname("harry");
         $studentB->setSurname("bakker");
         $studentB->setCity("utrecht");
-        $studentB->setAccount(null);
+        $studentB->setAccount($accountB);
         $studentB->setStreet("teststraat");
         $studentB->setHousenumber(15);
         $studentB->setEmail("h.bakker@student.avans.nl");
@@ -49,11 +66,12 @@ class TestdataController extends BaseController
         $em->persist($studentB);
         $em->flush();
         echo "New student with a business institute test data has been added to the database successfully <br />";
+        
         $studentE = new \PROJ\Entities\Student(); 
         $studentE->setFirstname("Kees");
         $studentE->setSurname("Jansen");
         $studentE->setCity("eindhoven");
-        $studentE->setAccount(null);
+        $studentE->setAccount($accountJ);
         $studentE->setStreet("teststraat");
         $studentE->setHousenumber(15);
         $studentE->setEmail("k.jansen@student.avans.nl");
@@ -97,7 +115,8 @@ class TestdataController extends BaseController
         $em->persist($reviewE);
         $em->flush();
         echo "New review with a educational institute test data has been added to the database successfully<br />";
-    }   
+    }
 }
+
 ?>
 
