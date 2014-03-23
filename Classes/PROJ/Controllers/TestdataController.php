@@ -41,17 +41,21 @@ class TestdataController extends BaseController
         echo "Business Institute test data has been added to the database successfully <br />";
         
         $accountJ = new \PROJ\Entities\Account();
-        $accountJ->setPassword("password");
+        $salt = "HGJDGFSJHDFJHSDf";
+        $hash = hash('sha512', "qwerty" . $salt);
+        $accountJ->setPassword($hash);
         $accountJ->setUsername("kjansen");
-        $accountJ->setSalt("test");
+        $accountJ->setSalt($salt);
         $em->persist($accountJ);
         $em->flush();
         echo "New account Jansen test data has been added to the database successfully<br />";
         
         $accountB = new \PROJ\Entities\Account();
-        $accountB->setPassword("password");
+        $salt = "E*(%&YUIERHDGFER";
+        $hash = hash('sha512', "password" . $salt);
+        $accountB->setPassword($hash);
         $accountB->setUsername("hbakker");
-        $accountB->setSalt("test");
+        $accountB->setSalt($salt);
         $em->persist($accountB);
         $em->flush();
         echo "New account Bakker test data has been added to the database successfully<br />";
