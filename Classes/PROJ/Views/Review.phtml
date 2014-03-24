@@ -1,0 +1,34 @@
+<?php
+$header = new \PROJ\Tools\Template("Partial/Header");
+$header->title = "Contact Formulier";
+echo $header;
+?>
+
+<div class="container"> 
+    <h2>Review</h2>
+    <form method="post" class="review">
+        <input type='hidden' name='id' value='<?php echo $id; ?>' />
+        <div id="left_col">
+            <label id="text">Review de instantie:</label>
+        </div>
+        <div id="right_col">
+            <textarea name='review' cols='50' rows='10' required autofocus><?php echo $text; ?></textarea>
+        </div>
+        <div id="left_col">
+            <label id="rating">Geef de instantie een cijfer:</label>
+        </div>
+        <div id="right_col">
+            <select name='rating'>
+                <?php
+                for ($i = 1; $i <= 5; $i++) {
+                    if ($i == $grade) {
+                        echo "<option value='" . $i . "' selected='selected'>" . $i . "</option>";
+                    } else {
+                        echo "<option value='" . $i . "'>" . $i . "</option>";
+                    }
+                }
+                ?>
+            </select>
+        </div><input type="submit" name="submit" value="Send">
+    </form>
+</div>

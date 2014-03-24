@@ -1,0 +1,281 @@
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/js/jquery.hammer.js"></script>
+<script type="text/javascript" src="/js/flowtype.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
+<script type="text/javascript" src="/js/Search.js"></script>
+
+<script type="text/javascript">
+    var map; /* Main map variable */
+    var lastLoadedJson;
+    
+    function fakeMarkerClick(locationId, lat, lng) {
+        map.setZoom(16);
+        map.setCenter(new google.maps.LatLng(lat, lng));
+        loadLocation(locationId);
+        openSidebar();
+    }
+
+    function loadLocation(locationId) {
+        for (var i = 0; i < lastLoadedJson.length; i++) {
+            if (lastLoadedJson[i].id === locationId) {
+                showLocation(lastLoadedJson[i]);
+                return;
+            }
+        }
+    }
+
+    function loadJsonMarkers() {
+        console.log("Fetching all data from server");
+        $.getJSON('/ajax/allLocations/', function(data) {
+            lastLoadedJson = data;
+            console.log("Data received");
+            $.each(data, function(i, location) {
+                console.log(location.name);
+                var marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(location.lat, location.lng),
+                    map: map,
+                    icon: getIconPath(location.type),
+                    animation: google.maps.Animation.NONE,
+                    title: location.name,
+                    id: location.id
+                });
+                google.maps.event.addListener(marker, 'click', function() {
+                    map.setZoom(16);
+                    map.setCenter(marker.getPosition());
+                    console.log("Clicked on marker for: " + marker.title);
+                    loadLocation(marker.id);
+                    openSidebar();
+                });
+            });
+        });
+    }
+
+    function openSidebar() {
+        $("aside").removeClass('closed');
+    }
+
+    function closeSidebar() {
+        $("aside").addClass('closed');
+    }
+
+    function toggleSidebar() {
+        if (!$('aside').hasClass('closed')) {
+            closeSidebar();
+        } else {
+            openSidebar();
+        }
+    }
+
+    function getIconPath(iconName) {
+        var iconBase = '/images/';
+        switch (iconName)
+        {
+            case "education":
+                return iconBase + "university.png";
+            case "business":
+                return iconBase + "business.png";
+            default:
+                console.log("Error: Invalid icon name");
+                return "";
+        }
+    }
+    
+    
+    function loadReview(projectId) {
+        for (var i = 0; i < lastLoadedJson.length; i++) {
+            var projects = lastLoadedJson[i].projects;
+            for (var j = 0; j < projects.length; j++) {
+                project = projects[j];
+
+                if (project.id === projectId) {
+                    showReview(project, lastLoadedJson[i]);
+                    return;
+                }
+            }
+        }
+    }
+
+    function showLocation(location) {
+        console.log("Showing location " + location.name + " in the sidebar.")
+        var sidebar = $('aside');
+
+        sidebar.text("");
+        sidebarHeader = $('<div class="row clearfix"/>');
+        sidebarHeader.append("<h2 class=\"column full highlight\">" + location.name + "</h2>");
+        sidebarHeader.append("<h3 class=\"column half italic\">" + location.place + "</h3>");
+        sidebarHeader.append("<h3 class=\"column half\">" + location.type + "</h3>");
+        sidebar.append(sidebarHeader);
+        sidebarHeader.append("<p class=\"column half\">Door</p>");
+        sidebarHeader.append("<p class=\"column half\">Beoordeling</p>");
+
+        var row;
+        for (var i = 0; i < location.projects.length; i++) {
+            var project = location.projects[i];
+            sidebar.append("<div class=\"row clearfix reviewLink\" data-review-id=\"" + project.id + "\"><span class=\"column full\">" + project.student.firstname + " " + project.student.surname + "</span></div>");
+
+
+            row = $("<p class=\"row clearfix\">");
+            row.append("<span class=\"column half italic\">" + project.type + "</span>");
+
+            var stars = $("<span class=\"column half\"/>");
+            stars.append(getStars(project.review.rating));
+
+            row.append(stars);
+
+            sidebar.append(row);
+        }
+    }
+
+    function getStars(score) {
+
+        var stars = $("<span />");
+        for (var i = 0; i < 5; i++) { //5 max rating
+            if (score > i) {
+                stars.append("<span class=\"highlight\">&#10032;</span>");
+            } else {
+                stars.append("<span>&#10032;</span>");
+            }
+        }
+        return stars;
+    }
+
+        
+    function showReview(project, location) {
+        console.log("Showing review for " + location.name + " by " + project.student.firstname + " in the sidebar.")
+        var sidebar = $('aside');
+        sidebar.text("");
+        sidebarHeader = $('<div class="row clearfix"/>');
+        sidebarHeader.append("<h2 class=\"column full highlight\">" + location.name + "</h2>");
+        sidebarHeader.append("<h3 class=\"column half italic\">" + location.place + "</h3>");
+        sidebarHeader.append("<h3 class=\"column half\">" + location.type + "</h3>");
+        sidebar.append(sidebarHeader);
+
+        var container;
+
+        container = $("<div class=\"row clearfix\">");
+        container.append("<div class=\"column two-thirds\">" + project.review.text + "</div>");
+
+        var sideContent = $("<div class=\"column third\"/>");
+        sideContent.append("<p>Door: " + project.student.firstname + " " + project.student.surname + "</p>");
+        sideContent.append("<p>Type: " + project.type + "</p>");
+        sideContent.append("<p>Beoordeling: " + getStars(project.review.rating).html() + "</p>");
+        sideContent.append("<p>Neem contact op met : <a href=\"/contact/show/studentId=" + project.student.id + "/\">" + project.student.firstname + "</a></p>");
+        container.append(sideContent);
+
+        sidebar.append(container);
+    }
+        
+    $(document).ready(function() {
+
+        $('aside').flowtype({
+            minimum: 500,
+            maximum: 1200,
+            fontRatio: 50
+        });
+
+        $('aside').hammer().on('dragright', function(e) {
+            e.preventDefault();
+            openSidebar();
+        });
+        $('aside').on('dragleft', function(e) {
+            if (!$('aside').hasClass('closed')) {
+                e.preventDefault();
+                closeSidebar();
+            }
+        });
+        $('#swipeline').on('click', function(e) {
+            e.stopPropagation();
+            e.preventDefault();
+            toggleSidebar();
+        });
+
+        //subtrackt the header size from the map canvas, removing the scrollbar
+        function correctHeaderOffset() {
+            var h = $(window).height();
+            var headerHeight = $('header').height();
+            //Force fill screen, strange bug with maps
+            $('#map').css('height', h);
+            $('aside').css('top', headerHeight);
+            $('aside').css('height', h - headerHeight);
+        }
+
+
+        function initialize() {
+            var avansStyle = (function() {
+                var json = null;
+                $.ajax({
+                    'async': false,
+                    'global': false,
+                    'url': "/js/mapStyle.json",
+                    'dataType': "json",
+                    'success': function(data) {
+                        json = data;
+                    }
+                });
+                return json;
+            })();
+            <?php
+            //Ophalen van user location
+            $ch = curl_init(); 
+            curl_setopt($ch, CURLOPT_URL, 'http://freegeoip.net/json/'.$_SERVER['REMOTE_ADDR']); 
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            $json = strip_tags(trim(curl_exec($ch))); 
+            curl_close($ch);  
+            
+            if(strpos($json,'Bad Request') === false && strpos($json,'Not Found') === false) {
+                $data = json_decode($json, true);
+                if($data['country_code'] != 'Reserved') {
+                    $loc = $data['country_name'];
+                }else{
+                    $loc = DEFAULT_MAP_LOCATION;
+                }
+            }else{
+                $loc = DEFAULT_MAP_LOCATION;
+            }
+            ?>
+            var geocoder;
+            geocoder = new google.maps.Geocoder();
+            geocoder.geocode( { 'address': '<?php echo $loc; ?>'}, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) { 
+                    var mapOptions = {
+                        center: results[0].geometry.location,
+                        zoom: 8,
+                        streetViewControl: false,
+                        zoomControl: false,
+                        panControl: false,
+                        mapTypeControl: false,
+                        styles: avansStyle
+                    };
+                    map = new google.maps.Map(document.getElementById("map"),
+                            mapOptions);
+                    //Force absolute positioning after map tiles are loaded
+                    google.maps.event.addListener(map, 'tilesloaded', function() {
+                        document.getElementById('map').style.position = 'absolute';
+                    });
+                    //Correct the height of the map after resizing
+                    google.maps.event.addListener(map, 'resize', function() {
+                        var mainHeight = $('main').height();
+                        var headerHeight = $('header').height();
+                        $('#map').css('height', (mainHeight - headerHeight));
+                    });
+                    //Force a recalculation of the map height
+                    correctHeaderOffset();
+                    loadJsonMarkers();
+                }
+            });
+        }
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+        //Register the correctHeaderOffset callback on windows resizing.
+        $(window).resize(correctHeaderOffset).resize();
+
+        $(document).on("click", ".reviewLink", function(e) {
+            var pid = $(this).data('review-id');
+            loadReview(pid);
+        });
+    });
+
+
+
+</script>

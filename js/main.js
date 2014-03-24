@@ -1,16 +1,19 @@
-$(document).on( "click", ".AllReviews", function() {
-    $("#blackout_content").html('');
-    $('#blackout').fadeIn();
-    $.post("/ajax/getReviews/", { instantie: $(this).attr("instantie") }, function(data) {
-        $("#blackout_content").html('<div style="padding:10px;">' + data + '</data>');
+$(document).ready(function() {
+    $('#login_button').click(function() {
+        $(this).parent().parent().submit();
+    });
+    $('#register_button').click(function() {
+        $(this).parent().parent().submit();
     });
 });
-$(document).ready(function() {
-    $('#blackout').click(function() {
-        if(event.target.id === "blackout") {
-            $(this).fadeOut();
-            GMapsArray['gMap'].setZoom(9);
-            infowindow_gMap.close();
-        }
-    });
+
+$(document).keypress(function(e) {
+    if(e.which == 13) {
+        if($('#register_container').length !== 0)
+            $('#register_container').children()[0].submit();
+        if($('#login_container').length !== 0)
+            $('#login_container').children()[0].submit();
+        if($('#contact_container').length !== 0)
+            $('#contact_container').children()[0].submit();
+    }
 });

@@ -24,14 +24,9 @@ class Review {
     private $rating;
 
     /**
-     * @OneToOne(targetEntity="\PROJ\Entities\Stage", inversedBy="review")
+     * @OneToOne(targetEntity="\PROJ\Entities\Project", inversedBy="review")
      */
-    private $stage;
-
-    function __construct() {
-        $this->OneToManyRelation = new \Doctrine\Common\Collections\ArrayCollection;
-        $this->ManyToManyRelation = new \Doctrine\Common\Collections\ArrayCollection;
-    }
+    private $project;
 
     public function getId() {
         return $this->id;
@@ -45,10 +40,10 @@ class Review {
         return $this->rating;
     }
 
-    public function getStage() {
-        return $this->stage;
+    public function getProject() {
+        return $this->project;
     }
-    
+
     public function setText($text) {
         $this->text = $text;
     }
@@ -57,8 +52,8 @@ class Review {
         $this->rating = $rating;
     }
 
-    public function setStage($stage) {
-        $this->stage = $stage;
+    public function setProject($project) {
+        $this->project = $project;
     }
 
 }

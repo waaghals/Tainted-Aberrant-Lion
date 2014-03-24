@@ -1,0 +1,90 @@
+<?php
+$header = new \PROJ\Tools\Template("Partial/Header");
+$header->title = "Stagekaart";
+
+echo $header;
+
+?>
+
+<div class="container">
+    <?php
+    $bar = new \PROJ\Tools\Template("Partial/TopBar");
+    $bar->search = true;
+    echo $bar;
+    ?>
+    <main class="row clearfix">
+        <div id="map" class="column full">
+
+        </div>
+
+        <aside class="closed scrollable shadow">
+            <div class="row clearfix">
+                <div class="column full">
+                    <h2 id="instanceName">Naam</h2>
+                    <i id="instancePlace">Locatie</i>
+                    <h3 id="instanceType">Universiteit</h2>
+                </div>
+                <div class="column two-thirds">
+                    <i>Stage</i>
+                </div>
+                <div>
+                    <span class="highlight">&#10032;</span><span class="highlight">&#10032;</span><span class="highlight">&#10032;</span><span>&#10032;</span><span>&#10032;</span>
+                </div>
+            </div>
+            <div class="row clearfix">
+                <div class="column two-thirds">
+                    <h4>Werkzaamheden</h4>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                        Etiam a enim fermentum, tempor enim pretium, luctus erat.
+                        Aliquam vitae elit purus. Sed volutpat arcu a mi ultrices, 
+                        et condimentum metus vestibulum. Cras vitae commodo tortor. 
+                        Morbi semper metus id erat laoreet fringilla. 
+                        Aenean sit amet orci risus. 
+                        Mauris malesuada nibh quis porttitor congue. 
+                        Nam ante nunc, imperdiet eget felis vitae, porta gravida tortor. 
+                        Proin eleifend at diam aliquet pellentesque.
+                    </p>
+                    <h4>Huisvesting</h4>
+                    <p>
+                        Maecenas erat nibh, blandit ut lacinia vitae, tincidunt lobortis metus. 
+                        Nam vel arcu vel nibh feugiat rutrum id porttitor erat. 
+                        Donec tempus hendrerit mi. Donec porttitor libero nec faucibus interdum. 
+                        Fusce sollicitudin sapien ac neque dignissim, vel varius purus congue. 
+                        Ut nec orci non orci adipiscing sodales sit amet sed nibh. 
+                        Cras vel justo id felis dignissim ultrices. 
+                        Duis pellentesque facilisis accumsan. 
+                        In varius iaculis magna, vitae varius erat commodo volutpat. 
+                        Vestibulum imperdiet pretium leo, eget varius velit condimentum eu. 
+                        Suspendisse potenti. 
+                        Aliquam dapibus metus nisl, id dignissim leo molestie ut. 
+                        Donec diam nisi, convallis eu lectus sed, aliquam varius eros. 
+                        Integer at vestibulum ante, et tempus nunc. 
+                        Donec congue nibh non nulla porttitor feugiat.
+                    </p>
+                </div>
+                <div class="third">
+                    <h5>Patrick Berenschot</h5>
+                    <img src="http://m.c.lnkd.licdn.com/mpr/pub/image-tEpOllUkvAV__dsH809yTY8e_17efvHVq29LhlmO_x-1rktKtEpLWxxk_KuKrNkqRkAM/patrick-berenschot.jpg" />
+                    <p>Tweedejaars Software-Engineering student.</p>
+                    <h6>Neem contact op</h6>
+                    <ul>
+                        <li>
+                            <i class="fa fa-twitter highlight"></i>@Waaghals
+                        </li>
+                        <li>
+                            <i class="fa fa-linkedin highlight"></i>Patrick Berenschot
+                        </li>
+                        <li>
+                            <i class="fa fa-github highlight"></i>Waaghals
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </aside>
+    </main> <!-- end row -->
+</div>
+
+<?php
+echo new \PROJ\Tools\Template("Partial/Footer");
+?>

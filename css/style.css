@@ -1,0 +1,338 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 23-feb-2014, 22:57:38
+    Author     : Patrick
+*/
+
+
+/* Layout
+   ========================================================================== */
+
+/* Use border-box as default boz-sizing. */
+*, *:before, *:after {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+/* Small screens (default) 
+   Note the lack of column definitions
+   making all the columns stack for mobile viewing. */
+html {
+    font-family: "Open Sans", sans-serif;
+    font-weight: 400;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    font-size: 18px;
+    background-color:#ecf0f2;
+}
+
+h1,h2,h3,h4,h5,h6,p {
+    line-height: 1.45;
+}
+
+h1 { font-size: 4em; }
+h2 { font-size: 3em; }
+h2 { font-size: 2em; }
+h2 { font-size: 1.5em; }
+
+
+aside {
+    width: 200px;
+}
+aside.closed {
+    left: -160px;
+}
+.column { width: 100%; }
+
+/* Medium screens (640px) */
+@media (min-width: 40rem) {
+    .column {
+        float: left;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .column.full { width: 100%; }
+    .column.two-thirds { width: 66.7%; }
+    .column.half { width: 50%; }
+    .column.third { width: 33.3%; }
+    .column.fourth { width: 24.95%; }
+    .column.fifth { width: 20%; }
+    .column.two-fifth { width: 40%; }
+    .column.three-fifth { width: 60%; }
+    .column.four-fifth { width: 80%; }
+    .column.flow-opposite { float: right; }
+
+    aside { width: 450px; }
+
+    aside.closed {
+        left: -410px;
+    }
+}
+
+/* Large screens (1024px) */
+@media (min-width: 64rem) { 
+    aside { width: 600px; }
+    aside.closed {
+        left: -540px;
+    }
+}
+
+/* Huge screens (1200px) */
+@media (min-width: 85rem) { 
+    aside { width: 800px; }
+    aside.closed {
+        left: -740px;
+    }
+}
+
+
+
+html, body, .container {
+    height: 100%;
+}
+
+.container {
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Clearfix */
+.clearfix:before,
+.clearfix:after {
+    content: " ";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+.clearfix {
+    *zoom: 1;
+}
+
+/* <Styles>
+   ========================================================================== */
+#map {
+    height: 100%;
+}
+
+aside {
+    background-color: white;
+    position: absolute;
+    max-height: 100%;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+    background: #ffffff; /* Old browsers */
+    background: -moz-linear-gradient(top, #ffffff 0%, #e5e5e5 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e5e5e5)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #ffffff 0%,#e5e5e5 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #ffffff 0%,#e5e5e5 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #ffffff 0%,#e5e5e5 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #ffffff 0%,#e5e5e5 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */
+}
+
+.scrollable {
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+}
+
+.shadow {
+    -webkit-box-shadow: 2px 5px 10px 0px rgba(50, 50, 50, 0.75);
+    -moz-box-shadow:    2px 5px 10px 0px rgba(50, 50, 50, 0.75);
+    box-shadow:         2px 5px 10px 0px rgba(50, 50, 50, 0.75);
+}
+
+.highlight {
+    color: #d11d40;
+}
+
+ul {
+    list-style-type: none;
+}
+
+
+.italic {
+    font-style: italic;
+}
+
+.hidden { display:none; }
+
+.reviewLink {
+    cursor: pointer; 
+    cursor: hand;
+}
+#searchbar{
+    width:300px;
+}
+#searchresult p{
+    margin:0px;
+    padding:0px;
+    line-height: 1.25;
+}
+.resultspacer{
+    height:1px;
+    background-color: darkgray;
+    width:100%;
+    margin: 5px 0px 5px;
+}
+#searchresult{
+    display:none;
+    position: absolute;
+    width:100%;
+    margin-top: 2px;
+    padding:5px;
+    font-size:14px;
+    background: #ffffff; /* Old browsers */
+    background: -moz-linear-gradient(top, #ffffff 0%, #e5e5e5 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e5e5e5)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #ffffff 0%,#e5e5e5 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #ffffff 0%,#e5e5e5 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #ffffff 0%,#e5e5e5 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #ffffff 0%,#e5e5e5 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */
+    border:1px solid darkgray;
+}
+
+/*.reviewLink {
+    background: rgba(255,255,255,1);
+    background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(255,255,255,1)), color-stop(47%, rgba(246,246,246,1)), color-stop(100%, rgba(237,237,237,1)));
+    background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%);
+    background: -o-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%);
+    background: -ms-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%);
+    background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed', GradientType=0 );
+}*/
+/* Nav
+   ========================================================================== */
+
+/* Register
+   ========================================================================== */
+
+#register_container{
+    width: 704px;
+    height: 596px;
+    left: 50%;
+    top: 50%;
+    margin-left: -352px;
+    margin-top: -298px;
+    position: absolute;
+    color:#444444;
+}
+
+#register_container_tophalf {
+    width: 704px;
+    padding:20px 35px !important;
+    background-image: url('/images/register_center.png');
+}
+
+#register_container_bottomhalf {
+    width: 704px;
+    padding:13px 35px 10px !important;
+    background-image: url('/images/register_bottom_center.png');
+}
+
+/* Contact
+   ========================================================================== */
+
+#contact_container{
+    width: 342px;
+    height:636px;
+    left: 50%;
+    top: 50%;
+    margin-left: -171px;
+    margin-top:-318px;
+    position: absolute;
+    color:#444444;
+}
+
+#contact_container textarea {
+    line-height: normal;
+    font-size:14px;
+    width: 100%;
+    padding: 10px;
+    height: 250px;
+}
+
+
+/* Login
+   ========================================================================== */
+#login_container p, #register_container p, #contact_container p {
+    line-height: normal;
+    font-size:14px;
+}
+
+#login_container input, #register_container input, #contact_container input {
+    line-height: normal;
+    font-size:14px;
+    width: 100%;
+    padding: 10px;
+}
+
+#login_container .fancy_button, #register_container .fancy_button, #contact_container .fancy_button {
+    float:right;
+}
+
+#login_container{
+    width: 342px;
+    height: 270px;
+    left: 50%;
+    top: 50%;
+    margin-left: -171px;
+    margin-top: -135px;
+    position: absolute;
+    color:#444444;
+}
+
+#login_container *, #register_container *, #contact_container *{
+    padding:0px;
+    margin: 0px;
+    float:left;
+}
+
+#login_container_tophalf {
+    width: 342px;
+    padding:20px 35px !important;
+    background-image: url('/images/login_center.png');
+}
+
+#login_container_bottomhalf {
+    width: 342px;
+    padding:13px 35px 10px !important;
+    background-image: url('/images/login_bottom_center.png');
+}
+
+div.fancy_button {
+    height:33px;
+    cursor: pointer;
+}
+
+div.fancy_button img {
+    float:left;
+}
+
+div.fancy_button p {
+    float:left;
+    line-height: 33px !important;
+    padding: 0px 10px;
+    margin: 0px;
+    background-image: url('/images/btn_center.png');
+    color: #FFF;
+    font-weight: bold;
+}

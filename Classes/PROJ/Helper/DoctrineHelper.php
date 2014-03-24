@@ -53,8 +53,8 @@ class DoctrineHelper{
 
         $connectionOptions = array(
             'dbname' => 'Agile',        //Databasenaam
-            'user' => 'root',               //Username
-            'password' => '',           //Password
+            'user' => 'agile',               //Username
+            'password' => 'tpY8^jEX171/WL1',           //Password
             'host' => 'localhost',
             'driver' => 'pdo_mysql'
         );
