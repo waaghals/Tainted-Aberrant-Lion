@@ -1,20 +1,46 @@
 <?php
+use PROJ\Helper\XssHelper;
 $header = new \PROJ\Tools\Template("Partial/Header");
 $header->title = "Contact Formulier";
 
 echo $header;
-?>
 
-<div id="contact">
-    <form action="/contact/send/studentId=<?php echo $studentId; ?>/" method="post">
-        <div id="left_col"><label id="to">Aan:</label></div>
-        <div id="right_col"><input type="text" name="mailTo" value="<?php echo $studentName; ?>" disabled></div>
-        <div id="left_col"><label id="from">Van:</label></div>
-        <div id="right_col"><input type="email" name="mailFrom" autofocus></div>
-        <div id="left_col"><label id="subject">Onderwerp:</label></div>
-        <div id="right_col"><input type="text" name="mailSubject" ></div>
-        <div id="left_col"><label id="message">Bericht:</label></div>
-        <div id="right_col"><textarea rows="25" cols="50" name="mailContent"></textarea></div>
-        <input type="submit" name="submit" value="Send">
+$bar = new \PROJ\Tools\Template("Partial/TopBar");
+echo $bar;
+?>
+<div id="contact_container">
+    <form name='contact' method='post' enctype="multipart/form-data">
+        <img src="/images/login_top.png">
+        <div id="login_container_tophalf">
+            <?php if (isset($error)): ?>
+            <div class="alert" style="margin-bottom:20px; padding: 5px;">
+                 <p><?php echo $error; ?></p>
+            </div>
+            <div style="clear:both;"></div>
+            <?php endif; ?>
+            <p>To: *</p>
+            <input type="text" value="<?php echo $studentName; ?>" name="mailTo" style="margin-top: 10px;" disabled />
+            <p style="margin-top:15px;">From: *</p>
+            <input type="text" value="<?php echo(isset($_POST['mailFrom']) ? XssHelper::sanitizeInput($_POST['mailFrom']) : ''); ?>" name="mailFrom" style="margin-top: 10px;" autofocus />
+            <p style="margin-top:15px;">Subject: *</p>
+            <input type="text" value="<?php echo(isset($_POST['mailSubject']) ? XssHelper::sanitizeInput($_POST['mailSubject']) : ''); ?>" name="mailSubject" style="margin-top: 10px;" />
+            <p style="margin-top:15px;">Message: *</p>
+            <textarea name="mailContent" style="margin-top: 10px;"><?php echo(isset($_POST['mailContent']) ? XssHelper::sanitizeInput($_POST['mailContent']) : ''); ?></textarea>
+            <p style="margin-top:25px; font-size:10px; color: #a1a1a1;">Fields marked with asterisk (*) are required.</p>
+        </div>
+        <img src="/images/login_split.png">
+        <div id="login_container_bottomhalf">
+            <div class="fancy_button" id="login_button" style="left: 335px; top: 160px;">
+                <img src="/images/btn_left.png" />
+                <p>Send</p>
+                <img src="/images/btn_right.png" />
+            </div>
+        </div>
+        <img src="/images/login_bottom.png">
     </form>
 </div>
+
+<?php
+$footer = new \PROJ\Tools\Template("Partial/Footer");
+echo $footer;
+?>
