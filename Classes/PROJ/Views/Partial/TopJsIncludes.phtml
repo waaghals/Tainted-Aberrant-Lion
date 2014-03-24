@@ -4,6 +4,7 @@
 <script type="text/javascript" src="/js/flowtype.js"></script>
 <script type="text/javascript" src="/js/main.js"></script>
 <script type="text/javascript" src="/js/Search.js"></script>
+<script type="text/javascript" src="/js/markerclusterer.js"></script>
 
 <script type="text/javascript">
     var map; /* Main map variable */
@@ -26,6 +27,9 @@
     }
 
     function loadJsonMarkers() {
+        //Array of markers
+        var markers = new Array();
+        
         console.log("Fetching all data from server");
         $.getJSON('/ajax/allLocations/', function(data) {
             lastLoadedJson = data;
@@ -40,6 +44,10 @@
                     title: location.name,
                     id: location.id
                 });
+                
+                //Fills an array with markers
+                markers[i] = marker;
+                
                 google.maps.event.addListener(marker, 'click', function() {
                     map.setZoom(16);
                     map.setCenter(marker.getPosition());
@@ -48,6 +56,10 @@
                     openSidebar();
                 });
             });
+        
+            //Shows a marker instead of multiple markers around one place
+            var markerCluster = new MarkerClusterer(map, markers);
+            markerCluster.setGridSize(15);
         });
     }
 
@@ -259,6 +271,7 @@
                         var headerHeight = $('header').height();
                         $('#map').css('height', (mainHeight - headerHeight));
                     });
+                    
                     //Force a recalculation of the map height
                     correctHeaderOffset();
                     loadJsonMarkers();

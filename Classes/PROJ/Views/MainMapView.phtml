@@ -1,6 +1,7 @@
 <?php
 $header = new \PROJ\Tools\Template("Partial/Header");
-$header->title = "Stagekaart";
+$map = "Kaart";
+$header->title = $map;
 
 echo $header;
 
@@ -9,6 +10,7 @@ echo $header;
 <div class="container">
     <?php
     $bar = new \PROJ\Tools\Template("Partial/TopBar");
+    $bar->map = $map;
     $bar->search = true;
     echo $bar;
     ?>
