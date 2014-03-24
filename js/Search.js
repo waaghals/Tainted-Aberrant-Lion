@@ -5,30 +5,55 @@
  */
 function init() {
     key_count_global = 0; // Global variable
-    document.getElementById("searchbar").onkeypress = function() {
+    document.getElementById("searchbar").onkeydown = function() {
         key_count_global++;
-        setTimeout("lookup(" + key_count_global + ")", 750); //Function will be called 1 second after user types anything. Feel free to change this value.
+        setTimeout("lookup(" + key_count_global + ")", 750);
     }
 }
-window.onload = init; //or $(document).ready(init); - for jQuery
+window.onload = init;
 
 function lookup(key_count) {
-
-    if (key_count == key_count_global) {
-        // Do the ajax lookup here.
-        var http = new XMLHttpRequest();
-        var url = "Ajax/getProjectInfo/";
-        var params = "tag=" + document.getElementById("searchbar").value;
-        http.open("POST", url, true);
-        //Send the proper header information along with the request
-        http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        http.setRequestHeader("Content-length", params.length);
-        http.setRequestHeader("Connection", "close");
-        http.onreadystatechange = function() {//Call a function when the state changes.
-            if (http.readyState == 4 && http.status == 200) {
-                window.open("Search", '_blank', "height=500,width=500");
+    if (key_count == key_count_global && $('#searchbar').val().trim() !== "") {
+        $.post( "/Ajax/getProjectInfo/", { tag: $('#searchbar').val() }, function( data ) {
+            $('#searchresult').show();
+            $('#searchresult').html('');
+            $.each(data, function(i, result) {
+                //Review hit
+                if(result['matchedOn'] === "review") {
+                    var newelement = $("<div style='cursor:pointer;' onclick='fakeMarkerClick("+result['instituteid']+","+result['lat']+","+result['lng']+"); loadReview("+result['revid']+");'></div>").appendTo('#searchresult');
+                    newelement.append("<p style='font-weight:bold; margin-bottom:3px;'>Review by "+result['studentname']+" "+result['studentsurname']+"</p>");
+                    newelement.append("<p>"+result['text']+"</p>");
+                    if (i !== data.length - 1) {
+                        $('#searchresult').append("<div class='resultspacer'> </div>");
+                    }
+                }
+                
+                //Institute hit
+                if(result['matchedOn'] === "instname") {
+                    var newelement = $("<div style='cursor:pointer;' onclick='fakeMarkerClick("+result['instituteid']+","+result['lat']+","+result['lng']+")'></div>").appendTo('#searchresult');
+                    newelement.append("<p style='font-weight:bold; margin-bottom:3px;'> "+result['institutename']+"</p>");
+                    newelement.append("<p>"+result['instituteplace']+"</p>");
+                    if (i !== data.length - 1) {
+                        $('#searchresult').append("<div class='resultspacer'> </div>");
+                    }
+                }
+            });
+            if(data.length === 0) {
+                $('#searchresult').append("<p>No search results found.</p>");
             }
-        }
-        http.send(params);
+        }, "json");
     }
 }
+
+$(document).ready(function() {
+    $(document).click(function() {
+        $('#searchresult').hide();
+    });
+});
+$(document).keypress(function(e) {
+    if(e.which == 13) {
+        if($('#searchbar').is(":focus")) {
+            lookup(key_count_global);
+        }
+    }
+});

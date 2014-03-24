@@ -12,7 +12,13 @@ $ac = new PROJ\Services\AccountService();
         <button class="headerbutton" onclick=location.href="/account/Register">Registreren</button>
         <?php endif; ?>
         <?php if(isset($search)) { ?>
-        <input id="searchbar" type="text" placeholder="Search">
+        <div style="float:right; width:15px;">&nbsp;</div>
+        <div style="float:right; position: relative; margin: 3px 5px 3px 0px;">
+            <input id="searchbar" type="text" placeholder="Search">
+            <div id="searchresult">
+                
+            </div>
+        </div>
         <?php } ?>
     </nav>
 </header>

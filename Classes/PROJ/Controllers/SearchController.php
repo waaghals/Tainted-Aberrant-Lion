@@ -13,7 +13,7 @@ class SearchController extends BaseController {
             $html .= "<p>Er zijn geen reviews gevonden.</p>";
         } else {
             foreach ($searchresult as $value) {
-                $html .= "<p>Instituut naam: " . $value['institutename'] . "<br> Long: " . $value['long'] . "<br> Lat: " . $value['lat'] . "<br> Review: " . $value['text'] . "<br> Rating: " . $value['rating'] . "<br>Review door: " . $value['studentname'] . " " . $value['studentsurname'] . "<br>Email: " . $value['email'] . "</p>";
+                $html .= "<p>Instituut naam: " . $value['institutename'] . "<br> Long: " . $value['lng'] . "<br> Lat: " . $value['lat'] . "<br> Review: " . $value['text'] . "<br> Rating: " . $value['rating'] . "<br>Review door: " . $value['studentname'] . " " . $value['studentsurname'] . "<br>Email: " . $value['email'] . "</p>";
             }
         }
         echo $html;
