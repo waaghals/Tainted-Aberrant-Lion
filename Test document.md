@@ -151,17 +151,18 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
 1. Laad de homepage http://localhost/
     * Rechts boven is een zoekformulier zichtbaar.
 2. Vul het woord `things` _(Visitor must be able to insert a keyword.)_
-	* Er komt een pop-up. _(Results will be shown if found.
-)_
-	* In de pop-up staat informatie over de gevonden reviews.
+	* Er komt een dropdown met gevonden reviews.
+3. Klik op een resultaat  _(Results will be shown if found.)_
+	* De sidebar wordt geopend en de betreffende review wordt er in getoont.
+
 
 ###Zoeken naar niet bestaande review:
 
 1. Laad de homepage http://localhost/
     * Rechts boven is een zoekformulier zichtbaar.
 2. Vul het woord `nope`
-	* Er komt een pop-up.
-	* In de pop-up staat `Er zijn geen reviews gevonden`
+	* Er komt een dropdownp.
+	* In de dropdown staat `No search results found`
 
 
 
