@@ -13,5 +13,7 @@ $(document).keypress(function(e) {
             $('#register_container').children()[0].submit();
         if($('#login_container').length !== 0)
             $('#login_container').children()[0].submit();
+        if($('#contact_container').length !== 0)
+            $('#contact_container').children()[0].submit();
     }
 });

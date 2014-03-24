@@ -248,21 +248,44 @@ ul {
     background-image: url('/images/register_bottom_center.png');
 }
 
+/* Contact
+   ========================================================================== */
+
+#contact_container{
+    width: 342px;
+    height:636px;
+    left: 50%;
+    top: 50%;
+    margin-left: -171px;
+    margin-top:-318px;
+    position: absolute;
+    color:#444444;
+}
+
+#contact_container textarea {
+    line-height: normal;
+    font-size:14px;
+    width: 100%;
+    padding: 10px;
+    height: 250px;
+}
+
+
 /* Login
    ========================================================================== */
-#login_container p, #register_container p {
+#login_container p, #register_container p, #contact_container p {
     line-height: normal;
     font-size:14px;
 }
 
-#login_container input, #register_container input {
+#login_container input, #register_container input, #contact_container input {
     line-height: normal;
     font-size:14px;
     width: 100%;
     padding: 10px;
 }
 
-#login_container .fancy_button, #register_container .fancy_button {
+#login_container .fancy_button, #register_container .fancy_button, #contact_container .fancy_button {
     float:right;
 }
 
@@ -277,7 +300,7 @@ ul {
     color:#444444;
 }
 
-#login_container *, #register_container *{
+#login_container *, #register_container *, #contact_container *{
     padding:0px;
     margin: 0px;
     float:left;

@@ -18,32 +18,25 @@ class ContactController extends BaseController {
         $this->service = new ContactService();
     }
 
-    public function sendAction($studentId) {
-        if (!isset($_POST['submit'])) { 
-           //Form was not submitted, nothing to send.
-            $msg = "No post data was sent to the server.";
-            throw new ServerException($msg, ServerException::BAD_REQUEST);
-        }
-        
-        if (empty($_POST['mailFrom']) || !filter_var($_POST['mailFrom'], FILTER_SANITIZE_EMAIL))
-        {
-            header("Location: /contact/show/studentId=".$studentId."/");
-        }
-        else
-        {
-            $student = $this->service->getStudentById($studentId);
-
-            $this->service->sendMail($student->getEmail());
-            echo "Email send.";
-        }
-    }
-
     public function showAction($studentId) {
         $student = $this->service->getStudentById($studentId);
 
+        $t1 = new \PROJ\Tools\Template("ContactFormSucces");
         $t = new \PROJ\Tools\Template("ContactForm");
         $t->studentId = $studentId;
         $t->studentName = $student->getFullName();
+        
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (empty($_POST['mailFrom']) || empty($_POST['mailSubject']) || empty($_POST['mailContent'])) {
+                $t->error = "One of the fields isn't filled in.";
+            }else{
+                $student = $this->service->getStudentById($studentId);
+
+                $this->service->sendMail($student->getEmail());
+                echo $t1;
+                exit;
+            }
+        }
 
         echo $t;
     }
