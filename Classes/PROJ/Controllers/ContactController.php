@@ -29,6 +29,8 @@ class ContactController extends BaseController {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (empty($_POST['mailFrom']) || empty($_POST['mailSubject']) || empty($_POST['mailContent'])) {
                 $t->error = "One of the fields isn't filled in.";
+            }elseif(!filter_var($_POST['mailFrom'], FILTER_SANITIZE_EMAIL)) {
+                $t->error = "From field isn't a valid E-mail adress.";
             }else{
                 $student = $this->service->getStudentById($studentId);
 
