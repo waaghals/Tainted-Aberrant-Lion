@@ -32,7 +32,7 @@ class ReviewService {
 
     public function loadReviewCenter() {
         $em = DoctrineHelper::instance()->getEntityManager();
-        return $em->getRepository('PROJ\Entities\Project')->findBy(array('student' => $_SESSION['user']));
+        return $em->getRepository('PROJ\Entities\Project')->findBy(array('student' => $_SESSION['user']->getStudent()));
     }
 
 }
