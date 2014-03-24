@@ -11,6 +11,14 @@ echo $bar;
     <form name='login' method='post' enctype="multipart/form-data">
         <img src="/images/login_top.png">
         <div id="login_container_tophalf">
+            <?php if (isset($error)): ?>
+            <div class="alert" style="margin-bottom:20px; padding: 5px;">
+                 <p><?php echo $error; ?></p>
+            </div>
+            <div style="clear:both;"></div>
+            <?php
+            endif;
+            ?>
             <p>Username:</p>
             <input type="text" value="" name="username" style="margin-top: 10px;" />
             <p style="margin-top:15px;">Password:</p>
