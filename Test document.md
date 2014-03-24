@@ -155,6 +155,16 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
 3. Klik op een resultaat  _(Results will be shown if found.)_
 	* De sidebar wordt geopend en de betreffende review wordt er in getoont.
 
+###Zoeken naar bestaande locatie:
+
+1. Laad de homepage http://localhost/
+    * Rechts boven is een zoekformulier zichtbaar.
+2. Vul het woord `Avans` _(Visitor must be able to insert a keyword.)_
+	* Er komt een dropdown met `Avans Hogeschool` als resultaat.
+3. Klik op een resultaat  _(Results will be shown if found.)_
+	* De sidebar wordt geopend en de betreffende locatie wordt getoont.
+	* Het is mogelijk om vanaf hier de reviews van `Avans` de bekijken.
+
 
 ###Zoeken naar niet bestaande review:
 
