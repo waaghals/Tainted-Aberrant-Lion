@@ -80,18 +80,41 @@ class AjaxController extends BaseController {
     }
 
     public function getProjectInfoAction() {
+        $returnArray;
         $tag = filter_var($_POST['tag'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $em = DoctrineHelper::instance()->getEntityManager();
         $qb = $em->createQueryBuilder();
-        $qb->select(array('student.firstname as studentname', 'student.surname as studentsurname', 'student.email', 'review.text', 'institute.name as institutename', 'review.rating', 'institute.lat', 'institute.long'))
+        $qb->select(array('student.firstname as studentname', 'student.surname as studentsurname', 'student.email', 'review.text', 'institute.name as institutename', 'review.rating', 'review.id as revid', 'institute.id as instituteid', 'institute.lat', 'institute.lng'))
                 ->from('\PROJ\Entities\Review', 'review')->leftJoin('review.project', 'project')->leftJoin('project.institute', 'institute')->leftJoin('project.student', 'student')
-                ->where($qb->expr()->like("review.text", $qb->expr()->literal("%" . $tag . "%")));
+                ->where($qb->expr()->like("review.text", $qb->expr()->literal("%" . $tag . "%")))
+                ->orWhere($qb->expr()->like("student.firstname", $qb->expr()->literal("%" . $tag . "%")))
+                ->orWhere($qb->expr()->like("student.surname", $qb->expr()->literal("%" . $tag . "%")));
+        
         $result = $qb->getQuery()->getResult();
         for ($i = 0; $i < count($result); $i++) {
             $result[$i]["text"] = substr($result[$i]["text"], 0, 50);
+            $result[$i]["matchedOn"] = "review";
         }
-        $_SESSION['searchresult'] = $result;
-        echo json_encode($result);
+        $returnArray = $result;
+        
+        
+        $qb = $em->createQueryBuilder();
+        $qb->select(array('student.firstname as studentname', 'student.surname as studentsurname', 'student.email', 'review.text', 'institute.name as institutename', 'institute.place as instituteplace', 'institute.id as instituteid', 'review.rating', 'institute.lat', 'institute.lng'))
+                ->from('\PROJ\Entities\Review', 'review')->leftJoin('review.project', 'project')->leftJoin('project.institute', 'institute')->leftJoin('project.student', 'student')
+                ->where($qb->expr()->like("institute.name", $qb->expr()->literal("%" . $tag . "%")));
+        
+        $result = $qb->getQuery()->getResult();
+        for ($i = 0; $i < count($result); $i++) {
+            $result[$i]["text"] = substr($result[$i]["text"], 0, 50);
+            $result[$i]["matchedOn"] = "instname";
+        }
+        $returnArray = array_merge($returnArray,$result);
+        
+        //Max 8 results
+        array_splice($returnArray, 8);
+        
+        
+        echo json_encode($returnArray);
     }
 
 }

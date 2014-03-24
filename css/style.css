@@ -178,9 +178,35 @@ ul {
     cursor: hand;
 }
 #searchbar{
-    float:right;
-    padding-right: 15px;
-    margin: 3px 5px 3px 0px;
+    width:300px;
+}
+#searchresult p{
+    margin:0px;
+    padding:0px;
+    line-height: 1.25;
+}
+.resultspacer{
+    height:1px;
+    background-color: darkgray;
+    width:100%;
+    margin: 5px 0px 5px;
+}
+#searchresult{
+    display:none;
+    position: absolute;
+    width:100%;
+    margin-top: 2px;
+    padding:5px;
+    font-size:14px;
+    background: #ffffff; /* Old browsers */
+    background: -moz-linear-gradient(top, #ffffff 0%, #e5e5e5 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e5e5e5)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #ffffff 0%,#e5e5e5 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #ffffff 0%,#e5e5e5 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #ffffff 0%,#e5e5e5 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #ffffff 0%,#e5e5e5 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */
+    border:1px solid darkgray;
 }
 
 /*.reviewLink {
