@@ -37,7 +37,7 @@
             </tr>
             <tr>
                 <th>Instelling</th>
-                <th>cijfer</th>
+                <th>Type</th>
             </tr>
 <?php
 $i = 0;
@@ -47,7 +47,7 @@ foreach ($projects as $project) {
         ?>
                     <tr>
                         <th><?php echo $project->getInstitute()->getName(); ?></th>
-                        <th><?php echo $project->getReview()->getRating(); ?></th>
+                        <th><?php echo $project->getType(); ?></th>
                         <th><a href='/Review/Add/ProjectId=<?php echo $project->getId(); ?>'>Add</a></th>
                     </tr>
         <?php

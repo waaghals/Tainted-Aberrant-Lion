@@ -13,7 +13,6 @@ class ReviewController extends BaseController {
 
     public function __construct() {
         $accountService = new AccountService();
-        $accountService->doLogin("admin");
 
         if (!$accountService->isLoggedIn()){
             HeaderHelper::redirect("/Account/Login/");
