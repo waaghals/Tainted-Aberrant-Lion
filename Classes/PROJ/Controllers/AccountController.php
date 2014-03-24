@@ -21,6 +21,7 @@ class AccountController extends BaseController {
         $t = new Template("Login");
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $validCredentials = $accountService->Login($_POST['username'], $_POST['password']);
+            $t->error = $validCredentials;
         }
         
         $loggedIn = $accountService->isLoggedIn();
