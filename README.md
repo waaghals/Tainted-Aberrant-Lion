@@ -4,7 +4,11 @@ Tainted-Aberrant-Lion
 School project
 
 ##Versie
-Huidige versie is 0.1 na de eerste sprint. Deze is getagd als `Eerste Sprint` met git.
+Huidige versie is 0.2 na de derde sprint. Deze is getagd als `Derde Sprint` met git.
+Er zijn momenteel twee tags
+
+* Eerste_Sprint
+* Derde_Sprint
 
 
 ##Pagina's
