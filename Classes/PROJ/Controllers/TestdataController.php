@@ -121,6 +121,13 @@ class TestdataController extends BaseController
         $em->persist($reviewE);
         $em->flush();
         echo "New review with a educational institute test data has been added to the database successfully<br />";
+        
+        $registrationCode = new \PROJ\Entities\RegistrationCode();
+        $registrationCode->setCode("1234567890");
+        $registrationCode->setEmail("pat@example.com");
+        $em->persist($registrationCode);
+        $em->flush();
+        echo "New registrationcode has been added to the database succesfully <br />";
     }
 }
 
