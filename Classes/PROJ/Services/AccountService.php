@@ -62,7 +62,7 @@ class AccountService {
 
     public function validateInput($data) {
         if (empty($data['username']) || empty($data['password']) || empty($data['passwordagain']) || empty($data['firstname']) || empty($data['surname']) || empty($data['city']) || empty($data['zipcode']) || empty($data['street']) ||
-                empty($data['streetnumber'])) {
+                empty($data['streetnumber']) || empty($data['registrationcode'])) {
             return "Not everything is filled in";
         }
         foreach ($data as $input) {
@@ -77,7 +77,8 @@ class AccountService {
             return "Streetnumber is not a number";
         if (!($data['password'] === $data['passwordagain']))
             return "Passwords did not match";
-
+        if(!$this->checkRegistrationCode($data['registrationcode'], $data['email']))
+                return "Registration code is not valid.";
         //return "Registration succeeded!";
         return false;
     }
@@ -109,6 +110,19 @@ class AccountService {
         $student->setAccount($account);
         $em->persist($student);
         $em->flush();
+    }
+    
+    public function checkRegistrationCode($code, $email){
+        $em = DoctrineHelper::instance()->getEntityManager();
+        $result = $em->getRepository('PROJ\Entities\RegistrationCode')->findOneBy(array('email' => $email));
+
+        if($result != null)
+            if($result->getCode() === $code){
+                $em->remove($result);
+                $em->flush();
+                return true;
+            }
+        return false;
     }
 
     public function isLoggedIn() {
