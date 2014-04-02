@@ -8,6 +8,7 @@ and open the template in the editor.
     Author     : Patrick
 */
 
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,300,500,700);
 
 /* Layout
    ========================================================================== */
@@ -179,6 +180,9 @@ ul {
 }
 #searchbar{
     width:300px;
+    font-size: 14px;
+    margin-top:3px;
+    padding-left:3px;
 }
 #searchresult p{
     margin:0px;
@@ -221,6 +225,61 @@ ul {
 }*/
 /* Nav
    ========================================================================== */
+
+nav h2{
+    font-family: 'Roboto', sans-serif;
+    font-size:18px;
+    margin:0px;
+    font-weight:700;
+    color: #444444;
+    padding:0px;
+}
+nav h2 a{
+    color:inherit;
+    font-style: normal;
+    text-decoration: none;
+    padding:3px 30px;
+    display:block;
+}
+
+#closepannel{
+    height:100%;
+    position: absolute;
+    right:5px;
+}
+
+#closepannel img{
+    position: relative;
+    top: 50%;
+    margin-top: -39px;
+    cursor: pointer;
+}
+
+.spacerbar{
+    background-image: url('/images/spacerbar.png');
+    width:2px;
+    height:22px;
+    float:right;
+    margin-top:6px;
+}
+
+.filterblock{
+    float:right;
+    padding:3px 15px;
+    font-size:14px;
+}
+
+.filterblock div{
+    float:left;
+    font-size:14px;
+    margin-top:5px;
+    padding-right: 10px;
+}
+
+.filterblock select{
+    float:left;
+    margin-top:4px;
+}
 
 /* Register
    ========================================================================== */
