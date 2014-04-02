@@ -36,7 +36,7 @@ echo $bar;
                 <input name="surname" value="<?php echo(isset($_POST['surname']) ? XssHelper::sanitizeInput($_POST['surname']) : ''); ?>" type="text" style="margin-top: 10px;" maxlength="50" required />
             </div>
             <div style="width: 282px; float:left;">
-                <p>City:</p>
+                <p>City: *</p>
                 <input name="city" value="<?php echo(isset($_POST['city']) ? XssHelper::sanitizeInput($_POST['city']) : ''); ?>" type="text" style="margin-top: 10px;" required />
                 <p style="margin-top:15px;">Zip code: *</p>
                 <input name="zipcode" value="<?php echo(isset($_POST['zipcode']) ? XssHelper::sanitizeInput($_POST['zipcode']) : ''); ?>" type="text" style="margin-top: 10px;" maxlength="6" required />

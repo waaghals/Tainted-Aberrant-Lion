@@ -73,6 +73,6 @@ Probeer database handelingen zoveel mogelijk in een model te doen. Het makkelijk
 * Deployement script is getest en werkend met de nieuwe functionalitiet. 
 * Database wordt ook geupdate
 * Documentatie is bijgewerkt. 
-* Zodra een nieuwe functie voldoet aan de DOD mag de nieuwe functionaliteit in de DEV Branch worden gemerged 
+* Zodra een nieuwe functie klaar is, mag je zelf beslissen wanneer het word gepushed naar de dev branch 
 
 <br>
