@@ -190,6 +190,7 @@ Zipcode|6000AA
 Street|Straatnaam
 Streetnumber|12
 Addition|[leeg]
+Registration Code | [leeg]
 
 ###2. Correcte registreren waarden
 Veld|Waarde
@@ -204,3 +205,4 @@ Zipcode|6000AA
 Street|Straatnaam
 Streetnumber|12
 Addition|[leeg]
+Registration Code | 1234567890
