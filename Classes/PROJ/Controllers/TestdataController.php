@@ -11,17 +11,17 @@
  *
  * @author Dennis
  */
-
 use PROJ\Exceptions\ServerException;
+
 namespace PROJ\Controllers;
 
 class TestdataController extends BaseController
-
 {
-  
-    public function createAction(){
-         $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
-        $instituteE = new \PROJ\Entities\Institute(); 
+
+    public function createAction()
+    {
+        $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
+        $instituteE = new \PROJ\Entities\Institute();
         $instituteE->setName("Avans Hogeschool");
         $instituteE->setType("education");
         $instituteE->setPlace("`s-Hertogenbosch");
@@ -30,7 +30,7 @@ class TestdataController extends BaseController
         $em->persist($instituteE);
         $em->flush();
         echo "Educational Institute test data has been added to the database successfully <br />";
-        $instituteB = new \PROJ\Entities\Institute(); 
+        $instituteB = new \PROJ\Entities\Institute();
         $instituteB->setName("McDonald's");
         $instituteB->setType("business");
         $instituteB->setPlace("Arnhem");
@@ -39,7 +39,7 @@ class TestdataController extends BaseController
         $em->persist($instituteB);
         $em->flush();
         echo "Business Institute test data has been added to the database successfully <br />";
-        
+
         $accountJ = new \PROJ\Entities\Account();
         $salt = "HGJDGFSJHDFJHSDf";
         $hash = hash('sha512', "qwerty" . $salt);
@@ -49,7 +49,7 @@ class TestdataController extends BaseController
         $em->persist($accountJ);
         $em->flush();
         echo "New account Jansen test data has been added to the database successfully<br />";
-        
+
         $accountB = new \PROJ\Entities\Account();
         $salt = "E*(%&YUIERHDGFER";
         $hash = hash('sha512', "password" . $salt);
@@ -59,8 +59,8 @@ class TestdataController extends BaseController
         $em->persist($accountB);
         $em->flush();
         echo "New account Bakker test data has been added to the database successfully<br />";
-        
-        $studentB = new \PROJ\Entities\Student(); 
+
+        $studentB = new \PROJ\Entities\Student();
         $studentB->setFirstname("harry");
         $studentB->setSurname("bakker");
         $studentB->setCity("utrecht");
@@ -72,8 +72,8 @@ class TestdataController extends BaseController
         $em->persist($studentB);
         $em->flush();
         echo "New student with a business institute test data has been added to the database successfully <br />";
-        
-        $studentE = new \PROJ\Entities\Student(); 
+
+        $studentE = new \PROJ\Entities\Student();
         $studentE->setFirstname("Kees");
         $studentE->setSurname("Jansen");
         $studentE->setCity("eindhoven");
@@ -85,8 +85,8 @@ class TestdataController extends BaseController
         $em->persist($studentE);
         $em->flush();
         echo "New student with a educational institute test data has been added to the database successfully <br />";
-        
-        $projectB = new \PROJ\Entities\Project(); 
+
+        $projectB = new \PROJ\Entities\Project();
         $projectB->setInstitute($instituteB);
         $projectB->setStartdate($startDate = new \DateTime('03/17/2014'));
         $projectB->setendDate($endDate = new \DateTime('05/17/2014'));
@@ -95,8 +95,8 @@ class TestdataController extends BaseController
         $em->persist($projectB);
         $em->flush();
         echo "New project with a business institute test data has been added to the database succesfully <br />";
-        
-        $projectE = new \PROJ\Entities\Project(); 
+
+        $projectE = new \PROJ\Entities\Project();
         $projectE->setInstitute($instituteE);
         $projectE->setStartdate($startDate = new \DateTime('02/04/2014'));
         $projectE->setendDate($endDate = new \DateTime('06/20/2014'));
@@ -105,24 +105,31 @@ class TestdataController extends BaseController
         $em->persist($projectE);
         $em->flush();
         echo "New project with a educational institute test data has been added to the database succesfully <br />";
-        
-        $reviewB = new \PROJ\Entities\Review(); 
+
+        $reviewB = new \PROJ\Entities\Review();
         $reviewB->setProject($projectB);
         $reviewB->setRating(5);
         $reviewB->setText("Good things happend here B");
         $em->persist($reviewB);
         $em->flush();
         echo "New review with a business institute test data has been added to the database successfully<br />";
-        
-        $reviewE = new \PROJ\Entities\Review(); 
+
+        $reviewE = new \PROJ\Entities\Review();
         $reviewE->setProject($projectE);
         $reviewE->setRating(4);
         $reviewE->setText("Good things happend here");
         $em->persist($reviewE);
         $em->flush();
         echo "New review with a educational institute test data has been added to the database successfully<br />";
-    }
-}
 
+        $registrationCode = new \PROJ\Entities\RegistrationCode();
+        $registrationCode->setCode("1234567890");
+        $registrationCode->setEmail("pat@example.com");
+        $em->persist($registrationCode);
+        $em->flush();
+        echo "New registrationcode has been added to the database succesfully <br />";
+    }
+
+}
 ?>
 
