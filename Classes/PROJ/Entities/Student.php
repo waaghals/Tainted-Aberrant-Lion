@@ -26,6 +26,11 @@ class Student {
     /**
      * @Column(type="string")
      */
+    private $country;
+
+    /**
+     * @Column(type="string")
+     */
     private $city;
 
     /**
@@ -150,6 +155,14 @@ class Student {
 
     public function getFullName() {
         return sprintf("%s %s", $this->firstname, $this->surname);
+    }
+    
+    public function getCountry() {
+        return $this->country;
+    }
+
+    public function setCountry($country) {
+        $this->country = $country;
     }
 
 }
