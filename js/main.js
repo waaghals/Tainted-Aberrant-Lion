@@ -5,6 +5,12 @@ $(document).ready(function() {
     $('#register_button').click(function() {
         $(this).parent().parent().submit();
     });
+    $('#management_cancel').click(function() {
+        window.location = location.href;
+    });
+    $('#management_save').click(function() {
+        $(this).parent().parent().submit();
+    });
 });
 
 $(document).keypress(function(e) {
