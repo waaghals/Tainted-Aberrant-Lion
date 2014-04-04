@@ -27,9 +27,7 @@ $(document).ready(function() {
     
     $('#create_location').click(function() {
         $(this).hide();
-        console.log(';test');
         $.post( "/Ajax/CreateLocation", $( "[name='create_location_form']" ).serialize(), function(data) {
-            console.log(data);
             if(data == "succes") {
                 $('#blackout').fadeOut(function() {
                     location.reload();
