@@ -8,14 +8,23 @@
 }
 
 #blackout_content{
-    width: 700px;
-    height: 800px;
+    width: 704px;
+    height: 596px;
     position: absolute;
     left:50%;
     top: 50%;
-    margin-left: -350px;
-    margin-top: -400px;
-    background-color: #FFFFFF;
+    margin-left: -352px;
+    margin-top: -315px;
+}
+
+#blackout_create_location{
+    width: 706px;
+    height: 634px;
+    position: absolute;
+    left:50%;
+    top: 50%;
+    margin-left: -352px;
+    margin-top: -317px;
 }
 
 #legenda{

@@ -68,7 +68,16 @@ class Student {
      */
     private $project;
 
+    /**
+     * @OneToMany(targetEntity="\PROJ\Entities\Institute", mappedBy="student", cascade={"remove"})
+     */
+    private $institutes;
     
+    function __construct() {
+        $this->institutes = new \Doctrine\Common\Collections\ArrayCollection;
+    }
+
+        
     public function getId() {
         return $this->id;
     }
@@ -163,6 +172,14 @@ class Student {
 
     public function setCountry($country) {
         $this->country = $country;
+    }
+    
+    public function getInstitutes() {
+        return $this->institutes;
+    }
+
+    public function setInstitutes($institutes) {
+        $this->institutes = $institutes;
     }
 
 }

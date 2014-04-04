@@ -219,7 +219,10 @@
             $('#management_right').css('width', w - leftbarWidth - 10);
             $('#management_container').css('margin-top', $('#management_container').height() / 8 + headerHeight);
             $('#management_container').css('margin-left', $('#management_container').width() / 8);
-            $("#management_container").children().first().css('height', ($("#management_container").height() - 52) / 100 * 94);
+            if($("#management_container").children().first().children().first().attr("id") !== "management_container_top")
+                $("#management_container").children().first().children().first().css('height', ($("#management_container").height() - 52) / 100 * 94);
+            else
+                $("#management_container").children().first().children('#scrollable').css('height', ($("#management_container").height() - 104) / 100 * 94);
         }
 
 

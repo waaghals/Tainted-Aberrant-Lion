@@ -282,6 +282,16 @@ ul {
     border-top: 1px solid #ffffff;
 }
 
+#management_container_top{
+    top:0px;
+    position: absolute;
+    height:50px;
+    background-color: #f2f6f8;
+    width:100%;
+    border-radius:5px;
+    border-top: 1px solid #ffffff;
+}
+
 #management_container_bottom .fancy_button{
     float:right;
     margin: 8px;
@@ -300,12 +310,64 @@ ul {
     float:left;
 }
 
+#blackout .left_container {
+    width:35%;
+    float:left;
+    text-align:right;
+    padding-top:4px;
+}
+
+#blackout .right_container {
+    width:60%;
+    float:left;
+}
+
+#blackout select{
+    margin-top: 10px;
+    line-height: normal;
+    font-size:14px;
+    width: 100%;
+    padding: 10px;
+}
+
 #management_container select{
     margin-top: 10px;
     line-height: normal;
     font-size:14px;
     width: 100%;
     padding: 10px;
+}
+
+.management_tab{
+    float:left;
+}
+
+
+.management_tab a{
+    float:left;
+    padding:16px 30px;
+    color:inherit;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.ManagementTable{
+    margin-top: 30px;
+    width: 100%;
+    text-align: left;
+}
+
+.ManagementTable tr{
+    margin-top: 30px;
+    border-bottom: 1px solid #dde0e8;
+}
+
+.ManagementTable tr:last-of-type{
+    border-bottom: none;
+}
+
+.ManagementTable th, .ManagementTable td{
+    padding:4px;
 }
 
 /* Nav
