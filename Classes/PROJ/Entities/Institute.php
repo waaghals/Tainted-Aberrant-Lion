@@ -38,6 +38,11 @@ class Institute {
      * @Column(type="string")
      */
     private $place;
+    
+    /**
+     * @Column(type="boolean")
+     */
+    private $aproved = 0;
 
     /**
      * @OneToMany(targetEntity="\PROJ\Entities\Project", mappedBy="institute", cascade={"remove"})
@@ -127,6 +132,14 @@ class Institute {
             "id" => $this->getId(),
             "projects" => $this->getProjects()
         );
+    }
+    
+    public function getAproved() {
+        return $this->aproved;
+    }
+
+    public function setAproved($aproved) {
+        $this->aproved = $aproved;
     }
 }
 ?>

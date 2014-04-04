@@ -15,15 +15,45 @@
             <div style="width:96%; margin: 2%; overflow: auto; margin-top:50px;" id="scrollable">
                 <table class="ManagementTable">
                     <tr>
+                        <th>Name:</th>
                         <th>Location:</th>
                         <th>Type:</th>
                         <th>Status:</th>
-                        <th></th>
-                        <th></th>
                     </tr>
+                    <?php
+                    $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
+                    $user = $em->getRepository('\PROJ\Entities\Account')->find($_SESSION['userID']);
+                    $qb = $em->createQueryBuilder();
+                    $qb->select('i')
+                            ->from('\PROJ\Entities\Institute', 'i')
+                            ->where($qb->expr()->eq('i.creator', $qb->expr()->literal($user->getStudent()->getId())))
+                            ->orderBy('i.name', 'ASC');
+                    $res = $qb->getQuery()->getResult();
+                    foreach($res as $r) {
+                        if($r->getAproved() == 0)
+                            $status = 'Pending';
+                        elseif($r->getAproved() == 1)
+                            $status = 'Aproved';
+                        else
+                            $status = 'Declined';
+                    ?>
                     <tr>
-                        <td colspan="4"><p>No locations found</p>
+                        <td><p><?php echo $r->getName(); ?></p></td>
+                        <td><p><?php echo $r->getPlace(); ?></p></td>
+                        <td><p><?php echo ucfirst($r->getType()); ?></p></td>
+                        <td><p><?php echo $status; ?></p></td>
+                    </tr> 
+                    <?php
+                    }
+                    
+                    if(count($res) == 0) {
+                    ?>
+                    <tr>
+                        <td colspan="4"><p>No locations found</p></td>
                     </tr>
+                    <?php
+                    }
+                    ?>
                 </table>
             </div>
             <div style="width:100%; position: absolute; bottom: 50px; height:1px; background-color: #dde0e8;">
