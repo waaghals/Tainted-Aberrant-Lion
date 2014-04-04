@@ -1,4 +1,9 @@
 <?php
+use PROJ\Helper\XssHelper;
+
+$em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
+$user = $em->getRepository('\PROJ\Entities\Account')->find($_SESSION['userID'])->getStudent();
+
 $header = new \PROJ\Tools\Template("Partial/Header");
 $header->title = "User Management";
 
@@ -7,17 +12,137 @@ echo $header;
 $bar = new \PROJ\Tools\Template("Partial/TopBar");
 echo $bar;
 
-$content = new \PROJ\Tools\Template("Management/".$page);
+$content = new \PROJ\Tools\Template("Management/" . $page);
 $content->additionalValues = $additionalValues;
 ?>
+<div id="blackout">
+    <div id="blackout_create_location">
+        <div id="register_container">
+            <form name='create_location_form' method='post' enctype="multipart/form-data">
+                <img src="/images/register_top.png">
+                <div id="register_container_tophalf">
+                    <div class="alert" id="addLocationError" style="display:none; margin-bottom:20px; padding: 5px;">
+                         <p></p>
+                    </div>
+                    <p style="font-weight:bold; margin-bottom:15px;">Please enter the details of the company you did your Minor/Internship/Etc. :</p>
+                    <div style="clear:both;"></div>
+                    
+                    <div class="left_container">
+                        <p style="padding-top:18px;">Type: *</p>
+                    </div>
+                    <div style="width:5%; float:left;">&nbsp;</div>
+                    <div class="right_container">
+                        <select name="type" required autofocus>
+                            <option value="">-- Select a type --</option>
+                            <option value="education">Education</option>
+                            <option value="business">Business</option>
+                        </select>
+                    </div>
+                    <div style="clear:both;"></div>
+                    
+                    <div class="left_container">
+                        <p style="padding-top:18px;">Company's Name: *</p>
+                    </div>
+                    <div style="width:5%; float:left;">&nbsp;</div>
+                    <div class="right_container">
+                        <input name="name" value="" type="text" style="margin-top: 10px;" maxlength="50" />
+                    </div>
+                    <div style="clear:both;"></div>
+                    
+                    <div class="left_container">
+                        <p style="padding-top:18px;">Company's Country: *</p>
+                    </div>
+                    <div style="width:5%; float:left;">&nbsp;</div>
+                    <div class="right_container">
+                        <select name="country" required autofocus>
+                            <option value="">-- Select a country --</option>
+                            <?php
+                            foreach($em->getRepository('\PROJ\Entities\Country')->findAll() as $res) {
+                                echo('<option value="'.$res->getId().'">'.$res->getName().'</option>');
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div style="clear:both;"></div>
+                    
+                    <div class="left_container">
+                        <p style="padding-top:18px;">Company's City: *</p>
+                    </div>
+                    <div style="width:5%; float:left;">&nbsp;</div>
+                    <div class="right_container">
+                        <input name="city" value="" type="text" style="margin-top: 10px;" maxlength="50" />
+                    </div>
+                    <div style="clear:both;"></div>
+                    
+                    <div class="left_container">
+                        <p style="padding-top:18px;">Company's Street: *</p>
+                    </div>
+                    <div style="width:5%; float:left;">&nbsp;</div>
+                    <div class="right_container">
+                        <input name="street" value="" type="text" style="margin-top: 10px;" maxlength="50" />
+                    </div>
+                    <div style="clear:both;"></div>
+                    
+                    <div class="left_container">
+                        <p style="padding-top:18px;">Company's House number: *</p>
+                    </div>
+                    <div style="width:5%; float:left;">&nbsp;</div>
+                    <div class="right_container">
+                        <input name="housenumber" value="" type="text" style="margin-top: 10px;" maxlength="50" />
+                    </div>
+                    <div style="clear:both;"></div>
+                    
+                    <div class="left_container">
+                        <p style="padding-top:18px;">Company's Postal code: *</p>
+                    </div>
+                    <div style="width:5%; float:left;">&nbsp;</div>
+                    <div class="right_container">
+                        <input name="postalcode" value="" type="text" style="margin-top: 10px;" maxlength="6" />
+                    </div>
+                    <div style="clear:both;"></div>
+                    
+                    <div class="left_container">
+                        <p style="padding-top:18px;">Contact's E-mail: *</p>
+                    </div>
+                    <div style="width:5%; float:left;">&nbsp;</div>
+                    <div class="right_container">
+                        <input name="email" value="" type="text" style="margin-top: 10px;" />
+                    </div>
+                    <div style="clear:both;"></div>
+                    
+                    <div class="left_container">
+                        <p style="padding-top:18px;">Contact's Telephone Number:</p>
+                    </div>
+                    <div style="width:5%; float:left;">&nbsp;</div>
+                    <div class="right_container">
+                        <input name="telephone" value="" type="text" style="margin-top: 10px;" maxlength="50" />
+                    </div>
+                    <div style="clear:both;"></div>
+
+
+                    <p style="margin-top:25px; font-size:10px; color: #a1a1a1;">Fields marked with asterisk (*) are required.</p>
+                </div>
+                <img src="/images/register_split.png">
+                <div id="register_container_bottomhalf">
+                    <div class="fancy_button" id="create_location" style="left: 335px; top: 160px;">
+                        <img src="/images/btn_left.png" />
+                        <p>Create Location</p>
+                        <img src="/images/btn_right.png" />
+                    </div>
+                </div>
+                <img src="/images/register_bottom.png">
+            </form>
+        </div>
+    </div>
+</div>
 <div id="management_left">
     <h2>Management</h2>
-    
+
     <div class="menuitem" style="border-top:1px solid #d2dce1; margin-top:20px;">
         <a href="/Management/Home">Home</a>
     </div>
     <div class="menuitem">
-        <a href="/Management/Account">Reviews</a>
+        <a href="/Management/MyReviews">Reviews & Locations</a>
     </div>
     <div class="menuitem">
         <a href="/Management/MyAccount">My Account</a>
@@ -25,11 +150,14 @@ $content->additionalValues = $additionalValues;
     <div class="menuitem">
         <a href="/Management/ChangePassword">Change Password</a>
     </div>
-    
+
     <h2>Coordinator</h2>
-    
+
     <div class="menuitem" style="border-top:1px solid #d2dce1; margin-top:20px;">
         <a href="/Management/Home">Users</a>
+    </div>
+    <div class="menuitem">
+        <a href="/Management/Account">Locations</a>
     </div>
     <div class="menuitem">
         <a href="/Management/Account">Reviews</a>

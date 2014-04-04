@@ -42,14 +42,18 @@ class Institute {
     /**
      * @OneToMany(targetEntity="\PROJ\Entities\Project", mappedBy="institute", cascade={"remove"})
      */
-    
     private $projects;
+
+    /**
+     * @ManyToOne(targetEntity="\PROJ\Entities\Student", inversedBy="institutes")
+     */
+    private $creator;
     
     
     function __construct() {
         $this->projects = new \Doctrine\Common\Collections\ArrayCollection;
     }
-
+    
     public function getId() {
         return $this->id;
     }
@@ -58,47 +62,62 @@ class Institute {
         return $this->name;
     }
 
-    public function setName($name) {
-        $this->name = $name;
+    public function getType() {
+        return $this->type;
     }
 
     public function getLat() {
         return $this->lat;
     }
 
-    public function getLong() {
+    public function getLng() {
         return $this->lng;
+    }
+
+    public function getPlace() {
+        return $this->place;
     }
 
     public function getProjects() {
         return $this->projects;
     }
 
-    public function setLat($lat) {
-        $this->lat = $lat;
+    public function getCreator() {
+        return $this->creator;
     }
 
-    public function setLong($long) {
-        $this->lng = $long;
-    }
-
-    public function setProjects($projects) {
-        $this->projects = $projects;
-    }
-
-    public function addProjects($projects) {
-        $this->projects->add($projects);
-        $projects->setInstitute($this);
-    }
-
-    public function getType() {
-        return $this->type;
+    public function setId($id) {
+        $this->id = $id;
     }
 
     public function setType($type) {
         $this->type = $type;
     }
 
+    public function setLat($lat) {
+        $this->lat = $lat;
+    }
+
+    public function setLng($lng) {
+        $this->lng = $lng;
+    }
+
+    public function setPlace($place) {
+        $this->place = $place;
+    }
+
+    public function setProjects($projects) {
+        $this->projects = $projects;
+    }
+
+    public function setCreator($creator) {
+        $this->creator = $creator;
+    }
+    
+    public function setName($name) {
+        $this->name = $name;
+    }
+    
     public function jsonSerialize() {
         return array(
             "type" => $this->getType(),
@@ -108,9 +127,6 @@ class Institute {
             "id" => $this->getId(),
             "projects" => $this->getProjects()
         );
-    }
- public function setPlace($place) {
-        $this->place = $place;
     }
 }
 ?>
