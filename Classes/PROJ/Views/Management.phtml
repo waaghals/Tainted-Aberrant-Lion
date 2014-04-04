@@ -1,0 +1,48 @@
+<?php
+$header = new \PROJ\Tools\Template("Partial/Header");
+$header->title = "User Management";
+
+echo $header;
+
+$bar = new \PROJ\Tools\Template("Partial/TopBar");
+echo $bar;
+
+$content = new \PROJ\Tools\Template("Management/".$page);
+$content->additionalValues = $additionalValues;
+?>
+<div id="management_left">
+    <h2>Management</h2>
+    
+    <div class="menuitem">
+        <a href="/Management/Home">Home</a>
+    </div>
+    <div class="menuitem">
+        <a href="/Management/Account">Reviews</a>
+    </div>
+    <div class="menuitem">
+        <a href="/Management/Account">My Account</a>
+    </div>
+    <div class="menuitem">
+        <a href="/Management/Account">Change Password</a>
+    </div>
+    
+    <h2>Coordinator</h2>
+    
+    <div class="menuitem">
+        <a href="/Management/Home">Users</a>
+    </div>
+    <div class="menuitem">
+        <a href="/Management/Account">Reviews</a>
+    </div>
+    <div class="menuitem">
+        <a href="/Management/Account">Projects</a>
+    </div>
+</div>
+
+<?php
+echo $content;
+
+
+$footer = new \PROJ\Tools\Template("Partial/Footer");
+echo $footer;
+?>
