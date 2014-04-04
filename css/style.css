@@ -246,11 +246,6 @@ ul {
     padding: 0px;
 }
 
-#management_left .menuitem:first-of-type{
-    border-top:1px solid #d2dce1;
-    margin-top:20px;
-}
-
 #management_left .menuitem{
     border-bottom:1px solid #d2dce1;
 }
