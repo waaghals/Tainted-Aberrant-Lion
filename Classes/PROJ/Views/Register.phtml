@@ -15,7 +15,7 @@ echo $bar;
     <form name='register' method='post' enctype="multipart/form-data">
         <img src="/images/register_top.png">
         <div id="register_container_tophalf">
-            <?php if ($hasErrors): ?>
+<?php if ($hasErrors): ?>
                 <div class="alert" style="margin-bottom:20px; padding: 5px;">
                     <p><?php echo $error; ?></p>
                 </div>

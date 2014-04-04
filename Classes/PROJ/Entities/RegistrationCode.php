@@ -5,7 +5,8 @@ namespace PROJ\Entities;
 /**
  * @Entity 
  */
-class RegistrationCode {
+class RegistrationCode
+{
 
     /**
      * @id @Column(type="string", unique=true)
@@ -16,7 +17,7 @@ class RegistrationCode {
      * @Column(type="string")
      */
     private $code;
-    
+
     public function getEmail()
     {
         return $this->email;
@@ -36,6 +37,5 @@ class RegistrationCode {
     {
         $this->code = $code;
     }
-
 
 }
