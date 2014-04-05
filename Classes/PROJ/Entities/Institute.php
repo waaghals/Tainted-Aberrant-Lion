@@ -42,7 +42,7 @@ class Institute {
     /**
      * @Column(type="boolean")
      */
-    private $aproved = 0;
+    private $aproved = 0;   // 0 = pending, 1 = aproved, 2 = declined
 
     /**
      * @OneToMany(targetEntity="\PROJ\Entities\Project", mappedBy="institute", cascade={"remove"})
