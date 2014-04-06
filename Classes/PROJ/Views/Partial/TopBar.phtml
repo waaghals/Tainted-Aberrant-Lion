@@ -3,11 +3,8 @@ $ac = new PROJ\Services\AccountService();
 ?>
 <header class="shadow">
     <nav>
-<<<<<<< HEAD
         <h2 style="float:left;"><a href="/">Worldmap</a></h2>
-=======
         <button class="headerbutton" onclick=location.href="/" style="float:left;"><?php echo $map; ?></button>
->>>>>>> f/Kaart
         <?php if($ac->isLoggedIn()): ?>
         <button class="headerbutton" onclick=location.href="/Account/Logout">Log uit</button>
         <button class="headerbutton" >Welcome <?php echo sprintf("%s", $_SESSION['user']->getStudent()->getFirstname()); ?></button>
