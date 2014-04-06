@@ -44,7 +44,9 @@ class ReviewController extends BaseController {
         $review = $this->reviewService->getReview($ReviewId);
         $t = new Template("Review");
         $t->text = (string) $review->gettext();
-        $t->grade = (int) $review->getrating();
+        $t->assgrade = (int) $review->getAssignmentRating();
+        $t->accgrade = (int) $review->getAccommodationRating();
+        $t->guigrade = (int) $review->getGuidanceRating();
         echo $t;
     }
 

@@ -21,7 +21,17 @@ class Review {
     /**
      * @Column(type="integer")
      */
-    private $rating;
+    private $assignmentrating;
+
+    /**
+     * @Column(type="integer")
+     */
+    private $guidancerating;
+
+    /**
+     * @Column(type="integer")
+     */
+    private $accommodationrating;
 
     /**
      * @OneToOne(targetEntity="\PROJ\Entities\Project", inversedBy="review")
@@ -36,8 +46,16 @@ class Review {
         return $this->text;
     }
 
-    public function getRating() {
-        return $this->rating;
+    public function getAssignmentRating() {
+        return $this->assignmentrating;
+    }
+
+    public function getGuidanceRating() {
+        return $this->guidancerating;
+    }
+
+    public function getAccommodationRating() {
+        return $this->accommodationrating;
     }
 
     public function getProject() {
@@ -48,8 +66,16 @@ class Review {
         $this->text = $text;
     }
 
-    public function setRating($rating) {
-        $this->rating = $rating;
+    public function setAssignmentRating($rating) {
+        $this->assignmentrating = $rating;
+    }
+
+    public function setGuidanceRating($rating) {
+        $this->guidancerating = $rating;
+    }
+
+    public function setAccommodationRating($rating) {
+        $this->accommodationrating = $rating;
     }
 
     public function setProject($project) {

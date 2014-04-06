@@ -108,7 +108,9 @@ class TestdataController extends BaseController
         
         $reviewB = new \PROJ\Entities\Review(); 
         $reviewB->setProject($projectB);
-        $reviewB->setRating(5);
+        $reviewB->setAssignmentRating(5);
+        $reviewB->setAccommodationRating(3);
+        $reviewB->setGuidanceRating(4);
         $reviewB->setText("Good things happend here B");
         $em->persist($reviewB);
         $em->flush();
@@ -116,7 +118,9 @@ class TestdataController extends BaseController
         
         $reviewE = new \PROJ\Entities\Review(); 
         $reviewE->setProject($projectE);
-        $reviewE->setRating(4);
+        $reviewE->setAssignmentRating(4);
+        $reviewE->setAccommodationRating(4);
+        $reviewE->setGuidanceRating(1);
         $reviewE->setText("Good things happend here");
         $em->persist($reviewE);
         $em->flush();

@@ -12,7 +12,9 @@ class Review extends MainPage {
             $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
             $newReview = new \PROJ\Entities\Review();
             $newReview->setText($_POST['review']);
-            $newReview->setRating($_POST['rating']);
+            $newReview->setAssignmentRating($_POST['assrating']);
+            $newReview->setAccommodationRating($_POST['accrating']);
+            $newReview->setGuidanceRating($_POST['guirating']);
             $em->persist($newReview);
             $em->flush();
         }
