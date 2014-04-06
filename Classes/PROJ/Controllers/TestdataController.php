@@ -43,7 +43,7 @@ class TestdataController extends BaseController {
         $institute->setType($type);
         $institute->setPlace($place);
         $institute->setLat($lat);
-        $institute->setLong($long);
+        $institute->setLng($long);
         $em->persist($institute);
         $em->flush();
         echo "Institute with the following data has been succesfully added to the database:"
