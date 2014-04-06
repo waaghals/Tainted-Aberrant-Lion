@@ -72,7 +72,7 @@ class TestdataController extends BaseController {
         return $account;
     }
 
-    private function createStudent($em, $fName, $sName, $street, $housenr, $zipcode, $city, $account, $email) {
+    private function createStudent($em, $fName, $sName, $street, $housenr, $zipcode, $city, $country, $account, $email) {
         $student = new Student();
         $student->setFirstname($fName);
         $student->setSurname($sName);
@@ -80,6 +80,7 @@ class TestdataController extends BaseController {
         $student->setHousenumber($housenr);
         $student->setZipcode($zipcode);
         $student->setCity($city);
+        $student->setCountry($country);
         $student->setAccount($account);
         $student->setEmail($email);
         $em->persist($student);
@@ -143,8 +144,8 @@ class TestdataController extends BaseController {
         $kjansen = $this->createUser($em, "kjansen", "qwerty", "HGJDGFSJHDFJHSDf");
         $hbakker = $this->createUser($em, "hbakker", "password", "E*(%&YUIERHDGFER");
 
-        $kees = $this->createStudent($em, "Kees", "Jansen", "Jansenlaan", 15, "1234AB", "eindhoven", $kjansen, "k.jansen@student.avans.nl");
-        $harry = $this->createStudent($em, "Harry", "Bakker", "Bakkersweg", 15, "5678CD", "utrecht", $hbakker, "h.bakker@student.avans.nl");
+        $kees = $this->createStudent($em, "Kees", "Jansen", "Jansenlaan", 15, "1234AB", "eindhoven", "netherlands", $kjansen, "k.jansen@student.avans.nl");
+        $harry = $this->createStudent($em, "Harry", "Bakker", "Bakkersweg", 15, "5678CD", "utrecht", "netherlands", $hbakker, "h.bakker@student.avans.nl");
 
         $projectX = $this->createProject($em, $kees, $avans, "internship", new \DateTime('03/17/2014'), new \DateTime('05/17/2014'));
         $projectZ = $this->createProject($em, $harry, $mac, "minor", new \DateTime('02/04/2014'), new \DateTime('06/20/2014'));
