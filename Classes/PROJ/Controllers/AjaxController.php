@@ -233,5 +233,49 @@ class AjaxController extends BaseController {
         
         echo 'succes';
      }
+    
+     public function createReviewAction() {
+        if (empty($_POST['project']) || (empty($_POST['assignment_score']) && @$_POST['assignment_score'] != 0) || empty($_POST['guidance_score'])
+                || empty($_POST['accomodation_score']) || empty($_POST['overall_score']) || empty($_POST['review'])) {
+            echo "Not everything is filled in";
+            return;
+        }
+        
+        if(!is_numeric($_POST['project']) || !is_numeric($_POST['assignment_score']) || !is_numeric($_POST['guidance_score']) || !is_numeric($_POST['accomodation_score']) || !is_numeric($_POST['overall_score']))
+            die();
+        
+        if($_POST['assignment_score'] > 5 || $_POST['assignment_score'] > 5 || $_POST['assignment_score'] > 5 || $_POST['guidance_score'] > 5)
+            die();
+        
+        $ac = new \PROJ\Services\AccountService();
+        if($ac->isLoggedIn()) {
+            $em = DoctrineHelper::instance()->getEntityManager();
+            $user = $em->getRepository('\PROJ\Entities\Account')->find($_SESSION['userID']);
+            $qb = $em->createQueryBuilder();
+            $qb->select('p.id')
+                    ->from('\PROJ\Entities\Project', 'p')
+                    ->where($qb->expr()->eq('p.student', $qb->expr()->literal($user->getStudent()->getId()))) ;
+            $res = $qb->getQuery()->getResult();
+
+            if(!in_array($_POST['project'], $res[0]))
+                die("Illegal Project");
+        
+        
+            $project = $em->getRepository('\PROJ\Entities\Project')->find($_POST['project']);
+            $review = new \PROJ\Entities\Review();
+            $review->setAccommodationRating($_POST['assignment_score']);
+            $review->setAssignmentRating($_POST['guidance_score']);
+            $review->setGuidanceRating($_POST['accomodation_score']);
+            $review->setProject($project);
+            $review->setRating($_POST['overall_score']);
+            $review->setText(\PROJ\Helper\XssHelper::sanitizeInput($_POST['review']));
+            $review->setAproved(0);
+            
+            $em->persist($review);
+            $em->flush();
+        }
+        
+        echo 'succes';
+     }
 
 }

@@ -39,6 +39,17 @@
     display:none;
 }
 
+#blackout_create_review{
+    width: 706px;
+    height: 390px;
+    position: absolute;
+    left:50%;
+    top: 50%;
+    margin-left: -352px;
+    margin-top: -195px;
+    display:none;
+}
+
 #legenda{
     padding:10px 20px;
     position: absolute;
