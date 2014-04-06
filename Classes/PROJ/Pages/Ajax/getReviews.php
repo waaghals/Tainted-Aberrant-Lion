@@ -16,7 +16,9 @@ class getReviews extends \PROJ\Pages\MainPage {
                     $r .= "<hr>"
                             . "<div style='text-align:right; width:100%;'>Review door: ".$stage->getStudent()->getVoornaam()." ".$stage->getStudent()->getAchternaam()."</div><br>"
                             . "<span style='font-style:italic'>".$stage->getReview()->getText()."</span><br>"
-                            . "<b>Rating: ".$stage->getReview()->getRating()."</b>"
+                            . "<b>Addignment Rating: ".$stage->getReview()->getAssignmentRating()."</b>"
+                            . "<b>Accomodation Rating: ".$stage->getReview()->getAccommodationRating()."</b>"
+                            . "<b>Guidance Rating: ".$stage->getReview()->getGuidanceRating()."</b>"
                             . "<hr>";
                 }
             }

@@ -190,7 +190,6 @@ Zipcode|6000AA
 Street|Straatnaam
 Streetnumber|12
 Addition|[leeg]
-Registration Code | [leeg]
 
 ###2. Correcte registreren waarden
 Veld|Waarde
@@ -205,4 +204,13 @@ Zipcode|6000AA
 Street|Straatnaam
 Streetnumber|12
 Addition|[leeg]
-Registration Code | 1234567890
+
+###Groeperen van markers:
+
+1.	Laad de homepage http://localhost/
+    * Er is een kaart zichtbaar
+2.	Zoom uit of in
+	* De hoeveelheid markers in een bepaald gebied wordt aangegeven door kleuren, het aantal markers, in dat gebied, staat in de 'groepeerings'-marker:
+	* Vanaf 1 tot en met 9 markers in het gebied, dan wordt de 'groepeerings'-marker blauw gekleurd.
+	* Vanaf 10 tot en met 99 markers in het gebied, dan wordt de 'groepeerings'-marker geel gekleurd.
+	* Vanaf 100 markers in het gebied, dan wordt de 'groepeerings'-marker rood gekleurd.
