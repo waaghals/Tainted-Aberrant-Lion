@@ -223,6 +223,162 @@ ul {
     background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed', GradientType=0 );
 }*/
+
+/* Management
+   ========================================================================== */
+
+#management_left{
+    background-color: #f2f6f8;
+    height: 100%;
+    width:20%;
+    border-right:1px solid #d2dce1;
+    float:left;
+    font-size: 16px;
+    min-width: 190px;
+}
+
+#management_left h2{
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    margin: 70px 0px 0px 20px;
+    font-weight: 700;
+    color: #444444;
+    padding: 0px;
+}
+
+#management_left .menuitem{
+    border-bottom:1px solid #d2dce1;
+}
+
+#management_left .menuitem a{
+    padding: 20px;
+    display:block;
+    color:inherit;
+    text-decoration: none;
+}
+
+#management_right{
+    float:left;
+    width:80%;
+}
+
+#management_container{
+    width: 80%;
+    height:80%;
+    background-color: #fefefe;
+    border-radius:5px;
+    border: 1px solid #d2dce1;
+    position: relative;
+    font-size:14px;
+}
+
+#management_container_bottom{
+    bottom:0px;
+    position: absolute;
+    height:50px;
+    background-color: #f2f6f8;
+    width:100%;
+    border-radius:5px;
+    border-top: 1px solid #ffffff;
+}
+
+#management_container_top{
+    top:0px;
+    position: absolute;
+    height:50px;
+    background-color: #f2f6f8;
+    width:100%;
+    border-radius:5px;
+    border-top: 1px solid #ffffff;
+}
+
+#management_container_bottom .fancy_button{
+    float:right;
+    margin: 8px;
+    font-size: 14px;
+}
+
+#management_container .left_container {
+    width:15%;
+    float:left;
+    text-align:right;
+    padding-top:4px;
+}
+
+#management_container .right_container {
+    width:80%;
+    float:left;
+}
+
+#blackout .left_container {
+    width:35%;
+    float:left;
+    text-align:right;
+    padding-top:4px;
+}
+
+#blackout .right_container {
+    width:60%;
+    float:left;
+}
+
+#blackout select{
+    margin-top: 10px;
+    line-height: normal;
+    font-size:14px;
+    width: 100%;
+    padding: 10px;
+}
+
+#blackout textarea{
+    margin-top: 10px;
+    line-height: normal;
+    font-size:14px;
+    width: 100%;
+    padding: 10px;
+    height: 300px;
+}
+
+#management_container select{
+    margin-top: 10px;
+    line-height: normal;
+    font-size:14px;
+    width: 100%;
+    padding: 10px;
+}
+
+.management_tab{
+    float:left;
+}
+
+
+.management_tab a{
+    float:left;
+    padding:16px 30px;
+    color:inherit;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.ManagementTable{
+    margin-top: 30px;
+    width: 100%;
+    text-align: left;
+}
+
+.ManagementTable tr{
+    margin-top: 30px;
+    border-bottom: 1px solid #dde0e8;
+}
+
+.ManagementTable tr:last-of-type{
+    border-bottom: none;
+}
+
+.ManagementTable th, .ManagementTable td{
+    padding:4px;
+}
+
 /* Nav
    ========================================================================== */
 
@@ -337,7 +493,7 @@ nav h2 a{
     font-size:14px;
 }
 
-#login_container input, #register_container input, #contact_container input {
+#login_container input, #register_container input, #contact_container input, #management_container input {
     line-height: normal;
     font-size:14px;
     width: 100%;
