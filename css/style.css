@@ -330,6 +330,15 @@ ul {
     padding: 10px;
 }
 
+#blackout textarea{
+    margin-top: 10px;
+    line-height: normal;
+    font-size:14px;
+    width: 100%;
+    padding: 10px;
+    height: 300px;
+}
+
 #management_container select{
     margin-top: 10px;
     line-height: normal;

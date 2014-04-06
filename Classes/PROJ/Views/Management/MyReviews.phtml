@@ -19,32 +19,35 @@
             <div style="width:96%; margin: 2%; overflow: auto; margin-top:50px;" id="scrollable">
                 <table class="ManagementTable">
                     <tr>
-                        <th>Name:</th>
                         <th>Location:</th>
-                        <th>Score:</th>
+                        <th>Type:</th>
+                        <th>Overall Score:</th>
                         <th>Status:</th>
                     </tr>
                     <?php
                     $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
                     $user = $em->getRepository('\PROJ\Entities\Account')->find($_SESSION['userID']);
                     $qb = $em->createQueryBuilder();
-                    $qb->select('i')
-                            ->from('\PROJ\Entities\Institute', 'i')
-                            ->where($qb->expr()->eq('i.creator', $qb->expr()->literal($user->getStudent()->getId())))
+                    $qb->select('i.place, i.name, p.type, r.rating, r.aproved')
+                            ->from('\PROJ\Entities\Review', 'r')
+                            ->leftJoin('r.project', 'p')
+                            ->leftJoin('p.institute', 'i')
+                            ->where($qb->expr()->eq('p.student', $qb->expr()->literal($user->getStudent()->getId())))
                             ->orderBy('i.name', 'ASC');
                     $res = $qb->getQuery()->getResult();
+                    
                     foreach($res as $r) {
-                        if($r->getAproved() == 0)
+                        if($r['aproved'] == 0)
                             $status = 'Pending';
-                        elseif($r->getAproved() == 1)
+                        elseif($r['aproved'] == 1)
                             $status = 'Aproved';
                         else
                             $status = 'Declined';
                     ?>
                     <tr>
-                        <td><p><?php echo $r->getName(); ?></p></td>
-                        <td><p><?php echo $r->getPlace(); ?></p></td>
-                        <td><p><?php echo ucfirst($r->getType()); ?></p></td>
+                        <td><p><?php echo $r['name'].' ('.$r['place'].')'; ?></p></td>
+                        <td><p><?php echo ucfirst($r['type']); ?></p></td>
+                        <td><p><?php echo $r['rating']; ?></p></td>
                         <td><p><?php echo $status; ?></p></td>
                     </tr> 
                     <?php
@@ -53,7 +56,7 @@
                     if(count($res) == 0) {
                     ?>
                     <tr>
-                        <td colspan="4"><p>No locations found</p></td>
+                        <td colspan="4"><p>No reviews found</p></td>
                     </tr>
                     <?php
                     }
@@ -63,7 +66,7 @@
             <div style="width:100%; position: absolute; bottom: 50px; height:1px; background-color: #dde0e8;">
             </div>
             <div id="management_container_bottom">
-                <div class="fancy_button" id="mylocation_add" style="left: 335px; top: 160px;">
+                <div class="fancy_button myreviews_add" style="left: 335px; top: 160px;">
                     <img src="/images/btn_left.png" />
                     <p>Write Review</p>
                     <img src="/images/btn_right.png" />
