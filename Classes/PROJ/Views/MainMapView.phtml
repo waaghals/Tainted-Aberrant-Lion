@@ -1,6 +1,11 @@
 <?php
 $header = new \PROJ\Tools\Template("Partial/Header");
+<<<<<<< HEAD
 $header->title = "Worldmap";
+=======
+$map = "Kaart";
+$header->title = $map;
+>>>>>>> f/Kaart
 
 echo $header;
 
@@ -9,6 +14,7 @@ echo $header;
 <div class="container">
     <?php
     $bar = new \PROJ\Tools\Template("Partial/TopBar");
+    $bar->map = $map;
     $bar->search = true;
     $bar->filter = true;
     echo $bar;
