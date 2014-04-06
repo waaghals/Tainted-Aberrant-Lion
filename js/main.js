@@ -1,3 +1,4 @@
+var goBackTo = null;
 $(document).ready(function() {
     $('#login_button').click(function() {
         $(this).parent().parent().submit();
@@ -13,13 +14,19 @@ $(document).ready(function() {
     });
     $('#mylocation_add').click(function() {
         $('#blackout').fadeIn();
-        $('#blackout_content').fadeIn();
+        $('#blackout_create_location').fadeIn();
+    });
+
+    $('#myprojects_add').click(function() {
+        $('#blackout').fadeIn();
+        $('#blackout_create_project').fadeIn();
     });
     
     $('#blackout').click(function(e) {
-        console.log($(event.target));
         if($(event.target).is($('#blackout'))) {
-            $('#blackout').fadeOut();
+            $('#blackout').fadeOut(function() {
+                $(this).children().hide();
+            });
         }else{
             e.preventDefault(); 
         }
@@ -35,6 +42,21 @@ $(document).ready(function() {
             }else{
                 $('#create_location').show();
                 $('#addLocationError').show().children().first().html(data);
+            }
+        });
+    });
+    
+    $('#create_project').click(function() {
+        $(this).hide();
+        $.post( "/Ajax/CreateProject", $( "[name='create_project_form']" ).serialize(), function(data) {
+            console.log(data);
+            if(data == "succes") {
+                $('#blackout').fadeOut(function() {
+                    location.reload();
+                });
+            }else{
+                $('#create_project').show();
+                $('#addProjectError').show().children().first().html(data);
             }
         });
     });

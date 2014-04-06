@@ -182,5 +182,56 @@ class AjaxController extends BaseController {
         
         echo 'succes';
      }
+    
+     public function createProjectAction() {
+        if (empty($_POST['type']) || empty($_POST['location']) || empty($_POST['start_year'])
+                || empty($_POST['start_month']) || empty($_POST['end_year']) || empty($_POST['end_month'])) {
+            echo "Not everything is filled in";
+            return;
+        }
+        
+        if(!is_numeric($_POST['start_year']) || !is_numeric($_POST['start_month']) || !is_numeric($_POST['end_year']) || !is_numeric($_POST['end_month']) || !is_numeric($_POST['location']))
+            die("");
+        
+        if($_POST['type'] != "minor" && $_POST['type'] != "internship" && $_POST['type'] != "graduation" && $_POST['type'] != "ESP")
+            die("");
+        
+        if(new \DateTime($_POST['start_year'].'-'.$_POST['start_month'].'-1') > new \DateTime($_POST['end_year'].'-'.$_POST['end_month'].'-1')) {
+            echo("Start date cannot be after Stop date");
+            return;
+        }
+        
+        $ac = new \PROJ\Services\AccountService();
+        if($ac->isLoggedIn()) {
+            $em = DoctrineHelper::instance()->getEntityManager();
+            $user = $em->getRepository('\PROJ\Entities\Account')->find($_SESSION['userID']);
+            $qb = $em->createQueryBuilder();
+            $qb->select('i.id')
+                    ->from('\PROJ\Entities\Institute', 'i')
+                    ->where($qb->expr()->eq('i.creator', $qb->expr()->literal($user->getStudent()->getId())))
+                    ->orWhere($qb->expr()->eq('i.aproved', '1'))
+                    ->orderBy('i.type', 'ASC');     
+            $res = $qb->getQuery()->getResult();
+
+            if(!in_array($_POST['location'], $res[0]))
+                die("Illegal Location");
+        
+        
+            $location = $em->getRepository('\PROJ\Entities\Institute')->find($_POST['location']);
+            $project = new \PROJ\Entities\Project();
+            $project->setAproved(0);
+            $project->setInstitute($location);
+            $project->setReview(null);
+            $project->setStartdate(new \DateTime($_POST['start_year'].'-'.$_POST['start_month'].'-1'));
+            $project->setendDate(new \DateTime($_POST['end_year'].'-'.$_POST['end_month'].'-1'));
+            $project->setStudent($user->getStudent());
+            $project->setType($_POST['type']);
+            
+            $em->persist($project);
+            $em->flush();
+        }
+        
+        echo 'succes';
+     }
 
 }
