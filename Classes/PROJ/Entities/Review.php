@@ -34,6 +34,16 @@ class Review {
     private $accommodationrating;
 
     /**
+     * @Column(type="integer")
+     */
+    private $rating;
+    
+    /**
+     * @Column(type="boolean")
+     */
+    private $aproved = 0;   // 0 = pending, 1 = aproved, 2 = declined
+
+    /**
      * @OneToOne(targetEntity="\PROJ\Entities\Project", inversedBy="review")
      */
     private $project;
@@ -81,7 +91,22 @@ class Review {
     public function setProject($project) {
         $this->project = $project;
     }
+    
+    public function getRating() {
+        return $this->rating;
+    }
 
+    public function setRating($rating) {
+        $this->rating = $rating;
+    }
+    
+    public function getAproved() {
+        return $this->aproved;
+    }
+
+    public function setAproved($aproved) {
+        $this->aproved = $aproved;
+    }
 }
 
 ?>
