@@ -8,14 +8,46 @@
 }
 
 #blackout_content{
-    width: 700px;
-    height: 800px;
+    width: 704px;
+    height: 596px;
     position: absolute;
     left:50%;
     top: 50%;
-    margin-left: -350px;
-    margin-top: -400px;
-    background-color: #FFFFFF;
+    margin-left: -352px;
+    margin-top: -315px;
+}
+
+#blackout_create_location{
+    width: 706px;
+    height: 634px;
+    position: absolute;
+    left:50%;
+    top: 50%;
+    margin-left: -352px;
+    margin-top: -317px;
+    display:none;
+}
+
+#blackout_create_project{
+    width: 706px;
+    height: 390px;
+    position: absolute;
+    left:50%;
+    top: 50%;
+    margin-left: -352px;
+    margin-top: -195px;
+    display:none;
+}
+
+#blackout_create_review{
+    width: 706px;
+    height: 390px;
+    position: absolute;
+    left:50%;
+    top: 50%;
+    margin-left: -352px;
+    margin-top: -195px;
+    display:none;
 }
 
 #legenda{
@@ -84,8 +116,8 @@
     resize: none;
 }
 .headerbutton{
-    font-size: 12px;
-    margin: 6px 5px 7px 5px;
+    font-size: 13px;
+    margin: 6px 5px 6px 5px;
     padding: 1px 10px;
     float:right;
 }

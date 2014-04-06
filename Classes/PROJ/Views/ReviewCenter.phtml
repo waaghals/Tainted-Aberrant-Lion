@@ -7,7 +7,9 @@
             </tr>
             <tr>
                 <th>Instelling</th>
-                <th>cijfer</th>
+                <th>Opdracht cijfer</th>
+                <th>Huisvesting cijfer</th>
+                <th>Begeleiding cijfer</th>
             </tr>
             <?php
             $i = 0;
@@ -17,7 +19,9 @@
                     ?>
                     <tr>
                         <th><?php echo $project->getInstitute()->getName(); ?></th>
-                        <th><?php echo $project->getReview()->getRating(); ?></th>
+                        <th><?php echo $project->getReview()->getAssignmentRating(); ?></th>
+                        <th><?php echo $project->getReview()->getAccommodationRating(); ?></th>
+                        <th><?php echo $project->getReview()->getGuidanceRating(); ?></th>
                         <th><a href='/Review/Edit/ReviewId=<?php echo $project->getReview()->getId(); ?>'>Edit</a></th>
                     </tr>
                     <?php

@@ -26,6 +26,11 @@ class Student {
     /**
      * @Column(type="string")
      */
+    private $country;
+
+    /**
+     * @Column(type="string")
+     */
     private $city;
 
     /**
@@ -63,7 +68,16 @@ class Student {
      */
     private $project;
 
+    /**
+     * @OneToMany(targetEntity="\PROJ\Entities\Institute", mappedBy="student", cascade={"remove"})
+     */
+    private $institutes;
     
+    function __construct() {
+        $this->institutes = new \Doctrine\Common\Collections\ArrayCollection;
+    }
+
+        
     public function getId() {
         return $this->id;
     }
@@ -150,6 +164,22 @@ class Student {
 
     public function getFullName() {
         return sprintf("%s %s", $this->firstname, $this->surname);
+    }
+    
+    public function getCountry() {
+        return $this->country;
+    }
+
+    public function setCountry($country) {
+        $this->country = $country;
+    }
+    
+    public function getInstitutes() {
+        return $this->institutes;
+    }
+
+    public function setInstitutes($institutes) {
+        $this->institutes = $institutes;
     }
 
 }

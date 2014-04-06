@@ -1,0 +1,73 @@
+<div id="management_right">
+    <div id="management_container">
+        <form name='management_account' method='post' enctype="multipart/form-data">
+            <div id="management_container_top">
+                <div class="management_tab">
+                    <a href="/Management/MyReviews/">My Reviews</a>
+                </div>
+                <div class="spacerbar" style="float:left; height:37px;"></div>
+                <div class="management_tab">
+                    <a href="/Management/MyProjects/">My Projects</a>
+                </div>
+                <div class="spacerbar" style="float:left; height:37px;"></div>
+                <div class="management_tab">
+                    <a href="/Management/MyLocations/">My Locations</a>
+                </div>
+            </div>
+            <div style="width:100%; position: absolute; top: 50px; height:1px; background-color: #dde0e8;">
+            </div>
+            <div style="width:96%; margin: 2%; overflow: auto; margin-top:50px;" id="scrollable">
+                <table class="ManagementTable">
+                    <tr>
+                        <th>Name:</th>
+                        <th>Location:</th>
+                        <th>Type:</th>
+                        <th>Status:</th>
+                    </tr>
+                    <?php
+                    $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
+                    $user = $em->getRepository('\PROJ\Entities\Account')->find($_SESSION['userID']);
+                    $qb = $em->createQueryBuilder();
+                    $qb->select('i')
+                            ->from('\PROJ\Entities\Institute', 'i')
+                            ->where($qb->expr()->eq('i.creator', $qb->expr()->literal($user->getStudent()->getId())))
+                            ->orderBy('i.name', 'ASC');
+                    $res = $qb->getQuery()->getResult();
+                    foreach($res as $r) {
+                        if($r->getAproved() == 0)
+                            $status = 'Pending';
+                        elseif($r->getAproved() == 1)
+                            $status = 'Aproved';
+                        else
+                            $status = 'Declined';
+                    ?>
+                    <tr>
+                        <td><p><?php echo $r->getName(); ?></p></td>
+                        <td><p><?php echo $r->getPlace(); ?></p></td>
+                        <td><p><?php echo ucfirst($r->getType()); ?></p></td>
+                        <td><p><?php echo $status; ?></p></td>
+                    </tr> 
+                    <?php
+                    }
+                    
+                    if(count($res) == 0) {
+                    ?>
+                    <tr>
+                        <td colspan="4"><p>No locations found</p></td>
+                    </tr>
+                    <?php
+                    }
+                    ?>
+                </table>
+            </div>
+            <div style="width:100%; position: absolute; bottom: 50px; height:1px; background-color: #dde0e8;">
+            </div>
+            <div id="management_container_bottom">
+                <div class="fancy_button mylocation_add" style="left: 335px; top: 160px;">
+                    <img src="/images/btn_left.png" />
+                    <p>Create New Location</p>
+                    <img src="/images/btn_right.png" />
+                </div>
+        </form>
+    </div>
+</div>

@@ -3,16 +3,22 @@ $ac = new PROJ\Services\AccountService();
 ?>
 <header class="shadow">
     <nav>
-        <button class="headerbutton" onclick=location.href="/" style="float:left;">Kaart</button>
+        <h2 style="float:left;"><a href="/">Worldmap</a></h2>
         <?php if($ac->isLoggedIn()): ?>
         <button class="headerbutton" onclick=location.href="/Account/Logout">Log uit</button>
-        <button class="headerbutton" >Welkom <?php echo sprintf("%s", $_SESSION['user']->getStudent()->getFirstname()); ?></button>
+        <button class="headerbutton" onclick=location.href="/Management/Home">Welcome <?php echo sprintf("%s", $_SESSION['user']->getStudent()->getFirstname()); ?></button>
         <?php else: ?>
         <button class="headerbutton" onclick=location.href="/Account/Login">Log in</button>
-        <button class="headerbutton" onclick=location.href="/account/Register">Registreren</button>
+        <button class="headerbutton" onclick=location.href="/account/Register">Register</button>
         <?php endif; ?>
         <?php if(isset($search)) { ?>
-        <div style="float:right; width:15px;">&nbsp;</div>
+        <div style="width:30px; float:right;">
+            &nbsp;
+        </div>
+        <div class="spacerbar"></div>
+        <div style="width:30px; float:right;">
+            &nbsp;
+        </div>
         <div style="float:right; position: relative; margin: 3px 5px 3px 0px;">
             <input id="searchbar" type="text" placeholder="Search">
             <div id="searchresult">
@@ -20,5 +26,34 @@ $ac = new PROJ\Services\AccountService();
             </div>
         </div>
         <?php } ?>
+        <!--
+        <?php if(isset($filter)) { ?>
+        <div style="width:30px; float:right;">
+            &nbsp;
+        </div>
+        <div class="spacerbar"></div>
+        <div style="width:15px; float:right;">
+            &nbsp;
+        </div>
+        <div class="filterblock">
+            <div>Type:</div>
+            <select>
+                <option>Internship</option>
+            </select>
+        </div>
+        <div class="filterblock">
+            <div>Region:</div>
+            <select>
+                <option>Brabant</option>
+            </select>
+        </div>
+        <div class="filterblock">
+            <div>Country:</div>
+            <select>
+                <option>Netherlands</option>
+            </select>
+        </div>
+        <?php } ?>
+        -->
     </nav>
 </header>

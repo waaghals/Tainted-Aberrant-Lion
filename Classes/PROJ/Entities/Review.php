@@ -21,7 +21,27 @@ class Review {
     /**
      * @Column(type="integer")
      */
+    private $assignmentrating;
+
+    /**
+     * @Column(type="integer")
+     */
+    private $guidancerating;
+
+    /**
+     * @Column(type="integer")
+     */
+    private $accommodationrating;
+
+    /**
+     * @Column(type="integer")
+     */
     private $rating;
+    
+    /**
+     * @Column(type="boolean")
+     */
+    private $aproved = 0;   // 0 = pending, 1 = aproved, 2 = declined
 
     /**
      * @OneToOne(targetEntity="\PROJ\Entities\Project", inversedBy="review")
@@ -36,8 +56,16 @@ class Review {
         return $this->text;
     }
 
-    public function getRating() {
-        return $this->rating;
+    public function getAssignmentRating() {
+        return $this->assignmentrating;
+    }
+
+    public function getGuidanceRating() {
+        return $this->guidancerating;
+    }
+
+    public function getAccommodationRating() {
+        return $this->accommodationrating;
     }
 
     public function getProject() {
@@ -48,14 +76,37 @@ class Review {
         $this->text = $text;
     }
 
-    public function setRating($rating) {
-        $this->rating = $rating;
+    public function setAssignmentRating($rating) {
+        $this->assignmentrating = $rating;
+    }
+
+    public function setGuidanceRating($rating) {
+        $this->guidancerating = $rating;
+    }
+
+    public function setAccommodationRating($rating) {
+        $this->accommodationrating = $rating;
     }
 
     public function setProject($project) {
         $this->project = $project;
     }
+    
+    public function getRating() {
+        return $this->rating;
+    }
 
+    public function setRating($rating) {
+        $this->rating = $rating;
+    }
+    
+    public function getAproved() {
+        return $this->aproved;
+    }
+
+    public function setAproved($aproved) {
+        $this->aproved = $aproved;
+    }
 }
 
 ?>

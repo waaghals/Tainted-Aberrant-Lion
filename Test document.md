@@ -175,6 +175,92 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
 	* In de dropdown staat `No search results found`
 
 
+##Coördinator:
+###Wachtwoord succesvol veranderen:
+1.	Laad de homepage http://localhost/Management/Home
+    * Er is een overzicht zichtbaar om je gegevens aan te passen
+2.	Druk op de knop `Change Password`
+	* Vul 'password' in.
+	* Vul 'pasword' in.
+	* Vul 'pasword' in.
+	* U krijgt de tekst `Change password succesfully.` te zien
+	
+###Wachtwoord niet succesvol veranderen:
+1.	Laad de homepage http://localhost/Management/Home
+    * Er is een overzicht zichtbaar om je gegevens aan te passen
+2.	Druk op de knop `Change Password`
+	* Vul 'pasword' in.
+	* Vul 'password' in.
+	* Vul 'password' in.
+	* U krijgt de tekst `Old password didn't match.` te zien
+	
+1.	Laad de homepage http://localhost/Management/Home
+    * Er is een overzicht zichtbaar om je gegevens aan te passen
+2.	Druk op de knop `Change Password`
+	* Vul 'password' in.
+	* Vul 'pasword' in.
+	* Vul 'password' in.
+	* Druk op 
+	* U krijgt de tekst `New passwords didn't match.` te zien
+	
+###Mijn account aanpassen:
+1.	Laad de homepage http://localhost/Management/Home
+    * Er is een overzicht zichtbaar om je gegevens aan te passen
+2.	Druk op de knop `My Account`
+	* Pas de `Country` aan naar 'Netherlands'
+	* Druk op de knop `Save`
+	* U krijgt de tekst `Successfully saved.` te zien
+	
+###Mijn locaties aanpassen:
+1.	Laad de homepage http://localhost/Management/Home
+    * Er is een overzicht zichtbaar om je gegevens aan te passen
+2.	Zoom uit of in
+	* Druk op de knop `My Projects`
+	* Druk op de knop `Create Project`
+	* Je krijgt een scherm te zien om een nieuw project aan te maken.
+	* Selecteer bij `type` de 'education'
+	* Selecteer bij `company name` de McDonald's (Arnhem)
+	* Selecteer bij `company country` het land `Netherlands`
+	* Selecteer bij `company city` het land `Den Bosch`
+	* Selecteer bij `company street` het land `Onderwijsboulevard`
+	* Selecteer bij `company house number` het land `385`
+	* Selecteer bij `company postal code` het land `5000AA`
+	* Selecteer bij `company e-mail` het land `test@toip.nl`
+	* Vul bij `company telephone number` het nummer `0123456` in
+	* Druk op de knop `Create Location`
+	* Het scherm verdwijnt en er wordt een nieuwe locatie aangemaakt.
+	
+###Mijn projecten aanpassen:
+1.	Laad de homepage http://localhost/Management/Home
+    * Er is een overzicht zichtbaar om je gegevens aan te passen
+2.	Zoom uit of in
+	* Druk op de knop `My Projects`
+	* Druk op de knop `Create Project`
+	* Je krijgt een scherm te zien om een nieuw project aan te maken.
+	* Selecteer bij `type` de 'internship'
+	* Selecteer bij `location` de McDonald's (Arnhem)
+	* Selecteer bij `start date` als jaar `2012` en als maand `Januari`
+	* Selecteer bij `end date` als jaar `2012` en als maand `Juni`
+	* Druk op de knop `Create Project`
+	* Het scherm verdwijnt en er wordt een nieuw project aangemaakt.
+	
+###Mijn reviews aanpassen:
+1.	Laad de homepage http://localhost/Management/Home
+    * Er is een overzicht zichtbaar om je gegevens aan te passen
+2.	Zoom uit of in
+	* Druk op de knop `My Projects`
+	* Druk op de knop `Create Project`
+	* Je krijgt een scherm te zien om een nieuw project aan te maken.
+	* Selecteer bij `project` de 'avans'
+	* Selecteer bij `assignment score` de het nummer '4'
+	* Selecteer bij `guidance score` de het nummer '2'
+	* Selecteer bij `accomodation score` de het nummer '3'
+	* Selecteer bij `overall score` de het nummer '3'
+	* Selecteer bij `review` de tekst 'Dit is een test review.'
+	* Druk op de knop `Create Review`
+	* Het scherm verdwijnt en er wordt een nieuwe review aangemaakt.
+	
+	
 
 ##Bijlage
 ###1. Incorrecte registreren waarden
@@ -190,6 +276,7 @@ Zipcode|6000AA
 Street|Straatnaam
 Streetnumber|12
 Addition|[leeg]
+Registration Code | [leeg]
 
 ###2. Correcte registreren waarden
 Veld|Waarde
@@ -204,3 +291,4 @@ Zipcode|6000AA
 Street|Straatnaam
 Streetnumber|12
 Addition|[leeg]
+Registration Code | 1234567890

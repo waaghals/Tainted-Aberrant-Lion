@@ -1,6 +1,10 @@
 <?php
 $header = new \PROJ\Tools\Template("Partial/Header");
-$header->title = "Stagekaart";
+
+$header->title = "Worldmap";
+
+$map = "Kaart";
+$header->title = $map;
 
 echo $header;
 
@@ -9,7 +13,9 @@ echo $header;
 <div class="container">
     <?php
     $bar = new \PROJ\Tools\Template("Partial/TopBar");
+    $bar->map = $map;
     $bar->search = true;
+    $bar->filter = true;
     echo $bar;
     ?>
     <main class="row clearfix">
@@ -17,7 +23,10 @@ echo $header;
 
         </div>
 
-        <aside class="closed scrollable shadow">
+        <aside class="closed scrollable shadow" style="padding-right:50px;">
+            <div id="closepannel">
+                <img src="/images/openpanel.png" />
+            </div>
             <div class="row clearfix">
                 <div class="column full">
                     <h2 id="instanceName">Naam</h2>

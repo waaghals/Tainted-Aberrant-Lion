@@ -1,0 +1,21 @@
+<?php
+
+use PROJ\Helper\XssHelper;
+
+$em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
+$user = $em->getRepository('\PROJ\Entities\Account')->find($_SESSION['userID'])->getStudent();
+?>
+
+<div id="management_right">
+    <div id="management_container">
+        <form name='management_account' method='post' enctype="multipart/form-data">
+            <div style="width:96%; margin: 2%; overflow: auto;">
+                
+            </div>
+            <div style="width:100%; position: absolute; bottom: 50px; height:1px; background-color: #dde0e8;">
+            </div>
+            <div id="management_container_bottom">
+            </div>
+        </form>
+    </div>
+</div>

@@ -79,4 +79,8 @@ if ($payload_exists) {
     echo "Pulling repository\n";
     $cmd = sprintf('sudo git pull origin %s', $branch);
     echo syscall($cmd, $virtual_host_folder);
+    
+    use "PROJ\Controllers\TestdataController";
+    $c = new \PROJ\Controllers\TestdataController();
+    $c->IndexAction();
 }

@@ -116,5 +116,166 @@ class AjaxController extends BaseController {
         
         echo json_encode($returnArray);
     }
+    
+     public function createLocationAction() {
+        if (empty($_POST['type']) || empty($_POST['name']) || empty($_POST['country'])
+                || empty($_POST['city']) || empty($_POST['street']) || empty($_POST['housenumber']) 
+                || empty($_POST['postalcode']) || empty($_POST['email'])) {
+            echo "Not everything is filled in";
+            return;
+        }
+        foreach($_POST as $input){
+            if($input == $_POST['housenumber'])
+                break;
+            
+            if(strlen($input) > 254) {
+                echo "Some fieldes are too long.";
+                return;
+            }
+            if(!preg_match('/^[A-Za-z0-9. -_]{1,31}$/', $input)) {
+                echo "No special characters allowed";
+                return;
+            }
+        }
+        if(!(filter_var($_POST['housenumber'], FILTER_VALIDATE_INT))) {
+            echo "Streetnumber is not a number";
+            return;
+        }
+        
+        if($_POST['type'] != "education" && $_POST['type'] != "business")
+            die();
+        
+        $em = DoctrineHelper::instance()->getEntityManager();
+        $ac = new \PROJ\Services\AccountService();
+        if($ac->isLoggedIn()) {
+            
+            $country = $em->getRepository('\PROJ\Entities\Country')->find($_POST['country']);
+            
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, 'http://maps.googleapis.com/maps/api/geocode/json?address='.urlencode($_POST['street'].' '.$_POST['housenumber'].', '.$_POST['city'].', '.$country->getName()).'&sensor=false');
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            $response = json_decode(curl_exec($ch), true);
+            
+            if ($response['status'] != 'OK') {
+                echo("Could not Geocode. Location was not created.");
+                return;
+            }
+            
+            $user = $em->getRepository('\PROJ\Entities\Account')->find($_SESSION['userID']);
+            $locatie = new \PROJ\Entities\Institute();
+            $locatie->setCreator($user->getStudent());
+            $locatie->setLat($response["results"][0]["geometry"]["location"]['lat']);
+            $locatie->setLng($response["results"][0]["geometry"]["location"]['lng']);
+            $place = \PROJ\Helper\XssHelper::sanitizeInput($_POST['city']);
+            foreach($response["results"][0]["address_components"] as $comp) {
+                if(in_array("locality", $comp["types"])) {
+                    $place = $comp["long_name"];
+                }
+            }
+            $locatie->setPlace($place);
+            $locatie->setType($_POST['type']);
+            $locatie->setName(\PROJ\Helper\XssHelper::sanitizeInput($_POST['name']));
+            
+            $em->persist($locatie);
+            $em->flush();
+        }
+        
+        echo 'succes';
+     }
+    
+     public function createProjectAction() {
+        if (empty($_POST['type']) || empty($_POST['location']) || empty($_POST['start_year'])
+                || empty($_POST['start_month']) || empty($_POST['end_year']) || empty($_POST['end_month'])) {
+            echo "Not everything is filled in";
+            return;
+        }
+        
+        if(!is_numeric($_POST['start_year']) || !is_numeric($_POST['start_month']) || !is_numeric($_POST['end_year']) || !is_numeric($_POST['end_month']) || !is_numeric($_POST['location']))
+            die("");
+        
+        if($_POST['type'] != "minor" && $_POST['type'] != "internship" && $_POST['type'] != "graduation" && $_POST['type'] != "ESP")
+            die("");
+        
+        if(new \DateTime($_POST['start_year'].'-'.$_POST['start_month'].'-1') > new \DateTime($_POST['end_year'].'-'.$_POST['end_month'].'-1')) {
+            echo("Start date cannot be after Stop date");
+            return;
+        }
+        
+        $ac = new \PROJ\Services\AccountService();
+        if($ac->isLoggedIn()) {
+            $em = DoctrineHelper::instance()->getEntityManager();
+            $user = $em->getRepository('\PROJ\Entities\Account')->find($_SESSION['userID']);
+            $qb = $em->createQueryBuilder();
+            $qb->select('i.id')
+                    ->from('\PROJ\Entities\Institute', 'i')
+                    ->where($qb->expr()->eq('i.creator', $qb->expr()->literal($user->getStudent()->getId())))
+                    ->orWhere($qb->expr()->eq('i.aproved', '1'))
+                    ->orderBy('i.type', 'ASC');     
+            $res = $qb->getQuery()->getResult();
+
+            if(!in_array($_POST['location'], $res[0]))
+                die("Illegal Location");
+        
+        
+            $location = $em->getRepository('\PROJ\Entities\Institute')->find($_POST['location']);
+            $project = new \PROJ\Entities\Project();
+            $project->setAproved(0);
+            $project->setInstitute($location);
+            $project->setReview(null);
+            $project->setStartdate(new \DateTime($_POST['start_year'].'-'.$_POST['start_month'].'-1'));
+            $project->setendDate(new \DateTime($_POST['end_year'].'-'.$_POST['end_month'].'-1'));
+            $project->setStudent($user->getStudent());
+            $project->setType($_POST['type']);
+            
+            $em->persist($project);
+            $em->flush();
+        }
+        
+        echo 'succes';
+     }
+    
+     public function createReviewAction() {
+        if (empty($_POST['project']) || (empty($_POST['assignment_score']) && @$_POST['assignment_score'] != 0) || empty($_POST['guidance_score'])
+                || empty($_POST['accomodation_score']) || empty($_POST['overall_score']) || empty($_POST['review'])) {
+            echo "Not everything is filled in";
+            return;
+        }
+        
+        if(!is_numeric($_POST['project']) || !is_numeric($_POST['assignment_score']) || !is_numeric($_POST['guidance_score']) || !is_numeric($_POST['accomodation_score']) || !is_numeric($_POST['overall_score']))
+            die();
+        
+        if($_POST['assignment_score'] > 5 || $_POST['assignment_score'] > 5 || $_POST['assignment_score'] > 5 || $_POST['guidance_score'] > 5)
+            die();
+        
+        $ac = new \PROJ\Services\AccountService();
+        if($ac->isLoggedIn()) {
+            $em = DoctrineHelper::instance()->getEntityManager();
+            $user = $em->getRepository('\PROJ\Entities\Account')->find($_SESSION['userID']);
+            $qb = $em->createQueryBuilder();
+            $qb->select('p.id')
+                    ->from('\PROJ\Entities\Project', 'p')
+                    ->where($qb->expr()->eq('p.student', $qb->expr()->literal($user->getStudent()->getId()))) ;
+            $res = $qb->getQuery()->getResult();
+
+            if(!in_array($_POST['project'], $res[0]))
+                die("Illegal Project");
+        
+        
+            $project = $em->getRepository('\PROJ\Entities\Project')->find($_POST['project']);
+            $review = new \PROJ\Entities\Review();
+            $review->setAccommodationRating($_POST['assignment_score']);
+            $review->setAssignmentRating($_POST['guidance_score']);
+            $review->setGuidanceRating($_POST['accomodation_score']);
+            $review->setProject($project);
+            $review->setRating($_POST['overall_score']);
+            $review->setText(\PROJ\Helper\XssHelper::sanitizeInput($_POST['review']));
+            $review->setAproved(0);
+            
+            $em->persist($review);
+            $em->flush();
+        }
+        
+        echo 'succes';
+     }
 
 }

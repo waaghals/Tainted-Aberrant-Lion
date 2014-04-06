@@ -1,5 +1,7 @@
 <?php
+
 use PROJ\Helper\XssHelper;
+
 $header = new \PROJ\Tools\Template("Partial/Header");
 $header->title = "Register";
 
@@ -14,11 +16,11 @@ echo $bar;
         <img src="/images/register_top.png">
         <div id="register_container_tophalf">
             <?php if ($hasErrors): ?>
-            <div class="alert" style="margin-bottom:20px; padding: 5px;">
-                 <p><?php echo $error; ?></p>
-            </div>
-            <div style="clear:both;"></div>
-            <?php
+                <div class="alert" style="margin-bottom:20px; padding: 5px;">
+                    <p><?php echo $error; ?></p>
+                </div>
+                <div style="clear:both;"></div>
+                <?php
             endif;
             ?>
             <div style="width: 282px; margin-right: 70px; float:left;">
@@ -29,14 +31,14 @@ echo $bar;
                 <p style="margin-top:15px;">Password: *</p>
                 <input name="passwordagain" type="password" name="password" style="margin-top: 10px;" maxlength="50" required />
                 <p style="margin-top:15px;">E-Mail: *</p>
-                <input name="email" value="<?php echo(isset($_POST['email']) ? XssHelper::sanitizeInput($_POST['email']) : ''); ?>" type="text" style="margin-top: 10px;" maxlength="50" required />
+                <input name="email" value="<?php echo(isset($_POST['email']) ? XssHelper::sanitizeInput($_POST['email']) : ''); ?>" type="email" style="margin-top: 10px;" maxlength="50" required />
                 <p style="margin-top:15px;">First name: *</p>
                 <input name="firstname" value="<?php echo(isset($_POST['firstname']) ? XssHelper::sanitizeInput($_POST['firstname']) : ''); ?>" type="text" style="margin-top: 10px;" maxlength="50" required />
                 <p style="margin-top:15px;">Surname: *</p>
                 <input name="surname" value="<?php echo(isset($_POST['surname']) ? XssHelper::sanitizeInput($_POST['surname']) : ''); ?>" type="text" style="margin-top: 10px;" maxlength="50" required />
             </div>
             <div style="width: 282px; float:left;">
-                <p>City:</p>
+                <p>City: *</p>
                 <input name="city" value="<?php echo(isset($_POST['city']) ? XssHelper::sanitizeInput($_POST['city']) : ''); ?>" type="text" style="margin-top: 10px;" required />
                 <p style="margin-top:15px;">Zip code: *</p>
                 <input name="zipcode" value="<?php echo(isset($_POST['zipcode']) ? XssHelper::sanitizeInput($_POST['zipcode']) : ''); ?>" type="text" style="margin-top: 10px;" maxlength="6" required />
@@ -46,6 +48,8 @@ echo $bar;
                 <input name="streetnumber" value="<?php echo(isset($_POST['streetnumber']) ? XssHelper::sanitizeInput($_POST['streetnumber']) : ''); ?>" type="text" style="margin-top: 10px;" maxlength="50" required />
                 <p style="margin-top:15px;">Addition:</p>
                 <input name="addition" value="<?php echo(isset($_POST['addition']) ? XssHelper::sanitizeInput($_POST['addition']) : ''); ?>" type="text" style="margin-top: 10px;" maxlength="3" required />
+                <p style="margin-top:15px;">Registration Code: *</p>
+                <input name="registrationcode" value="<?php echo(isset($_GET['registrationcode']) ? XssHelper::sanitizeInput($_GET['registrationcode']) : ''); ?>" type="text" style="margin-top: 10px;" maxlength="255" required />
             </div>
             <p style="margin-top:25px; font-size:10px; color: #a1a1a1;">Fields marked with asterisk (*) are required.</p>
         </div>

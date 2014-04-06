@@ -15,13 +15,13 @@ echo $header;
             <textarea name='review' cols='50' rows='10' required autofocus><?php echo $text; ?></textarea>
         </div>
         <div id="left_col">
-            <label id="rating">Geef de instantie een cijfer:</label>
+            <label id="rating">Geef de instantie een cijfer voor de opdracht:</label>
         </div>
         <div id="right_col">
-            <select name='rating'>
+            <select name='assrating'>
                 <?php
                 for ($i = 1; $i <= 5; $i++) {
-                    if ($i == $grade) {
+                    if ($i == $assgrade) {
                         echo "<option value='" . $i . "' selected='selected'>" . $i . "</option>";
                     } else {
                         echo "<option value='" . $i . "'>" . $i . "</option>";
@@ -29,6 +29,39 @@ echo $header;
                 }
                 ?>
             </select>
-        </div><input type="submit" name="submit" value="Send">
+        </div>
+        <div id="left_col">
+            <label id="rating">Geef de instantie een cijfer voor de huisvesting:</label>
+        </div>
+        <div id="right_col">
+            <select name='accrating'>
+                <?php
+                for ($i = 1; $i <= 5; $i++) {
+                    if ($i == $accgrade) {
+                        echo "<option value='" . $i . "' selected='selected'>" . $i . "</option>";
+                    } else {
+                        echo "<option value='" . $i . "'>" . $i . "</option>";
+                    }
+                }
+                ?>
+            </select>
+        </div>
+        <div id="left_col">
+            <label id="rating">Geef de instantie een cijfer voor de begeleiding:</label>
+        </div>
+        <div id="right_col">
+            <select name='guirating'>
+                <?php
+                for ($i = 1; $i <= 5; $i++) {
+                    if ($i == $guigrade) {
+                        echo "<option value='" . $i . "' selected='selected'>" . $i . "</option>";
+                    } else {
+                        echo "<option value='" . $i . "'>" . $i . "</option>";
+                    }
+                }
+                ?>
+            </select>
+        </div>
+        <input type="submit" name="submit" value="Send">
     </form>
 </div>
