@@ -11,123 +11,146 @@
  *
  * @author Dennis
  */
-use PROJ\Exceptions\ServerException;
 
 namespace PROJ\Controllers;
 
-class TestdataController extends BaseController
-{
+use PROJ\Exceptions\ServerException;
+use \PROJ\Entities\Institute;
+use \PROJ\Entities\Account;
+use \PROJ\Entities\Student;
+use \PROJ\Entities\Project;
+use \PROJ\Entities\Review;
 
-    public function createAction()
-    {
+class TestdataController extends BaseController {
+
+    private function emptyTables($em) {
+        $helperSet = new \Symfony\Component\Console\Helper\HelperSet(array(
+            'em' => new \Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper($em)
+        ));
+        $command1 = "orm:schema-tool:drop --force";
+        $command2 = "orm:schema-tool:update --force";
+        $commandarray1 = array_merge(array('doctrine'), explode(" ", $command1));
+        $commandarray2 = array_merge(array('doctrine'), explode(" ", $command2));
+        \PROJ\Tools\CodeConsoleRunner::run($helperSet, new \Symfony\Component\Console\Input\ArgvInput($commandarray1), new \Symfony\Component\Console\Output\StreamOutput(fopen('php://output', 'w')));
+        echo "<br />";
+        \PROJ\Tools\CodeConsoleRunner::run($helperSet, new \Symfony\Component\Console\Input\ArgvInput($commandarray2), new \Symfony\Component\Console\Output\StreamOutput(fopen('php://output', 'w')));
+        echo "<br /><br />";
+    }
+
+    private function createInstitute($em, $name, $type, $place, $lat, $long) {
+        $institute = new Institute();
+        $institute->setName($name);
+        $institute->setType($type);
+        $institute->setPlace($place);
+        $institute->setLat($lat);
+        $institute->setLong($long);
+        $em->persist($institute);
+        $em->flush();
+        echo "Institute with the following data has been succesfully added to the database:"
+        . "<br />Name: " . $name
+        . "<br />Type: " . $type
+        . "<br />Place: " . $place
+        . "<br />Latitude: " . $lat
+        . "<br />Longtitude: " . $long
+        . "<br /><br />";
+        return $institute;
+    }
+
+    private function createUser($em, $username, $password, $salt) {
+        $account = new Account();
+        $account->setUsername($username);
+        $hash = hash('sha512', $password . $salt);
+        $account->setPassword($hash);
+        $account->setSalt($salt);
+        $em->persist($account);
+        $em->flush();
+        echo "New account with the following data has been succesfully added to the database:"
+        . "<br />Username: " . $username
+        . "<br />Password: " . $password
+        . "<br />Salt: " . $salt
+        . "<br /><br />";
+        return $account;
+    }
+
+    private function createStudent($em, $fName, $sName, $street, $housenr, $zipcode, $city, $account, $email) {
+        $student = new Student();
+        $student->setFirstname($fName);
+        $student->setSurname($sName);
+        $student->setStreet($street);
+        $student->setHousenumber($housenr);
+        $student->setZipcode($zipcode);
+        $student->setCity($city);
+        $student->setAccount($account);
+        $student->setEmail($email);
+        $em->persist($student);
+        $em->flush();
+        echo "New student with the following data has been succesfully added to the database:"
+        . "<br />Firstname: " . $fName
+        . "<br />Surname: " . $sName
+        . "<br />Street: " . $street
+        . "<br />Housenumber: " . $housenr
+        . "<br />Zipcode: " . $zipcode
+        . "<br />City: " . $city
+        . "<br />Account: " . $account->getUsername()
+        . "<br />Email: " . $email
+        . "<br /><br />";
+        return $student;
+    }
+
+    private function createProject($em, $student, $institute, $type, $startDate, $endDate) {
+        $project = new Project();
+        $project->setStudent($student);
+        $project->setInstitute($institute);
+        $project->setType($type);
+        $project->setStartdate($startDate);
+        $project->setendDate($endDate);
+        $em->persist($project);
+        $em->flush();
+        echo "New project with the following data has been succesfully added to the database:"
+        . "<br />Student: " . $student->getFirstname() . " " . $student->getSurname()
+        . "<br />Institute: " . $institute->getName()       
+        . "<br />Type: " . $type
+        . "<br /><br />";
+        return $project;
+    }
+
+    private function createReview($em, $project, $assignRate, $accoRate, $guidRate, $text) {
+        $review = new Review();
+        $review->setProject($project);
+        $review->setAssignmentRating($assignRate);
+        $review->setAccommodationRating($accoRate);
+        $review->setGuidanceRating($guidRate);
+        $review->setText($text);
+        $em->persist($review);
+        $em->flush();
+        echo "New review with the following data has been succesfully added to the database:"
+        . "<br />Institute: " . $project->getInstitute()->getName()
+        . "<br />Assignment rating: " . $assignRate
+        . "<br />Accomodation rating: " . $accoRate
+        . "<br />Guidance rating: " . $guidRate
+        . "<br />Text: " . $text
+        . "<br /><br />";
+    }
+
+    public function IndexAction() {
         $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
-        $instituteE = new \PROJ\Entities\Institute();
-        $instituteE->setName("Avans Hogeschool");
-        $instituteE->setType("education");
-        $instituteE->setPlace("`s-Hertogenbosch");
-        $instituteE->setLat(51.688946);
-        $instituteE->setLong(5.287256);
-        $em->persist($instituteE);
-        $em->flush();
-        echo "Educational Institute test data has been added to the database successfully <br />";
-        $instituteB = new \PROJ\Entities\Institute();
-        $instituteB->setName("McDonald's");
-        $instituteB->setType("business");
-        $instituteB->setPlace("Arnhem");
-        $instituteB->setLat(51.9635996);
-        $instituteB->setLong(5.8930421);
-        $em->persist($instituteB);
-        $em->flush();
-        echo "Business Institute test data has been added to the database successfully <br />";
 
-        $accountJ = new \PROJ\Entities\Account();
-        $salt = "HGJDGFSJHDFJHSDf";
-        $hash = hash('sha512', "qwerty" . $salt);
-        $accountJ->setPassword($hash);
-        $accountJ->setUsername("kjansen");
-        $accountJ->setSalt($salt);
-        $em->persist($accountJ);
-        $em->flush();
-        echo "New account Jansen test data has been added to the database successfully<br />";
+        $this->emptyTables($em);
 
-        $accountB = new \PROJ\Entities\Account();
-        $salt = "E*(%&YUIERHDGFER";
-        $hash = hash('sha512', "password" . $salt);
-        $accountB->setPassword($hash);
-        $accountB->setUsername("hbakker");
-        $accountB->setSalt($salt);
-        $em->persist($accountB);
-        $em->flush();
-        echo "New account Bakker test data has been added to the database successfully<br />";
+        $avans = $this->createInstitute($em, "Avans Hogeschool", "education", "`s-Hertogenbosch", 51.688946, 5.287256);
+        $mac = $this->createInstitute($em, "McDonald's", "business", "Arnhem", 51.9635996, 5.8930421);
 
-        $studentB = new \PROJ\Entities\Student();
-        $studentB->setFirstname("harry");
-        $studentB->setSurname("bakker");
-        $studentB->setCity("utrecht");
-        $studentB->setAccount($accountB);
-        $studentB->setStreet("teststraat");
-        $studentB->setHousenumber(15);
-        $studentB->setEmail("h.bakker@student.avans.nl");
-        $studentB->setZipcode("3500AB");
-        $em->persist($studentB);
-        $em->flush();
-        echo "New student with a business institute test data has been added to the database successfully <br />";
+        $kjansen = $this->createUser($em, "kjansen", "qwerty", "HGJDGFSJHDFJHSDf");
+        $hbakker = $this->createUser($em, "hbakker", "password", "E*(%&YUIERHDGFER");
 
-        $studentE = new \PROJ\Entities\Student();
-        $studentE->setFirstname("Kees");
-        $studentE->setSurname("Jansen");
-        $studentE->setCity("eindhoven");
-        $studentE->setAccount($accountJ);
-        $studentE->setStreet("teststraat");
-        $studentE->setHousenumber(15);
-        $studentE->setEmail("k.jansen@student.avans.nl");
-        $studentE->setZipcode("3500AB");
-        $em->persist($studentE);
-        $em->flush();
-        echo "New student with a educational institute test data has been added to the database successfully <br />";
+        $kees = $this->createStudent($em, "Kees", "Jansen", "Jansenlaan", 15, "1234AB", "eindhoven", $kjansen, "k.jansen@student.avans.nl");
+        $harry = $this->createStudent($em, "Harry", "Bakker", "Bakkersweg", 15, "5678CD", "utrecht", $hbakker, "h.bakker@student.avans.nl");
 
-        $projectB = new \PROJ\Entities\Project();
-        $projectB->setInstitute($instituteB);
-        $projectB->setStartdate($startDate = new \DateTime('03/17/2014'));
-        $projectB->setendDate($endDate = new \DateTime('05/17/2014'));
-        $projectB->setStudent($studentB);
-        $projectB->setType("internship");
-        $em->persist($projectB);
-        $em->flush();
-        echo "New project with a business institute test data has been added to the database succesfully <br />";
+        $projectX = $this->createProject($em, $kees, $avans, "internship", new \DateTime('03/17/2014'), new \DateTime('05/17/2014'));
+        $projectZ = $this->createProject($em, $harry, $mac, "minor", new \DateTime('02/04/2014'), new \DateTime('06/20/2014'));
 
-        $projectE = new \PROJ\Entities\Project();
-        $projectE->setInstitute($instituteE);
-        $projectE->setStartdate($startDate = new \DateTime('02/04/2014'));
-        $projectE->setendDate($endDate = new \DateTime('06/20/2014'));
-        $projectE->setStudent($studentE);
-        $projectE->setType("minor");
-        $em->persist($projectE);
-        $em->flush();
-        echo "New project with a educational institute test data has been added to the database succesfully <br />";
-
-        $reviewB = new \PROJ\Entities\Review();
-        $reviewB->setProject($projectB);
-        $reviewB->setRating(5);
-        $reviewB->setText("Good things happend here B");
-        $em->persist($reviewB);
-        $em->flush();
-        echo "New review with a business institute test data has been added to the database successfully<br />";
-
-        $reviewE = new \PROJ\Entities\Review();
-        $reviewE->setProject($projectE);
-        $reviewE->setRating(4);
-        $reviewE->setText("Good things happend here");
-        $em->persist($reviewE);
-        $em->flush();
-        echo "New review with a educational institute test data has been added to the database successfully<br />";
-
-        $registrationCode = new \PROJ\Entities\RegistrationCode();
-        $registrationCode->setCode("1234567890");
-        $registrationCode->setEmail("pat@example.com");
-        $em->persist($registrationCode);
-        $em->flush();
-        echo "New registrationcode has been added to the database succesfully <br />";
+        $this->createReview($em, $projectX, 5, 3, 4, "Many fun activities to do here!");
+        $this->createReview($em, $projectZ, 4, 4, 1, "Just do your job and they're happy.");
     }
 
 }
