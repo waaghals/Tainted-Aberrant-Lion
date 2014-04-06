@@ -21,7 +21,7 @@ echo $header;
             <select name='assrating'>
                 <?php
                 for ($i = 1; $i <= 5; $i++) {
-                    if ($i == $grade) {
+                    if ($i == $assgrade) {
                         echo "<option value='" . $i . "' selected='selected'>" . $i . "</option>";
                     } else {
                         echo "<option value='" . $i . "'>" . $i . "</option>";
@@ -37,7 +37,7 @@ echo $header;
             <select name='accrating'>
                 <?php
                 for ($i = 1; $i <= 5; $i++) {
-                    if ($i == $grade) {
+                    if ($i == $accgrade) {
                         echo "<option value='" . $i . "' selected='selected'>" . $i . "</option>";
                     } else {
                         echo "<option value='" . $i . "'>" . $i . "</option>";
@@ -53,7 +53,7 @@ echo $header;
             <select name='guirating'>
                 <?php
                 for ($i = 1; $i <= 5; $i++) {
-                    if ($i == $grade) {
+                    if ($i == $guigrade) {
                         echo "<option value='" . $i . "' selected='selected'>" . $i . "</option>";
                     } else {
                         echo "<option value='" . $i . "'>" . $i . "</option>";
