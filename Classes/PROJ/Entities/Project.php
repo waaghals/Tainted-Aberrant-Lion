@@ -27,6 +27,11 @@ class Project {
      * @Column(type="string")
      */
     private $type;
+    
+    /**
+     * @Column(type="boolean")
+     */
+    private $aproved = 0;   // 0 = pending, 1 = aproved, 2 = declined
 
     /**
      * @OneToOne(targetEntity="\PROJ\Entities\Review", mappedBy="project", cascade={"remove"})
@@ -99,6 +104,14 @@ class Project {
             "review" => $this->getReview(),
             "author" => $this->getStudent()
         );
+    }
+    
+    public function getAproved() {
+        return $this->aproved;
+    }
+
+    public function setAproved($aproved) {
+        $this->aproved = $aproved;
     }
 
 }
