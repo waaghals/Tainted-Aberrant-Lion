@@ -75,6 +75,8 @@ Probeer database handelingen zoveel mogelijk in een model te doen. Het makkelijk
 * Deployement script is getest en werkend met de nieuwe functionalitiet. 
 * Database wordt ook geupdate
 * Documentatie is bijgewerkt. 
-* Zodra een nieuwe functie klaar is, mag je zelf beslissen wanneer het word gepushed naar de dev branch 
+* Zodra een functie klaar is moet je een pull request aanmaken.
+* Er moet test data beschikbaar zijn.
+* Uiterlijk moet voldoen aan het stijl document.
 
 <br>
