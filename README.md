@@ -66,7 +66,7 @@ In die paginas kun je dan de view aanroepen afhankelijk van overige url paramete
 Probeer database handelingen zoveel mogelijk in een model te doen. Het makkelijkste is om hier een Singleton van te maken (Zie DemoController.php in /PROJ/Classes/Controller/)
 
 <br>
-##Defenition of Done
+##Definition of Done
 
 
 * Het gemaakte werk moet voldoen aan de acceptatie criteria van de user story
