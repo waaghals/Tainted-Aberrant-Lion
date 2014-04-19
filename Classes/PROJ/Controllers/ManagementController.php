@@ -51,7 +51,6 @@ class ManagementController extends BaseController {
                 $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
                 $user = $em->getRepository('\PROJ\Entities\Account')->find($_SESSION['userID'])->getStudent();
                 
-                $user->setCountry($_POST['country']);
                 $user->setCity($_POST['city']);
                 $user->setZipcode($_POST['zipcode']);
                 $user->setStreet($_POST['street']);
@@ -83,7 +82,7 @@ class ManagementController extends BaseController {
     }
     
     private function validate_input($data) {
-        if (empty($data['country']) || empty($data['city']) 
+        if (empty($data['city']) 
                 || empty($data['zipcode']) || empty($data['street']) || empty($data['housenumber']) || empty($data['email'])) {
             return "Not everything is filled in";
         }
