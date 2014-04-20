@@ -212,8 +212,14 @@ class AjaxController extends BaseController {
                     ->orWhere($qb->expr()->eq('i.aproved', '1'))
                     ->orderBy('i.type', 'ASC');     
             $res = $qb->getQuery()->getResult();
+            
 
-            if(!in_array($_POST['location'], $res[0]))
+            $found = false;
+            foreach($res as $r)
+                if($r['id'] == $_POST['location'])
+                    $found = true;
+                
+            if(!$found)
                 die("Illegal Location");
         
         
@@ -251,13 +257,25 @@ class AjaxController extends BaseController {
         if($ac->isLoggedIn()) {
             $em = DoctrineHelper::instance()->getEntityManager();
             $user = $em->getRepository('\PROJ\Entities\Account')->find($_SESSION['userID']);
+            
+            if(count($em->getRepository('\PROJ\Entities\Review')->findBy(array('project' => $_POST['project']))) > 0) {
+                echo "You can only create one review per location";
+                return;
+            }
+            
+            
             $qb = $em->createQueryBuilder();
             $qb->select('p.id')
                     ->from('\PROJ\Entities\Project', 'p')
                     ->where($qb->expr()->eq('p.student', $qb->expr()->literal($user->getStudent()->getId()))) ;
             $res = $qb->getQuery()->getResult();
 
-            if(!in_array($_POST['project'], $res[0]))
+            $found = false;
+            foreach($res as $r)
+                if($r['id'] == $_POST['project'])
+                    $found = true;
+                
+            if(!$found)
                 die("Illegal Project");
         
         
