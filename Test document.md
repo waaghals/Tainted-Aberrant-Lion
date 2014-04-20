@@ -207,7 +207,6 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
 1.	Laad de homepage http://localhost/Management/Home
     * Er is een overzicht zichtbaar om je gegevens aan te passen
 2.	Druk op de knop `My Account`
-	* Pas de `Country` aan naar 'Netherlands'
 	* Druk op de knop `Save`
 	* U krijgt de tekst `Successfully saved.` te zien
 	
