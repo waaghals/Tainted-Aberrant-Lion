@@ -22,7 +22,7 @@
                         <th>Name:</th>
                         <th>Location:</th>
                         <th>Type:</th>
-                        <th>Status:</th>
+                        <th colspan="3">Status:</th>
                     </tr>
                     <?php
                     $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
@@ -31,7 +31,7 @@
                     $qb->select('i')
                             ->from('\PROJ\Entities\Institute', 'i')
                             ->where($qb->expr()->eq('i.creator', $qb->expr()->literal($user->getStudent()->getId())))
-                            ->orderBy('i.name', 'ASC');
+                            ->orderBy('i.aproved', 'ASC');
                     $res = $qb->getQuery()->getResult();
                     foreach($res as $r) {
                         if($r->getAproved() == 0)
@@ -46,6 +46,14 @@
                         <td><p><?php echo $r->getPlace(); ?></p></td>
                         <td><p><?php echo ucfirst($r->getType()); ?></p></td>
                         <td><p><?php echo $status; ?></p></td>
+                        <?php
+                        if($r->getAproved() == 0) {
+                        ?>
+                        <td style="width: 40px;"><img src="/images/edit.png" /></td>
+                        <td style="width: 40px;"><img src="/images/delete.png" /></td>
+                        <?php
+                        }
+                        ?>
                     </tr> 
                     <?php
                     }
