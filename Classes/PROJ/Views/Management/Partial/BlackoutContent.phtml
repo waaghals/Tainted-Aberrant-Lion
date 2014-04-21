@@ -1,0 +1,417 @@
+<?php
+$em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
+?>
+<!-- Create Location -->
+
+<div id="blackout_create_location">
+    <div id="register_container">
+        <form name='create_location_form' method='post' enctype="multipart/form-data">
+            <img src="/images/register_top.png">
+            <div id="register_container_tophalf">
+                <div class="alert" id="addLocationError" style="display:none; margin-bottom:20px; padding: 5px; clear:both;">
+                    <p></p>
+                </div>
+                <p style="font-weight:bold; margin-bottom:15px;">Please enter the details of the company you did your Minor/Internship/Etc. :</p>
+                <div style="clear:both;"></div>
+
+                <div class="left_container">
+                    <p style="padding-top:18px;">Type: *</p>
+                </div>
+                <div style="width:5%; float:left;">&nbsp;</div>
+                <div class="right_container">
+                    <select name="type" required autofocus>
+                        <option value="">-- Select a type --</option>
+                        <option value="education">Education</option>
+                        <option value="business">Business</option>
+                    </select>
+                </div>
+                <div style="clear:both;"></div>
+
+                <div class="left_container">
+                    <p style="padding-top:18px;">Company's Name: *</p>
+                </div>
+                <div style="width:5%; float:left;">&nbsp;</div>
+                <div class="right_container">
+                    <input name="name" value="" type="text" style="margin-top: 10px;" maxlength="50" />
+                </div>
+                <div style="clear:both;"></div>
+
+                <div class="left_container">
+                    <p style="padding-top:18px;">Company's Country: *</p>
+                </div>
+                <div style="width:5%; float:left;">&nbsp;</div>
+                <div class="right_container">
+                    <select name="country" required autofocus>
+                        <option value="">-- Select a country --</option>
+                        <?php
+                        foreach ($em->getRepository('\PROJ\Entities\Country')->findAll() as $res) {
+                            echo('<option value="' . $res->getId() . '">' . $res->getName() . '</option>');
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div style="clear:both;"></div>
+
+                <div class="left_container">
+                    <p style="padding-top:18px;">Company's City: *</p>
+                </div>
+                <div style="width:5%; float:left;">&nbsp;</div>
+                <div class="right_container">
+                    <input name="city" value="" type="text" style="margin-top: 10px;" maxlength="50" />
+                </div>
+                <div style="clear:both;"></div>
+
+                <div class="left_container">
+                    <p style="padding-top:18px;">Company's Street: *</p>
+                </div>
+                <div style="width:5%; float:left;">&nbsp;</div>
+                <div class="right_container">
+                    <input name="street" value="" type="text" style="margin-top: 10px;" maxlength="50" />
+                </div>
+                <div style="clear:both;"></div>
+
+                <div class="left_container">
+                    <p style="padding-top:18px;">Company's House number: *</p>
+                </div>
+                <div style="width:5%; float:left;">&nbsp;</div>
+                <div class="right_container">
+                    <input name="housenumber" value="" type="text" style="margin-top: 10px;" maxlength="50" />
+                </div>
+                <div style="clear:both;"></div>
+
+                <div class="left_container">
+                    <p style="padding-top:18px;">Company's Postal code: *</p>
+                </div>
+                <div style="width:5%; float:left;">&nbsp;</div>
+                <div class="right_container">
+                    <input name="postalcode" value="" type="text" style="margin-top: 10px;" maxlength="6" />
+                </div>
+                <div style="clear:both;"></div>
+
+                <div class="left_container">
+                    <p style="padding-top:18px;">Contact's E-mail: *</p>
+                </div>
+                <div style="width:5%; float:left;">&nbsp;</div>
+                <div class="right_container">
+                    <input name="email" value="" type="text" style="margin-top: 10px;" />
+                </div>
+                <div style="clear:both;"></div>
+
+                <div class="left_container">
+                    <p style="padding-top:18px;">Contact's Telephone Number:</p>
+                </div>
+                <div style="width:5%; float:left;">&nbsp;</div>
+                <div class="right_container">
+                    <input name="telephone" value="" type="text" style="margin-top: 10px;" maxlength="50" />
+                </div>
+                <div style="clear:both;"></div>
+
+
+                <p style="margin-top:25px; font-size:10px; color: #a1a1a1;">Fields marked with asterisk (*) are required.</p>
+            </div>
+            <img src="/images/register_split.png">
+            <div id="register_container_bottomhalf">
+                <div class="fancy_button" id="create_location" style="left: 335px; top: 160px;">
+                    <img src="/images/btn_left.png" />
+                    <p>Create Location</p>
+                    <img src="/images/btn_right.png" />
+                </div>
+            </div>
+            <img src="/images/register_bottom.png">
+        </form>
+    </div>
+</div>
+
+
+<!-- Create Review -->
+
+<div id="blackout_create_review">
+    <div id="register_container" style="height: 750px; margin-top: -375px;">
+        <form name='create_review_form' method='post' enctype="multipart/form-data">
+            <img src="/images/register_top.png">
+            <div id="register_container_tophalf">
+                <div class="alert" id="addProjectError" style="display:none; margin-bottom:20px; padding: 5px; clear:both;">
+                    <p></p>
+                </div>
+                <p style="font-weight:bold; margin-bottom:15px;">Please write a review about your project:</p>
+                <div style="clear:both;"></div>
+
+                <div class="left_container">
+                    <p style="padding-top:18px;">Project: <a style="float:none; cursor: pointer; text-decoration: underline" class="myprojects_add">(Create a project)</a>*</p>
+                </div>
+                <div style="width:5%; float:left;">&nbsp;</div>
+                <div class="right_container">
+                    <select name="project" required>
+                        <option value="">-- Select a project --</option>
+                        <?php
+                        $user = $em->getRepository('\PROJ\Entities\Account')->find($_SESSION['userID']);
+                        $qb = $em->createQueryBuilder();
+                        $qb->select('p.id, i.name, i.place, p.type')
+                                ->from('\PROJ\Entities\Project', 'p')
+                                ->leftJoin('p.institute', 'i')
+                                ->where($qb->expr()->eq('p.student', $qb->expr()->literal($user->getStudent()->getId())))
+                                ->orderBy('i.name', 'ASC');
+                        $res = $qb->getQuery()->getResult();
+                        foreach ($res as $r) {
+                            echo('<option value="' . $r['id'] . '">' . $r['name'] . ' (' . $r['place'] . ') - ' . ucfirst($r['type']) . '</option>');
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div style="clear:both;"></div>
+
+                <div class="left_container">
+                    <p style="padding-top:18px;">Assignment score: *</p>
+                </div>
+                <div style="width:5%; float:left;">&nbsp;</div>
+                <div class="right_container">
+                    <select name="assignment_score" required>
+                        <option value="">Score</option>
+                        <option value="0">Not Relevant</option>
+                        <?php
+                        for ($i = 1; $i < 6; $i++) {
+                            echo('<option value="' . $i . '">' . $i . '</option>');
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div style="clear:both;"></div>
+
+                <div class="left_container">
+                    <p style="padding-top:18px;">Guidance score: *</p>
+                </div>
+                <div style="width:5%; float:left;">&nbsp;</div>
+                <div class="right_container">
+                    <select name="guidance_score" required>
+                        <option value="">Score</option>
+                        <option value="0">Not Relevant</option>
+                        <?php
+                        for ($i = 1; $i < 6; $i++) {
+                            echo('<option value="' . $i . '">' . $i . '</option>');
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div style="clear:both;"></div>
+
+                <div class="left_container">
+                    <p style="padding-top:18px;">Accommodation score: *</p>
+                </div>
+                <div style="width:5%; float:left;">&nbsp;</div>
+                <div class="right_container">
+                    <select name="accomodation_score" required>
+                        <option value="">Score</option>
+                        <option value="0">Not Relevant</option>
+                        <?php
+                        for ($i = 1; $i < 6; $i++) {
+                            echo('<option value="' . $i . '">' . $i . '</option>');
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div style="clear:both;"></div>
+
+                <div class="left_container">
+                    <p style="padding-top:18px;">Overall score: *</p>
+                </div>
+                <div style="width:5%; float:left;">&nbsp;</div>
+                <div class="right_container">
+                    <select name="overall_score" required>
+                        <option value="">Score</option>
+                        <option value="0">Not Relevant</option>
+                        <?php
+                        for ($i = 1; $i < 6; $i++) {
+                            echo('<option value="' . $i . '">' . $i . '</option>');
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div style="clear:both;"></div>
+
+                <div class="left_container">
+                    <p style="padding-top:18px;">Review: *</p>
+                </div>
+                <div style="width:5%; float:left;">&nbsp;</div>
+                <div class="right_container">
+                    <textarea name="review" required></textarea>
+                </div>
+                <div style="clear:both;"></div>
+
+
+                <p style="margin-top:25px; font-size:10px; color: #a1a1a1;">Fields marked with asterisk (*) are required.</p>
+            </div>
+            <img src="/images/register_split.png">
+            <div id="register_container_bottomhalf">
+                <div class="fancy_button" id="create_review" style="left: 335px; top: 160px;">
+                    <img src="/images/btn_left.png" />
+                    <p>Add Review</p>
+                    <img src="/images/btn_right.png" />
+                </div>
+            </div>
+            <img src="/images/register_bottom.png">
+        </form>
+    </div>
+</div>
+
+<!-- Create Project -->
+
+<div id="blackout_create_project">
+    <div id="register_container" style="height: 390px; margin:0px; top:0px; left:0px;">
+        <form name='create_project_form' method='post' enctype="multipart/form-data">
+            <img src="/images/register_top.png">
+            <div id="register_container_tophalf">
+                <div class="alert" id="addProjectError" style="display:none; margin-bottom:20px; padding: 5px; clear:both;">
+                    <p></p>
+                </div>
+                <p style="font-weight:bold; margin-bottom:15px;">Please enter the details of your Minor/Internship/Etc. :</p>
+                <div style="clear:both;"></div>
+
+                <div class="left_container">
+                    <p style="padding-top:18px;">Type: *</p>
+                </div>
+                <div style="width:5%; float:left;">&nbsp;</div>
+                <div class="right_container">
+                    <select name="type" required autofocus>
+                        <option value="">-- Select a type --</option>
+                        <option value="minor">Minor</option>
+                        <option value="internship">Internship</option>
+                        <option value="graduation">Graduation</option>
+                        <option value="ESP">ESP</option>
+                    </select>
+                </div>
+                <div style="clear:both;"></div>
+
+                <div class="left_container">
+                    <p style="padding-top:18px;">Location: <a style="float:none; cursor: pointer; text-decoration: underline" class="mylocation_add">(Create a location)</a>*</p>
+                </div>
+                <div style="width:5%; float:left;">&nbsp;</div>
+                <div class="right_container">
+                    <select name="location" required>
+                        <option value="">-- Select a location --</option>
+                        <?php
+                        $user = $em->getRepository('\PROJ\Entities\Account')->find($_SESSION['userID']);
+                        $qb = $em->createQueryBuilder();
+                        $qb->select('i')
+                                ->from('\PROJ\Entities\Institute', 'i')
+                                ->where($qb->expr()->eq('i.creator', $qb->expr()->literal($user->getStudent()->getId())))
+                                ->orWhere($qb->expr()->eq('i.aproved', '1'))
+                                ->orderBy('i.type', 'ASC');
+                        $res = $qb->getQuery()->getResult();
+                        foreach ($res as $r) {
+                            echo('<option value="' . $r->getId() . '">' . $r->getName() . ' (' . $r->getPlace() . ')</option>');
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div style="clear:both;"></div>
+
+                <div class="left_container">
+                    <p style="padding-top:18px;">Start Date: *</p>
+                </div>
+                <div style="width:5%; float:left;">&nbsp;</div>
+                <div class="right_container">
+                    <select name="start_year" style="width:45%" required>
+                        <option value="">Year</option>
+                        <?php
+                        for ($i = date("Y"); $i > date("Y") - 10; $i--) {
+                            echo('<option value="' . $i . '">' . $i . '</option>');
+                        }
+                        ?>
+                    </select>
+                    <select name="start_month" style="width:45%; margin-left:10%;" required>
+                        <option value="">Month</option>
+                        <?php
+                        for ($i = 1; $i < 13; $i++) {
+                            echo('<option value="' . $i . '">' . date('F', mktime(0, 0, 0, $i, 1, 2000)) . '</option>');
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div style="clear:both;"></div>
+
+                <div class="left_container">
+                    <p style="padding-top:18px;">End Date: *</p>
+                </div>
+                <div style="width:5%; float:left;">&nbsp;</div>
+                <div class="right_container">
+                    <select name="end_year" style="width:45%" required>
+                        <option value="">Year</option>
+                        <?php
+                        for ($i = date("Y"); $i > date("Y") - 10; $i--) {
+                            echo('<option value="' . $i . '">' . $i . '</option>');
+                        }
+                        ?>
+                    </select>
+                    <select name="end_month" style="width:45%; margin-left:10%;" required>
+                        <option value="">Month</option>
+                        <?php
+                        for ($i = 1; $i < 13; $i++) {
+                            echo('<option value="' . $i . '">' . date('F', mktime(0, 0, 0, $i, 1, 2000)) . '</option>');
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div style="clear:both;"></div>
+
+
+                <p style="margin-top:25px; font-size:10px; color: #a1a1a1;">Fields marked with asterisk (*) are required.</p>
+            </div>
+            <img src="/images/register_split.png">
+            <div id="register_container_bottomhalf">
+                <div class="fancy_button" id="create_project" style="left: 335px; top: 160px;">
+                    <img src="/images/btn_left.png" />
+                    <p>Create Project</p>
+                    <img src="/images/btn_right.png" />
+                </div>
+            </div>
+            <img src="/images/register_bottom.png">
+        </form>
+    </div>
+</div>
+
+<!-- remove Location -->
+
+<div id="blackout_delete_location">
+    <div id="register_container" style="width: 480px; height: 274px; left:auto; top: auto; margin: 0px;">
+        <form name='create_location_form' method='post' enctype="multipart/form-data">
+            <img src="/images/register_top.png">
+            <div id="register_container_tophalf">
+                <div class="alert" id="removeLocationError" style="display:none; margin-bottom:20px; padding: 5px; clear:both;">
+                    <p></p>
+                </div>
+                <p style="margin-bottom:15px;">You are about to <span style="font-weight: bold;">remove</span> the following Location:</p>
+                <div style="clear:both;"></div>
+                <table>
+                    <tr>
+                        <td style="padding: 5px 5px 5px 0px;"><p>Name:</p></td>
+                        <td style="padding: 5px;"></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px 5px 5px 0px;"><p>Location:</p></td>
+                        <td style="padding: 5px;"></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px 5px 5px 0px;"><p>Type:</p></td>
+                        <td style="padding: 5px;"></td>
+                    </tr>
+                </table>
+                <div style="clear:both;"></div>
+                <p style="margin:15px inherit;">Are you sure you want to continue? This can <span style="font-weight: bold;">NOT</span> be undone.</p>
+            </div>
+            <img src="/images/register_split.png">
+            <div id="register_container_bottomhalf">
+                <div class="fancy_button" id="create_location" style="margin-left:10px;">
+                    <img src="/images/btn_left.png" />
+                    <p>Remove</p>
+                    <img src="/images/btn_right.png" />
+                </div>
+                <div class="fancy_button" id="create_location">
+                    <img src="/images/btn_left.png" />
+                    <p>Cancel</p>
+                    <img src="/images/btn_right.png" />
+                </div>
+            </div>
+            <img src="/images/register_bottom.png">
+        </form>
+    </div>
+</div>

@@ -28,6 +28,18 @@
     display:none;
 }
 
+
+#blackout_delete_location{
+    width: 480px;
+    height: 274px;
+    position: absolute;
+    left:50%;
+    top: 50%;
+    margin-left: -240px;
+    margin-top: -137px;
+    display:none;
+}
+
 #blackout_create_project{
     width: 706px;
     height: 390px;
