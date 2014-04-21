@@ -142,8 +142,9 @@ class AjaxController extends BaseController {
             return;
         }
         
-        if($_POST['type'] != "education" && $_POST['type'] != "business")
-            die();
+        if($_POST['type'] != "education" && $_POST['type'] != "business") {
+            throw new ServerException('Invallid Type', ServerException::SERVER_ERROR);
+        }
         
         $em = DoctrineHelper::instance()->getEntityManager();
         $ac = new \PROJ\Services\AccountService();
@@ -190,11 +191,13 @@ class AjaxController extends BaseController {
             return;
         }
         
-        if(!is_numeric($_POST['start_year']) || !is_numeric($_POST['start_month']) || !is_numeric($_POST['end_year']) || !is_numeric($_POST['end_month']) || !is_numeric($_POST['location']))
-            die("");
+        if(!is_numeric($_POST['start_year']) || !is_numeric($_POST['start_month']) || !is_numeric($_POST['end_year']) || !is_numeric($_POST['end_month']) || !is_numeric($_POST['location'])) {
+            throw new ServerException('One of the fields isn\'t numeric', ServerException::SERVER_ERROR);
+        }
         
-        if($_POST['type'] != "minor" && $_POST['type'] != "internship" && $_POST['type'] != "graduation" && $_POST['type'] != "ESP")
-            die("");
+        if($_POST['type'] != "minor" && $_POST['type'] != "internship" && $_POST['type'] != "graduation" && $_POST['type'] != "ESP") {
+           throw new ServerException('Invalid Type', ServerException::SERVER_ERROR);
+        }
         
         if(new \DateTime($_POST['start_year'].'-'.$_POST['start_month'].'-1') > new \DateTime($_POST['end_year'].'-'.$_POST['end_month'].'-1')) {
             echo("Start date cannot be after Stop date");
@@ -215,12 +218,15 @@ class AjaxController extends BaseController {
             
 
             $found = false;
-            foreach($res as $r)
-                if($r['id'] == $_POST['location'])
+            foreach($res as $r) {
+                if($r['id'] == $_POST['location']) {
                     $found = true;
+                }
+            }
                 
-            if(!$found)
-                die("Illegal Location");
+            if(!$found) {
+                throw new ServerException('Illegal Location', ServerException::SERVER_ERROR);
+            }
         
         
             $location = $em->getRepository('\PROJ\Entities\Institute')->find($_POST['location']);
@@ -247,11 +253,13 @@ class AjaxController extends BaseController {
             return;
         }
         
-        if(!is_numeric($_POST['project']) || !is_numeric($_POST['assignment_score']) || !is_numeric($_POST['guidance_score']) || !is_numeric($_POST['accomodation_score']) || !is_numeric($_POST['overall_score']))
-            die();
+        if(!is_numeric($_POST['project']) || !is_numeric($_POST['assignment_score']) || !is_numeric($_POST['guidance_score']) || !is_numeric($_POST['accomodation_score']) || !is_numeric($_POST['overall_score'])) {
+            throw new ServerException('One of the fields isn\'t numeric', ServerException::SERVER_ERROR);
+        }
         
-        if($_POST['assignment_score'] > 5 || $_POST['assignment_score'] > 5 || $_POST['assignment_score'] > 5 || $_POST['guidance_score'] > 5)
-            die();
+        if($_POST['assignment_score'] > 5 || $_POST['assignment_score'] > 5 || $_POST['assignment_score'] > 5 || $_POST['guidance_score'] > 5) {
+            throw new ServerException('Score field has an illegal value', ServerException::SERVER_ERROR);
+        }
         
         $ac = new \PROJ\Services\AccountService();
         if($ac->isLoggedIn()) {
@@ -271,12 +279,15 @@ class AjaxController extends BaseController {
             $res = $qb->getQuery()->getResult();
 
             $found = false;
-            foreach($res as $r)
-                if($r['id'] == $_POST['project'])
+            foreach($res as $r) {
+                if($r['id'] == $_POST['project']) {
                     $found = true;
+                }
+            }
                 
-            if(!$found)
-                die("Illegal Project");
+            if(!$found) {
+                throw new ServerException('Illegal Project', ServerException::SERVER_ERROR);
+            }
         
         
             $project = $em->getRepository('\PROJ\Entities\Project')->find($_POST['project']);

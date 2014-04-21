@@ -189,9 +189,10 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
 1.	Laad de homepage http://localhost/Management/Home
     * Er is een overzicht zichtbaar om je gegevens aan te passen
 2.	Druk op de knop `Change Password`
-	* Vul 'pasword' in.
+	* Vul 'paswword' in.
 	* Vul 'password' in.
 	* Vul 'password' in.
+	* Druk op `save`
 	* U krijgt de tekst `Old password didn't match.` te zien
 	
 1.	Laad de homepage http://localhost/Management/Home
@@ -200,8 +201,20 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
 	* Vul 'password' in.
 	* Vul 'pasword' in.
 	* Vul 'password' in.
-	* Druk op 
+	* Druk op `save`
 	* U krijgt de tekst `New passwords didn't match.` te zien
+3.	Druk op de knop `Change Password`
+	* Vul 'pasword' in.
+	* Vul 'pasword' in.
+	* Vul 'pasword' in.
+	* Druk op  `save`
+	* U krijgt de tekst `New password can't be the same as the old password.` te zien
+4.	Verander het wachtwoord terug naar het orgineel door op de knop `Change Password` te drukken.
+	* Vul 'pasword' in.
+	* Vul 'password' in.
+	* Vul 'password' in.
+	* Druk op  `save`
+	* U krijgt de tekst `Change password succesfully.` te zien
 	
 ###Mijn account aanpassen:
 1.	Laad de homepage http://localhost/Management/Home
