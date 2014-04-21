@@ -38,19 +38,12 @@ Dit commando draai je altijd als eerste om te kijken of de SQL is wat je verwach
 
 Als het dump-sql commando geen errors terug geeft, kun je --force gebruiken om de changes naar de database op te slaan.
 
-<br>
-
-#####Proxy's
-Alles wat in \Classes\PROJ\Proxies staat moet je niet editen. Je kan het wel doen maar Doctrine genereerd die shit vanzelf. Alles wat je doet wordt dus gewoon overschreven.
-
-<br>
 
 #####Debuggen
 Een doctrine entity **NOOIT** print_r of var_dumpen! Altijd de Debug functie hier voor gebruiken.
 
 >\Doctrine\Common\Util\Debug::dump( )
 
-<br>
 
 #####Handige links
 * [Doctrine Mapping](http://docs.doctrine-project.org/en/2.0.x/reference/association-mapping.html)
@@ -65,18 +58,10 @@ In die paginas kun je dan de view aanroepen afhankelijk van overige url paramete
 
 Probeer database handelingen zoveel mogelijk in een model te doen. Het makkelijkste is om hier een Singleton van te maken (Zie DemoController.php in /PROJ/Classes/Controller/)
 
-<br>
-##Definition of Done
+#Netbeans
+Gebruik de Netbeans instellingen zoals deze voor het project zijn ingesteld.
 
+1. Ga naar `Tools > options`
+2. Klik links onderaan op Import...
+3. Kies `Netbeans Settings.zip` uit de project root.
 
-* Het gemaakte werk moet voldoen aan de acceptatie criteria van de user story
-* de broncode  van het gemaakte werk heeft unit tests 
-* De broncode wordt gereviewd door twee anderen teamleden die het te reviewen werk niet gemaakt hebben.
-* Deployement script is getest en werkend met de nieuwe functionalitiet. 
-* Database wordt ook geupdate
-* Documentatie is bijgewerkt. 
-* Zodra een functie klaar is moet je een pull request aanmaken.
-* Er moet test data beschikbaar zijn.
-* Uiterlijk moet voldoen aan het stijl document.
-
-<br>
