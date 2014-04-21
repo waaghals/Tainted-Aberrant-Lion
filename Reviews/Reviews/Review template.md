@@ -1,44 +1,25 @@
-#Review
-Gereviewed door:
+# Review
 
-* [eigen naam] // Hier komt jou eigen naam
-* [eigen naam] // Hier komt jou eigen naam
+Reviewer: [NAAM]
 
-Onderwerp
+Branch: [BRANCH NAAM]
 
-* [Feature Branch naam]
+Maker(s): [NAMEN]
 
-Gemaakt door:
+## Behaald: :heavy_check_mark: of :x:
 
-* [naam]
-* [naam]
+## Beoordeling
 
- `Yes/No` Aan alle criteria voldaan
-
-## Beoordelings punten
-
-Nummer|Criteria|Voldaan
----|---|---
-1|Voldoet de code aan de algemene regeles beschreven in de stijlgids| `Yes/No`
-2|Werkt de code op een correcte manier met andere classes, interfaces en methodes| `Yes/No`
-3|Zijn de methodes logisch en makkelijk aan te passen geschreven| `Yes/No`
-4|De code is consequent geschreven en heeft dezelfde structuur| `Yes/No`
-5|Is het duidelijk wat ieder blok code doet(doormiddel van naamgeving en comentaar)?| `Yes/No`
-6|Voldoet de code aan alle Functitonele requirements| `Yes/No`
-7|Voldoet de code aan alle Gebruiksvriendelijke requirements| `Yes/No`
-8|Voldoet de code aan alle veiligheids requirements| `Yes/No`
-
-__Mocht er code onvoldoende of niet goed zijn schrijf dan bij feedback op hoe je tot die conclusie bent gekomen.__
-
+- [ ] Voldoet aan stijlregels volgens de [PSR standaard](https://github.com/php-fig/fig-standards/tree/master/accepted).
+- [ ] Voldoet aan uiterlijk regels.
+- [ ] Methodes hebben logische naamgeving.
+- [ ] Methodes zijn verzien van PHPDoc (Actions uitgezonderd).
+- [ ] Onduidelijke/onverzichtelijke code heeft commentaar.
+- [ ] Bevat geen overduidelijke kwetsbaarheden.
+- [ ] Heeft up-to-date testplan.
+- [ ] Heeft unit tests voor business logic.
+- [ ] Heeft afgelopen testplan.
+- [ ] Text documenten zijn gestyled met Github Flavord Markdown.
 
 ## Feedback
-
-1. - // op deze regels kun je de feedback zeteen en verwijzen naar code die je beneden kwijt kunt
-2. -
-3. -
-4. -
-5. -
-6. -
-7. -
-8. -
-9. -
+Ruimte voor feedback/code voorbeelde etc.
