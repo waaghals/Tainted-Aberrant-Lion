@@ -1,4 +1,3 @@
-nbproject/private/config.properties
-nbproject/private/private.properties
-Classes/PROJ/Proxies/__CG__PROJEntitiesProject.php
-Classes/PROJ/Helper/DoctrineHelper.php
+/nbproject/private/
+/Classes/PROJ/Helper/DoctrineHelper.php
+/Classes/PROJ/Proxies/
