@@ -29,7 +29,7 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
     * Er staan ongeveer tussen de 45 en 75 tekens op één regel
     * Bij kleine schermen (zoals voor telefoons) komen meerdere kolommen tekst onder elkaar te staan.
 3. Test of de kaart werkt _(Visitor must be able to zoom in / out)_
-    * Je kunt zoomen door te scrollen 
+    * Je kunt zoomen door te scrollen
     * Je kunt zoomen door met twee vingers een zoom gesture te maken.
     * Je kan de kaart verslepen met de muis of vinger.
 4. De sidebar is te openen en te sluiten
@@ -184,7 +184,7 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
 	* Vul 'pasword' in.
 	* Vul 'pasword' in.
 	* U krijgt de tekst `Change password succesfully.` te zien
-	
+
 ###Wachtwoord niet succesvol veranderen:
 1.	Laad de homepage http://localhost/Management/Home
     * Er is een overzicht zichtbaar om je gegevens aan te passen
@@ -194,7 +194,7 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
 	* Vul 'password' in.
 	* Druk op `save`
 	* U krijgt de tekst `Old password didn't match.` te zien
-	
+
 1.	Laad de homepage http://localhost/Management/Home
     * Er is een overzicht zichtbaar om je gegevens aan te passen
 2.	Druk op de knop `Change Password`
@@ -215,7 +215,7 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
 	* Vul 'password' in.
 	* Druk op  `save`
 	* U krijgt de tekst `Change password succesfully.` te zien
-	
+
 ###Mijn account aanpassen:
 1.	Laad de homepage http://localhost/Management/Home
     * Er is een overzicht zichtbaar om je gegevens aan te passen
@@ -223,21 +223,13 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
 	* Pas de `Country` aan naar 'Netherlands'
 	* Druk op de knop `Save`
 	* U krijgt de tekst `Successfully saved.` te zien
-	
+
 ###Correct een nieuwe Locatie aanmaken:
 1.	Laad de pagina: http://localhost/Management/MyLocations/
     * De Pagina laad, en de `Create New Location` knop is zichtbaar
 2.    Druk op de knop `Create New Location`
+3.    Vul de gegevens in volgens Bijlage 3.
 	* Je krijgt een scherm te zien om een nieuwe locatie aan te maken.
-	* Selecteer bij `type` de waarde: `education`.
-	* Vul bij `company name` de waarde: `Avans Hogeschool` in.
-	* Selecteer bij `company country` de waarde `Netherlands`.
-	* Vul bij `company city` de waarde: `'s-Hertogenbosch` in.
-	* Vul bij `company street` de waarde: `Onderwijsboulevard` in.
-	* Vul bij `company house number` de waarde: `215` in.
-	* Vul bij `company postal code` de waarde: `5223DE` in.
-	* Vul bij `company e-mail` de waarde: `contact@toip.nl` in.
-	* Vul bij `company telephone number` de waarde: `0123456` in.
 	* Druk op de knop `Create Location`
 	* Het scherm verdwijnt en er wordt een nieuwe locatie aangemaakt.
 
@@ -245,7 +237,7 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
 1.    Laad de pagina: http://localhost/Management/MyLocations/
     * De Pagina laad, en de `Create New Location` knop is zichtbaar
 2.    Druk op de knop `Create New Location`
-    * Vul dezelfde gegevens in als bij stap 2 van `Correct een nieuwe Locatie aanmaken`
+    * Vul dezelfde gegevens in als uit Bijlage 3. van `Correct een nieuwe Locatie aanmaken`
     * Maak willekeurig een van de zojuist ingevulde, verplichte, velden leeg.
     * Druk op de knop `Create Location`
     * Bovenaan zou de error `Not everything is filled in` moeten verschijnen.
@@ -253,15 +245,10 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
     * Vul bij het veld `Company's House Number` een letter in I.P.V. een getal.
     * Druk op de knop `Create Location`
     * Bovenaan zou de error `Streetnumber is not a number` moeten verschijnen.
-3.    Maak van het `Company's House Number` veld weer een getal
-4.    Probeer van de ingevulde adres gegevens een niet bestaand adres te maken:
-	* Vul bij `company city` de waarde: `NietBestaandeStad` in.
-	* Vul bij `company street` de waarde: `DummyStraat` in.
-	* Vul bij `company house number` de waarde: `666` in.
-	* Vul bij `company postal code` de waarde: `5000AA` in.
+3.    Vul een ongeldig adres is volgens bijlage 4.
     * Druk op de knop `Create Location`
     * Bovenaan zou de error `Could not Geocode. Location was not created.` moeten verschijnen.
-    
+
 ###Correct een nieuw Project aanmaken:
 1.    Laad de pagina: http://localhost/Management/MyProjects/
     * De Pagina laad, en de `Create Project` knop is zichtbaar
@@ -273,7 +260,7 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
 	* Selecteer bij `end date` als jaar `2012` en als maand `Juni`
 	* Druk op de knop `Create Project`
 	* Het scherm verdwijnt en er wordt een nieuw project aangemaakt.
-    
+
 ###Incorrect een nieuw Project aanmaken:
 1.	Laad de pagina: http://localhost/Management/MyProjects/
     * De Pagina laad, en de `Create Project` knop is zichtbaar
@@ -286,7 +273,7 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
     * Selecteer bij `start date` als jaar `2013` en als maand `Januari`
     * Druk op de knop `Create Project`
     * Bovenaan zou de error `Start date cannot be after Stop date` moeten verschijnen.
-    
+
 ###Correct een nieuwe Review aanmaken:
 1.    Laad de pagina: http://localhost/Management/MyReviews/
     * De Pagina laad, en de `Write review` knop is zichtbaar
@@ -300,7 +287,7 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
 	* Vul bij `review` de tekst: 'Dit is een test review.' in.
 	* Druk op de knop `Create Review`
 	* Het scherm verdwijnt en er wordt een nieuwe review aangemaakt.
-    
+
 ###Incorrect een nieuwe Review aanmaken:
 1.    Laad de pagina: http://localhost/Management/MyReviews/
     * De Pagina laad, en de `Write review` knop is zichtbaar
@@ -309,8 +296,8 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
     * Maak willekeurig een van de zojuist ingevulde, verplichte, velden leeg.
     * Druk op de knop `Write review``
     * Bovenaan zou de error `Not everything is filled in` moeten verschijnen.
-	
-	
+
+
 
 ##Bijlage
 ###1. Incorrecte registreren waarden
@@ -342,3 +329,23 @@ Street|Straatnaam
 Streetnumber|12
 Addition|[leeg]
 Registration Code | 1234567890
+
+###3. Correcte nieuwe locatie
+Veld|Waarde
+--------|--------
+company name|Avans Hogeschool
+company country|Netherlands
+company city|'s-Hertogenbosch
+company street|Onderwijsboulevard
+company house number|215
+company postal code|5223DE
+company email|contact@toip.nl
+company telephone number|0123456
+
+###4. Incorrect adres voor nieuwe locatie
+Veld|Waarde
+--------|--------
+company city|NietBestaandeStad
+company street|DummyStraat
+company house number|666
+company postal code|5000AA
