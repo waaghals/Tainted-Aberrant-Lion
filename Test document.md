@@ -12,7 +12,7 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
 1. Leeg alle tabellen in de database met phpMyAdmin.
 2. Breng de database structuur up-to-date door naar http://localhost/console.php te gaan
 3. Run het commando `orm:schema-tool:update --force` te runnen.
-	* Er komt geen `[FAIL]` voor in het resultaat.
+    * Er komt geen `[FAIL]` voor in het resultaat.
 4. Vul de database met test data door naar http://localhost/testData/create te gaan.
 	* Er staat meerdere keren `<iets> has been added to the database successfully`
 	* Er zijn geen errors
@@ -29,7 +29,7 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
     * Er staan ongeveer tussen de 45 en 75 tekens op één regel
     * Bij kleine schermen (zoals voor telefoons) komen meerdere kolommen tekst onder elkaar te staan.
 3. Test of de kaart werkt _(Visitor must be able to zoom in / out)_
-    * Je kunt zoomen door te scrollen 
+    * Je kunt zoomen door te scrollen
     * Je kunt zoomen door met twee vingers een zoom gesture te maken.
     * Je kan de kaart verslepen met de muis of vinger.
 4. De sidebar is te openen en te sluiten
@@ -175,7 +175,7 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
 	* In de dropdown staat `No search results found`
 
 
-##Coördinator:
+##Management:
 ###Wachtwoord succesvol veranderen:
 1.	Laad de homepage http://localhost/Management/Home
     * Er is een overzicht zichtbaar om je gegevens aan te passen
@@ -184,82 +184,119 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
 	* Vul 'pasword' in.
 	* Vul 'pasword' in.
 	* U krijgt de tekst `Change password succesfully.` te zien
-	
+
 ###Wachtwoord niet succesvol veranderen:
 1.	Laad de homepage http://localhost/Management/Home
     * Er is een overzicht zichtbaar om je gegevens aan te passen
 2.	Druk op de knop `Change Password`
-	* Vul 'pasword' in.
+	* Vul 'paswword' in.
 	* Vul 'password' in.
 	* Vul 'password' in.
+	* Druk op `save`
 	* U krijgt de tekst `Old password didn't match.` te zien
-	
+
 1.	Laad de homepage http://localhost/Management/Home
     * Er is een overzicht zichtbaar om je gegevens aan te passen
 2.	Druk op de knop `Change Password`
 	* Vul 'password' in.
 	* Vul 'pasword' in.
 	* Vul 'password' in.
-	* Druk op 
+	* Druk op `save`
 	* U krijgt de tekst `New passwords didn't match.` te zien
-	
+3.	Druk op de knop `Change Password`
+	* Vul 'pasword' in.
+	* Vul 'pasword' in.
+	* Vul 'pasword' in.
+	* Druk op  `save`
+	* U krijgt de tekst `New password can't be the same as the old password.` te zien
+4.	Verander het wachtwoord terug naar het orgineel door op de knop `Change Password` te drukken.
+	* Vul 'pasword' in.
+	* Vul 'password' in.
+	* Vul 'password' in.
+	* Druk op  `save`
+	* U krijgt de tekst `Change password succesfully.` te zien
+
 ###Mijn account aanpassen:
 1.	Laad de homepage http://localhost/Management/Home
     * Er is een overzicht zichtbaar om je gegevens aan te passen
 2.	Druk op de knop `My Account`
 	* Druk op de knop `Save`
 	* U krijgt de tekst `Successfully saved.` te zien
-	
-###Mijn locaties aanpassen:
-1.	Laad de homepage http://localhost/Management/Home
-    * Er is een overzicht zichtbaar om je gegevens aan te passen
-2.	Zoom uit of in
-	* Druk op de knop `My Projects`
-	* Druk op de knop `Create Project`
-	* Je krijgt een scherm te zien om een nieuw project aan te maken.
-	* Selecteer bij `type` de 'education'
-	* Selecteer bij `company name` de McDonald's (Arnhem)
-	* Selecteer bij `company country` het land `Netherlands`
-	* Selecteer bij `company city` het land `Den Bosch`
-	* Selecteer bij `company street` het land `Onderwijsboulevard`
-	* Selecteer bij `company house number` het land `385`
-	* Selecteer bij `company postal code` het land `5000AA`
-	* Selecteer bij `company e-mail` het land `test@toip.nl`
-	* Vul bij `company telephone number` het nummer `0123456` in
+
+###Correct een nieuwe Locatie aanmaken:
+1.	Laad de pagina: http://localhost/Management/MyLocations/
+    * De Pagina laad, en de `Create New Location` knop is zichtbaar
+2.    Druk op de knop `Create New Location`
+3.    Vul de gegevens in volgens Bijlage 3.
+	* Je krijgt een scherm te zien om een nieuwe locatie aan te maken.
 	* Druk op de knop `Create Location`
 	* Het scherm verdwijnt en er wordt een nieuwe locatie aangemaakt.
-	
-###Mijn projecten aanpassen:
-1.	Laad de homepage http://localhost/Management/Home
-    * Er is een overzicht zichtbaar om je gegevens aan te passen
-2.	Zoom uit of in
-	* Druk op de knop `My Projects`
-	* Druk op de knop `Create Project`
+
+###Incorrect een nieuwe Locatie aanmaken:
+1.    Laad de pagina: http://localhost/Management/MyLocations/
+    * De Pagina laad, en de `Create New Location` knop is zichtbaar
+2.    Druk op de knop `Create New Location`
+    * Vul dezelfde gegevens in als uit Bijlage 3. van `Correct een nieuwe Locatie aanmaken`
+    * Maak willekeurig een van de zojuist ingevulde, verplichte, velden leeg.
+    * Druk op de knop `Create Location`
+    * Bovenaan zou de error `Not everything is filled in` moeten verschijnen.
+3.    Vul het zojuist leeg gemaakte veld in met de eerder genoemde waarden.
+    * Vul bij het veld `Company's House Number` een letter in I.P.V. een getal.
+    * Druk op de knop `Create Location`
+    * Bovenaan zou de error `Streetnumber is not a number` moeten verschijnen.
+3.    Vul een ongeldig adres is volgens bijlage 4.
+    * Druk op de knop `Create Location`
+    * Bovenaan zou de error `Could not Geocode. Location was not created.` moeten verschijnen.
+
+###Correct een nieuw Project aanmaken:
+1.    Laad de pagina: http://localhost/Management/MyProjects/
+    * De Pagina laad, en de `Create Project` knop is zichtbaar
+2.    Druk op de knop `Create Project`
 	* Je krijgt een scherm te zien om een nieuw project aan te maken.
-	* Selecteer bij `type` de 'internship'
-	* Selecteer bij `location` de McDonald's (Arnhem)
+	* Selecteer bij `type` de waarde: `internship`
+	* Selecteer bij `location` de waarde: `Avans Hogeschool ('s-Hertogenbosch)`
 	* Selecteer bij `start date` als jaar `2012` en als maand `Januari`
 	* Selecteer bij `end date` als jaar `2012` en als maand `Juni`
 	* Druk op de knop `Create Project`
 	* Het scherm verdwijnt en er wordt een nieuw project aangemaakt.
-	
-###Mijn reviews aanpassen:
-1.	Laad de homepage http://localhost/Management/Home
-    * Er is een overzicht zichtbaar om je gegevens aan te passen
-2.	Zoom uit of in
-	* Druk op de knop `My Projects`
-	* Druk op de knop `Create Project`
-	* Je krijgt een scherm te zien om een nieuw project aan te maken.
-	* Selecteer bij `project` de 'avans'
-	* Selecteer bij `assignment score` de het nummer '4'
-	* Selecteer bij `guidance score` de het nummer '2'
-	* Selecteer bij `accomodation score` de het nummer '3'
-	* Selecteer bij `overall score` de het nummer '3'
-	* Selecteer bij `review` de tekst 'Dit is een test review.'
+
+###Incorrect een nieuw Project aanmaken:
+1.	Laad de pagina: http://localhost/Management/MyProjects/
+    * De Pagina laad, en de `Create Project` knop is zichtbaar
+2.    Druk op de knop `Create Project`
+    * Vul dezelfde gegevens in als bij stap 2 van `Correct een nieuw Project aanmaken`
+    * Maak willekeurig een van de zojuist ingevulde, verplichte, velden leeg.
+    * Druk op de knop `Create Project`
+    * Bovenaan zou de error `Not everything is filled in` moeten verschijnen.
+3.    Vul het zojuist leeg gemaakte veld in met de eerder genoemde waarden.
+    * Selecteer bij `start date` als jaar `2013` en als maand `Januari`
+    * Druk op de knop `Create Project`
+    * Bovenaan zou de error `Start date cannot be after Stop date` moeten verschijnen.
+
+###Correct een nieuwe Review aanmaken:
+1.    Laad de pagina: http://localhost/Management/MyReviews/
+    * De Pagina laad, en de `Write review` knop is zichtbaar
+2.    Druk op de knop `Write review`
+	* Je krijgt een scherm te zien om een nieuwe review aan te maken.
+	* Selecteer bij `project` de waarde: 'Avans Hogeschool ('s-Hertogenbosch) - Internship'
+	* Selecteer bij `assignment score` de waarde: 'Not Relevant'
+	* Selecteer bij `guidance score` de waarde: '2'
+	* Selecteer bij `accomodation score` de waarde: '3'
+	* Selecteer bij `overall score` de waarde: '3'
+	* Vul bij `review` de tekst: 'Dit is een test review.' in.
 	* Druk op de knop `Create Review`
 	* Het scherm verdwijnt en er wordt een nieuwe review aangemaakt.
-	
-	
+
+###Incorrect een nieuwe Review aanmaken:
+1.    Laad de pagina: http://localhost/Management/MyReviews/
+    * De Pagina laad, en de `Write review` knop is zichtbaar
+2.    Druk op de knop `Write review`
+    * Vul dezelfde gegevens in als bij stap 2 van `Correct een nieuwe Review aanmaken`
+    * Maak willekeurig een van de zojuist ingevulde, verplichte, velden leeg.
+    * Druk op de knop `Write review``
+    * Bovenaan zou de error `Not everything is filled in` moeten verschijnen.
+
+
 
 ##Bijlage
 ###1. Incorrecte registreren waarden
@@ -291,3 +328,23 @@ Street|Straatnaam
 Streetnumber|12
 Addition|[leeg]
 Registration Code | 1234567890
+
+###3. Correcte nieuwe locatie
+Veld|Waarde
+--------|--------
+company name|Avans Hogeschool
+company country|Netherlands
+company city|'s-Hertogenbosch
+company street|Onderwijsboulevard
+company house number|215
+company postal code|5223DE
+company email|contact@toip.nl
+company telephone number|0123456
+
+###4. Incorrect adres voor nieuwe locatie
+Veld|Waarde
+--------|--------
+company city|NietBestaandeStad
+company street|DummyStraat
+company house number|666
+company postal code|5000AA

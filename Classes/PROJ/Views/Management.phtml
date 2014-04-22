@@ -37,14 +37,15 @@ $content->additionalValues = $additionalValues;
                             <?php
                             $user = $em->getRepository('\PROJ\Entities\Account')->find($_SESSION['userID']);
                             $qb = $em->createQueryBuilder();
-                            $qb->select('p.id, i.name, i.place, p.type')
+                            $qb->select('p')
                                     ->from('\PROJ\Entities\Project', 'p')
                                     ->leftJoin('p.institute', 'i')
                                     ->where($qb->expr()->eq('p.student', $qb->expr()->literal($user->getStudent()->getId())))
                                     ->orderBy('i.name', 'ASC');     
                             $res = $qb->getQuery()->getResult();
                             foreach($res as $r) {
-                                echo('<option value="'.$r['id'].'">'.$r['name'].' ('.$r['place'].') - '.ucfirst($r['type']).'</option>');
+                                if(count($r->getReview()) == 0)
+                                    echo('<option value="'.$r->getId().'">'.$r->getInstitute()->getName().' ('.$r->getInstitute()->getPlace().') - '.ucfirst($r->getType()).'</option>');
                             }
                             ?>
                         </select>
@@ -58,7 +59,7 @@ $content->additionalValues = $additionalValues;
                     <div class="right_container">
                         <select name="assignment_score" required>
                             <option value="">Score</option>
-                            <option value="0">Not Relevant</option>
+                            <option value="-1">Not Relevant</option>
                             <?php
                             for($i = 1; $i < 6; $i++) {
                                 echo('<option value="'.$i.'">'.$i.'</option>');
@@ -75,7 +76,7 @@ $content->additionalValues = $additionalValues;
                     <div class="right_container">
                         <select name="guidance_score" required>
                             <option value="">Score</option>
-                            <option value="0">Not Relevant</option>
+                            <option value="-1">Not Relevant</option>
                             <?php
                             for($i = 1; $i < 6; $i++) {
                                 echo('<option value="'.$i.'">'.$i.'</option>');
@@ -92,7 +93,7 @@ $content->additionalValues = $additionalValues;
                     <div class="right_container">
                         <select name="accomodation_score" required>
                             <option value="">Score</option>
-                            <option value="0">Not Relevant</option>
+                            <option value="-1">Not Relevant</option>
                             <?php
                             for($i = 1; $i < 6; $i++) {
                                 echo('<option value="'.$i.'">'.$i.'</option>');
@@ -109,7 +110,6 @@ $content->additionalValues = $additionalValues;
                     <div class="right_container">
                         <select name="overall_score" required>
                             <option value="">Score</option>
-                            <option value="0">Not Relevant</option>
                             <?php
                             for($i = 1; $i < 6; $i++) {
                                 echo('<option value="'.$i.'">'.$i.'</option>');
