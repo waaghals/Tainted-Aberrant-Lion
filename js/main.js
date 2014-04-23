@@ -21,7 +21,8 @@ $(document).ready(function() {
     $('.mylocation_remove').click(function() {
         $('#blackout').fadeIn();
         $('[id^=blackout_]:visible').fadeOut();
-        $('#blackout_delete_location').fadeIn();
+        $('.fullscreen_loading_icon').fadeIn();
+        //$('#blackout_delete_location').fadeIn();
     });
 
     $('.myprojects_add').click(function() {
@@ -44,6 +45,12 @@ $(document).ready(function() {
         } else {
             e.preventDefault();
         }
+    });
+    
+    $('.blackout_cancel').click(function() {
+        $('#blackout').fadeOut(function() {
+            $(this).children().hide();
+        });
     });
 
     $('#create_location').click(function() {

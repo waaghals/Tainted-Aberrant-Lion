@@ -1,6 +1,9 @@
 <?php
 $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
 ?>
+<!-- Loading Icon -->
+<img src="/images/loading.gif" class="fullscreen_loading_icon">
+
 <!-- Create Location -->
 
 <div id="blackout_create_location">
@@ -168,7 +171,7 @@ $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
                     <select name="assignment_score" required>
                         <option value="">Score</option>
                         <option value="0">Not Relevant</option>
-                        <?php
+                        <?phpi
                         for ($i = 1; $i < 6; $i++) {
                             echo('<option value="' . $i . '">' . $i . '</option>');
                         }
@@ -372,7 +375,7 @@ $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
 <!-- remove Location -->
 
 <div id="blackout_delete_location">
-    <div id="register_container" style="width: 480px; height: 274px; left:auto; top: auto; margin: 0px;">
+    <div id="register_container" style="height: 274px; left:auto; top: auto; margin: 0px;">
         <form name='create_location_form' method='post' enctype="multipart/form-data">
             <img src="/images/register_top.png">
             <div id="register_container_tophalf">
@@ -400,14 +403,14 @@ $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
             </div>
             <img src="/images/register_split.png">
             <div id="register_container_bottomhalf">
-                <div class="fancy_button" id="create_location" style="margin-left:10px;">
+                <div class="fancy_button blackout_cancel" style="margin-left:10px;">
                     <img src="/images/btn_left.png" />
-                    <p>Remove</p>
+                    <p>Cancel</p>
                     <img src="/images/btn_right.png" />
                 </div>
                 <div class="fancy_button" id="create_location">
                     <img src="/images/btn_left.png" />
-                    <p>Cancel</p>
+                    <p>Remove</p>
                     <img src="/images/btn_right.png" />
                 </div>
             </div>

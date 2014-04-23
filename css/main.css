@@ -30,12 +30,12 @@
 
 
 #blackout_delete_location{
-    width: 480px;
+    width: 706px;
     height: 274px;
     position: absolute;
     left:50%;
     top: 50%;
-    margin-left: -240px;
+    margin-left: -352px;
     margin-top: -137px;
     display:none;
 }
@@ -60,6 +60,15 @@
     margin-left: -352px;
     margin-top: -195px;
     display:none;
+}
+
+.fullscreen_loading_icon{
+    margin-top: -155px;
+    margin-left: -155px;
+    top: 50%;
+    left: 50%;
+    display: none;
+    position: absolute;
 }
 
 #legenda{
