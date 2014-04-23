@@ -36,17 +36,20 @@ class TestdataController extends BaseController {
         echo "<br />";
         \PROJ\Tools\CodeConsoleRunner::run($helperSet, new \Symfony\Component\Console\Input\ArgvInput($commandarray2), new \Symfony\Component\Console\Output\StreamOutput(fopen('php://output', 'w')));
         echo "<br /><br />";
+        
+        ob_flush();
     }
 
-    private function createInstitute($em, $name, $type, $place, $lat, $long) {
+    private function createInstitute($em, $name, $type, $place, $lat, $long, $creator) {
         $institute = new Institute();
         $institute->setName($name);
         $institute->setType($type);
         $institute->setPlace($place);
         $institute->setLat($lat);
         $institute->setLng($long);
+        $institute->setCreator($creator);
         $em->persist($institute);
-        $em->flush();
+        
         echo "Institute with the following data has been succesfully added to the database:"
         . "<br />Name: " . $name
         . "<br />Type: " . $type
@@ -54,6 +57,8 @@ class TestdataController extends BaseController {
         . "<br />Latitude: " . $lat
         . "<br />Longtitude: " . $long
         . "<br /><br />";
+        
+        ob_flush();
         return $institute;
     }
 
@@ -64,12 +69,14 @@ class TestdataController extends BaseController {
         $account->setPassword($hash);
         $account->setSalt($salt);
         $em->persist($account);
-        $em->flush();
+        
         echo "New account with the following data has been succesfully added to the database:"
         . "<br />Username: " . $username
         . "<br />Password: " . $password
         . "<br />Salt: " . $salt
         . "<br /><br />";
+        
+        ob_flush();
         return $account;
     }
 
@@ -84,7 +91,7 @@ class TestdataController extends BaseController {
         $student->setAccount($account);
         $student->setEmail($email);
         $em->persist($student);
-        $em->flush();
+        
         echo "New student with the following data has been succesfully added to the database:"
         . "<br />Firstname: " . $fName
         . "<br />Surname: " . $sName
@@ -95,6 +102,8 @@ class TestdataController extends BaseController {
         . "<br />Account: " . $account->getUsername()
         . "<br />Email: " . $email
         . "<br /><br />";
+        
+        ob_flush();
         return $student;
     }
 
@@ -106,12 +115,14 @@ class TestdataController extends BaseController {
         $project->setStartdate($startDate);
         $project->setendDate($endDate);
         $em->persist($project);
-        $em->flush();
+        
         echo "New project with the following data has been succesfully added to the database:"
         . "<br />Student: " . $student->getFirstname() . " " . $student->getSurname()
         . "<br />Institute: " . $institute->getName()       
         . "<br />Type: " . $type
         . "<br /><br />";
+        
+        ob_flush();
         return $project;
     }
 
@@ -124,7 +135,7 @@ class TestdataController extends BaseController {
         $review->setRating(($assignRate + $accoRate + $guidRate) / 3);
         $review->setText($text);
         $em->persist($review);
-        $em->flush();
+        
         echo "New review with the following data has been succesfully added to the database:"
         . "<br />Institute: " . $project->getInstitute()->getName()
         . "<br />Assignment rating: " . $assignRate
@@ -132,6 +143,8 @@ class TestdataController extends BaseController {
         . "<br />Guidance rating: " . $guidRate
         . "<br />Text: " . $text
         . "<br /><br />";
+        
+        ob_flush();
     }
 
     private function createCountry($em, $iso_alpha2, $iso_alpha3, $iso_numeric, $fips_code, $name, $capital, $areainsqkm, $population, $continent, $tld, $currency, $languages)
@@ -150,7 +163,7 @@ class TestdataController extends BaseController {
         $country->setCurrency($currency);
         $country->setLanguages($languages);
         $em->persist($country);
-        $em->flush();
+        
         echo "New review with the following data has been succesfully added to the database:"
         . "<br />Iso_alpha2: " . $iso_alpha2
         . "<br />Iso_alpha3: " . $iso_alpha3
@@ -165,21 +178,26 @@ class TestdataController extends BaseController {
         . "<br />Currency: " . $currency
         . "<br />Languages: " . $languages
         . "<br /><br />";
+        
+        ob_flush();
     }
     
     public function IndexAction() {
         $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
+        
+        ob_start();
 
         $this->emptyTables($em);
-
-        $avans = $this->createInstitute($em, "Avans Hogeschool", "education", "`s-Hertogenbosch", 51.688946, 5.287256);
-        $mac = $this->createInstitute($em, "McDonald's", "business", "Arnhem", 51.9635996, 5.8930421);
+        echo "Database Cleared.<br /><br />";
 
         $kjansen = $this->createUser($em, "kjansen", "qwerty", "HGJDGFSJHDFJHSDf");
         $hbakker = $this->createUser($em, "hbakker", "password", "E*(%&YUIERHDGFER");
 
         $kees = $this->createStudent($em, "Kees", "Jansen", "Jansenlaan", 15, "1234AB", "eindhoven", $kjansen, "k.jansen@student.avans.nl");
         $harry = $this->createStudent($em, "Harry", "Bakker", "Bakkersweg", 15, "5678CD", "utrecht", $hbakker, "h.bakker@student.avans.nl");
+
+        $avans = $this->createInstitute($em, "Avans Hogeschool", "education", "`s-Hertogenbosch", 51.688946, 5.287256, $kees);
+        $mac = $this->createInstitute($em, "McDonald's", "business", "Arnhem", 51.9635996, 5.8930421, $harry);
 
         $projectX = $this->createProject($em, $kees, $avans, "internship", new \DateTime('03/17/2014'), new \DateTime('05/17/2014'));
         $projectZ = $this->createProject($em, $harry, $mac, "minor", new \DateTime('02/04/2014'), new \DateTime('06/20/2014'));
@@ -439,6 +457,9 @@ class TestdataController extends BaseController {
         $this->createCountry($em, 'ZW', 'ZWE', 716, 'ZI', 'Zimbabwe', 'Harare', 390580, 11651858, 'AF', '', 'ZWL', '.zw');
         $this->createCountry($em, 'CS', 'SCG', 891, 'YI', 'Serbia and Montenegro', 'Belgrade', 102350, 10829175, 'EU', '', 'RSD', '.cs');
         $this->createCountry($em, 'AN', 'ANT', 530, 'NT', 'Netherlands Antilles', 'Willemstad', 960, 136197, 'NA', '', 'ANG', '.an');
+        
+        $em->flush();
+        ob_end_flush();
     }
 
 }
