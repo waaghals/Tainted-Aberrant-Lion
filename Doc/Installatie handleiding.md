@@ -5,7 +5,7 @@ De eerste is voor een basis of demo installatie. De tweede is een development in
 
 ###Basis eisen:
  * Webserver met o.a.:
-  * Php 5.4
+  * PHP 5.4
   * Apache 2
   * Mysql 5
  * Basis kennis voor het hosten van websites.
@@ -49,7 +49,7 @@ De eerste is voor een basis of demo installatie. De tweede is een development in
         );
 ```
 5. Ga naar `/console.php` op de webserver. Bijvoorbeeld `http://example.com/console.php`.
-6. Run het volgende commando `orm:schema-tool:update --force`. Dit creeert de database tabellen.
+6. Run het volgende commando `orm:schema-tool:update --force`. Dit creëert de database tabellen.
 
 ###Demo data
 

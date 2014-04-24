@@ -20,7 +20,7 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
 	- [ ] Er mogen geen failures optreden!
 
 ## Responsiveness testen
-#### (20.) As a visitor I want to I want to see the world map so I can easiliy see which places are available for me.
+#### (20.) As a visitor I want to see the world map so I can easiliy see which places are available for me.
 
 1. Laad de homepage http://localhost _(Visitor must be able to view the world map)_
 	- [ ] Er is een map zichtbaar
