@@ -9,7 +9,7 @@
 <script type="text/javascript">
     var map; /* Main map variable */
     var lastLoadedJson;
-    
+    var markers = new Array();
     function fakeMarkerClick(locationId, lat, lng) {
         map.setZoom(16);
         map.setCenter(new google.maps.LatLng(lat, lng));
@@ -28,8 +28,7 @@
 
     function loadJsonMarkers() {
         //Array of markers
-        var markers = new Array();
-        
+
         console.log("Fetching all data from server");
         $.getJSON('/ajax/allLocations/', function(data) {
             lastLoadedJson = data;
@@ -42,12 +41,13 @@
                     icon: getIconPath(location.type),
                     animation: google.maps.Animation.NONE,
                     title: location.name,
-                    id: location.id
+                    id: location.id,
+                    type: location.type
                 });
-                
+
                 //Fills an array with markers
                 markers[i] = marker;
-                
+
                 google.maps.event.addListener(marker, 'click', function() {
                     map.setZoom(16);
                     map.setCenter(marker.getPosition());
@@ -56,7 +56,7 @@
                     openSidebar();
                 });
             });
-        
+
             //Shows a marker instead of multiple markers around one place
             var markerCluster = new MarkerClusterer(map, markers);
             markerCluster.setGridSize(15);
@@ -92,8 +92,8 @@
                 return "";
         }
     }
-    
-    
+
+
     function loadReview(projectId) {
         for (var i = 0; i < lastLoadedJson.length; i++) {
             var projects = lastLoadedJson[i].projects;
@@ -152,7 +152,7 @@
         return stars;
     }
 
-        
+
     function showReview(project, location) {
         console.log("Showing review for " + location.name + " by " + project.student.firstname + " in the sidebar.")
         var sidebar = $('aside');
@@ -177,7 +177,7 @@
 
         sidebar.append(container);
     }
-        
+
     $(document).ready(function() {
 
         $('aside').flowtype({
@@ -212,14 +212,14 @@
             $('#map').css('height', h);
             $('aside').css('top', headerHeight);
             $('aside').css('height', h - headerHeight);
-            
+
             //Auto size container of management
             $('#management_right').css('height', h - headerHeight);
             $('#management_right').css('top', headerHeight);
             $('#management_right').css('width', w - leftbarWidth - 10);
             $('#management_container').css('margin-top', $('#management_container').height() / 8 + headerHeight);
             $('#management_container').css('margin-left', $('#management_container').width() / 8);
-            if($("#management_container").children().first().children().first().attr("id") !== "management_container_top")
+            if ($("#management_container").children().first().children().first().attr("id") !== "management_container_top")
                 $("#management_container").children().first().children().first().css('height', ($("#management_container").height() - 52) / 100 * 94);
             else
                 $("#management_container").children().first().children('#scrollable').css('height', ($("#management_container").height() - 104) / 100 * 94);
@@ -240,29 +240,29 @@
                 });
                 return json;
             })();
-            <?php
-            //Ophalen van user location
-            $ch = curl_init(); 
-            curl_setopt($ch, CURLOPT_URL, 'http://freegeoip.net/json/'.$_SERVER['REMOTE_ADDR']); 
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            $json = strip_tags(trim(curl_exec($ch))); 
-            curl_close($ch);  
-            
-            if(strpos($json,'Bad Request') === false && strpos($json,'Not Found') === false) {
-                $data = json_decode($json, true);
-                if($data['country_code'] != 'Reserved') {
-                    $loc = $data['country_name'];
-                }else{
-                    $loc = DEFAULT_MAP_LOCATION;
-                }
-            }else{
-                $loc = DEFAULT_MAP_LOCATION;
-            }
-            ?>
+<?php
+//Ophalen van user location
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, 'http://freegeoip.net/json/' . $_SERVER['REMOTE_ADDR']);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+$json = strip_tags(trim(curl_exec($ch)));
+curl_close($ch);
+
+if (strpos($json, 'Bad Request') === false && strpos($json, 'Not Found') === false) {
+    $data = json_decode($json, true);
+    if ($data['country_code'] != 'Reserved') {
+        $loc = $data['country_name'];
+    } else {
+        $loc = DEFAULT_MAP_LOCATION;
+    }
+} else {
+    $loc = DEFAULT_MAP_LOCATION;
+}
+?>
             var geocoder;
             geocoder = new google.maps.Geocoder();
-            geocoder.geocode( { 'address': '<?php echo $loc; ?>'}, function(results, status) {
-                if (status == google.maps.GeocoderStatus.OK) { 
+            geocoder.geocode({'address': '<?php echo $loc; ?>'}, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
                     var mapOptions = {
                         center: results[0].geometry.location,
                         zoom: 8,
@@ -284,7 +284,7 @@
                         var headerHeight = $('header').height();
                         $('#map').css('height', (mainHeight - headerHeight));
                     });
-                    
+
                     //Force a recalculation of the map height
                     correctHeaderOffset();
                     loadJsonMarkers();
@@ -302,6 +302,33 @@
         });
     });
 
+    function filterCountry() {
+        for (var i = 0; i <= markers.length; i++) {
+            var long = markers[i].position['A'];
+            var lat = markers[i].position['k'];
+            console.log("asd");
+            $.ajax({url: 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + long + '&sensor=true',
+                success: function(data) {
+                    alert(data.results[0].formatted_address);
+                    /*or you could iterate the components for only the city and state*/
+                }
+            });
+        }
+    }
 
+    function filterType() {
+        showAllMarkers();
+        for (var i = 0; i < markers.length; i++) {
+            if (markers[i].type !== document.getElementById("type").value) {
+                markers[i].setVisible(false);
+            }
+        }
+    }
+
+    function showAllMarkers() {
+        for (var i = 0; i < markers.length; i++) {
+            markers[i].setVisible(true);
+        }
+    }
 
 </script>

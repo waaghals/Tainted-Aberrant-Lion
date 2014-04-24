@@ -26,7 +26,6 @@ $ac = new PROJ\Services\AccountService();
             </div>
         </div>
         <?php } ?>
-        <!--
         <?php if(isset($filter)) { ?>
         <div style="width:30px; float:right;">
             &nbsp;
@@ -37,8 +36,9 @@ $ac = new PROJ\Services\AccountService();
         </div>
         <div class="filterblock">
             <div>Type:</div>
-            <select>
-                <option>Internship</option>
+            <select id="type" onchange="filterType()">
+                <option>education</option>
+                <option>business</option>
             </select>
         </div>
         <div class="filterblock">
@@ -49,11 +49,11 @@ $ac = new PROJ\Services\AccountService();
         </div>
         <div class="filterblock">
             <div>Country:</div>
-            <select>
+            <select id="country" onchange="filterCountry()">
                 <option>Netherlands</option>
+                <option>Germany</option>
             </select>
         </div>
         <?php } ?>
-        -->
     </nav>
 </header>
