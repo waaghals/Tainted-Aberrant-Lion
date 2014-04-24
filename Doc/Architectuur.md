@@ -49,7 +49,8 @@ $t->where = "world.jpg"
 Het `Voorbeeld.phtml` bestand.
 ```php
 <h1><?php echo $greeting; ?></h1>
-<img src="/img/><?php echo $where; ?>" />```
+<img src="/img/><?php echo $where; ?>" />
+```
 
 ###3.4. Services
 Om onderscheid te houden tussen data en het verwerken van data hebben we een extra laag toegebracht. De _services_ laag. Hierin wordt er met de _models_ gecommuniceert en/of wordt er validaties gedaan. Door de meeste business logic in de _services_ te stoppen blijven de controllers overzichtelijk.
@@ -78,3 +79,66 @@ Namespaces dienen altijd de folder structuur aan te houden. Dus een voorbeeld en
 ##6. Response design
 Er is een stylesheet gemaakt welke css classes heeft voor resposive design.
 Dit is afgeleid vanaf ["A simple guide to responsive design."](http://www.adamkaplan.me/grid)
+
+###6.1 Introductie
+Het uiterlijk dient Mobile First te zijn. Dit houd in dat de inhoud standaard is gemaakt voor op kleinere apparaten. Vervolgens worden er onderdelen aan toegevoegd of worden onderdelen anders ingedeeld zodra het scherm groter wordt.
+
+###6.2 Classes
+Alle kolommen zitten altijd in een container. De container zorgt voor de maximale breedte zodat de kolommen hier niets van hoven te weten. De kolommen neem hun breedte aan vanaf de container waarin ze zitten. Het is dus mogelijk om meerdere containers te hebben.
+```
+<div class="container">
+  <!-- Inhoud -->
+</div>
+```
+
+Een kolom is altijd een blocklevel element. (Vult alle beschikbare breedte.)
+```
+<div class="container">
+  <div class="column">
+    <!-- Inhoud -->
+  </div>
+</div>
+```
+
+Zodra een venster grooter wordt dan krijgen colummen het eigenschap `float: left;`. Hierdoor worden de colummen op grotere schermen naast elkaar afgebeeld. Om de groote van de colummen aan te geven zijn er extra klassen.
+```css
+.full { width: 100%; }
+.two-thirds { width: 66.7%; }
+.half { width: 50%; }
+.third { width: 33.3%; }
+.fourth { width: 24.95%; }
+.fifth { width: 20%; }
+.two-fifth { width: 40%; }
+.three-fifth { width: 60%; }
+.four-fifth { width: 80%; }
+.flow-opposite { float: right; }
+```
+Standaard heeft een column al de breedte 100% dus de klasse `.full` is optioneel.
+
+
+Om er voor te zorgen dat kolommen niet naast elkaar blijven stapelen kunnen ze in rijen worden geplaatst. Na een rij dient de `float`'s te worden gereset. Dit gebeurd door de bekende __clearfix__ hack. Je hoeft alleen een extra element om de kolommen te voegen welke in de zelfde rij dienen te zitten. Vervolgens wordt aan dat element de klassen `.row` en `.clearfix` gedaan.
+```
+<div class="container">
+  <div class="row clearfix">
+    <div class="column half">
+      <!-- Inhoud -->
+    </div>
+    <div class="column half">
+      <!-- Inhoud -->
+    </div>
+  </div>
+
+  <div class="row clearfix">
+    <div class="column half">
+      <!-- Inhoud -->
+    </div>
+    <div class="column half">
+      <!-- Inhoud -->
+    </div>
+  </div>
+</div>
+```
+
+Er zit een standaard flow in deze opmaak. Alle kolommen welke als eerst in de opmaak staan worden als eerst getoont. Indien de ruimte er is worden er aan de rechterkant kolommen bij geplaatst. Soms is het toch wensbaar oom op grotere schermen een kolom eerst rechts te tonen terwijl die op kleinere schermen als eerste getoont dient te worden. Hiervoor is er de klasse `.flow-opposite`.
+
+Aan de elementen kan verder nog een eigen stijl gegeven worden. De bovenstaande klasses zijn er puur om de markup responsive te houden.
