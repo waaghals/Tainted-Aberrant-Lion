@@ -260,7 +260,24 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
 	* Druk op de knop `Create Review`
 	* Het scherm verdwijnt en er wordt een nieuwe review aangemaakt.
 	
-	
+##Filteren op locatie type:
+1.      Laad de homepage http://localhost/
+    * De kaart is zichtbaar met in de menubalk de filter "Location Type:".
+2.      Selecteer in de filter optie om alleen de "education" te laten zien.
+    * Alle markers met een icoontje  van een bussiness verdwijnen.
+3.      Select in de filter optie om alleen de "bussiness" te laten zien.
+    * De markers met een icoontje van een education verdwijnen.
+    * De markers met een icoontje van een bussines verschijnen.
+
+##Reseten van filters:
+1.      Laad de homepage http://localhost/
+    * De kaart is zichtbaar met in de menubalk de button "Reset".
+2.      Selecteer in de filter optie om alleen de "education" te laten zien.
+    * Alle markers met een icoontje  van een bussiness verdwijnen.
+3.      Druk op de "Reset" knop in de menubalk.
+    * Alle markers verschijnen.
+    * Alle filter opties worden leeg.
+
 
 ##Bijlage
 ###1. Incorrecte registreren waarden
