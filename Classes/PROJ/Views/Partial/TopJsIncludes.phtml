@@ -306,7 +306,6 @@ if (strpos($json, 'Bad Request') === false && strpos($json, 'Not Found') === fal
         for (var i = 0; i <= markers.length; i++) {
             var long = markers[i].position['A'];
             var lat = markers[i].position['k'];
-            console.log("asd");
             $.ajax({url: 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + long + '&sensor=true',
                 success: function(data) {
                     alert(data.results[0].formatted_address);
@@ -319,7 +318,7 @@ if (strpos($json, 'Bad Request') === false && strpos($json, 'Not Found') === fal
     function filterType() {
         showAllMarkers();
         for (var i = 0; i < markers.length; i++) {
-            if (markers[i].type !== document.getElementById("type").value) {
+            if (markers[i].type !== document.getElementById("locationType").value && document.getElementById("locationType").value !== "") {
                 markers[i].setVisible(false);
             }
         }
@@ -329,6 +328,14 @@ if (strpos($json, 'Bad Request') === false && strpos($json, 'Not Found') === fal
         for (var i = 0; i < markers.length; i++) {
             markers[i].setVisible(true);
         }
+    }
+    
+    function resetFilters(){
+        showAllMarkers();
+        document.getElementById("locationType").value = "";
+        document.getElementById("projectType").value = "";
+        document.getElementById("country").value = "";
+        
     }
 
 </script>

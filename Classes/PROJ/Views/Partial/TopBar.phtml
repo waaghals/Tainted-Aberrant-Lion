@@ -34,22 +34,31 @@ $ac = new PROJ\Services\AccountService();
         <div style="width:15px; float:right;">
             &nbsp;
         </div>
+        <div>
+            <button class="headerbutton" onclick="resetFilters()">Reset</button>
+        </div>
         <div class="filterblock">
-            <div>Type:</div>
-            <select id="type" onchange="filterType()">
+            <div>Location Type:</div>
+            <select id="locationType" onchange="filterType()">
+                <option></option>
                 <option>education</option>
                 <option>business</option>
             </select>
         </div>
         <div class="filterblock">
-            <div>Region:</div>
-            <select>
-                <option>Brabant</option>
+            <div>Project Type:</div>
+            <select id="projectType">
+                <option></option>
+                <option>Minor</option>
+                <option>EPS</option>
+                <option>Graduation project</option>
+                <option>Internship</option>
             </select>
         </div>
         <div class="filterblock">
             <div>Country:</div>
             <select id="country" onchange="filterCountry()">
+                <option></option>
                 <option>Netherlands</option>
                 <option>Germany</option>
             </select>
