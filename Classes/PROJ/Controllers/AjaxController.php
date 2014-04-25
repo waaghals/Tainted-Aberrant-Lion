@@ -89,7 +89,6 @@ class AjaxController extends BaseController {
                 ->where($qb->expr()->like("review.text", $qb->expr()->literal("%" . $tag . "%")))
                 ->orWhere($qb->expr()->like("student.firstname", $qb->expr()->literal("%" . $tag . "%")))
                 ->orWhere($qb->expr()->like("student.surname", $qb->expr()->literal("%" . $tag . "%")))
-                //->orWhere($qb->expr()->like("student.country", $qb->expr()->literal("%" . $tag . "%")))
                 ->orWhere($qb->expr()->like("student.city", $qb->expr()->literal("%" . $tag . "%")))
                 ->orWhere($qb->expr()->like("student.street", $qb->expr()->literal("%" . $tag . "%")))
                 ->orWhere($qb->expr()->like("student.email", $qb->expr()->literal("%" . $tag . "%")))
