@@ -1,4 +1,5 @@
 var goBackTo = null;
+var tempID = null;
 $(document).ready(function() {
     $('#login_button').click(function() {
         $(this).parent().parent().submit();
@@ -14,26 +15,57 @@ $(document).ready(function() {
     });
     $('.mylocation_add').click(function() {
         $('#blackout').fadeIn();
-        $('[id^=blackout_]:visible').fadeOut();
+        //$('[id^=blackout_]:visible').fadeOut();
+        $('#blackout').children().filter(':visible').fadeOut();
         $('#blackout_create_location').fadeIn();
     });
 
     $('.mylocation_remove').click(function() {
+        var clicked = $(this);
+        tempID = clicked.data("location-id");
         $('#blackout').fadeIn();
-        $('[id^=blackout_]:visible').fadeOut();
-        $('.fullscreen_loading_icon').fadeIn();
-        //$('#blackout_delete_location').fadeIn();
+        $('#blackout').children().filter(':visible').fadeOut();
+        $('.fullscreen_loading_icon').fadeIn(function() {
+            $.post("/ajax/getLocationInfo/", {id: clicked.data("location-id")}, function(data) {
+                $('.fullscreen_loading_icon').fadeOut();
+                $('#blackout_delete_location').fadeIn();
+                try {
+                    json = $.parseJSON(data);
+                    $("#RemoveLocationName").children().first().html(json.name);
+                    $("#RemoveLocationLoc").children().first().html(json.location);
+                    $("#RemoveLocationType").children().first().html(json.type);
+                } catch (e) {
+                    //error
+                    $("#removeLocationError").html(data);
+                    $("#removeLocationError").fadeIn();
+                }
+            });
+        });
+    });
+
+    $('#remove_location').click(function() {
+        $(this).hide();
+        $.post("/ajax/removeLocation/", {id: tempID}, function(data) {
+            if (data == "succes") {
+                $('#blackout').fadeOut(function() {
+                    location.reload();
+                });
+            } else {
+                $('#remove_location').show();
+                $('#removeLocationError').show().children().first().html(data);
+            }
+        });
     });
 
     $('.myprojects_add').click(function() {
         $('#blackout').fadeIn();
-        $('[id^=blackout_]:visible').fadeOut();
+        $('#blackout').children().filter(':visible').fadeOut();
         $('#blackout_create_project').fadeIn();
     });
 
     $('.myreviews_add').click(function() {
         $('#blackout').fadeIn();
-        $('[id^=blackout_]:visible').fadeOut();
+        $('#blackout').children().filter(':visible').fadeOut();
         $('#blackout_create_review').fadeIn();
     });
 
@@ -46,7 +78,7 @@ $(document).ready(function() {
             e.preventDefault();
         }
     });
-    
+
     $('.blackout_cancel').click(function() {
         $('#blackout').fadeOut(function() {
             $(this).children().hide();
