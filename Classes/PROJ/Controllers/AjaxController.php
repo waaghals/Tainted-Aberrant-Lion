@@ -122,7 +122,7 @@ class AjaxController extends BaseController
         echo json_encode($returnArray);
     }
 
-    public function createLocationAction()
+    public function saveLocationAction()
     {
         if (empty($_POST['type']) || empty($_POST['name']) || empty($_POST['country']) || empty($_POST['city']) || empty($_POST['street']) || empty($_POST['housenumber']) || empty($_POST['postalcode']) || empty($_POST['email'])) {
             echo "Not everything is filled in";
@@ -146,6 +146,16 @@ class AjaxController extends BaseController
             return;
         }
 
+        if (!is_numeric($_POST['id'])) {
+            echo "Invallid ID";
+            return;
+        }
+
+        if ($_POST['action'] !== "update" && $_POST['action'] == "create") {
+            echo("Invalid POST");
+            return;
+        }
+
         if ($_POST['type'] != "education" && $_POST['type'] != "business")
             die();
 
@@ -166,8 +176,24 @@ class AjaxController extends BaseController
             }
 
             $user = $em->getRepository('\PROJ\Entities\Account')->find($_SESSION['userID']);
-            $locatie = new \PROJ\Entities\Institute();
-            $locatie->setCreator($user->getStudent());
+            $locatie = null;
+            if ($_POST['action'] == "create") {
+                $locatie = new \PROJ\Entities\Institute();
+                $locatie->setCreator($user->getStudent());
+            } elseif ($_POST['action'] == "update") {
+                $locatie = $em->getRepository('\PROJ\Entities\Institute')->find($_POST['id']);
+
+                //Extra checks
+                if ($locatie->getCreator()->getAccount()->getId() == $_SESSION['userID']) {
+                    if ($locatie->getAproved() != 0) {
+                        echo "The Location has been aproved while you tried to edit it.";
+                        return;
+                    }
+                } else {
+                    echo "This isn't your Location.";
+                    return;
+                }
+            }
             $locatie->setLat($response["results"][0]["geometry"]["location"]['lat']);
             $locatie->setLng($response["results"][0]["geometry"]["location"]['lng']);
             $place = \PROJ\Helper\XssHelper::sanitizeInput($_POST['city']);
@@ -179,6 +205,13 @@ class AjaxController extends BaseController
             $locatie->setPlace($place);
             $locatie->setType($_POST['type']);
             $locatie->setName(\PROJ\Helper\XssHelper::sanitizeInput($_POST['name']));
+
+            $locatie->setCountry($country);
+            $locatie->setStreet(\PROJ\Helper\XssHelper::sanitizeInput($_POST['street']));
+            $locatie->setHousenumber(\PROJ\Helper\XssHelper::sanitizeInput($_POST['housenumber']));
+            $locatie->setPostalcode(\PROJ\Helper\XssHelper::sanitizeInput($_POST['postalcode']));
+            $locatie->setEmail(\PROJ\Helper\XssHelper::sanitizeInput($_POST['email']));
+            $locatie->setTelephone(\PROJ\Helper\XssHelper::sanitizeInput($_POST['telephone']));
 
             $em->persist($locatie);
             $em->flush();
@@ -295,8 +328,7 @@ class AjaxController extends BaseController
             $inst = $em->getRepository('\PROJ\Entities\Institute')->find($_POST['id']);
             if ($inst->getCreator()->getAccount()->getId() == $_SESSION['userID']) {
                 if ($inst->getAproved() == 0) {
-                    $returnA = array('name' => $inst->getName(), 'location' => $inst->getPlace(), 'type' => ucfirst($inst->getType()));
-                    echo json_encode($returnA);
+                    echo json_encode($inst->jsonSerialize());
                 } else {
                     echo "The Location has been aproved while you tried to delete it.";
                 }

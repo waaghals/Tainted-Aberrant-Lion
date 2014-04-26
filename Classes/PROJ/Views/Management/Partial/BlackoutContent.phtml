@@ -14,7 +14,7 @@ $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
                 <div class="alert" id="addLocationError" style="display:none; margin-bottom:20px; padding: 5px; clear:both;">
                     <p></p>
                 </div>
-                <p style="font-weight:bold; margin-bottom:15px;">Please enter the details of the company you did your Minor/Internship/Etc. :</p>
+                <p style="font-weight:bold; margin-bottom:15px;">Please enter the details of the company where you did your Minor/Internship/Etc. :</p>
                 <div style="clear:both;"></div>
 
                 <div class="left_container">
@@ -23,7 +23,7 @@ $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
                 <div style="width:5%; float:left;">&nbsp;</div>
                 <div class="right_container">
                     <select name="type" required autofocus>
-                        <option value="">-- Select a type --</option>
+                        <option>-- Select a type --</option>
                         <option value="education">Education</option>
                         <option value="business">Business</option>
                     </select>
@@ -92,7 +92,7 @@ $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
                 <div style="clear:both;"></div>
 
                 <div class="left_container">
-                    <p style="padding-top:18px;">Contact's E-mail: *</p>
+                    <p style="padding-top:18px;">Company's E-mail: *</p>
                 </div>
                 <div style="width:5%; float:left;">&nbsp;</div>
                 <div class="right_container">
@@ -101,7 +101,7 @@ $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
                 <div style="clear:both;"></div>
 
                 <div class="left_container">
-                    <p style="padding-top:18px;">Contact's Telephone Number:</p>
+                    <p style="padding-top:18px;">Company's Telephone Number:</p>
                 </div>
                 <div style="width:5%; float:left;">&nbsp;</div>
                 <div class="right_container">
@@ -114,7 +114,7 @@ $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
             </div>
             <img src="/images/register_split.png">
             <div id="register_container_bottomhalf">
-                <div class="fancy_button" id="create_location" style="left: 335px; top: 160px;">
+                <div class="fancy_button" id="location_action" style="left: 335px; top: 160px;">
                     <img src="/images/btn_left.png" />
                     <p>Create Location</p>
                     <img src="/images/btn_right.png" />
