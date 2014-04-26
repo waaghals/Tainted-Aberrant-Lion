@@ -3,9 +3,10 @@
 namespace PROJ\Entities;
 
 /**
- * @Entity 
+ * @Entity
  */
-class Project {
+class Project
+{
 
     /**
      * @Id @Column(type="integer")
@@ -27,11 +28,11 @@ class Project {
      * @Column(type="string")
      */
     private $type;
-    
+
     /**
      * @Column(type="boolean")
      */
-    private $aproved = 0;   // 0 = pending, 1 = aproved, 2 = declined
+    private $approved = 0;   // 0 = pending, 1 = approved, 2 = declined
 
     /**
      * @OneToOne(targetEntity="\PROJ\Entities\Review", mappedBy="project", cascade={"remove"})
@@ -48,70 +49,87 @@ class Project {
      */
     private $student;
 
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
-    public function getStartdate() {
+    public function getStartdate()
+    {
         return $this->startdate;
     }
 
-    public function getEnddate() {
+    public function getEnddate()
+    {
         return $this->enddate;
     }
 
-    public function getReview() {
+    public function getReview()
+    {
         return $this->review;
     }
 
-    public function getInstitute() {
+    public function getInstitute()
+    {
         return $this->institute;
     }
 
-    public function getStudent() {
+    public function getStudent()
+    {
         return $this->student;
     }
-    public function getType() {
+
+    public function getType()
+    {
         return $this->type;
     }
 
-    public function setStartdate($startdatum) {
+    public function setStartdate($startdatum)
+    {
         $this->startdate = $startdatum;
     }
 
-    public function setendDate($enddate) {
+    public function setendDate($enddate)
+    {
         $this->enddate = $enddate;
     }
 
-    public function setReview($review) {
+    public function setReview($review)
+    {
         $this->review = $review;
     }
 
-    public function setInstitute($institute) {
+    public function setInstitute($institute)
+    {
         $this->institute = $institute;
     }
 
-    public function setStudent($student) {
+    public function setStudent($student)
+    {
         $this->student = $student;
     }
-    public function setType($type) {
+
+    public function setType($type)
+    {
         $this->type = $type;
     }
 
-    public function jsonSerialize() {
+    public function jsonSerialize()
+    {
         return array(
-            
             "review" => $this->getReview(),
             "author" => $this->getStudent()
         );
     }
-    
-    public function getAproved() {
-        return $this->aproved;
+
+    public function getApproved()
+    {
+        return $this->approved;
     }
 
-    public function setAproved($aproved) {
-        $this->aproved = $aproved;
+    public function setApproved($approved)
+    {
+        $this->approved = $approved;
     }
 
 }

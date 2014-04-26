@@ -3,9 +3,10 @@
 namespace PROJ\Entities;
 
 /**
- * @Entity 
+ * @Entity
  */
-class Review {
+class Review
+{
 
     /**
      * @Id @Column(type="integer")
@@ -37,76 +38,92 @@ class Review {
      * @Column(type="integer")
      */
     private $rating;
-    
+
     /**
      * @Column(type="boolean")
      */
-    private $aproved = 0;   // 0 = pending, 1 = aproved, 2 = declined
+    private $approved = 0;   // 0 = pending, 1 = approved, 2 = declined
 
     /**
      * @OneToOne(targetEntity="\PROJ\Entities\Project", inversedBy="review")
      */
     private $project;
 
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
-    public function getText() {
+    public function getText()
+    {
         return $this->text;
     }
 
-    public function getAssignmentRating() {
+    public function getAssignmentRating()
+    {
         return $this->assignmentrating;
     }
 
-    public function getGuidanceRating() {
+    public function getGuidanceRating()
+    {
         return $this->guidancerating;
     }
 
-    public function getAccommodationRating() {
+    public function getAccommodationRating()
+    {
         return $this->accommodationrating;
     }
 
-    public function getProject() {
+    public function getProject()
+    {
         return $this->project;
     }
 
-    public function setText($text) {
+    public function setText($text)
+    {
         $this->text = $text;
     }
 
-    public function setAssignmentRating($rating) {
+    public function setAssignmentRating($rating)
+    {
         $this->assignmentrating = $rating;
     }
 
-    public function setGuidanceRating($rating) {
+    public function setGuidanceRating($rating)
+    {
         $this->guidancerating = $rating;
     }
 
-    public function setAccommodationRating($rating) {
+    public function setAccommodationRating($rating)
+    {
         $this->accommodationrating = $rating;
     }
 
-    public function setProject($project) {
+    public function setProject($project)
+    {
         $this->project = $project;
     }
-    
-    public function getRating() {
+
+    public function getRating()
+    {
         return $this->rating;
     }
 
-    public function setRating($rating) {
+    public function setRating($rating)
+    {
         $this->rating = $rating;
     }
-    
-    public function getAproved() {
-        return $this->aproved;
+
+    public function getApproved()
+    {
+        return $this->approved;
     }
 
-    public function setAproved($aproved) {
-        $this->aproved = $aproved;
+    public function setApproved($approved)
+    {
+        $this->approved = $approved;
     }
+
 }
 
 ?>

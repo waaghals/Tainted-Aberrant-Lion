@@ -33,31 +33,31 @@
                             ->where($qb->expr()->eq('i.creator', $qb->expr()->literal($user->getStudent()->getId())))
                             ->orderBy('i.name', 'ASC');
                     $res = $qb->getQuery()->getResult();
-                    
-                    foreach($res as $r) {
-                        if($r->getAproved() == 0) {
+
+                    foreach ($res as $r) {
+                        if ($r->getApproved() == 0) {
                             $status = 'Pending';
-                        }elseif($r->getAproved() == 1) {
-                            $status = 'Aproved';
-                        }else{
+                        } elseif ($r->getApproved() == 1) {
+                            $status = 'Approved';
+                        } else {
                             $status = 'Declined';
                         }
-                    ?>
-                    <tr>
-                        <td><p><?php echo $r->getName(); ?></p></td>
-                        <td><p><?php echo $r->getPlace(); ?></p></td>
-                        <td><p><?php echo ucfirst($r->getType()); ?></p></td>
-                        <td><p><?php echo $status; ?></p></td>
-                    </tr> 
-                    <?php
+                        ?>
+                        <tr>
+                            <td><p><?php echo $r->getName(); ?></p></td>
+                            <td><p><?php echo $r->getPlace(); ?></p></td>
+                            <td><p><?php echo ucfirst($r->getType()); ?></p></td>
+                            <td><p><?php echo $status; ?></p></td>
+                        </tr>
+                        <?php
                     }
-                    
-                    if(count($res) == 0) {
-                    ?>
-                    <tr>
-                        <td colspan="4"><p>No locations found</p></td>
-                    </tr>
-                    <?php
+
+                    if (count($res) == 0) {
+                        ?>
+                        <tr>
+                            <td colspan="4"><p>No locations found</p></td>
+                        </tr>
+                        <?php
                     }
                     ?>
                 </table>
