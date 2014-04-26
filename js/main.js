@@ -20,6 +20,7 @@ $(document).ready(function() {
         $("#location_action").children("p").html("Create Location");
         $('[name="create_location_form"]')[0].reset();
         $('#location_action').show();
+        $("#addLocationError").hide();
 
         //Start fade
         $('#blackout').fadeIn();
@@ -60,6 +61,7 @@ $(document).ready(function() {
         $("#location_action").data("action", "update");
         $("#location_action").children("p").html("Update Location");
         $('#location_action').show();
+        $("#addLocationError").hide();
 
         //Start fades
         $('#blackout').fadeIn();
