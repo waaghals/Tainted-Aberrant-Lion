@@ -37,19 +37,12 @@
                     $res = $qb->getQuery()->getResult();
 
                     foreach ($res as $r) {
-                        if ($r['approved'] == 0) {
-                            $status = 'Pending';
-                        } elseif ($r['approved'] == 1) {
-                            $status = 'Approved';
-                        } else {
-                            $status = 'Declined';
-                        }
                         ?>
                         <tr>
                             <td><p><?php echo $r['name'] . ' (' . $r['place'] . ')'; ?></p></td>
                             <td><p><?php echo ucfirst($r['type']); ?></p></td>
                             <td><p><?php echo $r['rating']; ?></p></td>
-                            <td><p><?php echo $status; ?></p></td>
+                            <td><p><?php echo ucfirst($r['approved']); ?></p></td>
                         </tr>
                         <?php
                     }

@@ -30,9 +30,9 @@ class Project
     private $type;
 
     /**
-     * @Column(type="boolean")
+     * @Column(type="projectstate")
      */
-    private $approved = 0;   // 0 = pending, 1 = approved, 2 = declined
+    private $approved = 'pending';
 
     /**
      * @OneToOne(targetEntity="\PROJ\Entities\Review", mappedBy="project", cascade={"remove"})

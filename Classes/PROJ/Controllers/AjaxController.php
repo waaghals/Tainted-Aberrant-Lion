@@ -216,7 +216,7 @@ class AjaxController extends BaseController
             $qb->select('i.id')
                     ->from('\PROJ\Entities\Institute', 'i')
                     ->where($qb->expr()->eq('i.creator', $qb->expr()->literal($user->getStudent()->getId())))
-                    ->orWhere($qb->expr()->eq('i.approved', '1'))
+                    ->orWhere($qb->expr()->eq('i.approved', $qb->expr()->literal('approved')))
                     ->orderBy('i.type', 'ASC');
             $res = $qb->getQuery()->getResult();
 
@@ -235,7 +235,7 @@ class AjaxController extends BaseController
 
             $location = $em->getRepository('\PROJ\Entities\Institute')->find($_POST['location']);
             $project = new \PROJ\Entities\Project();
-            $project->setApproved(0);
+            $project->setApproved('pending');
             $project->setInstitute($location);
             $project->setReview(null);
             $project->setStartdate(new \DateTime($_POST['start_year'] . '-' . $_POST['start_month'] . '-1'));
@@ -302,7 +302,7 @@ class AjaxController extends BaseController
             $review->setProject($project);
             $review->setRating($_POST['overall_score']);
             $review->setText(\PROJ\Helper\XssHelper::sanitizeInput($_POST['review']));
-            $review->setApproved(0);
+            $review->setApproved('pending');
 
             $em->persist($review);
             $em->flush();

@@ -40,9 +40,9 @@ class Review
     private $rating;
 
     /**
-     * @Column(type="boolean")
+     * @Column(type="projectstate")
      */
-    private $approved = 0;   // 0 = pending, 1 = approved, 2 = declined
+    private $approved = 'pending';
 
     /**
      * @OneToOne(targetEntity="\PROJ\Entities\Project", inversedBy="review")

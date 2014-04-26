@@ -35,20 +35,13 @@
                             ->orderBy('i.type', 'ASC');
                     $res = $qb->getQuery()->getResult();
                     foreach ($res as $r) {
-                        if ($r->getApproved() == 0) {
-                            $status = 'Pending';
-                        } elseif ($r->getApproved() == 1) {
-                            $status = 'Approved';
-                        } else {
-                            $status = 'Declined';
-                        }
                         ?>
                         <tr>
                             <td><p><?php echo ucfirst($r->getType()); ?></p></td>
                             <td><p><?php echo $r->getInstitute()->getName(); ?> (<?php echo $r->getInstitute()->getPlace(); ?>)</p></td>
                             <td><p><?php echo $r->getStartDate()->format('F Y'); ?></p></td>
                             <td><p><?php echo $r->getendDate()->format('F Y'); ?></p></td>
-                            <td><p><?php echo $status; ?></p></td>
+                            <td><p><?php echo ucfirst($r->getApproved()); ?></p></td>
                         </tr>
                         <?php
                     }

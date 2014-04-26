@@ -2,18 +2,21 @@
 
 namespace PROJ\Helper;
 
-
 use Doctrine\ORM\EntityManager,
     Doctrine\ORM\Configuration;
 
-class DoctrineHelper{
+class DoctrineHelper
+{
+
     private static $instance;
+
     /**
      *
      * @return \PROJ\Helper\DoctrineHelper instance
      */
-    public static function instance() {
-        if( self::$instance == null )
+    public static function instance()
+    {
+        if (self::$instance == null)
             self::$instance = new self();
 
         return self::$instance;
@@ -21,11 +24,13 @@ class DoctrineHelper{
 
     private $EntityManager;
 
-    private function __construct() {
+    private function __construct()
+    {
         $this->initialize();
     }
 
-    private function initialize() {
+    private function initialize()
+    {
         $applicationMode = "development";
 
         if ($applicationMode == "development") {
@@ -34,16 +39,16 @@ class DoctrineHelper{
             $cache = new \Doctrine\Common\Cache\ApcCache;
         }
 
-	$standard_namespace = 'PROJ';
+        $standard_namespace = 'PROJ';
         $config = new Configuration;
         $config->setMetadataCacheImpl($cache);
         $driverImpl = $config->newDefaultAnnotationDriver(array(
-                'Classes/'.$standard_namespace.'/Entities'
-            ) );
+            'Classes/' . $standard_namespace . '/Entities'
+        ));
         $config->setMetadataDriverImpl($driverImpl);
         $config->setQueryCacheImpl($cache);
-        $config->setProxyDir('Classes/'.$standard_namespace.'/Proxies');
-        $config->setProxyNamespace( $standard_namespace.'\Proxies');
+        $config->setProxyDir('Classes/' . $standard_namespace . '/Proxies');
+        $config->setProxyNamespace($standard_namespace . '\Proxies');
 
         if ($applicationMode == "development") {
             $config->setAutoGenerateProxyClasses(true);
@@ -52,14 +57,22 @@ class DoctrineHelper{
         }
 
         $connectionOptions = array(
-            'dbname' => 'Agile',        //Databasenaam
-            'user' => 'agile',               //Username
-            'password' => 'tpY8^jEX171/WL1',           //Password
+            'dbname' => 'Agile', //Databasenaam
+            'user' => 'agile', //Username
+            'password' => 'tpY8^jEX171/WL1', //Password
             'host' => 'localhost',
             'driver' => 'pdo_mysql'
         );
 
         $em = EntityManager::create($connectionOptions, $config);
+
+        //Fix, Allowes doctrine to use enum's
+        $platform = $em->getConnection()->getDatabasePlatform();
+        $platform->registerDoctrineTypeMapping('enum', 'string');
+
+        //Type registration
+        \Doctrine\DBAL\Types\Type::addType('projectstate', 'PROJ\DBAL\ApprovalStateType');
+
         $conn = $em->getConnection();
 
         $this->EntityManager = $em;
@@ -69,9 +82,11 @@ class DoctrineHelper{
      *
      * @return \Doctrine\ORM\EntityManager $entityManager
      */
-    public function getEntityManager() {
+    public function getEntityManager()
+    {
         return $this->EntityManager;
     }
+
 }
 
 ?>
