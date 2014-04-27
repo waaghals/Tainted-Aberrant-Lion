@@ -25,7 +25,7 @@ class Project
     private $enddate;
 
     /**
-     * @Column(type="string")
+     * @Column(type="projecttype")
      */
     private $type;
 

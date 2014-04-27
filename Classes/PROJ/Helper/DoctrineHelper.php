@@ -72,6 +72,8 @@ class DoctrineHelper
 
         //Type registration
         \Doctrine\DBAL\Types\Type::addType('projectstate', 'PROJ\DBAL\ApprovalStateType');
+        \Doctrine\DBAL\Types\Type::addType('institutetype', 'PROJ\DBAL\InstituteType');
+        \Doctrine\DBAL\Types\Type::addType('projecttype', 'PROJ\DBAL\ProjectType');
 
         $conn = $em->getConnection();
 

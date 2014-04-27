@@ -20,9 +20,9 @@ class Institute
     private $name;
 
     /**
-     * @Column(type="string")
+     * @Column(type="institutetype")
      */
-    private $type;  //Internship, Minor, Both
+    private $type;
 
     /**
      * @Column(type="float")
