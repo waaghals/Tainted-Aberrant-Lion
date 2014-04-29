@@ -57,9 +57,7 @@
                 });
             });
 
-            //Shows a marker instead of multiple markers around one place
-            var markerCluster = new MarkerClusterer(map, markers);
-            markerCluster.setGridSize(15);
+            clusterMarkers();
         });
     }
 
@@ -336,7 +334,21 @@ if (strpos($json, 'Bad Request') === false && strpos($json, 'Not Found') === fal
         document.getElementById("locationType").value = "";
         document.getElementById("projectType").value = "";
         document.getElementById("country").value = "";
+    }
 
+
+    // call this everytime a filter is applied
+    function clusterMarkers() {
+        //Shows a marker instead of multiple markers around one place
+        filteredMarkers = new Array();
+        for (var i = 0; i < markers.length; i++) {
+            if (markers[i].getVisible()) {
+                filteredMarkers[i] = markers[i];
+            }
+        }
+        console.log(filteredMarkers);
+        var markerCluster = new MarkerClusterer(map, filteredMarkers);
+        markerCluster.setGridSize(15);
     }
 
 </script>
