@@ -34,7 +34,6 @@
             lastLoadedJson = data;
             console.log("Data received");
             $.each(data, function(i, location) {
-                console.log(location.name);
                 var marker = new google.maps.Marker({
                     position: new google.maps.LatLng(location.lat, location.lng),
                     map: map,
@@ -42,7 +41,8 @@
                     animation: google.maps.Animation.NONE,
                     title: location.name,
                     id: location.id,
-                    type: location.type
+                    type: location.type,
+                    country: location.country
                 });
 
                 //Fills an array with markers
@@ -303,20 +303,14 @@ if (strpos($json, 'Bad Request') === false && strpos($json, 'Not Found') === fal
     });
 
     function filterCountry() {
-        for (var i = 0; i <= markers.length; i++) {
-            var long = markers[i].position['A'];
-            var lat = markers[i].position['k'];
-            $.ajax({url: 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + long + '&sensor=true',
-                success: function(data) {
-                    alert(data.results[0].formatted_address);
-                    /*or you could iterate the components for only the city and state*/
-                }
-            });
+        for (var i = 0; i < markers.length; i++) {
+            if (markers[i]["country"]["name"] !== document.getElementById("country").value && document.getElementById("country").value !== "") {
+                markers[i].setVisible(false);
+            }
         }
     }
 
     function filterType() {
-        showAllMarkers();
         for (var i = 0; i < markers.length; i++) {
             if (markers[i].type !== document.getElementById("locationType").value && document.getElementById("locationType").value !== "") {
                 markers[i].setVisible(false);
@@ -324,18 +318,25 @@ if (strpos($json, 'Bad Request') === false && strpos($json, 'Not Found') === fal
         }
     }
 
+    function applyFilters() {
+        showAllMarkers();
+
+        filterCountry();
+        filterType();
+    }
+
     function showAllMarkers() {
         for (var i = 0; i < markers.length; i++) {
             markers[i].setVisible(true);
         }
     }
-    
-    function resetFilters(){
+
+    function resetFilters() {
         showAllMarkers();
         document.getElementById("locationType").value = "";
         document.getElementById("projectType").value = "";
         document.getElementById("country").value = "";
-        
+
     }
 
 </script>

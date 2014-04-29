@@ -66,11 +66,10 @@ class AjaxController extends BaseController
     {
         $em = DoctrineHelper::instance()->getEntityManager();
 
-        $dql = "SELECT i, p, r, s FROM \PROJ\Entities\Institute i LEFT JOIN i.projects p LEFT JOIN p.review r LEFT JOIN p.student s";
+        $dql = "SELECT i, p, r, s, c FROM \PROJ\Entities\Institute i LEFT JOIN i.projects p LEFT JOIN p.review r LEFT JOIN p.student s LEFT JOIN i.country c";
         $q = $em->createQuery($dql);
 
         $res = $q->getArrayResult();
-
         echo json_encode($res);
     }
 
@@ -388,6 +387,17 @@ class AjaxController extends BaseController
                 echo "This isn't your Location.";
             }
         }
+    }
+
+    public function getAllCountrysAction()
+    {
+        $em = DoctrineHelper::instance()->getEntityManager();
+        $inst = $em->getRepository('\PROJ\Entities\Country')->findAll();
+        $dql = "SELECT c FROM \PROJ\Entities\Country c";
+        $q = $em->createQuery($dql);
+
+        $res = $q->getArrayResult();
+        return json_encode($res);
     }
 
 }

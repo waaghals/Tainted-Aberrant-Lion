@@ -64,7 +64,7 @@ class Student {
     private $project;
 
     /**
-     * @OneToMany(targetEntity="\PROJ\Entities\Institute", mappedBy="student", cascade={"remove"})
+     * @OneToMany(targetEntity="\PROJ\Entities\Institute", mappedBy="creator", cascade={"remove"})
      */
     private $institutes;
     
