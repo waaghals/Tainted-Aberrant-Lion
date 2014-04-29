@@ -34,7 +34,7 @@ class Project
     /**
      * @Column(type="projectstate")
      */
-    private $approved = Status::PENDING;
+    private $acceptanceStatus = Status::PENDING;
 
     /**
      * @OneToOne(targetEntity="\PROJ\Entities\Review", mappedBy="project", cascade={"remove"})
@@ -124,16 +124,14 @@ class Project
         );
     }
 
-    public function getApproved()
+    public function getAcceptanceStatus()
     {
-        return $this->approved;
+        return $this->acceptanceStatus;
     }
 
-    public function setApproved($approved)
+    public function setAcceptanceStatus($approved)
     {
-        $this->approved = $approved;
+        $this->acceptanceStatus = $approved;
     }
 
 }
-
-?>

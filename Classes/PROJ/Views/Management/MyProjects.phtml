@@ -41,7 +41,7 @@
                             <td><p><?php echo $r->getInstitute()->getName(); ?> (<?php echo $r->getInstitute()->getPlace(); ?>)</p></td>
                             <td><p><?php echo $r->getStartDate()->format('F Y'); ?></p></td>
                             <td><p><?php echo $r->getendDate()->format('F Y'); ?></p></td>
-                            <td><p><?php echo ucfirst($r->getApproved()); ?></p></td>
+                            <td><p><?php echo ucfirst($r->getAcceptanceStatus()); ?></p></td>
                         </tr>
                         <?php
                     }

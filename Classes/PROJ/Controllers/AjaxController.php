@@ -4,6 +4,7 @@ namespace PROJ\Controllers;
 
 use PROJ\Exceptions\ServerException;
 use PROJ\Helper\DoctrineHelper;
+use PROJ\DBAL\ApprovalStateType as Status;
 
 /**
  * Description of HomeController
@@ -235,7 +236,7 @@ class AjaxController extends BaseController
 
             $location = $em->getRepository('\PROJ\Entities\Institute')->find($_POST['location']);
             $project = new \PROJ\Entities\Project();
-            $project->setApproved('pending');
+            $project->setAcceptanceStatus(Status::PENDING);
             $project->setInstitute($location);
             $project->setReview(null);
             $project->setStartdate(new \DateTime($_POST['start_year'] . '-' . $_POST['start_month'] . '-1'));
@@ -302,7 +303,7 @@ class AjaxController extends BaseController
             $review->setProject($project);
             $review->setRating($_POST['overall_score']);
             $review->setText(\PROJ\Helper\XssHelper::sanitizeInput($_POST['review']));
-            $review->setApproved('pending');
+            $review->setAcceptanceStatus(Status::PENDING);
 
             $em->persist($review);
             $em->flush();

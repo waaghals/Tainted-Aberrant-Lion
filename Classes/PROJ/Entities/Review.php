@@ -44,7 +44,7 @@ class Review
     /**
      * @Column(type="projectstate")
      */
-    private $approved = Status::PENDING;
+    private $acceptanceStatus = Status::PENDING;
 
     /**
      * @OneToOne(targetEntity="\PROJ\Entities\Project", inversedBy="review")
@@ -116,16 +116,14 @@ class Review
         $this->rating = $rating;
     }
 
-    public function getApproved()
+    public function getAccepanceStatus()
     {
-        return $this->approved;
+        return $this->acceptanceStatus;
     }
 
-    public function setApproved($approved)
+    public function setAcceptanceStatus($status)
     {
-        $this->approved = $approved;
+        $this->acceptanceStatus = $status;
     }
 
 }
-
-?>
