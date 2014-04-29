@@ -128,11 +128,15 @@ class AjaxController extends BaseController
         echo json_encode($returnArray);
     }
 
-    public function saveLocationAction()
+    public function saveLocationAction($unitTest = null)
     {
+        if ($unitTest != null) {
+            $_POST = $unitTest;
+        }
+
         if (empty($_POST['type']) || empty($_POST['name']) || empty($_POST['country']) || empty($_POST['city']) || empty($_POST['street']) || empty($_POST['housenumber']) || empty($_POST['postalcode']) || empty($_POST['email'])) {
             echo "Not everything is filled in";
-            return;
+            return false;
         }
         foreach ($_POST as $input) {
             if ($input == $_POST['housenumber']) {
@@ -141,33 +145,47 @@ class AjaxController extends BaseController
 
             if (strlen($input) > 254) {
                 echo "Some fieldes are too long.";
-                return;
+                return false;
             }
             if (!preg_match('/^[A-Za-z0-9. -_]{1,31}$/', $input)) {
                 echo "No special characters allowed";
-                return;
+                return false;
             }
         }
         if (!(filter_var($_POST['housenumber'], FILTER_VALIDATE_INT))) {
             echo "Streetnumber is not a number";
-            return;
+            return false;
         }
 
         if (!is_numeric($_POST['id'])) {
             echo "Invalid ID";
-            return;
+            return false;
         }
 
         if ($_POST['action'] != "update" && $_POST['action'] != "create") {
             echo("Invalid POST:ACTION");
-            return;
+            return false;
         }
 
         if ($_POST['type'] != "education" && $_POST['type'] != "business") {
             echo("Invalid POST:TYPE");
-            return;
+            return false;
         }
 
+        if ($unitTest == null) {
+            $this->saveLocationToDatabase();
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * Function to save Location to the Database
+     * Also does aditional Checks
+     * @return type
+     */
+    private function saveLocationToDatabase()
+    {
         $em = DoctrineHelper::instance()->getEntityManager();
         $ac = new \PROJ\Services\AccountService();
         if ($ac->isLoggedIn()) {
