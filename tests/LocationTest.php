@@ -37,7 +37,7 @@ class RegistrationTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($this->controller->saveLocationAction($this->dummydata), true);
     }
 
-    public function testRegistraionInputValidationEmptyFieldFail()
+    public function testLocationInputValidationEmptyFieldFail()
     {
         $this->ResetData();
 
@@ -46,7 +46,7 @@ class RegistrationTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEquals($this->controller->saveLocationAction($this->dummydata), true);
     }
 
-    public function testRegistraionInputValidationFieldToLongFail()
+    public function testLocationInputValidationFieldToLongFail()
     {
         $this->ResetData();
 
@@ -55,7 +55,7 @@ class RegistrationTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEquals($this->controller->saveLocationAction($this->dummydata), true);
     }
 
-    public function testRegistraionInputValidationSpecialCharactersFail()
+    public function testLocationInputValidationSpecialCharactersFail()
     {
         $this->ResetData();
 
@@ -64,7 +64,7 @@ class RegistrationTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEquals($this->controller->saveLocationAction($this->dummydata), true);
     }
 
-    public function testRegistraionInputValidationHouseNumberFail()
+    public function testLocationInputValidationHouseNumberFail()
     {
         $this->ResetData();
 
@@ -73,7 +73,7 @@ class RegistrationTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEquals($this->controller->saveLocationAction($this->dummydata), true);
     }
 
-    public function testRegistraionInputValidationActionFail()
+    public function testLocationInputValidationActionFail()
     {
         $this->ResetData();
 
@@ -82,7 +82,7 @@ class RegistrationTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEquals($this->controller->saveLocationAction($this->dummydata), true);
     }
 
-    public function testRegistraionInputValidationTypeFail()
+    public function testLocationInputValidationTypeFail()
     {
         $this->ResetData();
 
