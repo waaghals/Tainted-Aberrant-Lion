@@ -180,7 +180,7 @@ $(document).ready(function() {
                 });
             } else {
                 $('#create_review').show();
-                $('#addProjectError').show().children().first().html(data);
+                $('#addReviewError').show().children().first().html(data);
             }
         });
     });

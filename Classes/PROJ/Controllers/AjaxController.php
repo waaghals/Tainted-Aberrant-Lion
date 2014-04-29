@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Geen ServerErrors in dit document; Dan komt de AJAX call niet meer terug.
+ */
+
 namespace PROJ\Controllers;
 
 use PROJ\Exceptions\ServerException;
@@ -36,17 +40,19 @@ class AjaxController extends BaseController
             $demoMarker = new \PROJ\Classes\Marker();
             $demoMarker->setLat($rev->getLat());
             $demoMarker->setLong($rev->getLong());
-            if ($rev->getType() == "Minor")
+            if ($rev->getType() == "Minor") {
                 $demoMarker->setColor('58D2FF');
-            elseif ($rev->getType() == "Both")
+            } elseif ($rev->getType() == "Both") {
                 $demoMarker->setColor('58E579');
+            }
 
             $markerHtml = "<div style='width:400px; height:200px;'><h4>" . $rev->getNaam() . "</h4><br>"
                     . "Gemiddelde Score: " . number_format($avg[0]['AVGSCORE'], 1);
-            if ($avg[0]['AANTALREVIEWS'] == 0)
+            if ($avg[0]['AANTALREVIEWS'] == 0) {
                 $markerHtml .= "<br><br>Er zijn nog geen reviews geschreven voor " . $rev->getNaam() . "</div>";
-            else
+            } else {
                 $markerHtml .= "<br><br><a href='#' class='AllReviews' instantie='" . $rev->getId() . "'>Alle (" . $avg[0]['AANTALREVIEWS'] . ") Reviews Bekijken</a></div>";
+            }
 
             $demoMarker->setHtml($markerHtml);
             $demoMarker->setTitle($rev->getName());
@@ -129,8 +135,9 @@ class AjaxController extends BaseController
             return;
         }
         foreach ($_POST as $input) {
-            if ($input == $_POST['housenumber'])
+            if ($input == $_POST['housenumber']) {
                 break;
+            }
 
             if (strlen($input) > 254) {
                 echo "Some fieldes are too long.";
@@ -151,13 +158,13 @@ class AjaxController extends BaseController
             return;
         }
 
-        if ($_POST['action'] !== "update" && $_POST['action'] == "create") {
-            echo("Invalid POST");
+        if ($_POST['action'] != "update" && $_POST['action'] != "create") {
+            echo("Invalid POST:ACTION");
             return;
         }
 
         if ($_POST['type'] != "education" && $_POST['type'] != "business") {
-            echo("Invalid POST");
+            echo("Invalid POST:TYPE");
             return;
         }
 
