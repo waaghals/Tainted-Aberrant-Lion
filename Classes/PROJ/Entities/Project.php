@@ -2,6 +2,8 @@
 
 namespace PROJ\Entities;
 
+use PROJ\DBAL\ApprovalStateType as Status;
+
 /**
  * @Entity
  */
@@ -32,7 +34,7 @@ class Project
     /**
      * @Column(type="projectstate")
      */
-    private $approved = 'pending';
+    private $approved = Status::PENDING;
 
     /**
      * @OneToOne(targetEntity="\PROJ\Entities\Review", mappedBy="project", cascade={"remove"})

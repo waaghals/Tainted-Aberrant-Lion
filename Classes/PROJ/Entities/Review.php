@@ -2,6 +2,8 @@
 
 namespace PROJ\Entities;
 
+use PROJ\DBAL\ApprovalStateType as Status;
+
 /**
  * @Entity
  */
@@ -42,7 +44,7 @@ class Review
     /**
      * @Column(type="projectstate")
      */
-    private $approved = 'pending';
+    private $approved = Status::PENDING;
 
     /**
      * @OneToOne(targetEntity="\PROJ\Entities\Project", inversedBy="review")
