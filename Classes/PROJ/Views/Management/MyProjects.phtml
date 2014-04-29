@@ -35,12 +35,13 @@
                             ->orderBy('i.type', 'ASC');
                     $res = $qb->getQuery()->getResult();
                     foreach ($res as $r) {
-                        if ($r->getAproved() == 0)
+                        if ($r->getAproved() == 0) {
                             $status = 'Pending';
-                        elseif ($r->getAproved() == 1)
+                        } elseif ($r->getAproved() == 1) {
                             $status = 'Aproved';
-                        else
+                        } else {
                             $status = 'Declined';
+                        }
                         ?>
                         <tr>
                             <td><p><?php echo ucfirst($r->getType()); ?></p></td>

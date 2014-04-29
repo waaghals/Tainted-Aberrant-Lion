@@ -40,7 +40,7 @@ class ManagementController extends BaseController
     public function changePasswordAction()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {    //Save account details
-            $valid = $this->validate_ChangePassword();
+            $valid = $this->validateChangePassword();
             if ($valid === "succes") {
                 $this->additionalVals = array('error' => 'Change password succesfully.');
             } else {
@@ -54,7 +54,7 @@ class ManagementController extends BaseController
     public function myAccountAction()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {    //Save account details
-            $valid = $this->validate_input($_POST);
+            $valid = $this->validateInput($_POST);
             if ($valid === "succes") {
                 $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
                 $user = $em->getRepository('\PROJ\Entities\Account')->find($_SESSION['userID'])->getStudent();
@@ -90,26 +90,39 @@ class ManagementController extends BaseController
         echo $t;
     }
 
-    private function validate_input($data)
+    /**
+     *  Function to validate the input entered when changing credentials.
+     * @param type $data (POST)
+     * @return string
+     */
+    private function validateInput($data)
     {
         if (empty($data['city']) || empty($data['zipcode']) || empty($data['street']) || empty($data['housenumber']) || empty($data['email'])) {
             return "Not everything is filled in";
         }
         foreach ($data as $input) {
-            if ($input == $data['housenumber'])
+            if ($input == $data['housenumber']) {
                 break;
-            if (strlen($input) > 254)
+            }
+            if (strlen($input) > 254) {
                 return "Some fieldes are too long.";
-            if (!preg_match('/^[A-Za-z0-9. -_]{1,31}$/', $input))
+            }
+            if (!preg_match('/^[A-Za-z0-9. -_]{1,31}$/', $input)) {
                 return "No special characters allowed";
+            }
         }
-        if (!(filter_var($data['housenumber'], FILTER_VALIDATE_INT)))
+        if (!(filter_var($data['housenumber'], FILTER_VALIDATE_INT))) {
             return "House number is not a number";
+        }
 
         return "succes";
     }
 
-    private function validate_ChangePassword()
+    /**
+     * Function to validate if the new entered passwords are allowed.
+     * @return string
+     */
+    private function validateChangePassword()
     {
         //Get current user
         $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();

@@ -147,7 +147,7 @@ class AjaxController extends BaseController
         }
 
         if (!is_numeric($_POST['id'])) {
-            echo "Invallid ID";
+            echo "Invalid ID";
             return;
         }
 
@@ -156,8 +156,10 @@ class AjaxController extends BaseController
             return;
         }
 
-        if ($_POST['type'] != "education" && $_POST['type'] != "business")
-            die();
+        if ($_POST['type'] != "education" && $_POST['type'] != "business") {
+            echo("Invalid POST");
+            return;
+        }
 
         $em = DoctrineHelper::instance()->getEntityManager();
         $ac = new \PROJ\Services\AccountService();
@@ -215,9 +217,9 @@ class AjaxController extends BaseController
 
             $em->persist($locatie);
             $em->flush();
-        }
 
-        echo 'succes';
+            echo 'succes';
+        }
     }
 
     public function createProjectAction()
@@ -227,11 +229,15 @@ class AjaxController extends BaseController
             return;
         }
 
-        if (!is_numeric($_POST['start_year']) || !is_numeric($_POST['start_month']) || !is_numeric($_POST['end_year']) || !is_numeric($_POST['end_month']) || !is_numeric($_POST['location']))
-            die("");
+        if (!is_numeric($_POST['start_year']) || !is_numeric($_POST['start_month']) || !is_numeric($_POST['end_year']) || !is_numeric($_POST['end_month'])) {
+            echo "Invalid POST";
+            return;
+        }
 
-        if ($_POST['type'] != "minor" && $_POST['type'] != "internship" && $_POST['type'] != "graduation" && $_POST['type'] != "ESP")
-            die("");
+        if ($_POST['type'] != "minor" && $_POST['type'] != "internship" && $_POST['type'] != "graduation" && $_POST['type'] != "ESP") {
+            echo "Invalid POST";
+            return;
+        }
 
         if (new \DateTime($_POST['start_year'] . '-' . $_POST['start_month'] . '-1') > new \DateTime($_POST['end_year'] . '-' . $_POST['end_month'] . '-1')) {
             echo("Start date cannot be after Stop date");
@@ -250,8 +256,10 @@ class AjaxController extends BaseController
                     ->orderBy('i.type', 'ASC');
             $res = $qb->getQuery()->getResult();
 
-            if (!in_array($_POST['location'], $res[0]))
-                die("Illegal Location");
+            if (!in_array($_POST['location'], $res[0])) {
+                echo "Illegal Location";
+                return;
+            }
 
 
             $location = $em->getRepository('\PROJ\Entities\Institute')->find($_POST['location']);
@@ -266,9 +274,9 @@ class AjaxController extends BaseController
 
             $em->persist($project);
             $em->flush();
-        }
 
-        echo 'succes';
+            echo 'succes';
+        }
     }
 
     public function createReviewAction()
@@ -278,11 +286,15 @@ class AjaxController extends BaseController
             return;
         }
 
-        if (!is_numeric($_POST['project']) || !is_numeric($_POST['assignment_score']) || !is_numeric($_POST['guidance_score']) || !is_numeric($_POST['accomodation_score']) || !is_numeric($_POST['overall_score']))
-            die();
+        if (!is_numeric($_POST['project']) || !is_numeric($_POST['assignment_score']) || !is_numeric($_POST['guidance_score']) || !is_numeric($_POST['accomodation_score']) || !is_numeric($_POST['overall_score'])) {
+            echo "Invalid POST";
+            return;
+        }
 
-        if ($_POST['assignment_score'] > 5 || $_POST['assignment_score'] > 5 || $_POST['assignment_score'] > 5 || $_POST['guidance_score'] > 5)
-            die();
+        if ($_POST['assignment_score'] > 5 || $_POST['assignment_score'] > 5 || $_POST['assignment_score'] > 5 || $_POST['guidance_score'] > 5) {
+            echo "Invalid POST";
+            return;
+        }
 
         $ac = new \PROJ\Services\AccountService();
         if ($ac->isLoggedIn()) {
@@ -294,8 +306,10 @@ class AjaxController extends BaseController
                     ->where($qb->expr()->eq('p.student', $qb->expr()->literal($user->getStudent()->getId())));
             $res = $qb->getQuery()->getResult();
 
-            if (!in_array($_POST['project'], $res[0]))
-                die("Illegal Project");
+            if (!in_array($_POST['project'], $res[0])) {
+                echo "Illegal Project";
+                return;
+            }
 
 
             $project = $em->getRepository('\PROJ\Entities\Project')->find($_POST['project']);
@@ -310,9 +324,9 @@ class AjaxController extends BaseController
 
             $em->persist($review);
             $em->flush();
-        }
 
-        echo 'succes';
+            echo 'succes';
+        }
     }
 
     public function getLocationInfoAction()

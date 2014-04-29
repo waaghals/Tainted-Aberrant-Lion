@@ -37,12 +37,13 @@
                     $res = $qb->getQuery()->getResult();
 
                     foreach ($res as $r) {
-                        if ($r['aproved'] == 0)
+                        if ($r['aproved'] == 0) {
                             $status = 'Pending';
-                        elseif ($r['aproved'] == 1)
+                        } elseif ($r['aproved'] == 1) {
                             $status = 'Aproved';
-                        else
+                        } else {
                             $status = 'Declined';
+                        }
                         ?>
                         <tr>
                             <td><p><?php echo $r['name'] . ' (' . $r['place'] . ')'; ?></p></td>
