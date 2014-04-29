@@ -321,6 +321,44 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
 
 ## Bijlage
 ### 1. Incorrecte registreren waarden
+    * Het scherm verdwijnt en er wordt een nieuwe review aangemaakt.
+
+##Filteren op locatie type:
+1.      Laad de homepage http://localhost/
+    * De kaart is zichtbaar met in de menubalk de filter "Location Type:".
+2.      Selecteer in de filter optie om alleen de "education" te laten zien.
+    * Alle markers met een icoontje  van een business verdwijnen.
+3.      Select in de filter optie om alleen de "business" te laten zien.
+    * De markers met een icoontje van een education verdwijnen.
+    * De markers met een icoontje van een busines verschijnen.
+
+##Reseten van filters:
+1.      Laad de homepage http://localhost/
+    * De kaart is zichtbaar met in de menubalk de button "Reset".
+2.      Selecteer in de filter optie om alleen de "education" te laten zien.
+    * Alle markers met een icoontje  van een business verdwijnen.
+3.      Druk op de "Reset" knop in de menubalk.
+    * Alle markers verschijnen.
+    * Alle filter opties worden leeg.
+
+##Filteren op locatie type:
+1.      Laad de homepage http://localhost/
+    * De kaart is zichtbaar met in de menubalk de filter "Country:".
+2.      Selecteer in de filter optie om alleen de "Netherlands" te laten zien.
+    * Alle markers buiten nederland verdwijnen.
+3.      Select in de filter optie om alleen de "" (leeg) te laten zien.
+    * Alle markers verschijnen.
+
+##Filters combineren
+1.      Laad de homepage http://localhost/
+    * De kaart is zichtbaar met in de menubalk de filter "Country:".
+2.      Selecteer in de filter optie Country om alleen de "Netherlands" te laten zien.
+3.      Selecteer in de filter optie Location Type de "education" te laten zien.
+    * Alleen markers in nederland zijn zichtbaar met het "education" type.
+
+##Bijlage
+###1. Incorrecte registreren waarden
+
 Veld|Waarde
 --------|--------
 Username|hbakker
