@@ -184,7 +184,7 @@ $content->additionalValues = $additionalValues;
                             $qb->select('i')
                                     ->from('\PROJ\Entities\Institute', 'i')
                                     ->where($qb->expr()->eq('i.creator', $qb->expr()->literal($user->getStudent()->getId())))
-                                    ->orWhere($qb->expr()->eq('i.approved', '1'))
+                                    ->orWhere($qb->expr()->eq('i.acceptanceStatus', '1'))
                                     ->orderBy('i.type', 'ASC');
                             $res = $qb->getQuery()->getResult();
                             foreach ($res as $r) {

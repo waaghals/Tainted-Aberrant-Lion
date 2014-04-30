@@ -217,7 +217,7 @@ class AjaxController extends BaseController
             $qb->select('i.id')
                     ->from('\PROJ\Entities\Institute', 'i')
                     ->where($qb->expr()->eq('i.creator', $qb->expr()->literal($user->getStudent()->getId())))
-                    ->orWhere($qb->expr()->eq('i.approved', $qb->expr()->literal('approved')))
+                    ->orWhere($qb->expr()->eq('i.acceptanceStatus', $qb->expr()->literal('approved')))
                     ->orderBy('i.type', 'ASC');
             $res = $qb->getQuery()->getResult();
 

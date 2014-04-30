@@ -2,7 +2,7 @@
 
 namespace PROJ\Entities;
 
-use \PROJ\Helper\XssHelper;
+use PROJ\DBAL\ApprovalStateType as Status;
 
 /**
  * @Entity
@@ -22,9 +22,9 @@ class Institute
     private $name;
 
     /**
-     * @Column(type="string")
+     * @Column(type="institutetype")
      */
-    private $type;  //Internship, Minor, Both
+    private $type;
 
     /**
      * @Column(type="float")
@@ -67,9 +67,9 @@ class Institute
     private $telephone;
 
     /**
-     * @Column(type="boolean")
+     * @Column(type="projectstate")
      */
-    private $aproved = 0;   // 0 = pending, 1 = aproved, 2 = declined
+    private $acceptanceStatus = Status::PENDING;
 
     /**
      * @OneToMany(targetEntity="\PROJ\Entities\Project", mappedBy="institute", cascade={"remove"})
@@ -190,16 +190,6 @@ class Institute
         );
     }
 
-    public function getAproved()
-    {
-        return $this->aproved;
-    }
-
-    public function setAproved($aproved)
-    {
-        $this->aproved = $aproved;
-    }
-
     public function getCountry()
     {
         return $this->country;
@@ -258,6 +248,16 @@ class Institute
     public function setTelephone($telephone)
     {
         $this->telephone = $telephone;
+    }
+
+    public function getAcceptanceStatus()
+    {
+        return $this->acceptanceStatus;
+    }
+
+    public function setAcceptanceStatus($acceptanceStatus)
+    {
+        $this->acceptanceStatus = $acceptanceStatus;
     }
 
 }

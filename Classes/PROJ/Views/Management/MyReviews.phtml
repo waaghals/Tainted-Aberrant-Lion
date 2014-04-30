@@ -28,7 +28,7 @@
                     $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
                     $user = $em->getRepository('\PROJ\Entities\Account')->find($_SESSION['userID']);
                     $qb = $em->createQueryBuilder();
-                    $qb->select('i.place, i.name, p.type, r.rating, r.approved')
+                    $qb->select('i.place, i.name, p.type, r.rating, r.acceptanceStatus')
                             ->from('\PROJ\Entities\Review', 'r')
                             ->leftJoin('r.project', 'p')
                             ->leftJoin('p.institute', 'i')
@@ -42,7 +42,7 @@
                             <td><p><?php echo $r['name'] . ' (' . $r['place'] . ')'; ?></p></td>
                             <td><p><?php echo ucfirst($r['type']); ?></p></td>
                             <td><p><?php echo $r['rating']; ?></p></td>
-                            <td><p><?php echo ucfirst($r['approved']); ?></p></td>
+                            <td><p><?php echo ucfirst($r['acceptanceStatus']); ?></p></td>
                         </tr>
                         <?php
                     }
