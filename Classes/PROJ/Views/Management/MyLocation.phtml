@@ -22,7 +22,7 @@
                         <th>Name:</th>
                         <th>Location:</th>
                         <th>Type:</th>
-                        <th>Status:</th>
+                        <th colspan="3">Status:</th>
                     </tr>
                     <?php
                     $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
@@ -41,6 +41,14 @@
                             <td><p><?php echo $r->getPlace(); ?></p></td>
                             <td><p><?php echo ucfirst($r->getType()); ?></p></td>
                             <td><p><?php echo ucfirst($r->getAcceptanceStatus()); ?></p></td>
+                            <?php
+                            if ($r->getAcceptanceStatus() == 0) {
+                                ?>
+                                <td style="width: 40px;"><img class="action_btn mylocation_update" data-location-id="<?php echo $r->getId(); ?>" src="/images/edit.png" /></td>
+                                <td style="width: 40px;"><img class="action_btn mylocation_remove" data-location-id="<?php echo $r->getId(); ?>" src="/images/delete.png" /></td>
+                                <?php
+                            }
+                            ?>
                         </tr>
                         <?php
                     }

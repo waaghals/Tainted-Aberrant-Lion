@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Geen ServerErrors in dit document; Dan komt de AJAX call niet meer terug.
+ */
+
 namespace PROJ\Controllers;
 
 use PROJ\Exceptions\ServerException;
@@ -37,17 +41,19 @@ class AjaxController extends BaseController
             $demoMarker = new \PROJ\Classes\Marker();
             $demoMarker->setLat($rev->getLat());
             $demoMarker->setLong($rev->getLong());
-            if ($rev->getType() == "Minor")
+            if ($rev->getType() == "Minor") {
                 $demoMarker->setColor('58D2FF');
-            elseif ($rev->getType() == "Both")
+            } elseif ($rev->getType() == "Both") {
                 $demoMarker->setColor('58E579');
+            }
 
             $markerHtml = "<div style='width:400px; height:200px;'><h4>" . $rev->getNaam() . "</h4><br>"
                     . "Gemiddelde Score: " . number_format($avg[0]['AVGSCORE'], 1);
-            if ($avg[0]['AANTALREVIEWS'] == 0)
+            if ($avg[0]['AANTALREVIEWS'] == 0) {
                 $markerHtml .= "<br><br>Er zijn nog geen reviews geschreven voor " . $rev->getNaam() . "</div>";
-            else
+            } else {
                 $markerHtml .= "<br><br><a href='#' class='AllReviews' instantie='" . $rev->getId() . "'>Alle (" . $avg[0]['AANTALREVIEWS'] . ") Reviews Bekijken</a></div>";
+            }
 
             $demoMarker->setHtml($markerHtml);
             $demoMarker->setTitle($rev->getName());
@@ -123,11 +129,15 @@ class AjaxController extends BaseController
         echo json_encode($returnArray);
     }
 
-    public function createLocationAction()
+    public function saveLocationAction($unitTest = null)
     {
+        if ($unitTest != null) {
+            $_POST = $unitTest;
+        }
+
         if (empty($_POST['type']) || empty($_POST['name']) || empty($_POST['country']) || empty($_POST['city']) || empty($_POST['street']) || empty($_POST['housenumber']) || empty($_POST['postalcode']) || empty($_POST['email'])) {
             echo "Not everything is filled in";
-            return;
+            return false;
         }
         foreach ($_POST as $input) {
             if ($input == $_POST['housenumber'])
@@ -135,22 +145,47 @@ class AjaxController extends BaseController
 
             if (strlen($input) > 254) {
                 echo "Some fieldes are too long.";
-                return;
+                return false;
             }
             if (!preg_match('/^[A-Za-z0-9. -_]{1,31}$/', $input)) {
                 echo "No special characters allowed";
-                return;
+                return false;
             }
         }
         if (!(filter_var($_POST['housenumber'], FILTER_VALIDATE_INT))) {
             echo "Streetnumber is not a number";
-            return;
+            return false;
+        }
+
+        if (!is_numeric($_POST['id'])) {
+            echo "Invalid ID";
+            return false;
+        }
+
+        if ($_POST['action'] != "update" && $_POST['action'] != "create") {
+            echo("Invalid POST:ACTION");
+            return false;
         }
 
         if ($_POST['type'] != "education" && $_POST['type'] != "business") {
-            throw new ServerException('Invallid Type', ServerException::SERVER_ERROR);
+            echo("Invalid POST:TYPE");
+            return false;
         }
 
+        if ($unitTest == null) {
+            $this->saveLocationToDatabase();
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * Function to save Location to the Database
+     * Also does aditional Checks
+     * @return type
+     */
+    private function saveLocationToDatabase()
+    {
         $em = DoctrineHelper::instance()->getEntityManager();
         $ac = new \PROJ\Services\AccountService();
         if ($ac->isLoggedIn()) {
@@ -168,8 +203,24 @@ class AjaxController extends BaseController
             }
 
             $user = $em->getRepository('\PROJ\Entities\Account')->find($_SESSION['userID']);
-            $locatie = new \PROJ\Entities\Institute();
-            $locatie->setCreator($user->getStudent());
+            $locatie = null;
+            if ($_POST['action'] == "create") {
+                $locatie = new \PROJ\Entities\Institute();
+                $locatie->setCreator($user->getStudent());
+            } elseif ($_POST['action'] == "update") {
+                $locatie = $em->getRepository('\PROJ\Entities\Institute')->find($_POST['id']);
+
+                //Extra checks
+                if ($locatie->getCreator()->getAccount()->getId() == $_SESSION['userID']) {
+                    if ($locatie->getAcceptanceStatus() != 0) {
+                        echo "The Location has been aproved while you tried to edit it.";
+                        return;
+                    }
+                } else {
+                    echo "This isn't your Location.";
+                    return;
+                }
+            }
             $locatie->setLat($response["results"][0]["geometry"]["location"]['lat']);
             $locatie->setLng($response["results"][0]["geometry"]["location"]['lng']);
             $place = \PROJ\Helper\XssHelper::sanitizeInput($_POST['city']);
@@ -182,11 +233,18 @@ class AjaxController extends BaseController
             $locatie->setType($_POST['type']);
             $locatie->setName(\PROJ\Helper\XssHelper::sanitizeInput($_POST['name']));
 
+            $locatie->setCountry($country);
+            $locatie->setStreet(\PROJ\Helper\XssHelper::sanitizeInput($_POST['street']));
+            $locatie->setHousenumber(\PROJ\Helper\XssHelper::sanitizeInput($_POST['housenumber']));
+            $locatie->setPostalcode(\PROJ\Helper\XssHelper::sanitizeInput($_POST['postalcode']));
+            $locatie->setEmail(\PROJ\Helper\XssHelper::sanitizeInput($_POST['email']));
+            $locatie->setTelephone(\PROJ\Helper\XssHelper::sanitizeInput($_POST['telephone']));
+
             $em->persist($locatie);
             $em->flush();
-        }
 
-        echo 'succes';
+            echo 'succes';
+        }
     }
 
     public function createProjectAction()
@@ -196,12 +254,14 @@ class AjaxController extends BaseController
             return;
         }
 
-        if (!is_numeric($_POST['start_year']) || !is_numeric($_POST['start_month']) || !is_numeric($_POST['end_year']) || !is_numeric($_POST['end_month']) || !is_numeric($_POST['location'])) {
-            throw new ServerException('One of the fields isn\'t numeric', ServerException::SERVER_ERROR);
+        if (!is_numeric($_POST['start_year']) || !is_numeric($_POST['start_month']) || !is_numeric($_POST['end_year']) || !is_numeric($_POST['end_month'])) {
+            echo "Invalid POST";
+            return;
         }
 
         if ($_POST['type'] != "minor" && $_POST['type'] != "internship" && $_POST['type'] != "graduation" && $_POST['type'] != "ESP") {
-            throw new ServerException('Invalid Type', ServerException::SERVER_ERROR);
+            echo "Invalid POST";
+            return;
         }
 
         if (new \DateTime($_POST['start_year'] . '-' . $_POST['start_month'] . '-1') > new \DateTime($_POST['end_year'] . '-' . $_POST['end_month'] . '-1')) {
@@ -230,7 +290,8 @@ class AjaxController extends BaseController
             }
 
             if (!$found) {
-                throw new ServerException('Illegal Location', ServerException::SERVER_ERROR);
+                echo "Illegal Location";
+                return;
             }
 
 
@@ -259,11 +320,13 @@ class AjaxController extends BaseController
         }
 
         if (!is_numeric($_POST['project']) || !is_numeric($_POST['assignment_score']) || !is_numeric($_POST['guidance_score']) || !is_numeric($_POST['accomodation_score']) || !is_numeric($_POST['overall_score'])) {
-            throw new ServerException('One of the fields isn\'t numeric', ServerException::SERVER_ERROR);
+            echo "Invalid POST";
+            return;
         }
 
         if ($_POST['assignment_score'] > 5 || $_POST['assignment_score'] > 5 || $_POST['assignment_score'] > 5 || $_POST['guidance_score'] > 5) {
-            throw new ServerException('Score field has an illegal value', ServerException::SERVER_ERROR);
+            echo "Invalid POST";
+            return;
         }
 
         $ac = new \PROJ\Services\AccountService();
@@ -291,7 +354,8 @@ class AjaxController extends BaseController
             }
 
             if (!$found) {
-                throw new ServerException('Illegal Project', ServerException::SERVER_ERROR);
+                echo "Illegal Project";
+                return;
             }
 
 
@@ -310,6 +374,60 @@ class AjaxController extends BaseController
         }
 
         echo 'succes';
+    }
+
+    public function getLocationInfoAction()
+    {
+        $em = DoctrineHelper::instance()->getEntityManager();
+        $ac = new \PROJ\Services\AccountService();
+
+        if (!is_numeric($_POST['id'])) {
+            echo "Illigal ID";
+            return;
+        }
+        if ($ac->isLoggedIn()) {
+            $inst = $em->getRepository('\PROJ\Entities\Institute')->find($_POST['id']);
+            if ($inst->getCreator()->getAccount()->getId() == $_SESSION['userID']) {
+                if ($inst->getAcceptanceStatus() == 0) {
+                    echo json_encode($inst->jsonSerialize());
+                } else {
+                    echo "The Location has been aproved while you tried to delete it.";
+                }
+            } else {
+                echo "This isn't your Location.";
+            }
+        }
+    }
+
+    public function removeLocationAction()
+    {
+        $em = DoctrineHelper::instance()->getEntityManager();
+        $ac = new \PROJ\Services\AccountService();
+
+        if (!is_numeric($_POST['id'])) {
+            echo "Illigal ID";
+            return;
+        }
+        if ($ac->isLoggedIn()) {
+            $inst = $em->getRepository('\PROJ\Entities\Institute')->find($_POST['id']);
+            if ($inst->getCreator()->getAccount()->getId() == $_SESSION['userID']) {
+                if ($inst->getAcceptanceStatus() == 0) {
+                    foreach ($inst->getProjects() as $proj) {
+                        foreach ($proj->getReview() as $rev) {
+                            $em->remove($rev);
+                        }
+                        $em->remove($proj);
+                    }
+                    $em->remove($inst);
+                    $em->flush();
+                    echo "succes";
+                } else {
+                    echo "The Location has been aproved while you tried to delete it.";
+                }
+            } else {
+                echo "This isn't your Location.";
+            }
+        }
     }
 
 }
