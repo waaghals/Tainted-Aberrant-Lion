@@ -28,38 +28,31 @@
                     $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
                     $user = $em->getRepository('\PROJ\Entities\Account')->find($_SESSION['userID']);
                     $qb = $em->createQueryBuilder();
-                    $qb->select('i.place, i.name, p.type, r.rating, r.aproved')
+                    $qb->select('i.place, i.name, p.type, r.rating, r.approved')
                             ->from('\PROJ\Entities\Review', 'r')
                             ->leftJoin('r.project', 'p')
                             ->leftJoin('p.institute', 'i')
                             ->where($qb->expr()->eq('p.student', $qb->expr()->literal($user->getStudent()->getId())))
                             ->orderBy('i.name', 'ASC');
                     $res = $qb->getQuery()->getResult();
-                    
-                    foreach($res as $r) {
-                        if($r['aproved'] == 0) {
-                            $status = 'Pending';
-                        }elseif($r['aproved'] == 1) {
-                            $status = 'Aproved';
-                        }else{
-                            $status = 'Declined';
-                        }
-                    ?>
-                    <tr>
-                        <td><p><?php echo $r['name'].' ('.$r['place'].')'; ?></p></td>
-                        <td><p><?php echo ucfirst($r['type']); ?></p></td>
-                        <td><p><?php echo $r['rating']; ?></p></td>
-                        <td><p><?php echo $status; ?></p></td>
-                    </tr> 
-                    <?php
+
+                    foreach ($res as $r) {
+                        ?>
+                        <tr>
+                            <td><p><?php echo $r['name'] . ' (' . $r['place'] . ')'; ?></p></td>
+                            <td><p><?php echo ucfirst($r['type']); ?></p></td>
+                            <td><p><?php echo $r['rating']; ?></p></td>
+                            <td><p><?php echo ucfirst($r['approved']); ?></p></td>
+                        </tr>
+                        <?php
                     }
-                    
-                    if(count($res) == 0) {
-                    ?>
-                    <tr>
-                        <td colspan="4"><p>No reviews found</p></td>
-                    </tr>
-                    <?php
+
+                    if (count($res) == 0) {
+                        ?>
+                        <tr>
+                            <td colspan="4"><p>No reviews found</p></td>
+                        </tr>
+                        <?php
                     }
                     ?>
                 </table>
