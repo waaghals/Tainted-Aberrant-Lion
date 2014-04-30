@@ -7,50 +7,58 @@ use PROJ\Helper\HeaderHelper;
 /**
  * @author Thijs
  */
-class ManagementController extends BaseController {
+class ManagementController extends BaseController
+{
+
     private $page;
     private $additionalVals = array();
-    
-    public function homeAction() {
+
+    public function homeAction()
+    {
         $this->page = "Home";
         $this->serveManagementTemplate();
     }
-    
-    public function myReviewsAction() {
+
+    public function myReviewsAction()
+    {
         $this->page = "MyReviews";
         $this->serveManagementTemplate();
     }
-    
-    public function myLocationsAction() {
+
+    public function myLocationsAction()
+    {
         $this->page = "MyLocation";
         $this->serveManagementTemplate();
     }
-    
-    public function myProjectsAction() {
+
+    public function myProjectsAction()
+    {
         $this->page = "MyProjects";
         $this->serveManagementTemplate();
     }
-    
-    public function changePasswordAction() {
+
+    public function changePasswordAction()
+    {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {    //Save account details
-            $valid = $this->validate_ChangePassword();
-            if($valid === "succes") {
-                $this->additionalVals = array('error'=>'Change password succesfully.');
-            }else{
-                $this->additionalVals = array('error'=>$valid);
+            $valid = $this->validateChangePassword();
+            if ($valid === "succes") {
+                $this->additionalVals = array('error' => 'Change password succesfully.');
+            } else {
+                $this->additionalVals = array('error' => $valid);
             }
         }
         $this->page = "ChangePassword";
         $this->serveManagementTemplate();
     }
-    
-    public function myAccountAction() {
+
+    public function myAccountAction()
+    {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {    //Save account details
-            $valid = $this->validate_input($_POST);
-            if($valid === "succes"){
+            $valid = $this->validateInput($_POST);
+            if ($valid === "succes") {
                 $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
                 $user = $em->getRepository('\PROJ\Entities\Account')->find($_SESSION['userID'])->getStudent();
-                
+
                 $user->setCity($_POST['city']);
                 $user->setZipcode($_POST['zipcode']);
                 $user->setStreet($_POST['street']);
@@ -59,73 +67,88 @@ class ManagementController extends BaseController {
                 $user->setEmail($_POST['email']);
                 $em->persist($user);
                 $em->flush();
-                $this->additionalVals = array('error'=>'Successfully saved.');
-            }else{
-                $this->additionalVals = array('error'=>$valid);
+                $this->additionalVals = array('error' => 'Successfully saved.');
+            } else {
+                $this->additionalVals = array('error' => $valid);
             }
         }
         $this->page = "MyAccount";
         $this->serveManagementTemplate();
     }
-    
-    private function serveManagementTemplate() {
+
+    private function serveManagementTemplate()
+    {
         $ac = new \PROJ\Services\AccountService();
-        if(!$ac->isLoggedIn()) {
+        if (!$ac->isLoggedIn()) {
             HeaderHelper::redirect("/");
             return;
         }
-        
+
         $t = new \PROJ\Tools\Template("Management");
         $t->page = $this->page;
         $t->additionalValues = $this->additionalVals;
         echo $t;
     }
-    
-    private function validate_input($data) {
-        if (empty($data['city']) 
-                || empty($data['zipcode']) || empty($data['street']) || empty($data['housenumber']) || empty($data['email'])) {
+
+    /**
+     *  Function to validate the input entered when changing credentials.
+     * @param type $data (POST)
+     * @return string
+     */
+    private function validateInput($data)
+    {
+        if (empty($data['city']) || empty($data['zipcode']) || empty($data['street']) || empty($data['housenumber']) || empty($data['email'])) {
             return "Not everything is filled in";
         }
-        foreach($data as $input){
-            if($input == $data['housenumber'])
+        foreach ($data as $input) {
+            if ($input == $data['housenumber']) {
                 break;
-            if(strlen($input) > 254)
+            }
+            if (strlen($input) > 254) {
                 return "Some fieldes are too long.";
-            if(!preg_match('/^[A-Za-z0-9. -_]{1,31}$/', $input))
+            }
+            if (!preg_match('/^[A-Za-z0-9. -_]{1,31}$/', $input)) {
                 return "No special characters allowed";
+            }
         }
-        if(!(filter_var($data['housenumber'], FILTER_VALIDATE_INT)))
-                return "House number is not a number";
-        
+        if (!(filter_var($data['housenumber'], FILTER_VALIDATE_INT))) {
+            return "House number is not a number";
+        }
+
         return "succes";
     }
-    
-    private function validate_ChangePassword() {
+
+    /**
+     * Function to validate if the new entered passwords are allowed.
+     * @return string
+     */
+    private function validateChangePassword()
+    {
         //Get current user
         $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
         $user = $em->getRepository('\PROJ\Entities\Account')->find($_SESSION['userID']);
-        
+
         //Valdidate old password
         $passwordEnteredOld = hash('sha512', $_POST['old_password'] . $user->getSalt());
-        if($passwordEnteredOld == $user->getPassword()) {
-            if($_POST['old_password'] != $_POST['new_password']) {
-                if($_POST['new_password'] == $_POST['rep_new_password']) {
+        if ($passwordEnteredOld == $user->getPassword()) {
+            if ($_POST['old_password'] != $_POST['new_password']) {
+                if ($_POST['new_password'] == $_POST['rep_new_password']) {
                     $passwordEnteredNew = hash('sha512', $_POST['new_password'] . $user->getSalt());
                     $user->setPassword($passwordEnteredNew);
                     $em->persist($user);
                     $em->flush();
-                    
+
                     //Change session to prevent logout
                     $_SESSION['login_string'] = hash('sha512', $user->getPassword() . $_SERVER['HTTP_USER_AGENT'] . $_SERVER['REMOTE_ADDR']);
-                    
+
                     return "succes";
-                }else{
+                } else {
                     return "New passwords didn't match.";
                 }
-            }else{
+            } else {
                 return "New password can't be the same as the old password.";
             }
-        }else{
+        } else {
             return "Old password didn't match.";
         }
     }
