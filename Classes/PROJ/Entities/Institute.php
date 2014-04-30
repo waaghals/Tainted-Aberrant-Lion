@@ -2,10 +2,13 @@
 
 namespace PROJ\Entities;
 
+use PROJ\DBAL\ApprovalStateType as Status;
+
 /**
- * @Entity 
+ * @Entity
  */
-class Institute {
+class Institute
+{
 
     /**
      * @Id @Column(type="integer")
@@ -19,9 +22,9 @@ class Institute {
     private $name;
 
     /**
-     * @Column(type="string")
+     * @Column(type="institutetype")
      */
-    private $type;  //Internship, Minor, Both
+    private $type;
 
     /**
      * @Column(type="float")
@@ -31,18 +34,17 @@ class Institute {
     /**
      * @Column(type="float")
      */
-
     private $lng;
-    
+
     /**
      * @Column(type="string")
      */
     private $place;
-    
+
     /**
-     * @Column(type="boolean")
+     * @Column(type="projectstate")
      */
-    private $aproved = 0;   // 0 = pending, 1 = aproved, 2 = declined
+    private $acceptanceStatus = Status::PENDING;
 
     /**
      * @OneToMany(targetEntity="\PROJ\Entities\Project", mappedBy="institute", cascade={"remove"})
@@ -53,77 +55,94 @@ class Institute {
      * @ManyToOne(targetEntity="\PROJ\Entities\Student", inversedBy="institutes")
      */
     private $creator;
-    
-    
-    function __construct() {
+
+    function __construct()
+    {
         $this->projects = new \Doctrine\Common\Collections\ArrayCollection;
     }
-    
-    public function getId() {
+
+    public function getId()
+    {
         return $this->id;
     }
 
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
-    public function getType() {
+    public function getType()
+    {
         return $this->type;
     }
 
-    public function getLat() {
+    public function getLat()
+    {
         return $this->lat;
     }
 
-    public function getLng() {
+    public function getLng()
+    {
         return $this->lng;
     }
 
-    public function getPlace() {
+    public function getPlace()
+    {
         return $this->place;
     }
 
-    public function getProjects() {
+    public function getProjects()
+    {
         return $this->projects;
     }
 
-    public function getCreator() {
+    public function getCreator()
+    {
         return $this->creator;
     }
 
-    public function setId($id) {
+    public function setId($id)
+    {
         $this->id = $id;
     }
 
-    public function setType($type) {
+    public function setType($type)
+    {
         $this->type = $type;
     }
 
-    public function setLat($lat) {
+    public function setLat($lat)
+    {
         $this->lat = $lat;
     }
 
-    public function setLng($lng) {
+    public function setLng($lng)
+    {
         $this->lng = $lng;
     }
 
-    public function setPlace($place) {
+    public function setPlace($place)
+    {
         $this->place = $place;
     }
 
-    public function setProjects($projects) {
+    public function setProjects($projects)
+    {
         $this->projects = $projects;
     }
 
-    public function setCreator($creator) {
+    public function setCreator($creator)
+    {
         $this->creator = $creator;
     }
-    
-    public function setName($name) {
+
+    public function setName($name)
+    {
         $this->name = $name;
     }
-    
-    public function jsonSerialize() {
+
+    public function jsonSerialize()
+    {
         return array(
             "type" => $this->getType(),
             "name" => $this->getName(),
@@ -133,13 +152,15 @@ class Institute {
             "projects" => $this->getProjects()
         );
     }
-    
-    public function getAproved() {
-        return $this->aproved;
+
+    public function getAcceptanceStatus()
+    {
+        return $this->acceptanceStatus;
     }
 
-    public function setAproved($aproved) {
-        $this->aproved = $aproved;
+    public function setAcceptanceStatus($status)
+    {
+        $this->acceptanceStatus = $status;
     }
+
 }
-?>

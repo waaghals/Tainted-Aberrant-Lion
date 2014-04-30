@@ -14,17 +14,20 @@
 
 namespace PROJ\Controllers;
 
-use PROJ\Exceptions\ServerException;
-use \PROJ\Entities\Institute;
-use \PROJ\Entities\Account;
-use \PROJ\Entities\Student;
-use \PROJ\Entities\Project;
-use \PROJ\Entities\Review;
+use PROJ\Entities\Institute;
+use PROJ\Entities\Account;
+use PROJ\Entities\Student;
+use PROJ\Entities\Project;
+use PROJ\Entities\Review;
 use PROJ\Entities\Country;
+use PROJ\DBAL\InstituteType;
+use PROJ\DBAL\ProjectType;
 
-class TestdataController extends BaseController {
+class TestdataController extends BaseController
+{
 
-    private function emptyTables($em) {
+    private function emptyTables($em)
+    {
         $helperSet = new \Symfony\Component\Console\Helper\HelperSet(array(
             'em' => new \Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper($em)
         ));
@@ -38,7 +41,8 @@ class TestdataController extends BaseController {
         echo "<br /><br />";
     }
 
-    private function createInstitute($em, $name, $type, $place, $lat, $long) {
+    private function createInstitute($em, $name, $type, $place, $lat, $long)
+    {
         $institute = new Institute();
         $institute->setName($name);
         $institute->setType($type);
@@ -57,7 +61,8 @@ class TestdataController extends BaseController {
         return $institute;
     }
 
-    private function createUser($em, $username, $password, $salt) {
+    private function createUser($em, $username, $password, $salt)
+    {
         $account = new Account();
         $account->setUsername($username);
         $hash = hash('sha512', $password . $salt);
@@ -73,7 +78,8 @@ class TestdataController extends BaseController {
         return $account;
     }
 
-    private function createStudent($em, $fName, $sName, $street, $housenr, $zipcode, $city, $account, $email) {
+    private function createStudent($em, $fName, $sName, $street, $housenr, $zipcode, $city, $account, $email)
+    {
         $student = new Student();
         $student->setFirstname($fName);
         $student->setSurname($sName);
@@ -98,7 +104,8 @@ class TestdataController extends BaseController {
         return $student;
     }
 
-    private function createProject($em, $student, $institute, $type, $startDate, $endDate) {
+    private function createProject($em, $student, $institute, $type, $startDate, $endDate)
+    {
         $project = new Project();
         $project->setStudent($student);
         $project->setInstitute($institute);
@@ -109,13 +116,14 @@ class TestdataController extends BaseController {
         $em->flush();
         echo "New project with the following data has been succesfully added to the database:"
         . "<br />Student: " . $student->getFirstname() . " " . $student->getSurname()
-        . "<br />Institute: " . $institute->getName()       
+        . "<br />Institute: " . $institute->getName()
         . "<br />Type: " . $type
         . "<br /><br />";
         return $project;
     }
 
-    private function createReview($em, $project, $assignRate, $accoRate, $guidRate, $text) {
+    private function createReview($em, $project, $assignRate, $accoRate, $guidRate, $text)
+    {
         $review = new Review();
         $review->setProject($project);
         $review->setAssignmentRating($assignRate);
@@ -166,14 +174,15 @@ class TestdataController extends BaseController {
         . "<br />Languages: " . $languages
         . "<br /><br />";
     }
-    
-    public function IndexAction() {
+
+    public function IndexAction()
+    {
         $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
 
         $this->emptyTables($em);
 
-        $avans = $this->createInstitute($em, "Avans Hogeschool", "education", "`s-Hertogenbosch", 51.688946, 5.287256);
-        $mac = $this->createInstitute($em, "McDonald's", "business", "Arnhem", 51.9635996, 5.8930421);
+        $avans = $this->createInstitute($em, "Avans Hogeschool", InstituteType::EDUCATION, "`s-Hertogenbosch", 51.688946, 5.287256);
+        $mac = $this->createInstitute($em, "McDonald's", InstituteType::BUSINESS, "Arnhem", 51.9635996, 5.8930421);
 
         $kjansen = $this->createUser($em, "kjansen", "qwerty", "HGJDGFSJHDFJHSDf");
         $hbakker = $this->createUser($em, "hbakker", "password", "E*(%&YUIERHDGFER");
@@ -181,12 +190,12 @@ class TestdataController extends BaseController {
         $kees = $this->createStudent($em, "Kees", "Jansen", "Jansenlaan", 15, "1234AB", "eindhoven", $kjansen, "k.jansen@student.avans.nl");
         $harry = $this->createStudent($em, "Harry", "Bakker", "Bakkersweg", 15, "5678CD", "utrecht", $hbakker, "h.bakker@student.avans.nl");
 
-        $projectX = $this->createProject($em, $kees, $avans, "internship", new \DateTime('03/17/2014'), new \DateTime('05/17/2014'));
-        $projectZ = $this->createProject($em, $harry, $mac, "minor", new \DateTime('02/04/2014'), new \DateTime('06/20/2014'));
+        $projectX = $this->createProject($em, $kees, $avans, ProjectType::INTERNSHIP, new \DateTime('03/17/2014'), new \DateTime('05/17/2014'));
+        $projectZ = $this->createProject($em, $harry, $mac, ProjectType::MINOR, new \DateTime('02/04/2014'), new \DateTime('06/20/2014'));
 
         $this->createReview($em, $projectX, 5, 3, 4, "Many fun activities to do here!");
         $this->createReview($em, $projectZ, 4, 4, 1, "Just do your job and they're happy.");
-        
+
         $this->createCountry($em, 'AD', 'AND', 20, 'AN', 'Andorra', 'Andorra la Vella', 468, 84000, 'EU', '', 'EUR', '.ad');
         $this->createCountry($em, 'AE', 'ARE', 784, 'AE', 'United Arab Emirates', 'Abu Dhabi', 82880, 4975593, 'AS', '', 'AED', '.ae');
         $this->createCountry($em, 'AF', 'AFG', 4, 'AF', 'Afghanistan', 'Kabul', 647500, 29121286, 'AS', '', 'AFN', '.af');
