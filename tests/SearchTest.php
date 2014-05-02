@@ -32,6 +32,7 @@ class SearchTest extends \PHPUnit_Framework_TestCase
     {
         $this->ResetData();
 
+        $this->service->
         $this->assertEquals($this->service->validateInput($this->dummydata), true);
     }
 

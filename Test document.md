@@ -224,12 +224,12 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
 	* Het is mogelijk om vanaf hier de reviews van `McDonald's` te bekijken.
 
 
-###Zoeken naar niet bestaande review:
+###Zoeken naar niet bestaande review/instituut:
 
 1. Laad de homepage http://localhost/
     * Rechts boven is een zoekformulier zichtbaar.
 2. Vul het woord `nope`
-	* Er komt een dropdownp.
+	* Er komt een dropdown.
 	* In de dropdown staat `No search results found`
 
 
