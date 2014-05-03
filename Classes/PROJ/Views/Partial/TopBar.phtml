@@ -45,6 +45,7 @@ $ac = new PROJ\Services\AccountService();
                     <option>business</option>
                 </select>
             </div>
+
             <div class="filterblock">
                 <div>Project Type:</div>
                 <select id="projectType">
@@ -61,8 +62,7 @@ $ac = new PROJ\Services\AccountService();
                     <option></option>
                     <?php
                     $ajaxController = new \PROJ\Controllers\AjaxController();
-                    $countryList = json_decode($ajaxController->getAllCountrysAction());
-                    var_dump($countryList);
+                    $countryList = json_decode($ajaxController->getAllCountriesAction());
                     for ($i = 0; $i < sizeof($countryList); $i++) {
                         echo "<option>" . $countryList[$i]->name . "</option>";
                     }
