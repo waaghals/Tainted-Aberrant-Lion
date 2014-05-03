@@ -66,10 +66,15 @@ class AjaxController extends BaseController
     {
         $em = DoctrineHelper::instance()->getEntityManager();
 
-        $dql = "SELECT i, p, r, s, c FROM \PROJ\Entities\Institute i LEFT JOIN i.projects p LEFT JOIN p.review r LEFT JOIN p.student s LEFT JOIN i.country c";
-        $q = $em->createQuery($dql);
-
-        $res = $q->getArrayResult();
+        $qb = $em->createQueryBuilder();
+        $res = $qb->select(array('i', 'p', 'r', 's', 'c'))
+                ->from('\PROJ\Entities\Institute', 'i')
+                ->leftJoin('i.projects', 'p')
+                ->leftJoin('p.review', 'r')
+                ->leftJoin('p.student', 's')
+                ->leftJoin('i.country', 'c')
+                ->getQuery()
+                ->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
         echo json_encode($res);
     }
 
@@ -389,15 +394,15 @@ class AjaxController extends BaseController
         }
     }
 
-    public function getAllCountrysAction()
+    public function getAllCountriesAction()
     {
         $em = DoctrineHelper::instance()->getEntityManager();
-        $inst = $em->getRepository('\PROJ\Entities\Country')->findAll();
-        $dql = "SELECT c FROM \PROJ\Entities\Country c";
-        $q = $em->createQuery($dql);
-
-        $res = $q->getArrayResult();
-        return json_encode($res);
+        $inst = $em->getRepository('\PROJ\Entities\Country')
+                ->createQueryBuilder('e')
+                ->select('e')
+                ->getQuery()
+                ->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
+        return json_encode($inst);
     }
 
 }
