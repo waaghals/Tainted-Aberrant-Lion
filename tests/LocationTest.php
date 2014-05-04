@@ -4,7 +4,7 @@ namespace PROJ\Tests;
 
 use PROJ\Controllers\AjaxController;
 
-class RegistrationTest extends \PHPUnit_Framework_TestCase
+class LocationsTest extends \PHPUnit_Framework_TestCase
 {
 
     public $dummydata;

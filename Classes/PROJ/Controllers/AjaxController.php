@@ -263,8 +263,13 @@ class AjaxController extends BaseController
             return;
         }
 
+        if ($_POST['action'] != "update" && $_POST['action'] != "create") {
+            echo("Invalid POST:ACTION");
+            return false;
+        }
+
         if ($_POST['type'] != "minor" && $_POST['type'] != "internship" && $_POST['type'] != "graduation" && $_POST['type'] != "ESP") {
-            echo "Invalid POST";
+            echo "Invalid POST:TYPE";
             return;
         }
 
