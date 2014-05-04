@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" dslVersion="1.0.0.0" Id="2868309f-2648-4951-8b3c-d8c1b7d6bad4" name="ContactController" linkedPackageId="37a7db2f-7e90-4e6f-924d-f304ed396f35" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
+  <profileInstances>
+    <packageHasProfileInstances Id="ce43ab45-0ef2-4ac6-bc12-81174636b85d">
+      <profileInstance Id="ce3b5adc-2241-48d8-a345-43ab0d18e649" name="StandardProfileL2">
+        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+      </profileInstance>
+      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances Id="1affea3e-e26d-489a-ad3d-99c7ed55d460">
+      <profileInstance Id="0c3d3494-ecef-4a20-ac1c-fdf547cba334" name="StandardProfileL3">
+        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+      </profileInstance>
+      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+    </packageHasProfileInstances>
+  </profileInstances>
+  <packagedElements>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="99b490a0-2979-4a69-88ee-6e39a39ec5d8" name="BaseController" isAbstract="true" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="8d586830-0f00-43c4-a03f-313fa0a98f39" />
+        <ownedOperationsInternal>
+          <operation Id="d019eff0-650f-49c1-bded-d1b827f9c900" name="callAction" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="bc2a7451-b527-4375-9d1d-dc50dc9e7ee4" />
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="e9d617bc-1508-4d23-b544-25aa5e3cb038" name="ContactController" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="87630e65-9205-40da-80b2-119a02a1ca05" />
+        <suppliersInternal>
+          <dependency Id="9471d7d3-c252-470d-b81e-4861f032680b">
+            <classMoniker Id="6a8ca93c-0599-472e-bbe6-5433a71cab29" LastKnownName="ContactService" />
+            <elementDefinition Id="d35872f4-cbf0-4c0a-a01d-202a7a4d5cbe" />
+          </dependency>
+        </suppliersInternal>
+        <generalsInternal>
+          <generalization Id="ac2d1ecc-4301-4907-bf11-26de3a12fa4f" isSubstitutable="false">
+            <classMoniker Id="99b490a0-2979-4a69-88ee-6e39a39ec5d8" LastKnownName="BaseController" />
+            <elementDefinition Id="2f4ea2bd-8faf-4f19-a7a3-c861552fd240" />
+          </generalization>
+        </generalsInternal>
+        <ownedAttributesInternal>
+          <property Id="0d9e341a-ebeb-4b10-abf1-ac42909abd72" name="service" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="fccd52ea-fcfa-4f75-802f-7270a47059e9" />
+          </property>
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation Id="dea23618-91c7-4fa4-b940-02a7f370a4fb" name="showAction" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="1e13c0df-fc6e-4467-bada-848caddc8fcc" />
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="6a8ca93c-0599-472e-bbe6-5433a71cab29" name="ContactService" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="4949b928-2cb7-4b9b-a2ae-15d244afa23f" />
+        <ownedOperationsInternal>
+          <operation Id="e7db8981-1f2d-4819-93f0-6fd6e429cd78" name="sendMail" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="eacfa4a4-4594-4f5c-b915-48f0a6e6dabd" />
+          </operation>
+          <operation Id="91f1d453-a911-400a-9617-0a211695dc37" name="getStudentById" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="4ce2d5cd-0125-4100-abb5-3b63523b8dc1" />
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+  </packagedElements>
+  <package Id="37a7db2f-7e90-4e6f-924d-f304ed396f35" name="agile">
+    <elementDefinition Id="84dff846-2de2-4e81-b104-097c6683e9aa" />
+  </package>
+</logicalClassDesignerModel>

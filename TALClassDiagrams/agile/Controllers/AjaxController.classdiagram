@@ -1,0 +1,174 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" dslVersion="1.0.0.0" Id="82cf158f-9376-45fc-85b3-83ed23f00e39" name="AjaxController" linkedPackageId="04cf85f1-21b4-43df-8983-5883bed90b4d" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
+  <packagedElements>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="294711c2-6422-4077-8848-be11afbd6b2c" name="AjaxController" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="130dce1b-bb0d-4cd2-a147-f17ec6da5e8e" />
+        <suppliersInternal>
+          <dependency Id="d5b4d5c8-3d18-411f-bb31-e175c0600a81">
+            <classMoniker Id="03f38347-db74-4d8f-9216-9e3d9cc3b486" LastKnownName="MarkerCollection" />
+            <elementDefinition Id="c10bfda6-dfe0-4664-9ae4-1a345e96ca82" />
+          </dependency>
+          <dependency Id="0967a695-796e-425f-ae4c-dc66653f6ed6">
+            <classMoniker Id="b8be08f9-3b33-4e45-9f33-bf1d1959f41c" LastKnownName="AccountService" />
+            <elementDefinition Id="14b2ac02-b09b-45ef-948e-fea3ce6d9e98" />
+          </dependency>
+          <dependency Id="302f043a-aa52-4057-8f83-d6ae69c57ff0">
+            <classMoniker Id="31f9506e-4695-4fe6-be40-94e58304f282" LastKnownName="Marker" />
+            <elementDefinition Id="3682bbdd-82d4-4206-8bae-3c1b24f3cee1" />
+          </dependency>
+        </suppliersInternal>
+        <generalsInternal>
+          <generalization Id="3d5f2c37-e5dd-41a5-bedf-12001e49e80d" isSubstitutable="false">
+            <classMoniker Id="15ae6173-7ff9-4ecd-b889-25555d3e8826" LastKnownName="BaseController" />
+            <elementDefinition Id="0dc1b95e-3306-4a6e-ba56-1518034cd543" />
+          </generalization>
+        </generalsInternal>
+        <ownedOperationsInternal>
+          <operation Id="f9ab229e-b6e7-4060-acbb-f8060276bc68" name="allMarkersAction" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="e431eb76-4ecb-477b-a5f9-eeda90414314" />
+          </operation>
+          <operation Id="96bba19f-40a4-4950-89cb-290041476a63" name="allLocationsAction" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="03f43eec-91f8-4a1d-8f8a-f72b9566bc99" />
+          </operation>
+          <operation Id="9ec1bd77-a58e-41b9-9a49-d3560c4ce8ae" name="locationReviewAction" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="ed6ccf8c-2fa7-4d0a-8f42-f888535a4fd3" />
+          </operation>
+          <operation Id="48640ae3-9dde-47ab-be99-3b4d59b02246" name="getProjectInfoAction" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="fc08af76-1875-4515-b0e9-a45b3b783af0" />
+          </operation>
+          <operation Id="98695f79-8ffa-4f60-b228-4cc9795fcead" name="saveLocationAction" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="06da6c17-3474-4b9a-8495-69cd6c3f3848" />
+          </operation>
+          <operation Id="f6f4280e-2ef0-423c-8e21-c5a2ceea6a56" name="saveLocationToDatabase" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="6ad72eb6-be8a-4826-bb7d-863b34b220a3" />
+          </operation>
+          <operation Id="02059f2f-14db-4f1d-8a8c-c24699f6e56b" name="createProjectAction" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="b7b6fb39-8386-4d5c-9537-8f2c55a46d26" />
+          </operation>
+          <operation Id="41e16e58-ee63-48fe-b5a4-77ee8f557589" name="createReviewAction" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="e771c15f-929c-4360-ac5f-7e3c95d7b720" />
+          </operation>
+          <operation Id="47163684-f03e-4f55-a4ed-269febc5275d" name="getLocationInfoAction" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="37ccbbc4-9a32-404d-ac85-4ffca5028e01" />
+          </operation>
+          <operation Id="482f9a80-398e-45ca-8c8d-66e627805b85" name="removeLocationAction" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="5be316a9-ff13-409e-b530-3ed23b76404c" />
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="15ae6173-7ff9-4ecd-b889-25555d3e8826" name="BaseController" isAbstract="true" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="478980d8-980b-4694-91de-311e5ecd47b0" />
+        <ownedOperationsInternal>
+          <operation Id="94dbb454-7a72-4d4f-a75c-0e55c85921d0" name="callAction" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="69323996-f679-4500-ad35-2fcc03bc744e" />
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="03f38347-db74-4d8f-9216-9e3d9cc3b486" name="MarkerCollection" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="b6a5ccb9-fd5d-4d1f-a3f5-4600d45e9ab1" />
+        <suppliersInternal>
+          <dependency Id="8204859a-299e-41d8-9bc4-e05553932144">
+            <classMoniker Id="31f9506e-4695-4fe6-be40-94e58304f282" LastKnownName="Marker" />
+            <elementDefinition Id="935bb538-106d-4fc7-b733-228515cc1da4" />
+          </dependency>
+        </suppliersInternal>
+        <ownedAttributesInternal>
+          <property Id="90b2e384-d4b4-4e32-a89a-08aea7eaf471" name="defaultMarker" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="2797174d-3024-4d18-9b3e-afcb3edc9e83" />
+          </property>
+          <property Id="e57d70c3-d723-4489-acb4-92a481bb2365" name="markerLocations" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="ad8d2326-6f4c-4b49-a57a-acff459f1a43" />
+          </property>
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation Id="4263d9b7-7796-4ba2-8352-29fe1fa4a69c" name="addMarkerLocation" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="ccb011b2-4c4b-4acf-b43c-2bda3c95daf3" />
+          </operation>
+          <operation Id="5d77af8f-b93a-47b3-ae12-a5bdf635fd06" name="generateMarkerJSON" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="b68f956f-2bbe-4e8b-ac15-686d8f32779a" />
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="b8be08f9-3b33-4e45-9f33-bf1d1959f41c" name="AccountService" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="cf65a382-6a10-4880-ae05-bb0d9fe573e2" />
+        <ownedOperationsInternal>
+          <operation Id="b63b955c-ea55-402d-b685-62fc95b04079" name="Login" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="8af0029f-8017-417b-a7d2-e6dc11e7c30d" />
+          </operation>
+          <operation Id="497ece40-30ce-4c04-bc7f-52709ac1d360" name="checkbruteforce" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="44ec3966-23fc-4a98-b4d9-a4613973bbbc" />
+          </operation>
+          <operation Id="7cb6bc3a-2b17-4e11-a0c7-a1a710d11e12" name="validateInput" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="d8444328-f7da-4b02-be7c-e39fa8b241e1" />
+          </operation>
+          <operation Id="8b0fbc61-fd14-4405-8085-2996144a4027" name="createAccount" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="3febc6f7-7fcf-4bd4-a703-149aec6167d6" />
+          </operation>
+          <operation Id="659c0b79-b4cd-42cc-a848-ba1d2ee046b6" name="createStudent" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="a0762d71-0e55-4731-9189-8779b42da0f7" />
+          </operation>
+          <operation Id="51717250-c802-4d13-be49-89f6019d6cca" name="checkRegistrationCode" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="25c85b3c-098f-4f67-ac34-0edef0cec2b3" />
+          </operation>
+          <operation Id="8561e27c-be75-4c94-90c3-e33d06d4082d" name="isLoggedIn" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="bc0e2068-9a47-464c-bb82-92e08e2ed002" />
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="31f9506e-4695-4fe6-be40-94e58304f282" name="Marker" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="995f0a93-e222-49b5-96d2-96fba5a9215a" />
+        <ownedAttributesInternal>
+          <property Id="2522e4a5-3deb-4207-a528-44ba7e1c3cdf" name="color" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="0afb33a1-976f-4517-8a95-acfdcac5308d" />
+          </property>
+          <property Id="7e4fee2e-756c-4428-a6cf-0395a89d5f0e" name="sign" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="733634a9-7928-436f-a3ab-96112508b3a4" />
+          </property>
+          <property Id="00e18e16-10b1-4f07-8bd8-ee8731486e82" name="title" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="eb7b83e6-5712-4d29-a9a9-5c9956681e4a" />
+          </property>
+          <property Id="a6f2e797-cbb5-4b07-a5db-e86df1dec653" name="html" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="37407f5e-68e9-44f4-80ee-a32a7a619ea7" />
+          </property>
+          <property Id="408fcea6-b28b-42c7-b13a-9932d26d2814" name="long" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="67070971-6f34-4f3e-85c8-061dfa348a23" />
+          </property>
+          <property Id="c97de3aa-a3fc-4dfb-9439-0a76ba20c484" name="lat" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="5346c471-ae06-48fd-a92d-e11fc14495f4" />
+          </property>
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation Id="7da9c429-fc82-46d5-983a-6e7b3e1b7e39" name="generateMarker" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="9a581e3b-a368-4bfc-9c5b-ea1c0f869730" />
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+  </packagedElements>
+  <package Id="04cf85f1-21b4-43df-8983-5883bed90b4d" name="agile">
+    <elementDefinition Id="84dff846-2de2-4e81-b104-097c6683e9aa" />
+    <profileInstances>
+      <packageHasProfileInstances Id="c283f5af-df62-4dbe-80e5-ed48f1904575">
+        <profileInstance Id="f1cdb444-0824-4b3d-9b22-f317354e52f6" name="StandardProfileL2">
+          <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+        </profileInstance>
+        <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="f22994a4-3ebb-48f9-8d4e-69015d08f5a0">
+        <profileInstance Id="b6a366b2-2411-4bce-8dd4-08e9a758c600" name="StandardProfileL3">
+          <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+        </profileInstance>
+        <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+      </packageHasProfileInstances>
+    </profileInstances>
+  </package>
+</logicalClassDesignerModel>
