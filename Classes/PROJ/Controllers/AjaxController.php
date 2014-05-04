@@ -22,12 +22,12 @@ class AjaxController extends BaseController
     {
         $mc = new \PROJ\Classes\MarkerCollection();
 
-        //Alle Instellingen ophalen
+//Alle Instellingen ophalen
         $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
         $reviews = $em->getRepository('\PROJ\Entities\Institute')->findAll();
 
         foreach ($reviews as $rev) {
-            //Gemiddelde score berekenen
+//Gemiddelde score berekenen
             $qb = $em->createQueryBuilder();
             $qb->select('avg(review.rating) as AVGSCORE, count(review.id) as AANTALREVIEWS')
                     ->from('\PROJ\Entities\Institute', 'institute')
@@ -122,7 +122,7 @@ class AjaxController extends BaseController
         }
         $returnArray = array_merge($returnArray, $result);
 
-        //Max 8 results
+//Max 8 results
         array_splice($returnArray, 8);
 
 
@@ -247,8 +247,12 @@ class AjaxController extends BaseController
         }
     }
 
-    public function createProjectAction()
+    public function saveProjectAction($unitTest = null)
     {
+        if ($unitTest != null) {
+            $_POST = $unitTest;
+        }
+
         if (empty($_POST['type']) || empty($_POST['location']) || empty($_POST['start_year']) || empty($_POST['start_month']) || empty($_POST['end_year']) || empty($_POST['end_month'])) {
             echo "Not everything is filled in";
             return;
@@ -269,6 +273,15 @@ class AjaxController extends BaseController
             return;
         }
 
+        if ($unitTest == null) {
+            $this->saveProjectDatabase();
+        } else {
+            return true;
+        }
+    }
+
+    private function saveProjectDatabase()
+    {
         $ac = new \PROJ\Services\AccountService();
         if ($ac->isLoggedIn()) {
             $em = DoctrineHelper::instance()->getEntityManager();
@@ -296,8 +309,23 @@ class AjaxController extends BaseController
 
 
             $location = $em->getRepository('\PROJ\Entities\Institute')->find($_POST['location']);
-            $project = new \PROJ\Entities\Project();
-            $project->setAcceptanceStatus(Status::PENDING);
+            if ($_POST['action'] == "create") {
+                $project = new \PROJ\Entities\Project();
+                $project->setAcceptanceStatus(Status::PENDING);
+            } elseif ($_POST['action'] == "update") {
+                $project = $em->getRepository('\PROJ\Entities\Project')->find($_POST['id']);
+
+                //Extra checks
+                if ($project->getStudent()->getAccount()->getId() == $_SESSION['userID']) {
+                    if ($project->getAcceptanceStatus() != 0) {
+                        echo "The Project has been aproved while you tried to edit it.";
+                        return;
+                    }
+                } else {
+                    echo "This isn't your Project.";
+                    return;
+                }
+            }
             $project->setInstitute($location);
             $project->setReview(null);
             $project->setStartdate(new \DateTime($_POST['start_year'] . '-' . $_POST['start_month'] . '-1'));
@@ -307,9 +335,9 @@ class AjaxController extends BaseController
 
             $em->persist($project);
             $em->flush();
-        }
 
-        echo 'succes';
+            echo 'succes';
+        }
     }
 
     public function createReviewAction()
@@ -426,6 +454,29 @@ class AjaxController extends BaseController
                 }
             } else {
                 echo "This isn't your Location.";
+            }
+        }
+    }
+
+    public function getMyLocationsInfoAction()
+    {
+        $em = DoctrineHelper::instance()->getEntityManager();
+        $ac = new \PROJ\Services\AccountService();
+
+        if (!is_numeric($_POST['id'])) {
+            echo "Illigal ID";
+            return;
+        }
+        if ($ac->isLoggedIn()) {
+            $proj = $em->getRepository('\PROJ\Entities\Project')->find($_POST['id']);
+            if ($proj->getStudent()->getId() == $_SESSION['userID']) {
+                if ($proj->getAcceptanceStatus() == 0) {
+                    echo json_encode($proj->jsonSerialize());
+                } else {
+                    echo "The Project has been aproved while you tried to delete it.";
+                }
+            } else {
+                echo "This isn't your Project.";
             }
         }
     }

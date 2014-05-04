@@ -104,6 +104,69 @@ $(document).ready(function() {
         });
     });
 
+    //Update projects icon
+    $('.myprojects_update').click(function() {
+        var clicked = $(this);
+        tempID = clicked.data("project-id");
+
+        //Prepare page
+        $("#projects_action").data("action", "update");
+        $("#projects_action").children("p").html("Update Location");
+        $('#projects_action').show();
+        $("#addProjectError").hide();
+
+        //Start fades
+        $('#blackout').fadeIn();
+        $('#blackout').children().filter(':visible').hide();
+        $('.fullscreen_loading_icon').fadeIn(function() {
+            $.post("/ajax/getMyLocationsInfo/", {id: clicked.data("project-id")}, function(data) {
+                $('.fullscreen_loading_icon').fadeOut();
+                $('#blackout_create_project').fadeIn();
+                try {
+                    json = $.parseJSON(data);
+                    $('[name="create_project_form"]').find('[name="type"]').children().each(function() {
+                        if ($(this).val() == json.type) {
+                            $(this).prop('selected', true);
+                        }
+                    });
+                    $('[name="create_project_form"]').find('[name="location"]').children().each(function() {
+                        if ($(this).val() == json.instituteID) {
+                            $(this).prop('selected', true);
+                        }
+                    });
+                    $('[name="create_project_form"]').find('[name="start_year"]').children().each(function() {
+                        if ($(this).val() == json.start_year) {
+                            $(this).prop('selected', true);
+                        }
+                    });
+                    $('[name="create_project_form"]').find('[name="start_month"]').children().each(function() {
+                        if ($(this).val() == json.start_month) {
+                            $(this).prop('selected', true);
+                        }
+                    });
+                    $('[name="create_project_form"]').find('[name="end_year"]').children().each(function() {
+                        if ($(this).val() == json.end_year) {
+                            $(this).prop('selected', true);
+                        }
+                    });
+                    $('[name="create_project_form"]').find('[name="end_month"]').children().each(function() {
+                        if ($(this).val() == json.end_month) {
+                            $(this).prop('selected', true);
+                        }
+                    });
+
+                    $("#RemoveLocationName").children().first().html(json.name);
+                    $("#RemoveLocationLoc").children().first().html(json.place);
+                    $("#RemoveLocationType").children().first().html(json.type);
+                } catch (e) {
+                    //error
+                    $("#addProjectError").html(data);
+                    $("#addProjectError").fadeIn();
+                }
+            });
+        });
+    });
+
     //Create new project button
     $('.myprojects_add').click(function() {
         $('#blackout').fadeIn();
@@ -154,16 +217,19 @@ $(document).ready(function() {
         });
     });
 
-    //Create new project confirmation button
-    $('#create_project').click(function() {
+    //Create/Update new project confirmation button
+    $('#projects_action').click(function() {
         $(this).hide();
-        $.post("/Ajax/CreateProject", $("[name='create_project_form']").serialize(), function(data) {
+        var data = $("[name='create_project_form']").serializeArray();
+        data.push({name: "action", value: $("#projects_action").data("action")});
+        data.push({name: "id", value: tempID});
+        $.post("/Ajax/SaveProject", data, function(data) {
             if (data == "succes") {
                 $('#blackout').fadeOut(function() {
                     location.reload();
                 });
             } else {
-                $('#create_project').show();
+                $('#projects_action').show();
                 $('#addProjectError').show().children().first().html(data);
             }
         });

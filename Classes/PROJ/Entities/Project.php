@@ -120,7 +120,13 @@ class Project
     {
         return array(
             "review" => $this->getReview(),
-            "author" => $this->getStudent()
+            "author" => $this->getStudent(),
+            "start_year" => $this->getStartdate()->Format("Y"),
+            "start_month" => $this->getStartdate()->Format("n"),
+            "end_year" => $this->getEnddate()->Format("Y"),
+            "end_month" => $this->getEnddate()->Format("n"),
+            "type" => $this->getType(),
+            "instituteID" => $this->getInstitute()->getId()
         );
     }
 

@@ -45,8 +45,8 @@
                             <?php
                             if ($r->getAcceptanceStatus() == 0) {
                                 ?>
-                                <td style="width: 40px;"><img class="action_btn myprojects_update" data-location-id="<?php echo $r->getId(); ?>" src="/images/edit.png" /></td>
-                                <td style="width: 40px;"><img class="action_btn myprojects_remove" data-location-id="<?php echo $r->getId(); ?>" src="/images/delete.png" /></td>
+                                <td style="width: 40px;"><img class="action_btn myprojects_update" data-project-id="<?php echo $r->getId(); ?>" src="/images/edit.png" /></td>
+                                <td style="width: 40px;"><img class="action_btn myprojects_remove" data-project-id="<?php echo $r->getId(); ?>" src="/images/delete.png" /></td>
                                 <?php
                             }
                             ?>
