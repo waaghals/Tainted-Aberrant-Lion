@@ -39,5 +39,9 @@
         <classShapeMoniker Id="4d9ed1dd-2c23-4493-a4c1-eeb346d5cdb2" />
       </nodes>
     </dependencyConnector>
+    <commentShape Id="68806b9a-93c4-47a6-b7d3-f1a9f485de2f" absoluteBounds="0.5, 2.125, 1.25, 0.75" customColor="251, 247, 200">
+      <commentMoniker Id="34581798-5af2-43fb-8a67-afd59416ddb1" />
+      <relativeChildShapes />
+    </commentShape>
   </nestedChildShapes>
 </logicalClassDesignerDiagram>

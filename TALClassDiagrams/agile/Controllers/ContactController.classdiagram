@@ -1,19 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" dslVersion="1.0.0.0" Id="2868309f-2648-4951-8b3c-d8c1b7d6bad4" name="ContactController" linkedPackageId="37a7db2f-7e90-4e6f-924d-f304ed396f35" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
-  <profileInstances>
-    <packageHasProfileInstances Id="ce43ab45-0ef2-4ac6-bc12-81174636b85d">
-      <profileInstance Id="ce3b5adc-2241-48d8-a345-43ab0d18e649" name="StandardProfileL2">
-        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
-      </profileInstance>
-      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
-    </packageHasProfileInstances>
-    <packageHasProfileInstances Id="1affea3e-e26d-489a-ad3d-99c7ed55d460">
-      <profileInstance Id="0c3d3494-ecef-4a20-ac1c-fdf547cba334" name="StandardProfileL3">
-        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
-      </profileInstance>
-      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
-    </packageHasProfileInstances>
-  </profileInstances>
+  <ownedCommentsInternal>
+    <comment Id="e65ec3c6-2a21-46a7-b123-091351a95031">
+      <elementDefinition Id="aa1a792a-551e-455f-afc5-ec44faa71ac6" />
+      <body>Controller maakt gebruik van de volgende templates:
+ContactFormSucces
+ContactForm</body>
+    </comment>
+  </ownedCommentsInternal>
   <packagedElements>
     <logicalClassDesignerModelHasTypes>
       <class Id="99b490a0-2979-4a69-88ee-6e39a39ec5d8" name="BaseController" isAbstract="true" isLeaf="false" isActiveClass="false">
@@ -68,5 +62,19 @@
   </packagedElements>
   <package Id="37a7db2f-7e90-4e6f-924d-f304ed396f35" name="agile">
     <elementDefinition Id="84dff846-2de2-4e81-b104-097c6683e9aa" />
+    <profileInstances>
+      <packageHasProfileInstances Id="ce43ab45-0ef2-4ac6-bc12-81174636b85d">
+        <profileInstance Id="ce3b5adc-2241-48d8-a345-43ab0d18e649" name="StandardProfileL2">
+          <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+        </profileInstance>
+        <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="1affea3e-e26d-489a-ad3d-99c7ed55d460">
+        <profileInstance Id="0c3d3494-ecef-4a20-ac1c-fdf547cba334" name="StandardProfileL3">
+          <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+        </profileInstance>
+        <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+      </packageHasProfileInstances>
+    </profileInstances>
   </package>
 </logicalClassDesignerModel>

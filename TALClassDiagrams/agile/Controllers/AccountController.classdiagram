@@ -1,5 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" dslVersion="1.0.0.0" Id="94190d6e-a5cb-44a3-bdad-1aad83c3f66f" name="AccountController" linkedPackageId="3f0e8e12-8153-4d73-b5af-1ae62ef7da78" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
+  <ownedCommentsInternal>
+    <comment Id="1b6b6426-311a-41f2-ab8b-c43ad025d643">
+      <elementDefinition Id="5b4f7109-e390-4e0f-866d-856f2dca8c7f" />
+      <body>Controller maakt gebruik van de volgende templates:
+Login
+Register</body>
+    </comment>
+  </ownedCommentsInternal>
   <packagedElements>
     <logicalClassDesignerModelHasTypes>
       <class Id="ccef3195-7eb3-444b-b912-4a065acedc2e" name="BaseController" isAbstract="true" isLeaf="false" isActiveClass="false">

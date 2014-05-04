@@ -1,1 +1,58 @@
-﻿ 
+﻿<?xml version="1.0" encoding="utf-8"?>
+<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" dslVersion="1.0.0.0" Id="14f632e5-02d7-4eb1-8666-eae48dfb571f" name="HomeController" linkedPackageId="4177b235-1b25-4df8-858f-b05003d8e9fe" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
+  <ownedCommentsInternal>
+    <comment Id="670cc228-9686-4f1c-bfb2-78f28207f915">
+      <elementDefinition Id="01892903-b3b3-4ee6-beef-d2ffcc638dfb" />
+      <body>Controller maakt gebruik van de volgende templates:
+MainMapView</body>
+    </comment>
+  </ownedCommentsInternal>
+  <profileInstances>
+    <packageHasProfileInstances Id="defd00f9-a578-49c6-925d-f9970d7e4b35">
+      <profileInstance Id="23d645e9-ca6d-4c3c-9dee-bc572e084316" name="StandardProfileL2">
+        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+      </profileInstance>
+      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances Id="e5f3f4c6-6b93-4e70-aaa2-a0ee67254e89">
+      <profileInstance Id="b904fc89-27d9-4d16-bf44-df8dc72a67dc" name="StandardProfileL3">
+        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+      </profileInstance>
+      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+    </packageHasProfileInstances>
+  </profileInstances>
+  <packagedElements>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="a4ef6d3a-78a1-4518-811b-49f5878c3850" name="BaseController" isAbstract="true" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="1b18cb24-4f8e-462f-8dd0-37ea24a6a543" />
+        <ownedOperationsInternal>
+          <operation Id="8cc2aaa6-6993-47eb-af2e-c207ffde7873" name="callAction" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="a39d58b5-9a8e-4d61-ad51-f8747c394e4c" />
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="c14e5ce5-ac59-4de9-97cb-3e20d37385a3" name="HomeController" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="6c80d134-18cd-4a96-bc81-e528c74d4f0a" />
+        <generalsInternal>
+          <generalization Id="ad7eb4c9-41dd-4091-8bde-18f210e0b81c" isSubstitutable="false">
+            <classMoniker Id="a4ef6d3a-78a1-4518-811b-49f5878c3850" LastKnownName="BaseController" />
+            <elementDefinition Id="6636379f-821d-40c5-8b38-fb50c9b59a68" />
+          </generalization>
+        </generalsInternal>
+        <ownedOperationsInternal>
+          <operation Id="c65d1495-b8b9-4b6c-93e1-cac1d2ef84ed" name="indexAction" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="6c90f6a0-ca01-40e0-b41f-87a595e5e942" />
+          </operation>
+          <operation Id="69ffb121-02f1-4b80-a479-92fe432a0a14" name="otherAction" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="55afa11b-bd68-48ff-8373-9ad8a0fb4738" />
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+  </packagedElements>
+  <package Id="4177b235-1b25-4df8-858f-b05003d8e9fe" name="agile">
+    <elementDefinition Id="84dff846-2de2-4e81-b104-097c6683e9aa" />
+  </package>
+</logicalClassDesignerModel>

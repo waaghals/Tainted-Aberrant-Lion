@@ -3,6 +3,30 @@
   dslVersion="1.0.0.0"
   Id="84dff846-2de2-4e81-b104-097c6683e9aa"
   name="agile" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <ownedCommentsInternal>
+    <comment
+      Id="5b4f7109-e390-4e0f-866d-856f2dca8c7f">
+      <body>Controller maakt gebruik van de volgende templates:
+Login
+Register</body>
+    </comment>
+    <comment
+      Id="aa1a792a-551e-455f-afc5-ec44faa71ac6">
+      <body>Controller maakt gebruik van de volgende templates:
+ContactFormSucces
+ContactForm</body>
+    </comment>
+    <comment
+      Id="01892903-b3b3-4ee6-beef-d2ffcc638dfb">
+      <body>Controller maakt gebruik van de volgende templates:
+MainMapView</body>
+    </comment>
+    <comment
+      Id="e970ec80-e05c-464f-aa49-bd4efd848bc2">
+      <body>Controller maakt gebruik van de volgende templates:
+Management</body>
+    </comment>
+  </ownedCommentsInternal>
   <profileInstances>
     <packageHasProfileInstances
       Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b">
@@ -1460,6 +1484,62 @@
           <operation
             Id="9a581e3b-a368-4bfc-9c5b-ea1c0f869730"
             name="generateMarker"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="1b18cb24-4f8e-462f-8dd0-37ea24a6a543"
+        name="BaseController"
+        isAbstract="true"
+        isLeaf="false"
+        isActiveClass="false">
+        <ownedOperationsInternal>
+          <operation
+            Id="a39d58b5-9a8e-4d61-ad51-f8747c394e4c"
+            name="callAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="6c80d134-18cd-4a96-bc81-e528c74d4f0a"
+        name="HomeController"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <generalsInternal>
+          <generalization
+            Id="6636379f-821d-40c5-8b38-fb50c9b59a68"
+            isSubstitutable="false">
+            <classMoniker
+              Id="1b18cb24-4f8e-462f-8dd0-37ea24a6a543"
+              LastKnownName="BaseController"
+              LastKnownLocation="agile.uml" />
+          </generalization>
+        </generalsInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="6c90f6a0-ca01-40e0-b41f-87a595e5e942"
+            name="indexAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="55afa11b-bd68-48ff-8373-9ad8a0fb4738"
+            name="otherAction"
             isLeaf="false"
             isStatic="false"
             isAbstract="false"
