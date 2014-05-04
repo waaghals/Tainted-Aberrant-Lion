@@ -2,7 +2,7 @@
 
 * Het gemaakte werk moet voldoen aan de acceptatie criteria van de user story.
 * De broncode  van het gemaakte werk heeft unit tests.
-* De broncode wordt gereviewd door twee anderen teamleden die het te reviewen werk niet gemaakt hebben.
+* De broncode is gereviewd door twee anderen teamleden die het te reviewen werk niet gemaakt hebben.
 * Deployement script is getest en werkend met de nieuwe functionalitiet.
 * Database wordt ook geupdate.
 * Documentatie is bijgewerkt.
