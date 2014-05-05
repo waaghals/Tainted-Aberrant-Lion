@@ -199,6 +199,14 @@ $(document).ready(function() {
 
     //Create new project button
     $('.myprojects_add').click(function() {
+        //Prepare page
+        $("#projects_action").data("action", "create");
+        $("#projects_action").children("p").html("Create Project");
+        $('[name="create_project_form"]')[0].reset();
+        $('#projects_action').show();
+        $("#addProjectError").hide();
+
+        //Start fade
         $('#blackout').fadeIn();
         $('#blackout').children().filter(':visible').fadeOut();
         $('#blackout_create_project').fadeIn();

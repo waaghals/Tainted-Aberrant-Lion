@@ -253,16 +253,7 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
     * Druk op de knop `Create Location`
     - [ ] Bovenaan zou de error `Could not Geocode. Location was not created.` moeten verschijnen.
 
-###Correct een nieuwe Locatie aanpassen:
-1.	Laad de pagina: http://localhost/Management/MyLocations/
-    - [ ] Er is een overzicht zichtbaar om je gegevens aan te passen
-2.    Druk op de knop potlood icoontje achter de Locatie McDonald's
-3.    Volg `Incorrect een nieuwe Locatie aanmaken` vanaf stap 2.
-    * Je hoeft niet op de `Create New Location` Knop te drukken
-    * De `Create Location` knop bestaat niet, maar heet nu `Update Location`.
-    - [ ] Bovenstaand is met succes uitgevoerd.
-
-###Incorrect een nieuwe Locatie aanpassen:
+###Correct een Locatie aanpassen:
 1.	Laad de pagina: http://localhost/Management/MyLocations/
     - [ ] Er is een overzicht zichtbaar om je gegevens aan te passen
 2.    Druk op de knop potlood icoontje achter de Locatie McDonald's
@@ -271,19 +262,56 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
     * Druk op de knop `Update Location`
     - [ ] Het scherm verdwijnt en de locatie word met succes aangepast.
 
+###Incorrect een Locatie aanpassen:
+1.	Laad de pagina: http://localhost/Management/MyLocations/
+    - [ ] Er is een overzicht zichtbaar om je gegevens aan te passen
+2.    Druk op de knop potlood icoontje achter de Locatie McDonald's
+3.    Volg `Incorrect een nieuwe Locatie aanmaken` vanaf stap 2.
+    * Je hoeft niet op de `Create New Location` Knop te drukken
+    * De `Create Location` knop bestaat niet, maar heet nu `Update Location`.
+    - [ ] Bovenstaand is met succes uitgevoerd.
+
+###Correct een nieuw Project aanmaken:
+1.	Laad de pagina: http://localhost/Management/MyProjects/
+    - [ ] Er is een overzicht zichtbaar om je gegevens aan te passen
+    * De Pagina laad, en de `Create Project` knop is zichtbaar
+2.    Druk op de knop `Create Project`
+	* Je krijgt een scherm te zien om een nieuw project aan te maken.
+3.    Vul de gegevens in volgens Bijlage 5.
+	* Druk op de knop `Create Project`
+    - [ ] Het scherm verdwijnt en er wordt een nieuwe locatie aangemaakt.
+
 ###Incorrect een nieuw Project aanmaken:
 1.	Laad de pagina: http://localhost/Management/MyProjects/
     - [ ] Er is een overzicht zichtbaar om je gegevens aan te passen
     * De Pagina laad, en de `Create Project` knop is zichtbaar
 2.    Druk op de knop `Create Project`
-    * Vul dezelfde gegevens in als bij stap 2 van `Correct een nieuw Project aanmaken`
+    * Vul de gegevens in volgens Bijlage 5.
     * Maak willekeurig een van de zojuist ingevulde, verplichte, velden leeg.
     * Druk op de knop `Create Project`
-	- [ ] Je krijgt een scherm te zien om een nieuw project aan te maken.
+	- [ ] Bovenaan zou de error `Not everything is filled in` moeten verschijnen.
 3.    Vul het zojuist leeg gemaakte veld in met de eerder genoemde waarden.
     * Selecteer bij `start date` als jaar `2013` en als maand `Januari`
     * Druk op de knop `Create Project`
     - [ ] Bovenaan zou de error `Start date cannot be after Stop date` moeten verschijnen.
+
+###Correct een Project aanpassen:
+1.	Laad de pagina: http://localhost/Management/MyProjects/
+    - [ ] Er is een overzicht zichtbaar om je gegevens aan te passen
+2.    Druk op de knop potlood icoontje achter het de Minor bij Avans Hogeschool
+3.    Controleer of de gegevens kloppen volgens Bijlage 5.
+4.    Selecteer bij `type` de waarde 'Internship'.
+    * Druk op de knop `Update Location`
+    - [ ] Het scherm verdwijnt en de locatie word met succes aangepast.
+
+###Incorrect een Project aanpassen:
+1.	Laad de pagina: http://localhost/Management/MyProjects/
+    - [ ] Er is een overzicht zichtbaar om je gegevens aan te passen
+2.    Druk op de knop potlood icoontje achter de Locatie McDonald's
+3.    Volg `Incorrect een nieuwe Project aanmaken` vanaf stap 2.
+    * Je hoeft niet op de `Create Project` Knop te drukken
+    * De `Create Project` knop bestaat niet, maar heet nu `Update Project`.
+    - [ ] Bovenstaand is met succes uitgevoerd.
 
 ###Correct een nieuwe Review aanmaken:
 1.    Laad de pagina: http://localhost/Management/MyReviews/
@@ -307,6 +335,15 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
     * Maak willekeurig een van de zojuist ingevulde, verplichte, velden leeg.
     * Druk op de knop `Write review``
     - [ ] Bovenaan zou de error `Not everything is filled in` moeten verschijnen.
+
+###Een Project verwijderen:
+1.	Laad de pagina: http://localhost/Management/MyProjects/
+    - [ ] Er is een overzicht zichtbaar om je gegevens aan te passen
+2.    Druk op het 'X' icoontje achter het project van McDonald's.
+	* Je krijgt een scherm te zien met daarin de info over het te verwijderen project.
+3.    Controlleer dat de getoonde informatie klopt.
+	* Druk op de knop `Remove`
+	- [ ] Het scherm verdwijnt en het project wordt verwijdert.
 
 ###Een Locatie verwijderen:
 1.	Laad de pagina: http://localhost/Management/MyLocations/
@@ -369,3 +406,13 @@ company city|NietBestaandeStad
 company street|DummyStraat
 company house number|666
 company postal code|5000AA
+
+###5. Correcte nieuw Project
+Veld|Waarde
+--------|--------
+Type|Minor
+Location|Avans Hogeschool ('s-Hertogenbosch)
+Start Year|2013
+Start Month|September
+End Year|2014
+End Month|February

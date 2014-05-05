@@ -445,11 +445,15 @@ class AjaxController extends BaseController
             $inst = $em->getRepository('\PROJ\Entities\Institute')->find($_POST['id']);
             if ($inst->getCreator()->getAccount()->getId() == $_SESSION['userID']) {
                 if ($inst->getAcceptanceStatus() == 0) {
-                    foreach ($inst->getProjects() as $proj) {
-                        foreach ($proj->getReview() as $rev) {
-                            $em->remove($rev);
+                    if ($inst->getProjects() != null) {
+                        foreach ($inst->getProjects() as $proj) {
+                            if ($proj->getReview() != null) {
+                                foreach ($proj->getReview() as $rev) {
+                                    $em->remove($rev);
+                                }
+                            }
+                            $em->remove($proj);
                         }
-                        $em->remove($proj);
                     }
                     $em->remove($inst);
                     $em->flush();
@@ -476,8 +480,10 @@ class AjaxController extends BaseController
             $proj = $em->getRepository('\PROJ\Entities\Project')->find($_POST['id']);
             if ($proj->getStudent()->getAccount()->getId() == $_SESSION['userID']) {
                 if ($proj->getAcceptanceStatus() == 0) {
-                    foreach ($proj->getReview() as $rev) {
-                        $em->remove($rev);
+                    if ($proj->getReview() != null) {
+                        foreach ($proj->getReview() as $rev) {
+                            $em->remove($rev);
+                        }
                     }
                     $em->remove($proj);
                     $em->flush();
