@@ -1,5 +1,10 @@
 var goBackTo = null;
 var tempID = 0;
+
+var monthNames = ["January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"];
+
+
 $(document).ready(function() {
     $('#login_button').click(function() {
         $(this).parent().parent().submit();
@@ -43,6 +48,31 @@ $(document).ready(function() {
                     $("#RemoveLocationName").children().first().html(json.name);
                     $("#RemoveLocationLoc").children().first().html(json.place);
                     $("#RemoveLocationType").children().first().html(json.type);
+                } catch (e) {
+                    //error
+                    $("#removeLocationError").html(data);
+                    $("#removeLocationError").fadeIn();
+                }
+            });
+        });
+    });
+
+    //Remove project icon
+    $('.myprojects_remove').click(function() {
+        var clicked = $(this);
+        tempID = clicked.data("project-id");
+        $('#blackout').fadeIn();
+        $('#blackout').children().filter(':visible').fadeOut();
+        $('.fullscreen_loading_icon').fadeIn(function() {
+            $.post("/ajax/getMyLocationsInfo/", {id: clicked.data("project-id")}, function(data) {
+                $('.fullscreen_loading_icon').fadeOut();
+                $('#blackout_delete_project').fadeIn();
+                try {
+                    json = $.parseJSON(data);
+                    $("#RemoveProjectnLoc").children().first().html(json.institute.name + "(" + json.institute.place + ")");
+                    $("#RemoveProjectType").children().first().html(json.type);
+                    $("#RemoveProjectStartDate").children().first().html(monthNames[json.start_month - 1] + " " + json.start_year);
+                    $("#RemoveProjectEndDate").children().first().html(monthNames[json.end_month - 1] + " " + json.end_year);
                 } catch (e) {
                     //error
                     $("#removeLocationError").html(data);
@@ -125,12 +155,12 @@ $(document).ready(function() {
                 try {
                     json = $.parseJSON(data);
                     $('[name="create_project_form"]').find('[name="type"]').children().each(function() {
-                        if ($(this).val() == json.type) {
+                        if ($(this).html() == json.type) {
                             $(this).prop('selected', true);
                         }
                     });
                     $('[name="create_project_form"]').find('[name="location"]').children().each(function() {
-                        if ($(this).val() == json.instituteID) {
+                        if ($(this).val() == json.institute.id) {
                             $(this).prop('selected', true);
                         }
                     });
@@ -262,6 +292,21 @@ $(document).ready(function() {
             } else {
                 $('#remove_location').show();
                 $('#removeLocationError').show().children().first().html(data);
+            }
+        });
+    });
+
+    //Remove project confirmation button
+    $('#remove_project').click(function() {
+        $(this).hide();
+        $.post("/ajax/removeProject/", {id: tempID}, function(data) {
+            if (data == "succes") {
+                $('#blackout').fadeOut(function() {
+                    location.reload();
+                });
+            } else {
+                $('#remove_project').show();
+                $('#removeProjectError').show().children().first().html(data);
             }
         });
     });

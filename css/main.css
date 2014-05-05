@@ -40,6 +40,18 @@
     display:none;
 }
 
+
+#blackout_delete_project{
+    width: 706px;
+    height: 330px;
+    position: absolute;
+    left:50%;
+    top: 50%;
+    margin-left: -352px;
+    margin-top: -165px;
+    display:none;
+}
+
 #blackout_create_project{
     width: 706px;
     height: 390px;

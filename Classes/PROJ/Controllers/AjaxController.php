@@ -463,6 +463,34 @@ class AjaxController extends BaseController
         }
     }
 
+    public function removeProjectAction()
+    {
+        $em = DoctrineHelper::instance()->getEntityManager();
+        $ac = new \PROJ\Services\AccountService();
+
+        if (!is_numeric($_POST['id'])) {
+            echo "Illigal ID";
+            return;
+        }
+        if ($ac->isLoggedIn()) {
+            $proj = $em->getRepository('\PROJ\Entities\Project')->find($_POST['id']);
+            if ($proj->getStudent()->getAccount()->getId() == $_SESSION['userID']) {
+                if ($proj->getAcceptanceStatus() == 0) {
+                    foreach ($proj->getReview() as $rev) {
+                        $em->remove($rev);
+                    }
+                    $em->remove($proj);
+                    $em->flush();
+                    echo "succes";
+                } else {
+                    echo "The Project has been aproved while you tried to delete it.";
+                }
+            } else {
+                echo "This isn't your Project.";
+            }
+        }
+    }
+
     public function getMyLocationsInfoAction()
     {
         $em = DoctrineHelper::instance()->getEntityManager();

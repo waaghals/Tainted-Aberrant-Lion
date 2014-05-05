@@ -125,8 +125,8 @@ class Project
             "start_month" => $this->getStartdate()->Format("n"),
             "end_year" => $this->getEnddate()->Format("Y"),
             "end_month" => $this->getEnddate()->Format("n"),
-            "type" => $this->getType(),
-            "instituteID" => $this->getInstitute()->getId()
+            "type" => ucfirst($this->getType()),
+            "institute" => $this->getInstitute()->jsonSerialize()
         );
     }
 
