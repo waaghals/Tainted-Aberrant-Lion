@@ -28,14 +28,14 @@ class ProjectsTest extends \PHPUnit_Framework_TestCase
         $this->dummydata['end_month'] = "8";
     }
 
-    public function testRegistrationInputValidationCheckPass()
+    public function testProjectInputValidationCheckPass()
     {
         $this->ResetData();
 
         $this->assertEquals($this->controller->saveProjectAction($this->dummydata), true);
     }
 
-    public function testLocationInputValidationEmptyFieldFail()
+    public function testProjectInputValidationEmptyFieldFail()
     {
         $this->ResetData();
 
@@ -44,7 +44,7 @@ class ProjectsTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEquals($this->controller->saveProjectAction($this->dummydata), true);
     }
 
-    public function testLocationInputValidationFieldToLongFail()
+    public function testProjectInputValidationFieldToLongFail()
     {
         $this->ResetData();
 
@@ -53,7 +53,7 @@ class ProjectsTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEquals($this->controller->saveProjectAction($this->dummydata), true);
     }
 
-    public function testLocationInputValidationSpecialCharactersFail()
+    public function testProjectInputValidationSpecialCharactersFail()
     {
         $this->ResetData();
 
@@ -62,7 +62,7 @@ class ProjectsTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEquals($this->controller->saveProjectAction($this->dummydata), true);
     }
 
-    public function testLocationInputValidationActionFail()
+    public function testProjectInputValidationActionFail()
     {
         $this->ResetData();
 
@@ -71,7 +71,7 @@ class ProjectsTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEquals($this->controller->saveProjectAction($this->dummydata), true);
     }
 
-    public function testLocationInputValidationTypeFail()
+    public function testProjectInputValidationTypeFail()
     {
         $this->ResetData();
 
@@ -80,7 +80,7 @@ class ProjectsTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEquals($this->controller->saveProjectAction($this->dummydata), true);
     }
 
-    public function testLocationInputValidationStartAfterEndDate()
+    public function testProjectInputValidationStartAfterEndDate()
     {
         $this->ResetData();
 
@@ -89,7 +89,7 @@ class ProjectsTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEquals($this->controller->saveProjectAction($this->dummydata), true);
     }
 
-    public function testLocationInputValidationInvalidDate()
+    public function testProjectInputValidationInvalidDate()
     {
         $this->ResetData();
 

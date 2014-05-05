@@ -30,7 +30,7 @@ class LocationsTest extends \PHPUnit_Framework_TestCase
         $this->dummydata['email'] = "contact@dummies.nl";
     }
 
-    public function testRegistrationInputValidationCheckPass()
+    public function testLocationInputValidationCheckPass()
     {
         $this->ResetData();
 
