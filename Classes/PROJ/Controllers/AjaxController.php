@@ -312,33 +312,51 @@ class AjaxController extends BaseController
         echo 'succes';
     }
 
-    public function createReviewAction()
+    public function saveReviewAction($unitTest = null)
     {
+        if ($unitTest != null) {
+            $_POST = $unitTest;
+        }
+
         if (empty($_POST['project']) || (empty($_POST['assignment_score']) && @$_POST['assignment_score'] != 0) || empty($_POST['guidance_score']) || empty($_POST['accomodation_score']) || empty($_POST['overall_score']) || empty($_POST['review'])) {
             echo "Not everything is filled in";
-            return;
+            return false;
         }
 
         if (!is_numeric($_POST['project']) || !is_numeric($_POST['assignment_score']) || !is_numeric($_POST['guidance_score']) || !is_numeric($_POST['accomodation_score']) || !is_numeric($_POST['overall_score'])) {
-            echo "Invalid POST";
-            return;
+            echo "Invalid POST:NUMERIC";
+            return false;
         }
 
         if ($_POST['assignment_score'] > 5 || $_POST['assignment_score'] > 5 || $_POST['assignment_score'] > 5 || $_POST['guidance_score'] > 5) {
-            echo "Invalid POST";
-            return;
+            echo "Invalid POST:SCORE";
+            return false;
         }
+
+        if ($_POST['action'] != "update" && $_POST['action'] != "create") {
+            echo("Invalid POST:ACTION");
+            return false;
+        }
+
+        if ($unitTest == null) {
+            $this->saveReviewToDatabase();
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * Function to save Location to the Database
+     * Also does aditional Checks
+     * @return type
+     */
+    private function saveReviewToDatabase()
+    {
 
         $ac = new \PROJ\Services\AccountService();
         if ($ac->isLoggedIn()) {
             $em = DoctrineHelper::instance()->getEntityManager();
             $user = $em->getRepository('\PROJ\Entities\Account')->find($_SESSION['userID']);
-
-            if (count($em->getRepository('\PROJ\Entities\Review')->findBy(array('project' => $_POST['project']))) > 0) {
-                echo "You can only create one review per location";
-                return;
-            }
-
 
             $qb = $em->createQueryBuilder();
             $qb->select('p.id')
@@ -360,20 +378,67 @@ class AjaxController extends BaseController
 
 
             $project = $em->getRepository('\PROJ\Entities\Project')->find($_POST['project']);
-            $review = new \PROJ\Entities\Review();
+            $review = null;
+            if ($_POST['action'] == "create") {
+                $review = new \PROJ\Entities\Review();
+                $review->setAcceptanceStatus(Status::PENDING);
+            } elseif ($_POST['action'] == "update") {
+                $review = $em->getRepository('\PROJ\Entities\Review')->find($_POST['id']);
+
+                //Extra checks
+                if ($review->getProject()->getSTudent()->getAccount()->getId() == $_SESSION['userID']) {
+                    if ($review->getAcceptanceStatus() != 0) {
+                        echo "The Review has been aproved while you tried to edit it.";
+                        return;
+                    }
+                } else {
+                    echo "This isn't your Review.";
+                    return;
+                }
+            }
+
+
+            if (count($em->getRepository('\PROJ\Entities\Review')->findBy(array('project' => $_POST['project']))) > 0 && $_POST['project'] != $review->getProject()->getId()) {
+                echo "You can only create one review per location";
+                return;
+            }
+
+
             $review->setAccommodationRating($_POST['assignment_score']);
             $review->setAssignmentRating($_POST['guidance_score']);
             $review->setGuidanceRating($_POST['accomodation_score']);
             $review->setProject($project);
             $review->setRating($_POST['overall_score']);
             $review->setText(\PROJ\Helper\XssHelper::sanitizeInput($_POST['review']));
-            $review->setAcceptanceStatus(Status::PENDING);
 
             $em->persist($review);
             $em->flush();
-        }
 
-        echo 'succes';
+            echo 'succes';
+        }
+    }
+
+    public function getReviewInfoAction()
+    {
+        $em = DoctrineHelper::instance()->getEntityManager();
+        $ac = new \PROJ\Services\AccountService();
+
+        if (!is_numeric($_POST['id'])) {
+            echo "Illigal ID";
+            return;
+        }
+        if ($ac->isLoggedIn()) {
+            $rev = $em->getRepository('\PROJ\Entities\Review')->find($_POST['id']);
+            if ($rev->getProject()->getStudent()->getAccount()->getId() == $_SESSION['userID']) {
+                if ($rev->getAcceptanceStatus() == 0) {
+                    echo json_encode($rev->jsonSerialize());
+                } else {
+                    echo "The Review has been aproved while you tried to delete it.";
+                }
+            } else {
+                echo "This isn't your Review.";
+            }
+        }
     }
 
     public function getLocationInfoAction()
@@ -426,6 +491,31 @@ class AjaxController extends BaseController
                 }
             } else {
                 echo "This isn't your Location.";
+            }
+        }
+    }
+
+    public function removeReviewAction()
+    {
+        $em = DoctrineHelper::instance()->getEntityManager();
+        $ac = new \PROJ\Services\AccountService();
+
+        if (!is_numeric($_POST['id'])) {
+            echo "Illigal ID";
+            return;
+        }
+        if ($ac->isLoggedIn()) {
+            $rev = $em->getRepository('\PROJ\Entities\Review')->find($_POST['id']);
+            if ($rev->getProject()->getStudent()->getAccount()->getId() == $_SESSION['userID']) {
+                if ($rev->getAcceptanceStatus() == 0) {
+                    $em->remove($rev);
+                    $em->flush();
+                    echo "succes";
+                } else {
+                    echo "The Review has been aproved while you tried to delete it.";
+                }
+            } else {
+                echo "This isn't your Review.";
             }
         }
     }

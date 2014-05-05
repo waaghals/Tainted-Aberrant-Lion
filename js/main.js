@@ -104,6 +104,86 @@ $(document).ready(function() {
         });
     });
 
+    //Update review icon
+    $('.myreview_update').click(function() {
+        var clicked = $(this);
+        tempID = clicked.data("review-id");
+
+        //Prepare page
+        $("#review_action").data("action", "update");
+        $("#review_action").children("p").html("Update Review");
+        $('#review_action').show();
+        $("#addReviewError").hide();
+
+        //Start fades
+        $('#blackout').fadeIn();
+        $('#blackout').children().filter(':visible').fadeOut();
+        $('.fullscreen_loading_icon').fadeIn(function() {
+            $.post("/ajax/getReviewInfo/", {id: clicked.data("review-id")}, function(data) {
+                $('.fullscreen_loading_icon').fadeOut();
+                $('#blackout_create_review').fadeIn();
+                try {
+                    json = $.parseJSON(data);
+                    $('[name="create_review_form"]').find('[name="project"]').children().each(function() {
+                        if ($(this).val() == json.project.id) {
+                            $(this).prop('selected', true);
+                        }
+                    });
+                    $('[name="create_review_form"]').find('[name="assignment_score"]').children().each(function() {
+                        if ($(this).val() == json.assignmentrating) {
+                            $(this).prop('selected', true);
+                        }
+                    });
+                    $('[name="create_review_form"]').find('[name="guidance_score"]').children().each(function() {
+                        if ($(this).val() == json.guidancerating) {
+                            $(this).prop('selected', true);
+                        }
+                    });
+                    $('[name="create_review_form"]').find('[name="accomodation_score"]').children().each(function() {
+                        if ($(this).val() == json.accommodationrating) {
+                            $(this).prop('selected', true);
+                        }
+                    });
+                    $('[name="create_review_form"]').find('[name="overall_score"]').children().each(function() {
+                        if ($(this).val() == json.rating) {
+                            $(this).prop('selected', true);
+                        }
+                    });
+
+                    var decodedName = $("<div/>").html(json.text).text();
+                    $('[name="create_review_form"]').find('[name="review"]').val(decodedName);
+                } catch (e) {
+                    //error
+                    $("#removeLocationError").html(data);
+                    $("#removeLocationError").fadeIn();
+                }
+            });
+        });
+    });
+
+    //Remove review icon
+    $('.myreview_remove').click(function() {
+        var clicked = $(this);
+        tempID = clicked.data("review-id");
+        $('#blackout').fadeIn();
+        $('#blackout').children().filter(':visible').fadeOut();
+        $('.fullscreen_loading_icon').fadeIn(function() {
+            $.post("/ajax/getReviewInfo/", {id: clicked.data("review-id")}, function(data) {
+                $('.fullscreen_loading_icon').fadeOut();
+                $('#blackout_delete_review').fadeIn();
+                try {
+                    json = $.parseJSON(data);
+                    $("#RemoveProjectProject").children().first().html(json.project.institute.name + " (" + json.project.institute.place + ")");
+                    $("#RemoveProjectScore").children().first().html(json.rating);
+                } catch (e) {
+                    //error
+                    $("#removeReviewError").html(data);
+                    $("#removeReviewError").fadeIn();
+                }
+            });
+        });
+    });
+
     //Create new project button
     $('.myprojects_add').click(function() {
         $('#blackout').fadeIn();
@@ -113,6 +193,14 @@ $(document).ready(function() {
 
     //Create new review button
     $('.myreviews_add').click(function() {
+        //Prepare page
+        $("#review_action").data("action", "create");
+        $("#review_action").children("p").html("Create Review");
+        $('[name="create_review_form"]')[0].reset();
+        $('#review_action').show();
+        $("#addReviewError").hide();
+
+        //Start fade
         $('#blackout').fadeIn();
         $('#blackout').children().filter(':visible').fadeOut();
         $('#blackout_create_review').fadeIn();
@@ -170,16 +258,18 @@ $(document).ready(function() {
     });
 
     //Create new review confirmation button
-    $('#create_review').click(function() {
+    $('#review_action').click(function() {
         $(this).hide();
-        $.post("/Ajax/CreateReview", $("[name='create_review_form']").serialize(), function(data) {
-            console.log(data);
+        var data = $("[name='create_review_form']").serializeArray();
+        data.push({name: "action", value: $("#review_action").data("action")});
+        data.push({name: "id", value: tempID});
+        $.post("/Ajax/SaveReview", data, function(data) {
             if (data == "succes") {
                 $('#blackout').fadeOut(function() {
                     location.reload();
                 });
             } else {
-                $('#create_review').show();
+                $('#review_action').show();
                 $('#addReviewError').show().children().first().html(data);
             }
         });
@@ -196,6 +286,21 @@ $(document).ready(function() {
             } else {
                 $('#remove_location').show();
                 $('#removeLocationError').show().children().first().html(data);
+            }
+        });
+    });
+
+    //Remove location confirmation button
+    $('#remove_review').click(function() {
+        $(this).hide();
+        $.post("/ajax/removeReview/", {id: tempID}, function(data) {
+            if (data == "succes") {
+                $('#blackout').fadeOut(function() {
+                    location.reload();
+                });
+            } else {
+                $('#remove_review').show();
+                $('#removeReviewError').show().children().first().html(data);
             }
         });
     });
