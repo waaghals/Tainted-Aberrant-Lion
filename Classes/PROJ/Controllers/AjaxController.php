@@ -255,12 +255,12 @@ class AjaxController extends BaseController
 
         if (empty($_POST['type']) || empty($_POST['location']) || empty($_POST['start_year']) || empty($_POST['start_month']) || empty($_POST['end_year']) || empty($_POST['end_month'])) {
             echo "Not everything is filled in";
-            return;
+            return false;
         }
 
         if (!is_numeric($_POST['start_year']) || !is_numeric($_POST['start_month']) || !is_numeric($_POST['end_year']) || !is_numeric($_POST['end_month'])) {
             echo "Invalid POST";
-            return;
+            return false;
         }
 
         if ($_POST['action'] != "update" && $_POST['action'] != "create") {
@@ -270,12 +270,12 @@ class AjaxController extends BaseController
 
         if ($_POST['type'] != "minor" && $_POST['type'] != "internship" && $_POST['type'] != "graduation" && $_POST['type'] != "ESP") {
             echo "Invalid POST:TYPE";
-            return;
+            return false;
         }
 
         if (new \DateTime($_POST['start_year'] . '-' . $_POST['start_month'] . '-1') > new \DateTime($_POST['end_year'] . '-' . $_POST['end_month'] . '-1')) {
             echo("Start date cannot be after Stop date");
-            return;
+            return false;
         }
 
         if ($unitTest == null) {
