@@ -4,13 +4,14 @@ Tainted-Aberrant-Lion
 School project
 
 ##Versie
-Huidige versie is 0.2b na de vierde sprint. Deze is getagd als `Vierde Sprint` met git.
-Er zijn momenteel drie verschillende releases.
+Huidige versie is 0.3 na de vijfde sprint. Deze is getagd als `Vijfde Sprint` met git.
+Er zijn momenteel vier verschillende releases.
 
 * Eerste_Sprint
 * ~~Tweede_Sprint~~
 * Derde_Sprint
 * Vierde_Sprint
+* Vijfde_Sprint
 
 
 ##Pagina's
@@ -54,7 +55,7 @@ Een doctrine entity **NOOIT** print_r of var_dumpen! Altijd de Debug functie hie
 ##MVC
 Het handigste is als we MVC gaan gebruiken. Ik heb het project al zo opgezet dat dit makkelijk moet gaan. In /PROJ/Classes/Controller zet je de controllers die bij URL benaarderbaar moeten zijn. dus bijvoorbeeld {domain}/DemoPage/. De index zorgt er al voor dat deze automatisch aangeroepen worden. **LET OP!** Deze pagina's worden **ALLEEN** aangeroepen als ze de BaseController extenden! Anders krijg je een 404.
 
-In die paginas kun je dan de view aanroepen afhankelijk van overige url parameters ({domain}/Controller/Action/Parm1=Value1/Parm2=Value2). 
+In die paginas kun je dan de view aanroepen afhankelijk van overige url parameters ({domain}/Controller/Action/Parm1=Value1/Parm2=Value2).
 
 Probeer database handelingen zoveel mogelijk in een model te doen. Het makkelijkste is om hier een Singleton van te maken (Zie DemoController.php in /PROJ/Classes/Controller/)
 
