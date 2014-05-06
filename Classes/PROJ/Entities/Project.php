@@ -119,6 +119,7 @@ class Project
     public function jsonSerialize()
     {
         return array(
+            "id" => $this->getId(),
             "review" => $this->getReview(),
             "author" => $this->getStudent(),
             "start_year" => $this->getStartdate()->Format("Y"),

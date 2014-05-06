@@ -116,14 +116,26 @@ class Review
         $this->rating = $rating;
     }
 
-    public function getAccepanceStatus()
+    public function getAcceptanceStatus()
     {
         return $this->acceptanceStatus;
     }
 
-    public function setAcceptanceStatus($status)
+    public function setAcceptanceStatus($acceptanceStatus)
     {
-        $this->acceptanceStatus = $status;
+        $this->acceptanceStatus = $acceptanceStatus;
+    }
+
+    public function jsonSerialize()
+    {
+        return array(
+            "text" => $this->getText(),
+            "assignmentrating" => $this->getAssignmentRating(),
+            "guidancerating" => $this->getGuidanceRating(),
+            "accommodationrating" => $this->getAccommodationRating(),
+            "rating" => $this->getRating(),
+            "project" => $this->getProject()->jsonSerialize()
+        );
     }
 
 }

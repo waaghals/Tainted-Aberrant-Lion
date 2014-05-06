@@ -41,6 +41,17 @@
 }
 
 
+#blackout_delete_review{
+    width: 706px;
+    height: 274px;
+    position: absolute;
+    left:50%;
+    top: 50%;
+    margin-left: -352px;
+    margin-top: -137px;
+    display:none;
+}
+
 #blackout_delete_project{
     width: 706px;
     height: 330px;
