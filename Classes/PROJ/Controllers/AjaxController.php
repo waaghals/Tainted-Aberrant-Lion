@@ -417,7 +417,7 @@ class AjaxController extends BaseController
 
 
             $project = $em->getRepository('\PROJ\Entities\Project')->find($_POST['project']);
-            $review = getReviewEntitie();
+            $review = $this->getReviewEntitie();
             if ($review == null) {
                 return;
             }
@@ -546,7 +546,6 @@ class AjaxController extends BaseController
             }
         }
     }
-
 
     public function removeReviewAction()
     {
