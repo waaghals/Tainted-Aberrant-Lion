@@ -213,7 +213,7 @@ class AjaxController extends BaseController
                 //Extra checks
                 if ($locatie->getCreator()->getAccount()->getId() == $_SESSION['userID']) {
                     if ($locatie->getAcceptanceStatus() != 0) {
-                        echo "The Location has been aproved while you tried to edit it.";
+                        echo "The Location has been approved while you tried to edit it.";
                         return;
                     }
                 } else {
@@ -378,23 +378,9 @@ class AjaxController extends BaseController
 
 
             $project = $em->getRepository('\PROJ\Entities\Project')->find($_POST['project']);
-            $review = null;
-            if ($_POST['action'] == "create") {
-                $review = new \PROJ\Entities\Review();
-                $review->setAcceptanceStatus(Status::PENDING);
-            } elseif ($_POST['action'] == "update") {
-                $review = $em->getRepository('\PROJ\Entities\Review')->find($_POST['id']);
-
-                //Extra checks
-                if ($review->getProject()->getSTudent()->getAccount()->getId() == $_SESSION['userID']) {
-                    if ($review->getAcceptanceStatus() != 0) {
-                        echo "The Review has been aproved while you tried to edit it.";
-                        return;
-                    }
-                } else {
-                    echo "This isn't your Review.";
-                    return;
-                }
+            $review = getReviewEntitie();
+            if ($review == null) {
+                return;
             }
 
 
@@ -418,13 +404,36 @@ class AjaxController extends BaseController
         }
     }
 
+    private function getReviewEntitie()
+    {
+        if ($_POST['action'] == "create") {
+            $review = new \PROJ\Entities\Review();
+            $review->setAcceptanceStatus(Status::PENDING);
+        } elseif ($_POST['action'] == "update") {
+            $review = $em->getRepository('\PROJ\Entities\Review')->find($_POST['id']);
+
+            //Extra checks
+            if ($review->getProject()->getSTudent()->getAccount()->getId() == $_SESSION['userID']) {
+                if ($review->getAcceptanceStatus() != 0) {
+                    echo "The Review has been approved while you tried to edit it.";
+                    return null;
+                }
+            } else {
+                echo "This isn't your Review.";
+                return null;
+            }
+        }
+
+        return $review;
+    }
+
     public function getReviewInfoAction()
     {
         $em = DoctrineHelper::instance()->getEntityManager();
         $ac = new \PROJ\Services\AccountService();
 
         if (!is_numeric($_POST['id'])) {
-            echo "Illigal ID";
+            echo "Illegal ID";
             return;
         }
         if ($ac->isLoggedIn()) {
@@ -433,7 +442,7 @@ class AjaxController extends BaseController
                 if ($rev->getAcceptanceStatus() == 0) {
                     echo json_encode($rev->jsonSerialize());
                 } else {
-                    echo "The Review has been aproved while you tried to delete it.";
+                    echo "The Review has been approved while you tried to delete it.";
                 }
             } else {
                 echo "This isn't your Review.";
@@ -447,7 +456,7 @@ class AjaxController extends BaseController
         $ac = new \PROJ\Services\AccountService();
 
         if (!is_numeric($_POST['id'])) {
-            echo "Illigal ID";
+            echo "Illegal ID";
             return;
         }
         if ($ac->isLoggedIn()) {
@@ -456,7 +465,7 @@ class AjaxController extends BaseController
                 if ($inst->getAcceptanceStatus() == 0) {
                     echo json_encode($inst->jsonSerialize());
                 } else {
-                    echo "The Location has been aproved while you tried to delete it.";
+                    echo "The Location has been approved while you tried to delete it.";
                 }
             } else {
                 echo "This isn't your Location.";
@@ -470,7 +479,7 @@ class AjaxController extends BaseController
         $ac = new \PROJ\Services\AccountService();
 
         if (!is_numeric($_POST['id'])) {
-            echo "Illigal ID";
+            echo "Illegal ID";
             return;
         }
         if ($ac->isLoggedIn()) {
@@ -487,7 +496,7 @@ class AjaxController extends BaseController
                     $em->flush();
                     echo "succes";
                 } else {
-                    echo "The Location has been aproved while you tried to delete it.";
+                    echo "The Location has been approved while you tried to delete it.";
                 }
             } else {
                 echo "This isn't your Location.";
@@ -501,7 +510,7 @@ class AjaxController extends BaseController
         $ac = new \PROJ\Services\AccountService();
 
         if (!is_numeric($_POST['id'])) {
-            echo "Illigal ID";
+            echo "Illegal ID";
             return;
         }
         if ($ac->isLoggedIn()) {
@@ -512,7 +521,7 @@ class AjaxController extends BaseController
                     $em->flush();
                     echo "succes";
                 } else {
-                    echo "The Review has been aproved while you tried to delete it.";
+                    echo "The Review has been approved while you tried to delete it.";
                 }
             } else {
                 echo "This isn't your Review.";
