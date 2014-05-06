@@ -55,6 +55,29 @@ $(document).ready(function() {
         });
     });
 
+    //Remove user icon
+    $('.users_remove').click(function() {
+        var clicked = $(this);
+        tempID = clicked.data("user-id");
+        $('#blackout').fadeIn();
+        $('#blackout').children().filter(':visible').fadeOut();
+        $('.fullscreen_loading_icon').fadeIn(function() {
+            $.post("/ajax/getUserInfo/", {id: clicked.data("user-id")}, function(data) {
+                $('.fullscreen_loading_icon').fadeOut();
+                $('#blackout_delete_user').fadeIn();
+                try {
+                    json = $.parseJSON(data);
+                    $("#RemoveUserName").children().first().html(json.firstname + " " + json.surname);
+                    $("#RemoveUserEmail").children().first().html(json.email);
+                } catch (e) {
+                    //error
+                    $("#removeUserError").html(data);
+                    $("#removeUserError").fadeIn();
+                }
+            });
+        });
+    });
+
     //Update location icon
     $('.mylocation_update').click(function() {
         var clicked = $(this);
@@ -199,6 +222,21 @@ $(document).ready(function() {
             } else {
                 $('#remove_location').show();
                 $('#removeLocationError').show().children().first().html(data);
+            }
+        });
+    });
+
+    //Remove user confirmation button
+    $('#remove_user').click(function() {
+        $(this).hide();
+        $.post("/ajax/removeUser/", {id: tempID}, function(data) {
+            if (data == "succes") {
+                $('#blackout').fadeOut(function() {
+                    location.reload();
+                });
+            } else {
+                $('#remove_user').show();
+                $('#removeUserError').show().children().first().html(data);
             }
         });
     });

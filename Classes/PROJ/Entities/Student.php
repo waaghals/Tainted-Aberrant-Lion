@@ -194,6 +194,21 @@ class Student
         $this->institutes = $institutes;
     }
 
+    public function jsonSerialize()
+    {
+        return array(
+            "addition" => $this->getAddition(),
+            "city" => $this->getCity(),
+            "email" => $this->getEmail(),
+            "firstname" => $this->getFirstname(),
+            "housenumber" => $this->getHousenumber(),
+            "id" => $this->getId(),
+            "street" => $this->getStreet(),
+            "surname" => $this->getSurname(),
+            "zipcode" => $this->getZipcode()
+        );
+    }
+
 }
 
 ?>

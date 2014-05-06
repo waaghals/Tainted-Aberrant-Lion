@@ -46,6 +46,7 @@ class ManagementController extends BaseController
 
     public function CreateUserAction()
     {
+        //TODO: Add coordinator check
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {    //Create new account
             $valid = $this->validateCreateUser();
             if ($valid === "succes") {

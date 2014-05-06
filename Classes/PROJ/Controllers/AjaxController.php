@@ -430,4 +430,48 @@ class AjaxController extends BaseController
         }
     }
 
+    public function getUserInfoAction()
+    {
+        $em = DoctrineHelper::instance()->getEntityManager();
+        $ac = new \PROJ\Services\AccountService();
+
+        if (!is_numeric($_POST['id'])) {
+            echo "Illegal ID";
+            return;
+        }
+        if ($ac->isLoggedIn()) {
+            $student = $em->getRepository('\PROJ\Entities\Student')->find($_POST['id']);
+            //TODO: Add coordinator check
+            echo json_encode($student->jsonSerialize());
+        }
+    }
+
+    public function removeUserAction()
+    {
+        $em = DoctrineHelper::instance()->getEntityManager();
+        $ac = new \PROJ\Services\AccountService();
+
+        if (!is_numeric($_POST['id'])) {
+            echo "Illegal ID";
+            return;
+        }
+        if ($ac->isLoggedIn()) {
+            //TODO: Add coordinator check
+            $user = $em->getRepository('\PROJ\Entities\Student')->find($_POST['id']);
+            if ($user->getProject() != null) {
+                foreach ($user->getProject() as $proj) {
+                    if ($proj->getReview() != null) {
+                        foreach ($proj->getReview() as $rev) {
+                            $em->remove($rev);
+                        }
+                    }
+                    $em->remove($proj);
+                }
+            }
+            $em->remove($user);
+            $em->flush();
+            echo "succes";
+        }
+    }
+
 }

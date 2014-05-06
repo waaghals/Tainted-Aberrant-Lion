@@ -419,3 +419,47 @@ $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
         </form>
     </div>
 </div>
+
+<!-- remove User -->
+
+<div id="blackout_delete_user">
+    <div id="register_container" style="height: 274px; left:auto; top: auto; margin: 0px;">
+        <form name='remove_user_form' method='post' enctype="multipart/form-data">
+            <img src="/images/register_top.png">
+            <div id="register_container_tophalf">
+                <div class="alert" id="removeUserError" style="display:none; margin-bottom:20px; padding: 5px; clear:both;">
+                    <p></p>
+                </div>
+                <p style="margin-bottom:15px;">You are about to <span style="font-weight: bold;">remove</span> the following User:</p>
+                <div style="clear:both;"></div>
+                <table>
+                    <tr>
+                        <td style="padding: 5px 5px 5px 0px;"><p>Name:</p></td>
+                        <td style="padding: 5px; font-weight: bold;" id="RemoveUserName"><p></p></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px 5px 5px 0px;"><p>Email:</p></td>
+                        <td style="padding: 5px; font-weight: bold;" id="RemoveUserEmail"><p></p></td>
+                    </tr>
+                </table>
+                <div style="clear:both;"></div>
+                <p style="margin:15px inherit;">This process will also remove any Projects and/or Reviews connected to this User.</p>
+                <p style="margin:15px inherit;">Are you sure you want to continue? This can <span style="font-weight: bold;">NOT</span> be undone.</p>
+            </div>
+            <img src="/images/register_split.png">
+            <div id="register_container_bottomhalf">
+                <div class="fancy_button blackout_cancel" style="margin-left:10px;">
+                    <img src="/images/btn_left.png" />
+                    <p>Cancel</p>
+                    <img src="/images/btn_right.png" />
+                </div>
+                <div class="fancy_button" id="remove_user">
+                    <img src="/images/btn_left.png" />
+                    <p>Remove</p>
+                    <img src="/images/btn_right.png" />
+                </div>
+            </div>
+            <img src="/images/register_bottom.png">
+        </form>
+    </div>
+</div>
