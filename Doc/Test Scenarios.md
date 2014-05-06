@@ -1,4 +1,4 @@
-#Test document
+# Test document
 
 In dit document worden de stappen beschreven waarin de __acceptence criteria__ van de __use cases__ getest worden. Het script dient van boven tot onder doorlopen te worden. Het is niet de bedoeling om steeds één stuk te testen. Het hele testplan moet afgelopen worden zodat zeker is dat de onderdelen onderling werkend blijven.
 
@@ -12,18 +12,18 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
 1. Leeg alle tabellen in de database met phpMyAdmin.
 2. Breng de database structuur up-to-date door naar http://localhost/console.php te gaan
 3. Run het commando `orm:schema-tool:update --force` te runnen.
-	- [ ] Er komt geen `[FAIL]` voor in het resultaat.
-4. Vul de database met test data door naar http://localhost/testData/create te gaan.
-	- [ ] Er staat meerdere keren `<iets> has been added to the database successfully`
-	- [ ] Er zijn geen errors
+    - [ ] Er komt geen `[FAIL]` voor in het resultaat.
+4. Vul de database met test data door naar http://localhost/testData te gaan.
+    - [ ] Er staat meerdere keren `<iets> with the following data has been succesfully added to the database:`
+    - [ ] Er zijn geen errors
 5. Run alle unit tests
-	- [ ] Er mogen geen failures optreden!
+    - [ ] Er mogen geen failures optreden!
 
 ## Responsiveness testen
 #### (20.) As a visitor I want to see the world map so I can easiliy see which places are available for me.
 
 1. Laad de homepage http://localhost _(Visitor must be able to view the world map)_
-	- [ ] Er is een map zichtbaar
+    - [ ] Er is een map zichtbaar
 2. Vergroot en verklein het scherm
     - [ ] Tekst dient kleiner te worden blij kleinere schermen.
     - [ ] Er staan ongeveer tussen de 45 en 75 tekens op één regel
@@ -35,94 +35,75 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
 4. De sidebar is te openen en te sluiten
     - [ ] De sidebar moet sluiten door naar links te slepen met de muis of vinger indien deze open is.
     - [ ] De sidebar moet openen door deze naar rechts te slepen met de muis of vinger indien deze gesloten is.
-5. Vul de database met test data
-6. Controleer of de `institute`'s op de kaart staan.
+5. Controleer of de `institute`'s op de kaart staan.
     - [ ] Kijk of de marker uit de database ook op de kaart komen te staan.
     - [ ] Een `institute` met `type` `education` dient een icoontje van een schoolhoedje te zijn.
     - [ ] Een `institute` met `type` `business` dient een icoontje van een bedrijfsgebouw te zijn.
-7. Klik op de marker in ``s-Hertogenbosch`
+6. Klik op de marker in ``s-Hertogenbosch`
     - [ ] De sidebar is nu geopend indien deze gesloten was.
-8. Klik op de naam `Kees Jansen`  _(Visitor must be able to see all reviews or internships on the map.)_
-	- [ ] De tekst van de review is `Good things happend here`
-	- [ ] De review heeft 4 van de 5 sterren.
+7. Klik op de naam `Kees Jansen`  _(Visitor must be able to see all reviews or internships on the map.)_
+    - [ ] De tekst van de review is `Many fun activities to do here!`
+    - [ ] De review heeft 4 van de 5 sterren.
 
 
 ## Login
 #### (33.) As a informant I want to login so I can make sure no other people can modify my reviews.
 ### Correcte inlog:
 
-1.	Laad de homepage http://localhost/account/login/
+1.  Laad de homepage http://localhost/account/login/
     - [ ] Er is een inlogscherm zichtbaar
-2.	Vul als gebruikersnaam `hbakker` en wachtwoord `password` in
-3.	Klik op de knop `login` _(Informant must be able to login)_
-	- [ ] Je wordt doorgestuurd naar de homepage
+2.  Vul als gebruikersnaam `hbakker` en wachtwoord `password` in
+3.  Klik op de knop `login` _(Informant must be able to login)_
+    - [ ] Je wordt doorgestuurd naar de homepage
     - [ ] Rechtst bovenin de balk is de voornaam `harry` van de test gebruiker zichtbaar.
 
 ### Uitloggen:
-1.	Klik rechtsboven op `Log uit`
-	- [ ] Je wordt doorgestuurd naar de homepage
-        - [ ] Rechtst bovenin de balk staan er weer twee knoppen `Registreren` en `Log in`
+1.  Klik rechtsboven op `Log uit`
+    - [ ] Je wordt doorgestuurd naar de homepage
+    - [ ] Rechtst bovenin de balk staan er weer twee knoppen `Registreren` en `Log in`
 
 ### Foutieve inlog:
 
-1.	Laad de homepage http://localhost/account/login/
+1.  Laad de homepage http://localhost/account/login/
     - [ ] Er is een inlogscherm zichtbaar
-2.	Vul als gebruikersnaam `hbakker` en wachtwoord `ongeldig` in
-3.	Klik op de knop `login`
-	- [ ] Het login veld wordt geleegd.
-	- [ ] Je wordt niet doorgestuurd naar een andere pagina.
+2.  Vul als gebruikersnaam `hbakker` en wachtwoord `ongeldig` in
+3.  Klik op de knop `login`
+    - [ ] Het login veld wordt geleegd.
+    - [ ] Je wordt niet doorgestuurd naar een andere pagina.
 
 ### Bruteforce inlog:
 
-1.	Laad de homepage http://localhost/account/login/
+1.  Laad de homepage http://localhost/account/login/
     - [ ] Er is een inlogscherm zichtbaar
-2.	Vul als gebruikersnaam `hbakker` en wachtwoord `ongeldig` in
-3.	Klik op de knop `login`
-	- [ ] Het login veld wordt geleegd.
-	- [ ] Je wordt niet doorgestuurd naar een andere pagina.
-4.	Vul als gebruikersnaam `hbakker` en wachtwoord `ongeldig` in
-5.	Klik op de knop `login`
-	- [ ] Het login veld wordt geleegd.
-	- [ ] Je wordt niet doorgestuurd naar een andere pagina.
-6.	Vul als gebruikersnaam `hbakker` en wachtwoord `ongeldig` in
-7.	Klik op de knop `login`
-	- [ ] Het login veld wordt geleegd.
-	- [ ] Je wordt niet doorgestuurd naar een andere pagina.
-8.	Vul als gebruikersnaam `hbakker` en wachtwoord `password` in
-9.	Klik op de knop `login`
-	- [ ] Het login veld wordt geleegd.
-	- [ ] Je wordt niet doorgestuurd naar een andere pagina.
-	- [ ] Je wordt niet ingelogd aangezien je de aantal pogingen hebt overschreven.
+2.  Vul als gebruikersnaam `hbakker` en wachtwoord `ongeldig` in
+3.  Klik op de knop `login`
+    - [ ] Het login veld wordt geleegd.
+    - [ ] Je wordt niet doorgestuurd naar een andere pagina.
+4.  Vul als gebruikersnaam `hbakker` en wachtwoord `ongeldig` in
+5.  Klik op de knop `login`
+    - [ ] Het login veld wordt geleegd.
+    - [ ] Je wordt niet doorgestuurd naar een andere pagina.
+6.  Vul als gebruikersnaam `hbakker` en wachtwoord `ongeldig` in
+7.  Klik op de knop `login`
+    - [ ] Het login veld wordt geleegd.
+    - [ ] Je wordt niet doorgestuurd naar een andere pagina.
+8.  Vul als gebruikersnaam `hbakker` en wachtwoord `password` in
+9.  Klik op de knop `login`
+    - [ ] Het login veld wordt geleegd.
+    - [ ] Je wordt niet doorgestuurd naar een andere pagina.
+    - [ ] Je wordt niet ingelogd aangezien je de aantal pogingen hebt overschreven.
 10. Ga naar de homepagine op http://localhost
-	- [ ] Rechtst bovenin de balk staat nogsteeds de knop `Log in`
+    - [ ] Rechtst bovenin de balk staat nogsteeds de knop `Log in`
 
 ### Inloggen na bruteforce:
 
 1. Leeg de tabel `loginattempt` in phpMyAdmin
-2.	Laad de homepage http://localhost/account/login/
+2.  Laad de homepage http://localhost/account/login/
     - [ ] Er is een inlogscherm zichtbaar
-3.	Vul als gebruikersnaam `hbakker` en wachtwoord `password` in
-4.	Klik op de knop `login` _(Informant must be able to login)_
-	- [ ] Je wordt doorgestuurd naar de homepage
+3.  Vul als gebruikersnaam `hbakker` en wachtwoord `password` in
+4.  Klik op de knop `login` _(Informant must be able to login)_
+    - [ ] Je wordt doorgestuurd naar de homepage
     - [ ] Rechtst bovenin de balk is de voornaam `harry` van de test gebruiker zichtbaar.
-
-## Register
-### Correct Access Code Genereren:
-1.	Laad de homepage http://localhost/Management/CreateUser/
-    - [ ] Er is een genereer scherm zichtbaar
-2.  Vul in beide velden in: `test@toip.nl`
-3.  Klik op de knop `Create Access Code`
-	- [ ] In het scherm komt een melding met de tekst: `Created access code succesfully`.
-
-### Incorrect Access Code Genereren:
-1.	Laad de homepage http://localhost/Management/CreateUser/
-    - [ ] Er is een genereer scherm zichtbaar
-2.  Vul in het `E-Mail` veld in: `test@toip.nl`
-    - Vul in het `Repeat E-Mail` veld in: `test1@toip.nl`
-3.  Klik op de knop `Create Access Code`
-	- [ ] In het scherm komt een melding met de tekst: `E-Mail fiels do not match.`.
-3.  Maak een van de twee velden leeg en klik op de knop `Create Access Code`
-	- [ ] In het scherm komt een melding met de tekst: `Not everything is filled in`.
 
 ### Incorrect registreren:
 
@@ -130,22 +111,20 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
     - [ ] Er is een registreerscherm zichtbaar
 2. Vul de gegevens in volgens bijlage 1.
 3. Klik op de knop `Register`
-	- [ ] Er komt een error op het scherm dat de gebruikers naam al ingebruik is.
+    - [ ] Er komt een error op het scherm dat de gebruikers naam al ingebruik is.
 
 ### Correct registreren:
 
 1. Laad de homepage http://localhost/account/register/
     - [ ] Er is een registreerscherm zichtbaar
 2. Vul de gegevens in volgens bijlage 2.
-2. Zoek in PhpMyAdmin, in de tabel `registrationcode` op welke code bij `test@toip.nl` hoort.
-    -   Vul deze code in bij het veld: `Registration Code`
 3. Klik op de knop `Register`
-	- [ ] Je wordt doorgestuurd naar de homepage
+    - [ ] Je wordt doorgestuurd naar de homepage
 4. Klik op de knop `Log in` rechtsboven in de balk.
     - [ ] Er is een inlogscherm zichtbaar
-5.	Vul als gebruikersnaam `patrick` en wachtwoord `iscool` in
-6.	Klik op de knop `login` _(Informant must be able to login)_
-	- [ ] Je wordt doorgestuurd naar de homepage
+5.  Vul als gebruikersnaam `patrick` en wachtwoord `iscool` in
+6.  Klik op de knop `login` _(Informant must be able to login)_
+    - [ ] Je wordt doorgestuurd naar de homepage
     - [ ] Rechtst bovenin de balk is de voornaam `Patrick` van de test gebruiker zichtbaar.
 
 ## Contact
@@ -153,15 +132,15 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
 
 ### Correcte verzenden:
 
-1.	Op de review van `Kees Jansen` van de `Avans Hogeschool` in `s-Hertogenbosch.
-2.	Klik naast `Neem contact op met` op `Kees` _(Visitor can view a review and press a contact button)_
-	- [ ] Er is een contact formulier zichtbaar
-	- [ ] In het veld `Aan` staat `Kees Jansen`
+1.  Op de review van `Kees Jansen` van de `Avans Hogeschool` in `s-Hertogenbosch.
+2.  Klik naast `Neem contact op met` op `Kees` _(Visitor can view a review and press a contact button)_
+    - [ ] Er is een contact formulier zichtbaar
+    - [ ] In het veld `Aan` staat `Kees Jansen`
 3. Vul je eigen email adres in
 4. Typ een onderwerp
 5. Typ een bericht
 6. Klik op de knop `send` _(Visitor can email the informant)_
-	- [ ] In het resultaat staat `Email send`
+    - [ ] In het resultaat staat `Your message was sent successfully.`
 
 ## Zoeken
 #### (34.) As a visitor I want to search so I can get a specific project review.
@@ -170,20 +149,20 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
 
 1. Laad de homepage http://localhost/
     - [ ] Rechts boven is een zoekformulier zichtbaar.
-2. Vul het woord `things` _(Visitor must be able to insert a keyword.)_
-	- [ ] Er komt een dropdown met gevonden reviews.
+2. Vul het woord `fun` _(Visitor must be able to insert a keyword.)_
+    - [ ] Er komt een dropdown met gevonden reviews.
 3. Klik op een resultaat  _(Results will be shown if found.)_
-	- [ ] De sidebar wordt geopend en de betreffende review wordt er in getoont.
+    - [ ] De sidebar wordt geopend en de betreffende review wordt er in getoont.
 
 ### Zoeken naar bestaande locatie:
 
 1. Laad de homepage http://localhost/
     - [ ] Rechts boven is een zoekformulier zichtbaar.
 2. Vul het woord `Avans` _(Visitor must be able to insert a keyword.)_
-	- [ ] Er komt een dropdown met `Avans Hogeschool` als resultaat.
+    - [ ] Er komt een dropdown met `Avans Hogeschool` als resultaat.
 3. Klik op een resultaat  _(Results will be shown if found.)_
-	- [ ] De sidebar wordt geopend en de betreffende locatie wordt getoont.
-	- [ ] Het is mogelijk om vanaf hier de reviews van `Avans` de bekijken.
+    - [ ] De sidebar wordt geopend en de betreffende locatie wordt getoont.
+    - [ ] Het is mogelijk om vanaf hier de reviews van `Avans` de bekijken.
 
 
 ### Zoeken naar niet bestaande review:
@@ -191,133 +170,65 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
 1. Laad de homepage http://localhost/
     - [ ] Rechts boven is een zoekformulier zichtbaar.
 2. Vul het woord `nope`
-	- [ ] Er komt een dropdownp.
-	- [ ] In de dropdown staat `No search results found`
-	
-###Zoeken op alle tekstvelden:
-
-##Review:
-#Student stad:
-1. Laad de homepage http://localhost/
-    [ ] Rechts boven is een zoekformulier zichtbaar.
-2. Vul het woord `Utrecht` _(Visitor must be able to insert a keyword.)_
-	[ ] Er komt een dropdown met `Review by Harry Bakker` als resultaat.
-3. Klik op een resultaat  _(Results will be shown if found.)_
-	[ ] De sidebar wordt geopend en de betreffende locatie wordt getoont.
-	[ ] Het is mogelijk om vanaf hier de review van `Harry Bakker` te bekijken bij de `McDonald's te 's-Hertogenbosch`.
-
-#Student adres:
-1. Laad de homepage http://localhost/
-    [ ] Rechts boven is een zoekformulier zichtbaar.
-2. Vul het woord `Jansenlaan` _(Visitor must be able to insert a keyword.)_
-	[ ] Er komt een dropdown met `Review by Kees Jansen` als resultaat.
-3. Klik op een resultaat  _(Results will be shown if found.)_
-	[ ] De sidebar wordt geopend en de betreffende locatie wordt getoont.
-	[ ] Het is mogelijk om vanaf hier de review van `Kees Jansen` te bekijken bij de `Avans Hogeschool 's-Hertogenbosch`.
-
-#Student email:
-1. Laad de homepage http://localhost/
-    [ ] Rechts boven is een zoekformulier zichtbaar.
-2. Vul het woord `h.bakker@student.avans.nl` _(Visitor must be able to insert a keyword.)_
-	[ ] Er komt een dropdown met `Review by Harry Bakker` als resultaat.
-3. Klik op een resultaat  _(Results will be shown if found.)_
-	[ ] De sidebar wordt geopend en de betreffende locatie wordt getoont.
-	[ ] Het is mogelijk om vanaf hier de review van `Harry Bakker` te bekijken bij de `McDonald's te 's-Hertogenbosch`.
-
-#Project type:
-1. Laad de homepage http://localhost/
-    [ ] Rechts boven is een zoekformulier zichtbaar.
-2. Vul het woord `Internship` _(Visitor must be able to insert a keyword.)_
-	[ ] Er komt een dropdown met `Review by Kees Jansen` als resultaat.
-3. Klik op een resultaat  _(Results will be shown if found.)_
-	[ ] De sidebar wordt geopend en de betreffende locatie wordt getoont.
-	[ ] Het is mogelijk om vanaf hier de review van `Kees Jansen` te bekijken bij de `Avans Hogeschool 's-Hertogenbosch`.
-
-##Instituut:
-#Locatie:
-1. Laad de homepage http://localhost/
-    [ ] Rechts boven is een zoekformulier zichtbaar.
-2. Vul het woord ``s-Hertogenbosch` _(Visitor must be able to insert a keyword.)_
-	[ ] Er komt een dropdown met `Avans Hogeschool` als resultaat.
-3. Klik op een resultaat  _(Results will be shown if found.)_
-	[ ] De sidebar wordt geopend en de betreffende locatie wordt getoont.
-	[ ] Het is mogelijk om vanaf hier de reviews van `Avans` te bekijken.
-
-#Type:
-1. Laad de homepage http://localhost/
-    [ ] Rechts boven is een zoekformulier zichtbaar.
-2. Vul het woord `business` _(Visitor must be able to insert a keyword.)_
-	[ ] Er komt een dropdown met `McDonald's` als resultaat.
-3. Klik op een resultaat  _(Results will be shown if found.)_
-	[ ] De sidebar wordt geopend en de betreffende locatie wordt getoont.
-	[ ] Het is mogelijk om vanaf hier de reviews van `McDonald's` te bekijken.
-
-
-###Zoeken naar niet bestaande review/instituut:
-
-1. Laad de homepage http://localhost/
-    [ ] Rechts boven is een zoekformulier zichtbaar.
-2. Vul het woord `nope`
-	[ ] Er komt een dropdown.
-	[ ] In de dropdown staat `No search results found`
+    - [ ] Er komt een dropdown.
+    - [ ] In de dropdown staat `No search results found`
 
 
 ## Coördinator:
 ### Wachtwoord succesvol veranderen:
-1.	Laad de homepage http://localhost/Management/ChangePassword
+1.  Laad de homepage http://localhost/Management/ChangePassword
     - [ ] Er is een overzicht zichtbaar om je gegevens aan te passen
-2.	Druk op de knop `Change Password`
-	* Vul `password` in.
-	* Vul `pasword` in.
-	* Vul `pasword` in.
-	- [ ] U krijgt de tekst `Change password succesfully.` te zien
+2.  Druk op de knop `Change Password`
+    * Vul `password` in het 'Old Password' veld in.
+    * Vul `notsosecret` in het 'New Password' veld in.
+    * Vul `notsosecret` in het 'Repeat New Password' veld in.
+    - [ ] U krijgt de tekst `Change password succesfully.` te zien
 
 ### Wachtwoord niet succesvol veranderen:
-1.	Laad de homepage http://localhost/Management/ChangePassword
+1.  Laad de homepage http://localhost/Management/ChangePassword
     - [ ] Er is een overzicht zichtbaar om je gegevens aan te passen
-2.	Druk op de knop `Change Password`
-	* Vul 'password' in.
-	* Vul `password` in.
-	* Vul `password` in.
-	* Druk op `save`
+2.  Druk op de knop `Change Password`
+    * Vul `notoldpassword` in het 'Old Password' veld in.
+    * Vul `notsosecret` in het 'New Password' veld in.
+    * Vul `notsosecret` in het 'Repeat New Password' veld in.
+    * Druk op `save`
     - [ ] U krijgt de tekst `Old password didn't match.` te zien
 
-1.	Laad de homepage http://localhost/Management/ChangePassword
+1.  Laad de homepage http://localhost/Management/ChangePassword
     - [ ] Er is een overzicht zichtbaar om je gegevens aan te passen
-2.	Druk op de knop `Change Password`
-	* Vul `pasword` in.
-	* Vul `passsword` in.
-	* Vul `password` in.
-	* Druk op `save`
-	- [ ] U krijgt de tekst `New passwords didn't match.` te zien
-	
-3.	Druk op de knop `Change Password`
-	* Vul 'pasword' in.
-	* Vul 'pasword' in.
-	* Vul 'pasword' in.
-	* Druk op  `save`
+2.  Druk op de knop `Change Password`
+    * Vul `notsosecret` in het 'Old Password' veld in.
+    * Vul `password` in het 'New Password' veld in.
+    * Vul `pasword` in het 'Repeat New Password' veld in.
+    * Druk op `save`
+    - [ ] U krijgt de tekst `New passwords didn't match.` te zien
+3.  Druk op de knop `Change Password`
+    * Vul `notsosecret` in het 'Old Password' veld in.
+    * Vul `notsosecret` in het 'New Password' veld in.
+    * Vul `notsosecret` in het 'Repeat New Password' veld in.
+    * Druk op  `save`
     - [ ] U krijgt de tekst `New password can't be the same as the old password.` te zien
-4.	Verander het wachtwoord terug naar het orgineel door op de knop `Change Password` te drukken.
-	* Vul 'pasword' in.
-	* Vul 'password' in.
-	* Vul 'password' in.
-	* Druk op  `save`
+4.  Verander het wachtwoord terug naar het orgineel door op de knop `Change Password` te drukken.
+    * Vul `notsosecret` in het 'Old Password' veld in.
+    * Vul `password` in het 'New Password' veld in.
+    * Vul `password` in het 'Repeat New Password' veld in.
+    * Druk op  `save`
     - [ ] U krijgt de tekst `Change password succesfully.` te zien
 
 ### Mijn account aanpassen:
-1.	Laad de homepage http://localhost/Management/MyAccount
+1.  Laad de homepage http://localhost/Management/MyAccount
     - [ ] Er is een overzicht zichtbaar om je gegevens aan te passen
-2.	Druk op de knop `My Account`
+2.  Druk op de knop `My Account`
         * Druk op de knop `Save`
     - [ ]  U krijgt de tekst `Successfully saved.` te zien
 
 ###Correct een nieuwe Locatie aanmaken:
-1.	Laad de pagina: http://localhost/Management/MyLocations/
-    - [ ] Er is een overzicht zichtbaar om je gegevens aan te passen
+1.  Laad de pagina: http://localhost/Management/MyLocations/
+    - [ ] Er is een overzicht zichtbaar om je locaties aan te passen
 2.    Druk op de knop `Create New Location`
 3.    Vul de gegevens in volgens Bijlage 3.
-	* Je krijgt een scherm te zien om een nieuwe locatie aan te maken.
-	* Druk op de knop `Create Location`
+    * Je krijgt een scherm te zien om een nieuwe locatie aan te maken.
+    * Druk op de knop `Create Location`
     - [ ] Het scherm verdwijnt en er wordt een nieuwe locatie aangemaakt.
 
 ###Incorrect een nieuwe Locatie aanmaken:
@@ -334,16 +245,16 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
     - [ ] Bovenaan zou de error `Streetnumber is not a number` moeten verschijnen.
 4.    Maak van het `Company's House Number` veld weer een getal
 5.    Probeer van de ingevulde adres gegevens een niet bestaand adres te maken:
-	* Vul bij `company city` de waarde: `NietBestaandeStad` in.
-	* Vul bij `company street` de waarde: `DummyStraat` in.
-	* Vul bij `company house number` de waarde: `666` in.
-	* Vul bij `company postal code` de waarde: `5000AA` in.
+    * Vul bij `company city` de waarde: `NietBestaandeStad` in.
+    * Vul bij `company street` de waarde: `DummyStraat` in.
+    * Vul bij `company house number` de waarde: `666` in.
+    * Vul bij `company postal code` de waarde: `5000AA` in.
     * Druk op de knop `Create Location`
     - [ ] Bovenaan zou de error `Could not Geocode. Location was not created.` moeten verschijnen.
 
 ###Correct een Locatie aanpassen:
-1.	Laad de pagina: http://localhost/Management/MyLocations/
-    - [ ] Er is een overzicht zichtbaar om je gegevens aan te passen
+1.  Laad de pagina: http://localhost/Management/MyLocations/
+    - [ ] Er is een overzicht zichtbaar om je locaties aan te passen
 2.    Druk op de knop potlood icoontje achter de Locatie McDonald's
 3.    Controleer of de gegevens kloppen volgens Bijlage 3.
 4.    Vul bij `Company's Name` 'Mc-Donald's' in.
@@ -351,8 +262,8 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
     - [ ] Het scherm verdwijnt en de locatie word met succes aangepast.
 
 ###Incorrect een Locatie aanpassen:
-1.	Laad de pagina: http://localhost/Management/MyLocations/
-    - [ ] Er is een overzicht zichtbaar om je gegevens aan te passen
+1.  Laad de pagina: http://localhost/Management/MyLocations/
+    - [ ] Er is een overzicht zichtbaar om je locaties aan te passen
 2.    Druk op de knop potlood icoontje achter de Locatie McDonald's
 3.    Volg `Incorrect een nieuwe Locatie aanmaken` vanaf stap 2.
     * Je hoeft niet op de `Create New Location` Knop te drukken
@@ -360,31 +271,31 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
     - [ ] Bovenstaand is met succes uitgevoerd.
 
 ###Correct een nieuw Project aanmaken:
-1.	Laad de pagina: http://localhost/Management/MyProjects/
-    - [ ] Er is een overzicht zichtbaar om je gegevens aan te passen
+1.  Laad de pagina: http://localhost/Management/MyProjects/
+    - [ ] Er is een overzicht zichtbaar om je projecten aan te passen
     * De Pagina laad, en de `Create Project` knop is zichtbaar
 2.    Druk op de knop `Create Project`
-	* Je krijgt een scherm te zien om een nieuw project aan te maken.
+    * Je krijgt een scherm te zien om een nieuw project aan te maken.
 3.    Vul de gegevens in volgens Bijlage 5.
-	* Druk op de knop `Create Project`
+    * Druk op de knop `Create Project`
     - [ ] Het scherm verdwijnt en er wordt een nieuwe locatie aangemaakt.
 
 ###Incorrect een nieuw Project aanmaken:
-1.	Laad de pagina: http://localhost/Management/MyProjects/
-    - [ ] Er is een overzicht zichtbaar om je gegevens aan te passen
+1.  Laad de pagina: http://localhost/Management/MyProjects/
+    - [ ] Er is een overzicht zichtbaar om je projecten aan te passen
     * De Pagina laad, en de `Create Project` knop is zichtbaar
 2.    Druk op de knop `Create Project`
     * Vul de gegevens in volgens Bijlage 5.
     * Maak willekeurig een van de zojuist ingevulde, verplichte, velden leeg.
     * Druk op de knop `Create Project`
-	- [ ] Bovenaan zou de error `Not everything is filled in` moeten verschijnen.
+    - [ ] Bovenaan zou de error `Not everything is filled in` moeten verschijnen.
 3.    Vul het zojuist leeg gemaakte veld in met de eerder genoemde waarden.
     * Selecteer bij `start date` als jaar `2013` en als maand `Januari`
     * Druk op de knop `Create Project`
     - [ ] Bovenaan zou de error `Start date cannot be after Stop date` moeten verschijnen.
 
 ###Correct een Project aanpassen:
-1.	Laad de pagina: http://localhost/Management/MyProjects/
+1.  Laad de pagina: http://localhost/Management/MyProjects/
     - [ ] Er is een overzicht zichtbaar om je gegevens aan te passen
 2.    Druk op de knop potlood icoontje achter de Minor bij Avans Hogeschool
 3.    Controleer of de gegevens kloppen volgens Bijlage 5.
@@ -393,7 +304,7 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
     - [ ] Het scherm verdwijnt en de locatie word met succes aangepast.
 
 ###Incorrect een Project aanpassen:
-1.	Laad de pagina: http://localhost/Management/MyProjects/
+1.  Laad de pagina: http://localhost/Management/MyProjects/
     - [ ] Er is een overzicht zichtbaar om je gegevens aan te passen
 2.    Druk op de knop potlood icoontje achter de Minor bij Avans Hogeschool
 3.    Volg `Incorrect een nieuwe Project aanmaken` vanaf stap 2.
@@ -405,15 +316,10 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
 1.    Laad de pagina: http://localhost/Management/MyReviews/
     * De Pagina laad, en de `Write review` knop is zichtbaar
 2.    Druk op de knop `Write review`
-	* Je krijgt een scherm te zien om een nieuwe review aan te maken.
-	* Selecteer bij `project` de waarde: 'Avans Hogeschool ('s-Hertogenbosch) - Internship'
-	* Selecteer bij `assignment score` de waarde: 'Not Relevant'
-	* Selecteer bij `guidance score` de waarde: '2'
-	* Selecteer bij `accomodation score` de waarde: '3'
-	* Selecteer bij `overall score` de waarde: '3'
-	* Vul bij `review` de tekst: 'Dit is een test review.' in.
-	* Druk op de knop `Create Review`
-	- [ ] Het scherm verdwijnt en er wordt een nieuwe review aangemaakt.
+    * Je krijgt een scherm te zien om een nieuwe review aan te maken.
+    * Gebruik de gegevens uit bijlage 6 om de review in te vullen.
+    * Druk op de knop `Create Review`
+    - [ ] Het scherm verdwijnt en er wordt een nieuwe review aangemaakt.
 
 ###Incorrect een nieuwe Review aanmaken:
 1.    Laad de pagina: http://localhost/Management/MyReviews/
@@ -425,7 +331,7 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
     - [ ] Bovenaan zou de error `Not everything is filled in` moeten verschijnen.
 
 ###Correct een Review aanpassen:
-1.	Laad de pagina: http://localhost/Management/MyReviews/
+1.  Laad de pagina: http://localhost/Management/MyReviews/
     - [ ] Er is een overzicht zichtbaar om je gegevens aan te passen
 2.    Druk op de knop potlood icoontje achter de Review van de `Avans Hogeschool`
 3.    Controleer of de gegevens kloppen volgens Bijlage 5.
@@ -434,7 +340,7 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
     - [ ] Het scherm verdwijnt en de review word met succes aangepast.
 
 ###Incorrect een Review aanpassen:
-1.	Laad de pagina: http://localhost/Management/MyReviews/
+1.  Laad de pagina: http://localhost/Management/MyReviews/
     - [ ] Er is een overzicht zichtbaar om je gegevens aan te passen
 2.    Druk op de knop potlood icoontje achter de Review van de `Avans Hogeschool`
 3.    Volg `Incorrect een nieuwe Review aanmaken` vanaf stap 2.
@@ -443,13 +349,13 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
     - [ ] Bovenstaand is met succes uitgevoerd.
 
 ###Een Project verwijderen:
-1.	Laad de pagina: http://localhost/Management/MyProjects/
+1.  Laad de pagina: http://localhost/Management/MyProjects/
     - [ ] Er is een overzicht zichtbaar om je gegevens aan te passen
 2.    Druk op het 'X' icoontje achter het project van McDonald's.
-	* Je krijgt een scherm te zien met daarin de info over het te verwijderen project.
+    * Je krijgt een scherm te zien met daarin de info over het te verwijderen project.
 3.    Controlleer dat de getoonde informatie klopt.
-	* Druk op de knop `Remove`
-	- [ ] Het scherm verdwijnt en het project wordt verwijdert.
+    * Druk op de knop `Remove`
+    - [ ] Het scherm verdwijnt en het project wordt verwijdert.
 
 ###Incorrect een User aanpassen:
 1.    Laad de pagina: http://localhost/Management/Users/
@@ -470,61 +376,55 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
 
 
 ###Een Locatie verwijderen:
-1.	Laad de pagina: http://localhost/Management/MyLocations/
+1.  Laad de pagina: http://localhost/Management/MyLocations/
     - [ ] Er is een overzicht zichtbaar om je gegevens aan te passen
 2.    Druk op het 'X' icoontje achter de locatie McDonald's.
-	* Je krijgt een scherm te zien met daarin de info over de te verwijderen locatie.
+    * Je krijgt een scherm te zien met daarin de info over de te verwijderen locatie.
 3.    Controlleer dat de getoonde informatie klopt.
-	* Druk op de knop `Remove`
-	- [ ] Het scherm verdwijnt en de locatie wordt verwijdert.
+    * Druk op de knop `Remove`
+    - [ ] Het scherm verdwijnt en de locatie wordt verwijdert.
 
 ###Een Review verwijderen:
-1.	Laad de pagina: http://localhost/Management/MyReviews/
+1.  Laad de pagina: http://localhost/Management/MyReviews/
     - [ ] Er is een overzicht zichtbaar om je gegevens aan te passen
 2.    Druk op het 'X' icoontje achter de review van de McDonald's.
-	* Je krijgt een scherm te zien met daarin de info over de te verwijderen review.
+    - [ ] Je krijgt een scherm te zien met daarin de info over de te verwijderen review.
 3.    Controlleer dat de getoonde informatie klopt.
-	* Druk op de knop `Remove`
-	- [ ] Het scherm verdwijnt en de locatie wordt verwijdert.
-
-
-
-## Bijlage
-### 1. Incorrecte registreren waarden
-    * Het scherm verdwijnt en er wordt een nieuwe review aangemaakt.
+    * Druk op de knop `Remove`
+    - [ ] Het scherm verdwijnt en de locatie wordt verwijdert.
 
 ##Filteren op locatie type:
 1.      Laad de homepage http://localhost/
-    * De kaart is zichtbaar met in de menubalk de filter "Location Type:".
+    - [ ] De kaart is zichtbaar met in de menubalk de filter "Location Type:".
 2.      Selecteer in de filter optie om alleen de "education" te laten zien.
-    * Alle markers met een icoontje  van een business verdwijnen.
+    - [ ] Alle markers met een icoontje  van een business verdwijnen.
 3.      Select in de filter optie om alleen de "business" te laten zien.
-    * De markers met een icoontje van een education verdwijnen.
-    * De markers met een icoontje van een busines verschijnen.
+    - [ ] De markers met een icoontje van een education verdwijnen.
+    - [ ] De markers met een icoontje van een busines verschijnen.
 
 ##Reseten van filters:
 1.      Laad de homepage http://localhost/
-    * De kaart is zichtbaar met in de menubalk de button "Reset".
+    - [ ] De kaart is zichtbaar met in de menubalk de button "Reset".
 2.      Selecteer in de filter optie om alleen de "education" te laten zien.
-    * Alle markers met een icoontje  van een business verdwijnen.
+    - [ ] Alle markers met een icoontje  van een business verdwijnen.
 3.      Druk op de "Reset" knop in de menubalk.
-    * Alle markers verschijnen.
-    * Alle filter opties worden leeg.
+    - [ ] Alle markers verschijnen.
+    - [ ] Alle filter opties worden leeg.
 
 ##Filteren op locatie type:
 1.      Laad de homepage http://localhost/
-    * De kaart is zichtbaar met in de menubalk de filter "Country:".
+    - [ ] De kaart is zichtbaar met in de menubalk de filter "Country:".
 2.      Selecteer in de filter optie om alleen de "Netherlands" te laten zien.
-    * Alle markers buiten nederland verdwijnen.
+    - [ ] Alle markers buiten nederland verdwijnen.
 3.      Select in de filter optie om alleen de "" (leeg) te laten zien.
-    * Alle markers verschijnen.
+    - [ ] Alle markers verschijnen.
 
 ##Filters combineren
 1.      Laad de homepage http://localhost/
-    * De kaart is zichtbaar met in de menubalk de filter "Country:".
+    - [ ] De kaart is zichtbaar met in de menubalk de filter "Country:".
 2.      Selecteer in de filter optie Country om alleen de "Netherlands" te laten zien.
 3.      Selecteer in de filter optie Location Type de "education" te laten zien.
-    * Alleen markers in nederland zijn zichtbaar met het "education" type.
+    - [ ] Alleen markers in nederland zijn zichtbaar met het "education" type.
 
 ##Bijlage
 ###1. Incorrecte registreren waarden
@@ -548,7 +448,7 @@ Veld|Waarde
 --------|--------
 Username|patrick
 Password|iscool
-E-mail|test@toip.nl
+E-mail|pat@example.com
 First Name|Patrick
 Surname|Berenschot
 City|Arnhem
@@ -556,6 +456,7 @@ Zipcode|6000AA
 Street|Straatnaam
 Streetnumber|12
 Addition|[leeg]
+Registration Code | 1234567890
 
 ###3. Correcte nieuwe locatie
 Veld|Waarde
@@ -586,3 +487,13 @@ Start Year|2013
 Start Month|September
 End Year|2014
 End Month|February
+
+###6. Correct een review aanmaken
+Veld|Waarde
+--------|--------
+Project|Avans Hogeschool ('s-Hertogenbosch) - Internship
+Assignment score|Not Relevant
+Guidance score|2
+Accomodation score|3
+Overall score|3
+review|Dit is een test review.
