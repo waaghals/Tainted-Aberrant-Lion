@@ -61,7 +61,7 @@ Om de code vrij te houden van SQL code hebben we gekozen voor een ORM, een ORM h
 Vervolgens is er gekozen voor __Doctrine__ als ORM aangezien hiermee de meeste ervaring is in het team. Er is verder niet gekeken naar andere ORM's. Het is niet handig om een totaal andere ORM aan te leren als er al ervaring is met __Doctrine__.
 
 ###4.1. Entiteiten
-![EER](images/docs/EER.png)
+![ERD](img/erd.png)
 
 
 ###4.2. Autoloader
