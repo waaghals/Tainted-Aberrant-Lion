@@ -1,0 +1,65 @@
+<div id="management_right">
+    <div id="management_container">
+        <form name='management_account' method='post' enctype="multipart/form-data">
+            <div id="management_container_top">
+                <div class="management_tab">
+                    <a href="/Management/Users/">Manage Users</a>
+                </div>
+                <div class="spacerbar" style="float:left; height:37px;"></div>
+                <div class="management_tab">
+                    <a href="/Management/CreateUser/">Create Access Codes</a>
+                </div>
+            </div>
+            <div style="width:100%; position: absolute; top: 50px; height:1px; background-color: #dde0e8;">
+            </div>
+            <div style="width:96%; margin: 2%; overflow: auto; margin-top:50px;" id="scrollable">
+                <table class="ManagementTable">
+                    <tr>
+                        <th>Name:</th>
+                        <th>Email:</th>
+                        <th>Locations:</th>
+                        <th>Projects:</th>
+                        <th>Reviews:</th>
+                        <th colspan="2"></th>
+                    </tr>
+                    <?php
+                    $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
+                    $qb = $em->createQueryBuilder();
+                    $qb->select('st')
+                            ->from('\PROJ\Entities\Student', 'st')
+                            ->orderBy('st.surname', 'ASC');
+                    $students = $qb->getQuery()->getResult();
+
+                    foreach ($students as $student) {
+                        //Count number of Review for student
+                        $qb = $em->createQueryBuilder();
+                        $qb->select('p')
+                                ->from('\PROJ\Entities\Project', 'p')
+                                ->join('p.review', 'r')
+                                ->where($qb->expr()->eq('p.student', $qb->expr()->literal($student->getId())));
+                        $reviews = $qb->getQuery()->getResult();
+                        ?>
+                        <tr>
+                            <td><p><?php echo $student->getFullName(); ?></p></td>
+                            <td><p><?php echo $student->getEmail(); ?></p></td>
+                            <td><p><?php echo count($em->getRepository('\PROJ\Entities\Institute')->findBy(array('creator' => $student->getId()))); ?></p></td>
+                            <td><p><?php echo count($em->getRepository('\PROJ\Entities\Project')->findBy(array('student' => $student->getId()))); ?></p></td>
+                            <td><p><?php echo count($reviews); ?></p></td>
+                            <td style="width: 40px;"><img class="action_btn users_update" data-user-id="<?php echo $student->getId(); ?>" src="/images/edit.png" /></td>
+                            <td style="width: 40px;"><img class="action_btn users_remove" data-user-id="<?php echo $student->getId(); ?>" src="/images/delete.png" /></td>
+                        </tr>
+                        <?php
+                    }
+
+                    if (count($students) == 0) {
+                        ?>
+                        <tr>
+                            <td colspan="7"><p>No Users found</p></td>
+                        </tr>
+                        <?php
+                    }
+                    ?>
+                </table>
+            </div>
+        </form>
+    </div>

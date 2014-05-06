@@ -257,7 +257,77 @@ class AjaxController extends BaseController
         }
     }
 
-    public function saveProjectAction($unitTest = null)
+    public function saveUserAction($unitTest = null)
+    {
+        if ($unitTest != null) {
+            $_POST = $unitTest;
+        }
+
+        if (empty($_POST['firstname']) || empty($_POST['surname']) || empty($_POST['username'])) {
+            echo "Not everything is filled in";
+            return false;
+        }
+        foreach ($_POST as $input) {
+            if (strlen($input) > 254) {
+                echo "Some fieldes are too long.";
+                return false;
+            }
+            if (!preg_match('/^[A-Za-z0-9. -_]{1,31}$/', $input)) {
+                echo "No special characters allowed";
+                return false;
+            }
+        }
+
+        if (!is_numeric($_POST['id'])) {
+            echo "Invalid ID";
+            return false;
+        }
+
+        if ($_POST['action'] != "update" && $_POST['action'] != "create") {
+            echo("Invalid POST:ACTION");
+            return false;
+        }
+
+        if ($unitTest == null) {
+            $this->saveUserToDatabase();
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * Function to save a User to the Database
+     * Also does additional Checks
+     * @return type
+     */
+    private function saveUserToDatabase()
+    {
+        $em = DoctrineHelper::instance()->getEntityManager();
+        $ac = new \PROJ\Services\AccountService();
+
+        //TODO: Add coordinator check
+        if ($ac->isLoggedIn()) {
+            $user = $em->getRepository('\PROJ\Entities\Account')->find($_POST['id']);
+            if (count($em->getRepository('\PROJ\Entities\Account')->findBy(array('username' => $_POST['username']))) > 0 && $user->getUsername() != $_POST['username']) {
+                echo("This username isn't unique.");
+                return;
+            }
+
+            $student = $user->getStudent();
+
+            $student->setFirstName(\PROJ\Helper\XssHelper::sanitizeInput($_POST['firstname']));
+            $student->setSurName(\PROJ\Helper\XssHelper::sanitizeInput($_POST['surname']));
+            $user->setUsername(\PROJ\Helper\XssHelper::sanitizeInput($_POST['username']));
+
+            $em->persist($student);
+            $em->persist($user);
+            $em->flush();
+
+            echo 'succes';
+        }
+    }
+
+    public function createProjectAction()
     {
         if ($unitTest != null) {
             $_POST = $unitTest;
@@ -637,6 +707,50 @@ class AjaxController extends BaseController
             } else {
                 echo "This isn't your Project.";
             }
+        }
+    }
+
+	public function getUserInfoAction()
+    {
+        $em = DoctrineHelper::instance()->getEntityManager();
+        $ac = new \PROJ\Services\AccountService();
+
+        if (!is_numeric($_POST['id'])) {
+            echo "Illegal ID";
+            return;
+        }
+        if ($ac->isLoggedIn()) {
+            $student = $em->getRepository('\PROJ\Entities\Student')->find($_POST['id']);
+            //TODO: Add coordinator check
+            echo json_encode($student->jsonSerialize());
+        }
+    }
+
+    public function removeUserAction()
+    {
+        $em = DoctrineHelper::instance()->getEntityManager();
+        $ac = new \PROJ\Services\AccountService();
+
+        if (!is_numeric($_POST['id'])) {
+            echo "Illegal ID";
+            return;
+        }
+        if ($ac->isLoggedIn()) {
+            //TODO: Add coordinator check
+            $user = $em->getRepository('\PROJ\Entities\Student')->find($_POST['id']);
+            if ($user->getProject() != null) {
+                foreach ($user->getProject() as $proj) {
+                    if ($proj->getReview() != null) {
+                        foreach ($proj->getReview() as $rev) {
+                            $em->remove($rev);
+                        }
+                    }
+                    $em->remove($proj);
+                }
+            }
+            $em->remove($user);
+            $em->flush();
+            echo "succes";
         }
     }
 

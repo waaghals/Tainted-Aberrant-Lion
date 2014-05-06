@@ -3,6 +3,7 @@
 namespace PROJ\Controllers;
 
 use PROJ\Helper\HeaderHelper;
+use PROJ\Helper\XssHelper;
 
 /**
  * @author Thijs
@@ -34,6 +35,27 @@ class ManagementController extends BaseController
     public function myProjectsAction()
     {
         $this->page = "MyProjects";
+        $this->serveManagementTemplate();
+    }
+
+    public function UsersAction()
+    {
+        $this->page = "ViewUsers";
+        $this->serveManagementTemplate();
+    }
+
+    public function CreateUserAction()
+    {
+        //TODO: Add coordinator check
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {    //Create new account
+            $valid = $this->validateCreateUser();
+            if ($valid === "succes") {
+                $this->additionalVals = array('error' => 'Created access code succesfully.');
+            } else {
+                $this->additionalVals = array('error' => $valid);
+            }
+        }
+        $this->page = "CreateUser";
         $this->serveManagementTemplate();
     }
 
@@ -151,6 +173,60 @@ class ManagementController extends BaseController
         } else {
             return "Old password didn't match.";
         }
+    }
+
+    /**
+     * Function to validate the Create User form.
+     * Also saves code to the database.
+     * @return string
+     */
+    private function validateCreateUser()
+    {
+        if (empty($_POST['email']) || empty($_POST['rep_email'])) {
+            return "Not everything is filled in";
+        }
+
+        $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
+        $ac = new \PROJ\Services\AccountService();
+        if ($ac->isLoggedIn()) {
+            if ($_POST['email'] == $_POST['rep_email']) {
+                //Check if the email already has an activation code. If so; just resent the email
+                $RegCode = $em->getRepository('\PROJ\Entities\RegistrationCode')->findBy(array('email' => $_POST['email']));
+                if (count($RegCode) > 0) {
+                    $this->sendActivationMail($RegCode->getEmail(), $RegCode->getCode());
+                } else {
+                    $code = sha1(mt_rand(1, 99999) . time() . session_id());
+                    //Prevents duplicate codes
+                    while (count($em->getRepository('\PROJ\Entities\RegistrationCode')->findBy(array('code' => $code))) > 0) {
+                        $code = sha1(mt_rand(1, 99999) . time() . session_id());
+                    }
+
+                    $activation = new \PROJ\Entities\RegistrationCode();
+                    $activation->setCode($code);
+                    $activation->setEmail(XssHelper::sanitizeInput($_POST['email']));
+
+                    $em->persist($activation);
+                    $em->flush();
+
+                    $this->sendActivationMail(XssHelper::sanitizeInput($_POST['email']), $code);
+                }
+                return "succes";
+            } else {
+                return "E-Mail fiels do not match.";
+            }
+        } else {
+            return "Not Logged In";
+        }
+    }
+
+    private function sendActivationMail($to, $code)
+    {
+        $message = "This is your personal activation code to create a account on the Avans WorldMap.\n\rThis code is linked to your E-Mail adress.\n\r\n\rYour code is: " . $code;
+        $headers = "From: coordinator@toip.nl\r\n" .
+                "Reply-To: no-reply@toip.nl\r\n" .
+                'X-Mailer: PHP/' . phpversion();
+
+        mail($to, "Creation code for Avans WorldMap", $message, $headers);
     }
 
 }

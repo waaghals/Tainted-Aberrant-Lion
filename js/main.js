@@ -18,6 +18,9 @@ $(document).ready(function() {
     $('#management_save').click(function() {
         $(this).parent().parent().submit();
     });
+    $('#create_user_save').click(function() {
+        $(this).parent().parent().submit();
+    });
     //Create new location button
     $('.mylocation_add').click(function() {
         //Prepare page
@@ -77,6 +80,29 @@ $(document).ready(function() {
                     //error
                     $("#removeLocationError").html(data);
                     $("#removeLocationError").fadeIn();
+                }
+            });
+        });
+    });
+
+    //Remove user icon
+    $('.users_remove').click(function() {
+        var clicked = $(this);
+        tempID = clicked.data("user-id");
+        $('#blackout').fadeIn();
+        $('#blackout').children().filter(':visible').fadeOut();
+        $('.fullscreen_loading_icon').fadeIn(function() {
+            $.post("/ajax/getUserInfo/", {id: clicked.data("user-id")}, function(data) {
+                $('.fullscreen_loading_icon').fadeOut();
+                $('#blackout_delete_user').fadeIn();
+                try {
+                    json = $.parseJSON(data);
+                    $("#RemoveUserName").children().first().html(json.firstname + " " + json.surname);
+                    $("#RemoveUserEmail").children().first().html(json.email);
+                } catch (e) {
+                    //error
+                    $("#removeUserError").html(data);
+                    $("#removeUserError").fadeIn();
                 }
             });
         });
@@ -277,6 +303,39 @@ $(document).ready(function() {
         });
     });
 
+    //Update location icon
+    $('.users_update').click(function() {
+        var clicked = $(this);
+        tempID = clicked.data("user-id");
+
+        //Prepare page
+        $("#user_action").data("action", "update");
+        $("#user_action").children("p").html("Update User");
+        $('#user_action').show();
+        $("#addUserError").hide();
+
+        //Start fades
+        $('#blackout').fadeIn();
+        $('#blackout').children().filter(':visible').hide();
+        $('.fullscreen_loading_icon').fadeIn(function() {
+            $.post("/ajax/getUserInfo/", {id: clicked.data("user-id")}, function(data) {
+                $('.fullscreen_loading_icon').fadeOut();
+                $('#blackout_create_user').fadeIn();
+                try {
+                    json = $.parseJSON(data);
+                    var decodedName = $("<div/>").html(json.name).text();
+                    $('[name="create_user_form"]').find('[name="firstname"]').val(json.firstname);
+                    $('[name="create_user_form"]').find('[name="surname"]').val(json.surname);
+                    $('[name="create_user_form"]').find('[name="username"]').val(json.account.username);
+                } catch (e) {
+                    //error
+                    $("#addUserError").html(data);
+                    $("#addUserError").fadeIn();
+                }
+            });
+        });
+    });
+
     //Create new project button
     $('.myprojects_add').click(function() {
         //Prepare page
@@ -361,6 +420,24 @@ $(document).ready(function() {
         });
     });
 
+	//Create/Update new location confirmation button
+    $('#user_action').click(function() {
+        $(this).hide();
+        var data = $("[name='create_user_form']").serializeArray();
+        data.push({name: "action", value: $("#user_action").data("action")});
+        data.push({name: "id", value: tempID});
+        $.post("/Ajax/SaveUser", data, function(data) {
+            if (data == "succes") {
+                $('#blackout').fadeOut(function() {
+                    location.reload();
+                });
+            } else {
+                $('#user_action').show();
+                $('#addUserError').show().children().first().html(data);
+            }
+        });
+    });
+
     //Create new review confirmation button
     $('#review_action').click(function() {
         $(this).hide();
@@ -420,6 +497,21 @@ $(document).ready(function() {
             } else {
                 $('#remove_project').show();
                 $('#removeProjectError').show().children().first().html(data);
+            }
+        });
+    });
+
+    //Remove user confirmation button
+    $('#remove_user').click(function() {
+        $(this).hide();
+        $.post("/ajax/removeUser/", {id: tempID}, function(data) {
+            if (data == "succes") {
+                $('#blackout').fadeOut(function() {
+                    location.reload();
+                });
+            } else {
+                $('#remove_user').show();
+                $('#removeUserError').show().children().first().html(data);
             }
         });
     });

@@ -372,6 +372,62 @@ $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
     </div>
 </div>
 
+<!-- Update User -->
+
+<div id="blackout_create_user">
+    <div id="register_container">
+        <form name='create_user_form' method='post' enctype="multipart/form-data">
+            <img src="/images/register_top.png">
+            <div id="register_container_tophalf">
+                <div class="alert" id="addUserError" style="display:none; margin-bottom:20px; padding: 5px; clear:both;">
+                    <p></p>
+                </div>
+                <p style="font-weight:bold; margin-bottom:15px;">Please enter the details of the selected user:</p>
+                <div style="clear:both;"></div>
+
+                <div class="left_container">
+                    <p style="padding-top:18px;">Firstname: *</p>
+                </div>
+                <div style="width:5%; float:left;">&nbsp;</div>
+                <div class="right_container">
+                    <input name="firstname" value="" type="text" style="margin-top: 10px;" maxlength="50" />
+                </div>
+                <div style="clear:both;"></div>
+
+                <div class="left_container">
+                    <p style="padding-top:18px;">Surname: *</p>
+                </div>
+                <div style="width:5%; float:left;">&nbsp;</div>
+                <div class="right_container">
+                    <input name="surname" value="" type="text" style="margin-top: 10px;" maxlength="50" />
+                </div>
+                <div style="clear:both;"></div>
+
+                <div class="left_container">
+                    <p style="padding-top:18px;">Username: *</p>
+                </div>
+                <div style="width:5%; float:left;">&nbsp;</div>
+                <div class="right_container">
+                    <input name="username" value="" type="text" style="margin-top: 10px;" maxlength="50" />
+                </div>
+                <div style="clear:both;"></div>
+
+
+                <p style="margin-top:25px; font-size:10px; color: #a1a1a1;">Fields marked with asterisk (*) are required.</p>
+            </div>
+            <img src="/images/register_split.png">
+            <div id="register_container_bottomhalf">
+                <div class="fancy_button" id="user_action" style="left: 335px; top: 160px;">
+                    <img src="/images/btn_left.png" />
+                    <p>Create User</p>
+                    <img src="/images/btn_right.png" />
+                </div>
+            </div>
+            <img src="/images/register_bottom.png">
+        </form>
+    </div>
+</div>
+
 <!-- remove Location -->
 
 <div id="blackout_delete_location">
@@ -505,6 +561,50 @@ $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
                     <img src="/images/btn_right.png" />
                 </div>
                 <div class="fancy_button" id="remove_project">
+                    <img src="/images/btn_left.png" />
+                    <p>Remove</p>
+                    <img src="/images/btn_right.png" />
+                </div>
+            </div>
+            <img src="/images/register_bottom.png">
+        </form>
+    </div>
+</div>
+
+<!-- remove User -->
+
+<div id="blackout_delete_user">
+    <div id="register_container" style="height: 274px; left:auto; top: auto; margin: 0px;">
+        <form name='remove_user_form' method='post' enctype="multipart/form-data">
+            <img src="/images/register_top.png">
+            <div id="register_container_tophalf">
+                <div class="alert" id="removeUserError" style="display:none; margin-bottom:20px; padding: 5px; clear:both;">
+                    <p></p>
+                </div>
+                <p style="margin-bottom:15px;">You are about to <span style="font-weight: bold;">remove</span> the following User:</p>
+                <div style="clear:both;"></div>
+                <table>
+                    <tr>
+                        <td style="padding: 5px 5px 5px 0px;"><p>Name:</p></td>
+                        <td style="padding: 5px; font-weight: bold;" id="RemoveUserName"><p></p></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px 5px 5px 0px;"><p>Email:</p></td>
+                        <td style="padding: 5px; font-weight: bold;" id="RemoveUserEmail"><p></p></td>
+                    </tr>
+                </table>
+                <div style="clear:both;"></div>
+                <p style="margin:15px inherit;">This process will also remove any Projects and/or Reviews connected to this User.</p>
+                <p style="margin:15px inherit;">Are you sure you want to continue? This can <span style="font-weight: bold;">NOT</span> be undone.</p>
+            </div>
+            <img src="/images/register_split.png">
+            <div id="register_container_bottomhalf">
+                <div class="fancy_button blackout_cancel" style="margin-left:10px;">
+                    <img src="/images/btn_left.png" />
+                    <p>Cancel</p>
+                    <img src="/images/btn_right.png" />
+                </div>
+                <div class="fancy_button" id="remove_user">
                     <img src="/images/btn_left.png" />
                     <p>Remove</p>
                     <img src="/images/btn_right.png" />
