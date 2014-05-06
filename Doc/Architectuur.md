@@ -30,6 +30,12 @@ Alle controllers extenden `baseController`. Deze speciale controller zorgt er vo
 
 Elke controller heeft zo zijn eigen actions welke de juiste _views_, _services_ en eventueel _models_ gebruikt om tot een resultaat te komen. Dit resultaat wordt terug gestuurt naar de gebruiker.
 
+###3.1.1. Overzicht
+Hieronder een overzicht van de controllers.
+![](img/controllers.png)
+
+
+
 ###3.2. Models
 Zoals in punt 3. kort toegelicht zijn de _models_ pure data containers. De data wordt door __Doctrine__ opgehaald uit de database of ook door __Doctrine__ opgeslagen. Elke verandering aan de _models_ heeft niet direct invloed op de database. Dit gebeurt pas zodra in de model de methode `persist` wordt aangeroepen.
 
@@ -61,7 +67,7 @@ Om de code vrij te houden van SQL code hebben we gekozen voor een ORM, een ORM h
 Vervolgens is er gekozen voor __Doctrine__ als ORM aangezien hiermee de meeste ervaring is in het team. Er is verder niet gekeken naar andere ORM's. Het is niet handig om een totaal andere ORM aan te leren als er al ervaring is met __Doctrine__.
 
 ###4.1. Entiteiten
-![EER](images/docs/EER.png)
+![EER](img/EER.png)
 
 
 ###4.2. Autoloader
