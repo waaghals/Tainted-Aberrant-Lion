@@ -5,11 +5,11 @@ $ac = new PROJ\Services\AccountService();
     <nav>
         <h2 style="float:left;"><a href="/">Worldmap</a></h2>
         <?php if ($ac->isLoggedIn()): ?>
-            <button class="headerbutton" onclick=location.href = "/Account/Logout">Log uit</button>
-            <button class="headerbutton" onclick=location.href = "/Management/Home">Welcome <?php echo sprintf("%s", $_SESSION['user']->getStudent()->getFirstname()); ?></button>
+            <button class="headerbutton" onclick='location.href = "/Account/Logout"'>Log uit</button>
+            <button class="headerbutton" onclick='location.href = "/Management/Home"'>Welcome <?php echo sprintf("%s", $_SESSION['user']->getStudent()->getFirstname()); ?></button>
         <?php else: ?>
-            <button class="headerbutton" onclick=location.href = "/Account/Login">Log in</button>
-            <button class="headerbutton" onclick=location.href = "/account/Register">Register</button>
+            <button class="headerbutton" onclick='location.href = "/Account/Login"'>Log in</button>
+            <button class="headerbutton" onclick='location.href = "/account/Register"'>Register</button>
         <?php endif; ?>
         <?php if (isset($search)) { ?>
             <div style="width:30px; float:right;">
