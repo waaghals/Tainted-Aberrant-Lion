@@ -182,6 +182,10 @@ class ManagementController extends BaseController
      */
     private function validateCreateUser()
     {
+        if (empty($_POST['email']) || empty($_POST['rep_email'])) {
+            return "Not everything is filled in";
+        }
+
         $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
         $ac = new \PROJ\Services\AccountService();
         if ($ac->isLoggedIn()) {
