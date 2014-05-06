@@ -247,6 +247,76 @@ class AjaxController extends BaseController
         }
     }
 
+    public function saveUserAction($unitTest = null)
+    {
+        if ($unitTest != null) {
+            $_POST = $unitTest;
+        }
+
+        if (empty($_POST['firstname']) || empty($_POST['surname']) || empty($_POST['username'])) {
+            echo "Not everything is filled in";
+            return false;
+        }
+        foreach ($_POST as $input) {
+            if (strlen($input) > 254) {
+                echo "Some fieldes are too long.";
+                return false;
+            }
+            if (!preg_match('/^[A-Za-z0-9. -_]{1,31}$/', $input)) {
+                echo "No special characters allowed";
+                return false;
+            }
+        }
+
+        if (!is_numeric($_POST['id'])) {
+            echo "Invalid ID";
+            return false;
+        }
+
+        if ($_POST['action'] != "update" && $_POST['action'] != "create") {
+            echo("Invalid POST:ACTION");
+            return false;
+        }
+
+        if ($unitTest == null) {
+            $this->saveUserToDatabase();
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * Function to save a User to the Database
+     * Also does additional Checks
+     * @return type
+     */
+    private function saveUserToDatabase()
+    {
+        $em = DoctrineHelper::instance()->getEntityManager();
+        $ac = new \PROJ\Services\AccountService();
+
+        //TODO: Add coordinator check
+        if ($ac->isLoggedIn()) {
+            if (count($em->getRepository('\PROJ\Entities\Account')->findBy(array('username' => $_POST['username']))) > 0) {
+                echo("This username isn't unique.");
+                return;
+            }
+
+            $user = $em->getRepository('\PROJ\Entities\Account')->find($_POST['id']);
+            $student = $user->getStudent();
+
+            $student->setFirstName(\PROJ\Helper\XssHelper::sanitizeInput($_POST['firstname']));
+            $student->setSurName(\PROJ\Helper\XssHelper::sanitizeInput($_POST['surname']));
+            $user->setUsername(\PROJ\Helper\XssHelper::sanitizeInput($_POST['username']));
+
+            $em->persist($student);
+            $em->persist($user);
+            $em->flush();
+
+            echo 'succes';
+        }
+    }
+
     public function createProjectAction()
     {
         if (empty($_POST['type']) || empty($_POST['location']) || empty($_POST['start_year']) || empty($_POST['start_month']) || empty($_POST['end_year']) || empty($_POST['end_month'])) {

@@ -205,7 +205,8 @@ class Student
             "id" => $this->getId(),
             "street" => $this->getStreet(),
             "surname" => $this->getSurname(),
-            "zipcode" => $this->getZipcode()
+            "zipcode" => $this->getZipcode(),
+            "account" => $this->getAccount()->jsonSerialize()
         );
     }
 

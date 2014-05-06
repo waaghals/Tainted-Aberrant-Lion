@@ -376,7 +376,7 @@ $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
 
 <div id="blackout_create_user">
     <div id="register_container">
-        <form name='create_location_form' method='post' enctype="multipart/form-data">
+        <form name='create_user_form' method='post' enctype="multipart/form-data">
             <img src="/images/register_top.png">
             <div id="register_container_tophalf">
                 <div class="alert" id="addUserError" style="display:none; margin-bottom:20px; padding: 5px; clear:both;">
@@ -386,94 +386,29 @@ $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
                 <div style="clear:both;"></div>
 
                 <div class="left_container">
-                    <p style="padding-top:18px;">Type: *</p>
+                    <p style="padding-top:18px;">Firstname: *</p>
                 </div>
                 <div style="width:5%; float:left;">&nbsp;</div>
                 <div class="right_container">
-                    <select name="type" required autofocus>
-                        <option>-- Select a type --</option>
-                        <option value="education">Education</option>
-                        <option value="business">Business</option>
-                    </select>
+                    <input name="firstname" value="" type="text" style="margin-top: 10px;" maxlength="50" />
                 </div>
                 <div style="clear:both;"></div>
 
                 <div class="left_container">
-                    <p style="padding-top:18px;">Company's Name: *</p>
+                    <p style="padding-top:18px;">Surname: *</p>
                 </div>
                 <div style="width:5%; float:left;">&nbsp;</div>
                 <div class="right_container">
-                    <input name="name" value="" type="text" style="margin-top: 10px;" maxlength="50" />
+                    <input name="surname" value="" type="text" style="margin-top: 10px;" maxlength="50" />
                 </div>
                 <div style="clear:both;"></div>
 
                 <div class="left_container">
-                    <p style="padding-top:18px;">Company's Country: *</p>
+                    <p style="padding-top:18px;">Username: *</p>
                 </div>
                 <div style="width:5%; float:left;">&nbsp;</div>
                 <div class="right_container">
-                    <select name="country" required autofocus>
-                        <option value="">-- Select a country --</option>
-                        <?php
-                        foreach ($em->getRepository('\PROJ\Entities\Country')->findAll() as $res) {
-                            echo('<option value="' . $res->getId() . '">' . $res->getName() . '</option>');
-                        }
-                        ?>
-                    </select>
-                </div>
-                <div style="clear:both;"></div>
-
-                <div class="left_container">
-                    <p style="padding-top:18px;">Company's City: *</p>
-                </div>
-                <div style="width:5%; float:left;">&nbsp;</div>
-                <div class="right_container">
-                    <input name="city" value="" type="text" style="margin-top: 10px;" maxlength="50" />
-                </div>
-                <div style="clear:both;"></div>
-
-                <div class="left_container">
-                    <p style="padding-top:18px;">Company's Street: *</p>
-                </div>
-                <div style="width:5%; float:left;">&nbsp;</div>
-                <div class="right_container">
-                    <input name="street" value="" type="text" style="margin-top: 10px;" maxlength="50" />
-                </div>
-                <div style="clear:both;"></div>
-
-                <div class="left_container">
-                    <p style="padding-top:18px;">Company's House number: *</p>
-                </div>
-                <div style="width:5%; float:left;">&nbsp;</div>
-                <div class="right_container">
-                    <input name="housenumber" value="" type="text" style="margin-top: 10px;" maxlength="50" />
-                </div>
-                <div style="clear:both;"></div>
-
-                <div class="left_container">
-                    <p style="padding-top:18px;">Company's Postal code: *</p>
-                </div>
-                <div style="width:5%; float:left;">&nbsp;</div>
-                <div class="right_container">
-                    <input name="postalcode" value="" type="text" style="margin-top: 10px;" maxlength="6" />
-                </div>
-                <div style="clear:both;"></div>
-
-                <div class="left_container">
-                    <p style="padding-top:18px;">Company's E-mail: *</p>
-                </div>
-                <div style="width:5%; float:left;">&nbsp;</div>
-                <div class="right_container">
-                    <input name="email" value="" type="text" style="margin-top: 10px;" />
-                </div>
-                <div style="clear:both;"></div>
-
-                <div class="left_container">
-                    <p style="padding-top:18px;">Company's Telephone Number:</p>
-                </div>
-                <div style="width:5%; float:left;">&nbsp;</div>
-                <div class="right_container">
-                    <input name="telephone" value="" type="text" style="margin-top: 10px;" maxlength="50" />
+                    <input name="username" value="" type="text" style="margin-top: 10px;" maxlength="50" />
                 </div>
                 <div style="clear:both;"></div>
 
