@@ -1,0 +1,1572 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="84dff846-2de2-4e81-b104-097c6683e9aa"
+  name="agile" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <ownedCommentsInternal>
+    <comment
+      Id="5b4f7109-e390-4e0f-866d-856f2dca8c7f">
+      <body>Controller maakt gebruik van de volgende templates:
+Login
+Register</body>
+    </comment>
+    <comment
+      Id="aa1a792a-551e-455f-afc5-ec44faa71ac6">
+      <body>Controller maakt gebruik van de volgende templates:
+ContactFormSucces
+ContactForm</body>
+    </comment>
+    <comment
+      Id="01892903-b3b3-4ee6-beef-d2ffcc638dfb">
+      <body>Controller maakt gebruik van de volgende templates:
+MainMapView</body>
+    </comment>
+    <comment
+      Id="e970ec80-e05c-464f-aa49-bd4efd848bc2">
+      <body>Controller maakt gebruik van de volgende templates:
+Management</body>
+    </comment>
+  </ownedCommentsInternal>
+  <profileInstances>
+    <packageHasProfileInstances
+      Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b">
+      <profileInstance
+        Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791"
+        name="StandardProfileL2" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances
+      Id="29349502-908c-4fda-9054-c48619c59ed0">
+      <profileInstance
+        Id="532ea607-fb19-44b8-8502-3351b05452be"
+        name="StandardProfileL3" />
+    </packageHasProfileInstances>
+  </profileInstances>
+  <packagedElements>
+    <packageHasNamedElement>
+      <class
+        Id="4a47e23d-3a49-4936-a41f-c8f7481918c1"
+        name="BaseController"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="a941e539-ab01-40e1-99db-c678078e5801"
+        name="BaseController"
+        isAbstract="true"
+        isLeaf="false"
+        isActiveClass="false">
+        <ownedOperationsInternal>
+          <operation
+            Id="6eba6705-c1f7-40a6-ad91-78dc733c8a4a"
+            name="callAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <Interface
+        Id="4dd91130-5696-4d66-a394-72d23408ef54"
+        name="Interface1"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="f21b75b3-9151-4500-853c-076f25ddbd7c"
+        name="AccountController"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <description>Controller</description>
+        <suppliersInternal>
+          <dependency
+            Id="f36f1387-bc1e-4b11-bc15-e3a7a801849b">
+            <classMoniker
+              Id="5e689ff9-2eb4-480a-85d2-593af21860a8"
+              LastKnownName="AccountService"
+              LastKnownLocation="agile.uml" />
+          </dependency>
+        </suppliersInternal>
+        <generalsInternal>
+          <generalization
+            Id="5084f55f-30e2-42d1-9452-6b3a1d494213"
+            isSubstitutable="false">
+            <classMoniker
+              Id="a941e539-ab01-40e1-99db-c678078e5801"
+              LastKnownName="BaseController"
+              LastKnownLocation="agile.uml" />
+          </generalization>
+        </generalsInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="b1ca34cc-141c-4cfc-ba15-45ecfade8b07"
+            name="loginAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="a601ad8a-eb32-4e21-8788-4818d3d54933"
+            name="logoutAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="7d411574-e448-42cb-a7a5-824024d62777"
+            name="registerAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="5e689ff9-2eb4-480a-85d2-593af21860a8"
+        name="AccountService"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <ownedOperationsInternal>
+          <operation
+            Id="1477547a-86ee-43e3-b73a-92adc0b03b0e"
+            name="Login"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="22be0b8e-405e-47d3-900e-c73fa260aa04"
+            name="checkbruteforce"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="8cf3e9f2-64e5-480c-bdde-f5e1a4215ec4"
+            name="validateInput"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="9ec7cf39-004f-4961-bbf1-d390ffd6831c"
+            name="createAccount"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="2f2a54d0-be73-46b0-8b33-704dcedb1681"
+            name="createStudent"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="9793d5b4-49e8-44f5-83d8-d8f06851357d"
+            name="checkRegistrationCode"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="3297134c-e9ba-4e71-add5-e910db88a0f5"
+            name="isLoggedIn"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="4380061e-0fe2-4f19-b574-185fe84567d4"
+        name="BaseController"
+        isAbstract="true"
+        isLeaf="false"
+        isActiveClass="false">
+        <ownedOperationsInternal>
+          <operation
+            Id="8a4f6f52-9e0d-4164-b663-5febdd74fb4f"
+            name="callAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="9a66f26e-d15a-4e97-ac2a-85f0dfa82834"
+        name="AccountController"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <description>Controller</description>
+        <generalsInternal>
+          <generalization
+            Id="1f1eb129-6d23-4602-a0f6-17fa2500d0f8"
+            isSubstitutable="false">
+            <classMoniker
+              Id="4380061e-0fe2-4f19-b574-185fe84567d4"
+              LastKnownName="BaseController"
+              LastKnownLocation="agile.uml" />
+          </generalization>
+        </generalsInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="189c0a01-e1f5-4d63-8a29-4f641cdbc89a"
+            name="loginAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="f47cffa8-b883-49da-96ed-8661c769e035"
+            name="logoutAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="6898486c-7d4a-491d-8898-9253f4f444dc"
+            name="registerAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="6087d7bd-04c0-492c-ae59-b389be00849c"
+        name="AjaxController"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <generalsInternal>
+          <generalization
+            Id="d6704849-435e-4235-b8b9-7768a43a0dbb"
+            isSubstitutable="false">
+            <classMoniker
+              Id="4380061e-0fe2-4f19-b574-185fe84567d4"
+              LastKnownName="BaseController"
+              LastKnownLocation="agile.uml" />
+          </generalization>
+        </generalsInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="f3342f88-2ad8-4435-9be5-bb24179ed432"
+            name="allMarkersAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="d78da463-57f2-4f41-abd2-738627424d21"
+            name="allLocationsAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="e5dbf969-cdb4-4578-b826-efb4a318c6ae"
+            name="locationReviewAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="3aa0d042-1475-4d75-ad40-986899a39a1a"
+            name="getProjectInfoAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="0740510b-4e39-4207-8c49-bde599445afc"
+            name="saveLocationAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="cec83878-3a7f-41b7-adb7-6ea3021fd7e0"
+            name="saveLocationToDatabase"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="51a0cf97-cf98-44a6-a4dc-264dea207093"
+            name="createProjectAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="e67e6a16-8936-47e2-99ab-54764bcccf22"
+            name="createReviewAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="78bd57d7-c44b-48bc-9cab-27158426ef3b"
+            name="getLocationInfoAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="750c80d2-6ffe-4e72-8308-03d4afc932aa"
+            name="removeLocationAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="b4195175-4b69-4640-9f8c-a7aa9d9d2b3b"
+        name="ContactController"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <generalsInternal>
+          <generalization
+            Id="d3904ee4-4ed9-495f-978e-2fb0f6bf9d39"
+            isSubstitutable="false">
+            <classMoniker
+              Id="4380061e-0fe2-4f19-b574-185fe84567d4"
+              LastKnownName="BaseController"
+              LastKnownLocation="agile.uml" />
+          </generalization>
+        </generalsInternal>
+        <ownedAttributesInternal>
+          <property
+            Id="6b370d54-97cb-4171-84c3-4017621d9706"
+            name="service"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="cfc737ab-2136-4178-8ea2-3eadc92f9e1f"
+            name="showAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="39b10cbd-552a-4fa7-b5a9-b79f0ab950d7"
+        name="HomeController"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <generalsInternal>
+          <generalization
+            Id="89a37576-7391-4bbc-babd-b0566249574e"
+            isSubstitutable="false">
+            <classMoniker
+              Id="4380061e-0fe2-4f19-b574-185fe84567d4"
+              LastKnownName="BaseController"
+              LastKnownLocation="agile.uml" />
+          </generalization>
+        </generalsInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="87b6d23a-7fd1-4bcc-a55c-04b7ce17d245"
+            name="indexAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="15c8871d-241b-40ea-96b2-93e0231147af"
+            name="otherAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="10e8b91a-af9e-430a-b62f-0b00150c01f9"
+        name="ManagementController"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <generalsInternal>
+          <generalization
+            Id="4ac167c8-5724-4a3a-b7f2-a463c902c940"
+            isSubstitutable="false">
+            <classMoniker
+              Id="4380061e-0fe2-4f19-b574-185fe84567d4"
+              LastKnownName="BaseController"
+              LastKnownLocation="agile.uml" />
+          </generalization>
+        </generalsInternal>
+        <ownedAttributesInternal>
+          <property
+            Id="1656f98c-c88e-4788-b08d-374746bf3fe0"
+            name="page"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+          <property
+            Id="b73c5dfa-8031-4ee1-ad0d-0de2fa7a74ca"
+            name="additionalVals"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="db7dd40e-f13a-4b9a-8e59-32a65562bf0b"
+            name="HomeAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="d5d6a0af-d310-44f0-a25b-f1f665a00be0"
+            name="myReviewsAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="ca2c8b27-bd93-4395-b74f-7b78324ce4ca"
+            name="myLocationsAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="12398fe6-7638-4c8a-bc99-09b43bbeb0b8"
+            name="myprojectsAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="23adc7cb-9b6c-427b-9091-2c16df992a19"
+            name="changePasswordAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="3ff40882-f65f-4318-a918-8a4e56149173"
+            name="myAccountAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="e75c7aab-af06-4ac5-bf0d-e36c168002f6"
+            name="serveManagementTemplate"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="b49b5ec1-6e1f-479f-bdba-a584dc160d94"
+        name="RegisterController"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <generalsInternal>
+          <generalization
+            Id="b8d7c35a-a1b2-4192-a55c-4aca1eb2ef49"
+            isSubstitutable="false">
+            <classMoniker
+              Id="4380061e-0fe2-4f19-b574-185fe84567d4"
+              LastKnownName="BaseController"
+              LastKnownLocation="agile.uml" />
+          </generalization>
+        </generalsInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="8a495168-34f6-4c7d-90ac-620dd0aff9af"
+            name="validateInput"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="feb8a8df-0c07-4824-b38c-8564508944a1"
+            name="create_account"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="657ac558-6879-424d-a643-7b0aea77d234"
+            name="create_student"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="4684e53e-fa7e-460b-a4a3-94112ac2329f"
+        name="TestDataController"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <generalsInternal>
+          <generalization
+            Id="e2cb433a-2507-449a-ae8f-5ff92f3679cd"
+            isSubstitutable="false">
+            <classMoniker
+              Id="4380061e-0fe2-4f19-b574-185fe84567d4"
+              LastKnownName="BaseController"
+              LastKnownLocation="agile.uml" />
+          </generalization>
+        </generalsInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="e17abe9e-185b-46b6-be91-ca2e2b03dcd2"
+            name="emptyTables"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="0a7493f5-fe91-45bb-a53a-7a64d9134bdb"
+            name="createInstitute"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="c8b3489d-2f21-4513-991a-db4326e339da"
+            name="createUser"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="1c588b72-a9b1-4ac3-949b-d89785ad7f89"
+            name="createStudent"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="62f36168-6f4c-4dcd-bfd0-db1bd62c99b1"
+            name="createProject"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="aa85bf24-cd00-443b-859d-3e81946d454d"
+            name="createReview"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="649c12f3-ff03-40fb-bad3-276af9510098"
+            name="createCountry"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="c3cbf877-55d2-4dfe-ad9e-6342bcf7e21e"
+            name="IndexAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="130dce1b-bb0d-4cd2-a147-f17ec6da5e8e"
+        name="AjaxController"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <suppliersInternal>
+          <dependency
+            Id="c10bfda6-dfe0-4664-9ae4-1a345e96ca82">
+            <classMoniker
+              Id="b6a5ccb9-fd5d-4d1f-a3f5-4600d45e9ab1"
+              LastKnownName="MarkerCollection"
+              LastKnownLocation="agile.uml" />
+          </dependency>
+          <dependency
+            Id="14b2ac02-b09b-45ef-948e-fea3ce6d9e98">
+            <classMoniker
+              Id="cf65a382-6a10-4880-ae05-bb0d9fe573e2"
+              LastKnownName="AccountService"
+              LastKnownLocation="agile.uml" />
+          </dependency>
+          <dependency
+            Id="3682bbdd-82d4-4206-8bae-3c1b24f3cee1">
+            <classMoniker
+              Id="995f0a93-e222-49b5-96d2-96fba5a9215a"
+              LastKnownName="Marker"
+              LastKnownLocation="agile.uml" />
+          </dependency>
+        </suppliersInternal>
+        <generalsInternal>
+          <generalization
+            Id="0dc1b95e-3306-4a6e-ba56-1518034cd543"
+            isSubstitutable="false">
+            <classMoniker
+              Id="478980d8-980b-4694-91de-311e5ecd47b0"
+              LastKnownName="BaseController"
+              LastKnownLocation="agile.uml" />
+          </generalization>
+        </generalsInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="e431eb76-4ecb-477b-a5f9-eeda90414314"
+            name="allMarkersAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="03f43eec-91f8-4a1d-8f8a-f72b9566bc99"
+            name="allLocationsAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="ed6ccf8c-2fa7-4d0a-8f42-f888535a4fd3"
+            name="locationReviewAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="fc08af76-1875-4515-b0e9-a45b3b783af0"
+            name="getProjectInfoAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="06da6c17-3474-4b9a-8495-69cd6c3f3848"
+            name="saveLocationAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="6ad72eb6-be8a-4826-bb7d-863b34b220a3"
+            name="saveLocationToDatabase"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="b7b6fb39-8386-4d5c-9537-8f2c55a46d26"
+            name="createProjectAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="e771c15f-929c-4360-ac5f-7e3c95d7b720"
+            name="createReviewAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="37ccbbc4-9a32-404d-ac85-4ffca5028e01"
+            name="getLocationInfoAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="5be316a9-ff13-409e-b530-3ed23b76404c"
+            name="removeLocationAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="478980d8-980b-4694-91de-311e5ecd47b0"
+        name="BaseController"
+        isAbstract="true"
+        isLeaf="false"
+        isActiveClass="false">
+        <ownedOperationsInternal>
+          <operation
+            Id="69323996-f679-4500-ad35-2fcc03bc744e"
+            name="callAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="b6a5ccb9-fd5d-4d1f-a3f5-4600d45e9ab1"
+        name="MarkerCollection"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <suppliersInternal>
+          <dependency
+            Id="935bb538-106d-4fc7-b733-228515cc1da4">
+            <classMoniker
+              Id="995f0a93-e222-49b5-96d2-96fba5a9215a"
+              LastKnownName="Marker"
+              LastKnownLocation="agile.uml" />
+          </dependency>
+        </suppliersInternal>
+        <ownedAttributesInternal>
+          <property
+            Id="2797174d-3024-4d18-9b3e-afcb3edc9e83"
+            name="defaultMarker"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+          <property
+            Id="ad8d2326-6f4c-4b49-a57a-acff459f1a43"
+            name="markerLocations"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="ccb011b2-4c4b-4acf-b43c-2bda3c95daf3"
+            name="addMarkerLocation"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="b68f956f-2bbe-4e8b-ac15-686d8f32779a"
+            name="generateMarkerJSON"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="cf65a382-6a10-4880-ae05-bb0d9fe573e2"
+        name="AccountService"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <ownedOperationsInternal>
+          <operation
+            Id="8af0029f-8017-417b-a7d2-e6dc11e7c30d"
+            name="Login"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="44ec3966-23fc-4a98-b4d9-a4613973bbbc"
+            name="checkbruteforce"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="d8444328-f7da-4b02-be7c-e39fa8b241e1"
+            name="validateInput"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="3febc6f7-7fcf-4bd4-a703-149aec6167d6"
+            name="createAccount"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="a0762d71-0e55-4731-9189-8779b42da0f7"
+            name="createStudent"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="25c85b3c-098f-4f67-ac34-0edef0cec2b3"
+            name="checkRegistrationCode"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="bc0e2068-9a47-464c-bb82-92e08e2ed002"
+            name="isLoggedIn"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="8d586830-0f00-43c4-a03f-313fa0a98f39"
+        name="BaseController"
+        isAbstract="true"
+        isLeaf="false"
+        isActiveClass="false">
+        <ownedOperationsInternal>
+          <operation
+            Id="bc2a7451-b527-4375-9d1d-dc50dc9e7ee4"
+            name="callAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="87630e65-9205-40da-80b2-119a02a1ca05"
+        name="ContactController"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <suppliersInternal>
+          <dependency
+            Id="d35872f4-cbf0-4c0a-a01d-202a7a4d5cbe">
+            <classMoniker
+              Id="4949b928-2cb7-4b9b-a2ae-15d244afa23f"
+              LastKnownName="ContactService"
+              LastKnownLocation="agile.uml" />
+          </dependency>
+        </suppliersInternal>
+        <generalsInternal>
+          <generalization
+            Id="2f4ea2bd-8faf-4f19-a7a3-c861552fd240"
+            isSubstitutable="false">
+            <classMoniker
+              Id="8d586830-0f00-43c4-a03f-313fa0a98f39"
+              LastKnownName="BaseController"
+              LastKnownLocation="agile.uml" />
+          </generalization>
+        </generalsInternal>
+        <ownedAttributesInternal>
+          <property
+            Id="fccd52ea-fcfa-4f75-802f-7270a47059e9"
+            name="service"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="1e13c0df-fc6e-4467-bada-848caddc8fcc"
+            name="showAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="4949b928-2cb7-4b9b-a2ae-15d244afa23f"
+        name="ContactService"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <ownedOperationsInternal>
+          <operation
+            Id="eacfa4a4-4594-4f5c-b915-48f0a6e6dabd"
+            name="sendMail"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="4ce2d5cd-0125-4100-abb5-3b63523b8dc1"
+            name="getStudentById"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="f936d62c-79d6-43f6-b8be-e0b9fd23a1de"
+        name="BaseController"
+        isAbstract="true"
+        isLeaf="false"
+        isActiveClass="false">
+        <ownedOperationsInternal>
+          <operation
+            Id="f4c0ed3e-bfa4-409b-aea5-dfca3b637920"
+            name="callAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="78483bc3-c116-468c-b291-0ab742790706"
+        name="ManagementController"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <suppliersInternal>
+          <dependency
+            Id="e0a38daa-96a9-49ed-a023-a22e2be910c6">
+            <classMoniker
+              Id="c8ecceb7-ccb7-4f1f-a262-d4c2ac4d8aeb"
+              LastKnownName="AccountService"
+              LastKnownLocation="agile.uml" />
+          </dependency>
+        </suppliersInternal>
+        <generalsInternal>
+          <generalization
+            Id="b3823608-9d09-4454-844a-dd9109259b86"
+            isSubstitutable="false">
+            <classMoniker
+              Id="f936d62c-79d6-43f6-b8be-e0b9fd23a1de"
+              LastKnownName="BaseController"
+              LastKnownLocation="agile.uml" />
+          </generalization>
+        </generalsInternal>
+        <ownedAttributesInternal>
+          <property
+            Id="325dbbec-110f-4b9b-b59e-11d7c203da3d"
+            name="page"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+          <property
+            Id="4c43fef6-deba-4400-82fb-1224817912fa"
+            name="additionalVals"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="b84436e6-bf6f-4007-a95d-29283493e827"
+            name="HomeAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="07a1de76-feff-463c-acf1-47dfc020b78c"
+            name="myReviewsAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="b7e92cb9-9dba-4429-bf5a-f0801159106e"
+            name="myLocationsAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="5a7a21d6-956e-4f47-bc21-e0551eebeebf"
+            name="myprojectsAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="6fa6286e-3668-40ab-833d-c85005b44933"
+            name="changePasswordAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="e2c70f4a-147b-41df-aaf7-ba6f63646da2"
+            name="myAccountAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="04a85dcd-f40f-421e-ba8d-ea22815818b8"
+            name="serveManagementTemplate"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="c8ecceb7-ccb7-4f1f-a262-d4c2ac4d8aeb"
+        name="AccountService"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <ownedOperationsInternal>
+          <operation
+            Id="c484d063-d1e4-4f34-9978-0103518720cc"
+            name="Login"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="3abcf2d4-8aa8-4c41-9a26-96493a54eefc"
+            name="checkbruteforce"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="8f0c83b2-190b-441c-b195-ae7524da9e03"
+            name="validateInput"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="0c6edd17-aa03-4c51-b4b8-c5595ec0bb75"
+            name="createAccount"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="aae791cc-03a6-4168-8341-d849178e02e0"
+            name="createStudent"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="25b4a8af-02f4-4fee-95ec-720d3b3cb89a"
+            name="checkRegistrationCode"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="b3e3d4a1-82a5-48d9-8bef-9cf460dabbde"
+            name="isLoggedIn"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="ebc8a8f5-3314-474f-b8af-927dfc67d51c"
+        name="BaseController"
+        isAbstract="true"
+        isLeaf="false"
+        isActiveClass="false">
+        <ownedOperationsInternal>
+          <operation
+            Id="669d4d63-fe5b-4b53-b38c-fc38facd9b3c"
+            name="callAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="261c7b93-ed8a-4049-9b7d-577ba676c57e"
+        name="RegisterController"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <generalsInternal>
+          <generalization
+            Id="e7525791-30df-4caf-a7fa-80b5b8b9a22d"
+            isSubstitutable="false">
+            <classMoniker
+              Id="ebc8a8f5-3314-474f-b8af-927dfc67d51c"
+              LastKnownName="BaseController"
+              LastKnownLocation="agile.uml" />
+          </generalization>
+        </generalsInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="ef39825a-c9e8-4290-abaa-c771fcf5a934"
+            name="validateInput"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="c4d7f912-f3be-4728-80f5-625c2702196d"
+            name="create_account"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="76b4be9f-9e27-402b-b09a-677073602eed"
+            name="create_student"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="d5cc6fe6-718e-4207-aa8d-93290db9a12a"
+        name="BaseController"
+        isAbstract="true"
+        isLeaf="false"
+        isActiveClass="false">
+        <ownedOperationsInternal>
+          <operation
+            Id="b06c5dc8-4392-44d2-a413-0b60554df47d"
+            name="callAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="d6834bd3-657e-48b7-9a68-67c004b352c4"
+        name="TestDataController"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <generalsInternal>
+          <generalization
+            Id="370475a0-9107-4fd7-8f7d-6f58bef68799"
+            isSubstitutable="false">
+            <classMoniker
+              Id="d5cc6fe6-718e-4207-aa8d-93290db9a12a"
+              LastKnownName="BaseController"
+              LastKnownLocation="agile.uml" />
+          </generalization>
+        </generalsInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="a0b5877a-982e-4d6f-82b1-ab301f7a5a2f"
+            name="emptyTables"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="e09d93c0-40e6-4d88-b07a-fe9c76ada014"
+            name="createInstitute"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="a7cbc318-9ac4-48cd-a4d6-0a12b37a24c6"
+            name="createUser"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="e9d91655-ba7b-4af6-9626-f8ddffb3374b"
+            name="createStudent"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="debaf8c2-d2d3-4d4e-ac35-5ece7725d6a4"
+            name="createProject"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="f85fd058-d838-49fe-97b9-68fa9241fc54"
+            name="createReview"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="fec97707-528f-4c7b-baf4-37670f2b3cac"
+            name="createCountry"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="36a8fb3d-c714-4834-90a4-fb5a98a1035a"
+            name="IndexAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="995f0a93-e222-49b5-96d2-96fba5a9215a"
+        name="Marker"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <ownedAttributesInternal>
+          <property
+            Id="0afb33a1-976f-4517-8a95-acfdcac5308d"
+            name="color"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+          <property
+            Id="733634a9-7928-436f-a3ab-96112508b3a4"
+            name="sign"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+          <property
+            Id="eb7b83e6-5712-4d29-a9a9-5c9956681e4a"
+            name="title"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+          <property
+            Id="37407f5e-68e9-44f4-80ee-a32a7a619ea7"
+            name="html"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+          <property
+            Id="67070971-6f34-4f3e-85c8-061dfa348a23"
+            name="long"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+          <property
+            Id="5346c471-ae06-48fd-a92d-e11fc14495f4"
+            name="lat"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="9a581e3b-a368-4bfc-9c5b-ea1c0f869730"
+            name="generateMarker"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="1b18cb24-4f8e-462f-8dd0-37ea24a6a543"
+        name="BaseController"
+        isAbstract="true"
+        isLeaf="false"
+        isActiveClass="false">
+        <ownedOperationsInternal>
+          <operation
+            Id="a39d58b5-9a8e-4d61-ad51-f8747c394e4c"
+            name="callAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="6c80d134-18cd-4a96-bc81-e528c74d4f0a"
+        name="HomeController"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <generalsInternal>
+          <generalization
+            Id="6636379f-821d-40c5-8b38-fb50c9b59a68"
+            isSubstitutable="false">
+            <classMoniker
+              Id="1b18cb24-4f8e-462f-8dd0-37ea24a6a543"
+              LastKnownName="BaseController"
+              LastKnownLocation="agile.uml" />
+          </generalization>
+        </generalsInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="6c90f6a0-ca01-40e0-b41f-87a595e5e942"
+            name="indexAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="55afa11b-bd68-48ff-8373-9ad8a0fb4738"
+            name="otherAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+  </packagedElements>
+  <primitiveType
+    Id="220a3521-e091-4221-bae9-3ef9018e845c"
+    name="Integer"
+    isAbstract="false"
+    isLeaf="false" />
+  <primitiveType
+    Id="8943dc84-709e-4f62-b15a-a3273aa6f165"
+    name="Boolean"
+    isAbstract="false"
+    isLeaf="false" />
+  <primitiveType
+    Id="59259974-6d55-42c6-b7bd-763d77ac8ef9"
+    name="String"
+    isAbstract="false"
+    isLeaf="false" />
+  <primitiveType
+    Id="3ab42e7d-4969-445a-b209-471f5cb8209c"
+    name="UnlimitedNatural"
+    isAbstract="false"
+    isLeaf="false" />
+</modelStoreModel>

@@ -22,13 +22,14 @@
                         <th>Location:</th>
                         <th>Type:</th>
                         <th>Overall Score:</th>
-                        <th>Status:</th>
+                        <th colspan="3">Status:</th>
                     </tr>
                     <?php
                     $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
                     $user = $em->getRepository('\PROJ\Entities\Account')->find($_SESSION['userID']);
                     $qb = $em->createQueryBuilder();
-                    $qb->select('i.place, i.name, p.type, r.rating, r.aproved')
+                    //$qb->select('i.place, i.name, p.type, r.rating, r.acceptanceStatus')
+                    $qb->select('i,r,p')
                             ->from('\PROJ\Entities\Review', 'r')
                             ->leftJoin('r.project', 'p')
                             ->leftJoin('p.institute', 'i')
@@ -37,19 +38,20 @@
                     $res = $qb->getQuery()->getResult();
 
                     foreach ($res as $r) {
-                        if ($r['aproved'] == 0) {
-                            $status = 'Pending';
-                        } elseif ($r['aproved'] == 1) {
-                            $status = 'Aproved';
-                        } else {
-                            $status = 'Declined';
-                        }
                         ?>
                         <tr>
-                            <td><p><?php echo $r['name'] . ' (' . $r['place'] . ')'; ?></p></td>
-                            <td><p><?php echo ucfirst($r['type']); ?></p></td>
-                            <td><p><?php echo $r['rating']; ?></p></td>
-                            <td><p><?php echo $status; ?></p></td>
+                            <td><p><?php echo $r->getProject()->getInstitute()->getName() . ' (' . $r->getProject()->getInstitute()->getPlace() . ')'; ?></p></td>
+                            <td><p><?php echo ucfirst($r->getProject()->getType()); ?></p></td>
+                            <td><p><?php echo $r->getRating(); ?></p></td>
+                            <td><p><?php echo ucfirst($r->getAcceptanceStatus()); ?></p></td>
+                            <?php
+                            if ($r->getAcceptanceStatus() == "pending") {
+                                ?>
+                                <td style="width: 40px;"><img class="action_btn myreview_update" data-review-id="<?php echo $r->getId(); ?>" src="/images/edit.png" /></td>
+                                <td style="width: 40px;"><img class="action_btn myreview_remove" data-review-id="<?php echo $r->getId(); ?>" src="/images/delete.png" /></td>
+                                <?php
+                            }
+                            ?>
                         </tr>
                         <?php
                     }

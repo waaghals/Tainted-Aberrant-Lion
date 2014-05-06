@@ -245,7 +245,7 @@ $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
             </div>
             <img src="/images/register_split.png">
             <div id="register_container_bottomhalf">
-                <div class="fancy_button" id="create_review" style="left: 335px; top: 160px;">
+                <div class="fancy_button" id="review_action" style="left: 335px; top: 160px;">
                     <img src="/images/btn_left.png" />
                     <p>Add Review</p>
                     <img src="/images/btn_right.png" />
@@ -297,7 +297,7 @@ $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
                         $qb->select('i')
                                 ->from('\PROJ\Entities\Institute', 'i')
                                 ->where($qb->expr()->eq('i.creator', $qb->expr()->literal($user->getStudent()->getId())))
-                                ->orWhere($qb->expr()->eq('i.aproved', '1'))
+                                ->orWhere($qb->expr()->eq('i.acceptanceStatus', $qb->expr()->literal('approved')))
                                 ->orderBy('i.type', 'ASC');
                         $res = $qb->getQuery()->getResult();
                         foreach ($res as $r) {
@@ -361,7 +361,7 @@ $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
             </div>
             <img src="/images/register_split.png">
             <div id="register_container_bottomhalf">
-                <div class="fancy_button" id="create_project" style="left: 335px; top: 160px;">
+                <div class="fancy_button" id="projects_action" style="left: 335px; top: 160px;">
                     <img src="/images/btn_left.png" />
                     <p>Create Project</p>
                     <img src="/images/btn_right.png" />
@@ -410,6 +410,101 @@ $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
                     <img src="/images/btn_right.png" />
                 </div>
                 <div class="fancy_button" id="remove_location">
+                    <img src="/images/btn_left.png" />
+                    <p>Remove</p>
+                    <img src="/images/btn_right.png" />
+                </div>
+            </div>
+            <img src="/images/register_bottom.png">
+        </form>
+    </div>
+</div>
+
+<!-- remove Review -->
+
+<div id="blackout_delete_review">
+    <div id="register_container" style="height: 274px; left:auto; top: auto; margin: 0px;">
+        <form name='create_review_form' method='post' enctype="multipart/form-data">
+            <img src="/images/register_top.png">
+            <div id="register_container_tophalf">
+                <div class="alert" id="removeReviewError" style="display:none; margin-bottom:20px; padding: 5px; clear:both;">
+                    <p></p>
+                </div>
+                <p style="margin-bottom:15px;">You are about to <span style="font-weight: bold;">remove</span> the following Review:</p>
+                <div style="clear:both;"></div>
+                <table>
+                    <tr>
+                        <td style="padding: 5px 5px 5px 0px;"><p>Project:</p></td>
+                        <td style="padding: 5px; font-weight: bold;" id="RemoveProjectProject"><p></p></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px 5px 5px 0px;"><p>Score:</p></td>
+                        <td style="padding: 5px; font-weight: bold;" id="RemoveProjectScore"><p></p></td>
+                    </tr>
+                </table>
+                <div style="clear:both;"></div>
+                <p style="margin:15px inherit;">Are you sure you want to continue? This can <span style="font-weight: bold;">NOT</span> be undone.</p>
+            </div>
+            <img src="/images/register_split.png">
+            <div id="register_container_bottomhalf">
+                <div class="fancy_button blackout_cancel" style="margin-left:10px;">
+                    <img src="/images/btn_left.png" />
+                    <p>Cancel</p>
+                    <img src="/images/btn_right.png" />
+                </div>
+                <div class="fancy_button" id="remove_review">
+                    <img src="/images/btn_left.png" />
+                    <p>Remove</p>
+                    <img src="/images/btn_right.png" />
+                </div>
+            </div>
+            <img src="/images/register_bottom.png">
+        </form>
+    </div>
+</div>
+
+<!-- remove Project -->
+
+<div id="blackout_delete_project">
+    <div id="register_container" style="height: 274px; left:auto; top: auto; margin: 0px;">
+        <form name='create_location_form' method='post' enctype="multipart/form-data">
+            <img src="/images/register_top.png">
+            <div id="register_container_tophalf">
+                <div class="alert" id="removeProjectError" style="display:none; margin-bottom:20px; padding: 5px; clear:both;">
+                    <p></p>
+                </div>
+                <p style="margin-bottom:15px;">You are about to <span style="font-weight: bold;">remove</span> the following Project:</p>
+                <div style="clear:both;"></div>
+                <table>
+                    <tr>
+                        <td style="padding: 5px 5px 5px 0px;"><p>Type:</p></td>
+                        <td style="padding: 5px; font-weight: bold;" id="RemoveProjectType"><p></p></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px 5px 5px 0px;"><p>Location:</p></td>
+                        <td style="padding: 5px; font-weight: bold;" id="RemoveProjectnLoc"><p></p></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px 5px 5px 0px;"><p>Start Date:</p></td>
+                        <td style="padding: 5px; font-weight: bold;" id="RemoveProjectStartDate"><p></p></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px 5px 5px 0px;"><p>End Date:</p></td>
+                        <td style="padding: 5px; font-weight: bold;" id="RemoveProjectEndDate"><p></p></td>
+                    </tr>
+                </table>
+                <div style="clear:both;"></div>
+                <p style="margin:15px inherit;">This process will also remove any Reviews connected to this Project.</p>
+                <p style="margin:15px inherit;">Are you sure you want to continue? This can <span style="font-weight: bold;">NOT</span> be undone.</p>
+            </div>
+            <img src="/images/register_split.png">
+            <div id="register_container_bottomhalf">
+                <div class="fancy_button blackout_cancel" style="margin-left:10px;">
+                    <img src="/images/btn_left.png" />
+                    <p>Cancel</p>
+                    <img src="/images/btn_right.png" />
+                </div>
+                <div class="fancy_button" id="remove_project">
                     <img src="/images/btn_left.png" />
                     <p>Remove</p>
                     <img src="/images/btn_right.png" />

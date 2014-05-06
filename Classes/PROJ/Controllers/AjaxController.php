@@ -8,6 +8,7 @@ namespace PROJ\Controllers;
 
 use PROJ\Exceptions\ServerException;
 use PROJ\Helper\DoctrineHelper;
+use PROJ\DBAL\ApprovalStateType as Status;
 
 /**
  * Description of HomeController
@@ -21,12 +22,12 @@ class AjaxController extends BaseController
     {
         $mc = new \PROJ\Classes\MarkerCollection();
 
-        //Alle Instellingen ophalen
+//Alle Instellingen ophalen
         $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
         $reviews = $em->getRepository('\PROJ\Entities\Institute')->findAll();
 
         foreach ($reviews as $rev) {
-            //Gemiddelde score berekenen
+//Gemiddelde score berekenen
             $qb = $em->createQueryBuilder();
             $qb->select('avg(review.rating) as AVGSCORE, count(review.id) as AANTALREVIEWS')
                     ->from('\PROJ\Entities\Institute', 'institute')
@@ -125,53 +126,70 @@ class AjaxController extends BaseController
         }
         $returnArray = array_merge($returnArray, $result);
 
-        //Max 8 results
+//Max 8 results
         array_splice($returnArray, 8);
 
 
         echo json_encode($returnArray);
     }
 
-    public function saveLocationAction()
+    public function saveLocationAction($unitTest = null)
     {
+        if ($unitTest != null) {
+            $_POST = $unitTest;
+        }
+
         if (empty($_POST['type']) || empty($_POST['name']) || empty($_POST['country']) || empty($_POST['city']) || empty($_POST['street']) || empty($_POST['housenumber']) || empty($_POST['postalcode']) || empty($_POST['email'])) {
             echo "Not everything is filled in";
-            return;
+            return false;
         }
         foreach ($_POST as $input) {
-            if ($input == $_POST['housenumber']) {
+            if ($input == $_POST['housenumber'])
                 break;
-            }
 
             if (strlen($input) > 254) {
                 echo "Some fieldes are too long.";
-                return;
+                return false;
             }
             if (!preg_match('/^[A-Za-z0-9. -_]{1,31}$/', $input)) {
                 echo "No special characters allowed";
-                return;
+                return false;
             }
         }
         if (!(filter_var($_POST['housenumber'], FILTER_VALIDATE_INT))) {
             echo "Streetnumber is not a number";
-            return;
+            return false;
         }
 
         if (!is_numeric($_POST['id'])) {
             echo "Invalid ID";
-            return;
+            return false;
         }
 
         if ($_POST['action'] != "update" && $_POST['action'] != "create") {
             echo("Invalid POST:ACTION");
-            return;
+            return false;
         }
 
         if ($_POST['type'] != "education" && $_POST['type'] != "business") {
             echo("Invalid POST:TYPE");
-            return;
+            return false;
         }
 
+        if ($unitTest == null) {
+            $this->saveLocationToDatabase();
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * Function to save Location to the Database
+     * Also does aditional Checks
+     * @return type
+     */
+    private function saveLocationToDatabase()
+    {
         $em = DoctrineHelper::instance()->getEntityManager();
         $ac = new \PROJ\Services\AccountService();
         if ($ac->isLoggedIn()) {
@@ -196,10 +214,10 @@ class AjaxController extends BaseController
             } elseif ($_POST['action'] == "update") {
                 $locatie = $em->getRepository('\PROJ\Entities\Institute')->find($_POST['id']);
 
-                //Extra checks
+//Extra checks
                 if ($locatie->getCreator()->getAccount()->getId() == $_SESSION['userID']) {
-                    if ($locatie->getAproved() != 0) {
-                        echo "The Location has been aproved while you tried to edit it.";
+                    if ($locatie->getAcceptanceStatus() != 0) {
+                        echo "The Location has been approved while you tried to edit it.";
                         return;
                     }
                 } else {
@@ -233,28 +251,46 @@ class AjaxController extends BaseController
         }
     }
 
-    public function createProjectAction()
+    public function saveProjectAction($unitTest = null)
     {
+        if ($unitTest != null) {
+            $_POST = $unitTest;
+        }
+
         if (empty($_POST['type']) || empty($_POST['location']) || empty($_POST['start_year']) || empty($_POST['start_month']) || empty($_POST['end_year']) || empty($_POST['end_month'])) {
             echo "Not everything is filled in";
-            return;
+            return false;
         }
 
         if (!is_numeric($_POST['start_year']) || !is_numeric($_POST['start_month']) || !is_numeric($_POST['end_year']) || !is_numeric($_POST['end_month'])) {
             echo "Invalid POST";
-            return;
+            return false;
+        }
+
+        if ($_POST['action'] != "update" && $_POST['action'] != "create") {
+            echo("Invalid POST:ACTION");
+            return false;
         }
 
         if ($_POST['type'] != "minor" && $_POST['type'] != "internship" && $_POST['type'] != "graduation" && $_POST['type'] != "ESP") {
-            echo "Invalid POST";
-            return;
+            echo "Invalid POST:TYPE";
+            return false;
         }
 
         if (new \DateTime($_POST['start_year'] . '-' . $_POST['start_month'] . '-1') > new \DateTime($_POST['end_year'] . '-' . $_POST['end_month'] . '-1')) {
             echo("Start date cannot be after Stop date");
-            return;
+            return false;
         }
 
+        if ($unitTest == null) {
+            $this->saveProjectDatabase();
+        } else {
+            return true;
+        }
+    }
+
+    private function saveProjectDatabase()
+    {
         $ac = new \PROJ\Services\AccountService();
         if ($ac->isLoggedIn()) {
             $em = DoctrineHelper::instance()->getEntityManager();
@@ -263,19 +299,42 @@ class AjaxController extends BaseController
             $qb->select('i.id')
                     ->from('\PROJ\Entities\Institute', 'i')
                     ->where($qb->expr()->eq('i.creator', $qb->expr()->literal($user->getStudent()->getId())))
-                    ->orWhere($qb->expr()->eq('i.aproved', '1'))
+                    ->orWhere($qb->expr()->eq('i.acceptanceStatus', $qb->expr()->literal('approved')))
                     ->orderBy('i.type', 'ASC');
             $res = $qb->getQuery()->getResult();
 
-            if (!in_array($_POST['location'], $res[0])) {
+
+            $found = false;
+            foreach ($res as $r) {
+                if ($r['id'] == $_POST['location']) {
+                    $found = true;
+                }
+            }
+
+            if (!$found) {
                 echo "Illegal Location";
                 return;
             }
 
 
             $location = $em->getRepository('\PROJ\Entities\Institute')->find($_POST['location']);
-            $project = new \PROJ\Entities\Project();
-            $project->setAproved(0);
+            if ($_POST['action'] == "create") {
+                $project = new \PROJ\Entities\Project();
+                $project->setAcceptanceStatus(Status::PENDING);
+            } elseif ($_POST['action'] == "update") {
+                $project = $em->getRepository('\PROJ\Entities\Project')->find($_POST['id']);
+
+//Extra checks
+                if ($project->getStudent()->getAccount()->getId() == $_SESSION['userID']) {
+                    if ($project->getAcceptanceStatus() != 0) {
+                        echo "The Project has been aproved while you tried to edit it.";
+                        return;
+                    }
+                } else {
+                    echo "This isn't your Project.";
+                    return;
+                }
+            }
             $project->setInstitute($location);
             $project->setReview(null);
             $project->setStartdate(new \DateTime($_POST['start_year'] . '-' . $_POST['start_month'] . '-1'));
@@ -290,53 +349,141 @@ class AjaxController extends BaseController
         }
     }
 
-    public function createReviewAction()
+    public function saveReviewAction($unitTest = null)
     {
+        if ($unitTest != null) {
+            $_POST = $unitTest;
+        }
+
         if (empty($_POST['project']) || (empty($_POST['assignment_score']) && @$_POST['assignment_score'] != 0) || empty($_POST['guidance_score']) || empty($_POST['accomodation_score']) || empty($_POST['overall_score']) || empty($_POST['review'])) {
             echo "Not everything is filled in";
-            return;
+            return false;
         }
 
         if (!is_numeric($_POST['project']) || !is_numeric($_POST['assignment_score']) || !is_numeric($_POST['guidance_score']) || !is_numeric($_POST['accomodation_score']) || !is_numeric($_POST['overall_score'])) {
-            echo "Invalid POST";
-            return;
+            echo "Invalid POST:NUMERIC";
+            return false;
         }
 
         if ($_POST['assignment_score'] > 5 || $_POST['assignment_score'] > 5 || $_POST['assignment_score'] > 5 || $_POST['guidance_score'] > 5) {
-            echo "Invalid POST";
-            return;
+            echo "Invalid POST:SCORE";
+            return false;
         }
+
+        if ($_POST['action'] != "update" && $_POST['action'] != "create") {
+            echo("Invalid POST:ACTION");
+            return false;
+        }
+
+        if ($unitTest == null) {
+            $this->saveReviewToDatabase();
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * Function to save Location to the Database
+     * Also does aditional Checks
+     * @return type
+     */
+    private function saveReviewToDatabase()
+    {
 
         $ac = new \PROJ\Services\AccountService();
         if ($ac->isLoggedIn()) {
             $em = DoctrineHelper::instance()->getEntityManager();
             $user = $em->getRepository('\PROJ\Entities\Account')->find($_SESSION['userID']);
+
             $qb = $em->createQueryBuilder();
             $qb->select('p.id')
                     ->from('\PROJ\Entities\Project', 'p')
                     ->where($qb->expr()->eq('p.student', $qb->expr()->literal($user->getStudent()->getId())));
             $res = $qb->getQuery()->getResult();
 
-            if (!in_array($_POST['project'], $res[0])) {
+            $found = false;
+            foreach ($res as $r) {
+                if ($r['id'] == $_POST['project']) {
+                    $found = true;
+                }
+            }
+
+            if (!$found) {
                 echo "Illegal Project";
                 return;
             }
 
 
             $project = $em->getRepository('\PROJ\Entities\Project')->find($_POST['project']);
-            $review = new \PROJ\Entities\Review();
+            $review = getReviewEntitie();
+            if ($review == null) {
+                return;
+            }
+
+
+            if (count($em->getRepository('\PROJ\Entities\Review')->findBy(array('project' => $_POST['project']))) > 0 && $_POST['project'] != $review->getProject()->getId()) {
+                echo "You can only create one review per location";
+                return;
+            }
+
+
             $review->setAccommodationRating($_POST['assignment_score']);
             $review->setAssignmentRating($_POST['guidance_score']);
             $review->setGuidanceRating($_POST['accomodation_score']);
             $review->setProject($project);
             $review->setRating($_POST['overall_score']);
             $review->setText(\PROJ\Helper\XssHelper::sanitizeInput($_POST['review']));
-            $review->setAproved(0);
 
             $em->persist($review);
             $em->flush();
 
             echo 'succes';
+        }
+    }
+
+    private function getReviewEntitie()
+    {
+        if ($_POST['action'] == "create") {
+            $review = new \PROJ\Entities\Review();
+            $review->setAcceptanceStatus(Status::PENDING);
+        } elseif ($_POST['action'] == "update") {
+            $review = $em->getRepository('\PROJ\Entities\Review')->find($_POST['id']);
+
+//Extra checks
+            if ($review->getProject()->getSTudent()->getAccount()->getId() == $_SESSION['userID']) {
+                if ($review->getAcceptanceStatus() != 0) {
+                    echo "The Review has been approved while you tried to edit it.";
+                    return null;
+                }
+            } else {
+                echo "This isn't your Review.";
+                return null;
+            }
+        }
+
+        return $review;
+    }
+
+    public function getReviewInfoAction()
+    {
+        $em = DoctrineHelper::instance()->getEntityManager();
+        $ac = new \PROJ\Services\AccountService();
+
+        if (!is_numeric($_POST['id'])) {
+            echo "Illegal ID";
+            return;
+        }
+        if ($ac->isLoggedIn()) {
+            $rev = $em->getRepository('\PROJ\Entities\Review')->find($_POST['id']);
+            if ($rev->getProject()->getStudent()->getAccount()->getId() == $_SESSION['userID']) {
+                if ($rev->getAcceptanceStatus() == 0) {
+                    echo json_encode($rev->jsonSerialize());
+                } else {
+                    echo "The Review has been approved while you tried to delete it.";
+                }
+            } else {
+                echo "This isn't your Review.";
+            }
         }
     }
 
@@ -346,16 +493,16 @@ class AjaxController extends BaseController
         $ac = new \PROJ\Services\AccountService();
 
         if (!is_numeric($_POST['id'])) {
-            echo "Illigal ID";
+            echo "Illegal ID";
             return;
         }
         if ($ac->isLoggedIn()) {
             $inst = $em->getRepository('\PROJ\Entities\Institute')->find($_POST['id']);
             if ($inst->getCreator()->getAccount()->getId() == $_SESSION['userID']) {
-                if ($inst->getAproved() == 0) {
+                if ($inst->getAcceptanceStatus() == 0) {
                     echo json_encode($inst->jsonSerialize());
                 } else {
-                    echo "The Location has been aproved while you tried to delete it.";
+                    echo "The Location has been approved while you tried to delete it.";
                 }
             } else {
                 echo "This isn't your Location.";
@@ -369,24 +516,28 @@ class AjaxController extends BaseController
         $ac = new \PROJ\Services\AccountService();
 
         if (!is_numeric($_POST['id'])) {
-            echo "Illigal ID";
+            echo "Illegal ID";
             return;
         }
         if ($ac->isLoggedIn()) {
             $inst = $em->getRepository('\PROJ\Entities\Institute')->find($_POST['id']);
             if ($inst->getCreator()->getAccount()->getId() == $_SESSION['userID']) {
-                if ($inst->getAproved() == 0) {
-                    foreach ($inst->getProjects() as $proj) {
-                        foreach ($proj->getReview() as $rev) {
-                            $em->remove($rev);
+                if ($inst->getAcceptanceStatus() == 0) {
+                    if ($inst->getProjects() != null) {
+                        foreach ($inst->getProjects() as $proj) {
+                            if ($proj->getReview() != null) {
+                                foreach ($proj->getReview() as $rev) {
+                                    $em->remove($rev);
+                                }
+                            }
+                            $em->remove($proj);
                         }
-                        $em->remove($proj);
                     }
                     $em->remove($inst);
                     $em->flush();
                     echo "succes";
                 } else {
-                    echo "The Location has been aproved while you tried to delete it.";
+                    echo "The Location has been approved while you tried to delete it.";
                 }
             } else {
                 echo "This isn't your Location.";
@@ -403,6 +554,84 @@ class AjaxController extends BaseController
                 ->getQuery()
                 ->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
         return json_encode($inst);
+    }
+
+    public function removeReviewAction()
+    {
+        $em = DoctrineHelper::instance()->getEntityManager();
+        $ac = new \PROJ\Services\AccountService();
+
+        if (!is_numeric($_POST['id'])) {
+            echo "Illegal ID";
+            return;
+        }
+        if ($ac->isLoggedIn()) {
+            $rev = $em->getRepository('\PROJ\Entities\Review')->find($_POST['id']);
+            if ($rev->getProject()->getStudent()->getAccount()->getId() == $_SESSION['userID']) {
+                if ($rev->getAcceptanceStatus() == 0) {
+                    $em->remove($rev);
+                    $em->flush();
+                    echo "succes";
+                } else {
+                    echo "The Review has been approved while you tried to delete it.";
+                }
+            } else {
+                echo "This isn't your Review.";
+            }
+        }
+    }
+
+    public function removeProjectAction()
+    {
+        $em = DoctrineHelper::instance()->getEntityManager();
+        $ac = new \PROJ\Services\AccountService();
+
+        if (!is_numeric($_POST['id'])) {
+            echo "Illegal ID";
+            return;
+        }
+        if ($ac->isLoggedIn()) {
+            $proj = $em->getRepository('\PROJ\Entities\Project')->find($_POST['id']);
+            if ($proj->getStudent()->getAccount()->getId() == $_SESSION['userID']) {
+                if ($proj->getAcceptanceStatus() == 0) {
+                    if ($proj->getReview() != null) {
+                        foreach ($proj->getReview() as $rev) {
+                            $em->remove($rev);
+                        }
+                    }
+                    $em->remove($proj);
+                    $em->flush();
+                    echo "succes";
+                } else {
+                    echo "The Project has been aproved while you tried to delete it.";
+                }
+            } else {
+                echo "This isn't your Project.";
+            }
+        }
+    }
+
+    public function getMyLocationsInfoAction()
+    {
+        $em = DoctrineHelper::instance()->getEntityManager();
+        $ac = new \PROJ\Services\AccountService();
+
+        if (!is_numeric($_POST['id'])) {
+            echo "Illigal ID";
+            return;
+        }
+        if ($ac->isLoggedIn()) {
+            $proj = $em->getRepository('\PROJ\Entities\Project')->find($_POST['id']);
+            if ($proj->getStudent()->getId() == $_SESSION['userID']) {
+                if ($proj->getAcceptanceStatus() == 0) {
+                    echo json_encode($proj->jsonSerialize());
+                } else {
+                    echo "The Project has been aproved while you tried to delete it.";
+                }
+            } else {
+                echo "This isn't your Project.";
+            }
+        }
     }
 
 }

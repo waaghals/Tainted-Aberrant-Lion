@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" dslVersion="1.0.0.0" Id="94190d6e-a5cb-44a3-bdad-1aad83c3f66f" name="AccountController" linkedPackageId="3f0e8e12-8153-4d73-b5af-1ae62ef7da78" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
+  <ownedCommentsInternal>
+    <comment Id="1b6b6426-311a-41f2-ab8b-c43ad025d643">
+      <elementDefinition Id="5b4f7109-e390-4e0f-866d-856f2dca8c7f" />
+      <body>Controller maakt gebruik van de volgende templates:
+Login
+Register</body>
+    </comment>
+  </ownedCommentsInternal>
+  <packagedElements>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="ccef3195-7eb3-444b-b912-4a065acedc2e" name="BaseController" isAbstract="true" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="a941e539-ab01-40e1-99db-c678078e5801" />
+        <ownedOperationsInternal>
+          <operation Id="28ba61ae-cd45-4b53-b8d5-2bdaa3aa0f0b" name="callAction" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="6eba6705-c1f7-40a6-ad91-78dc733c8a4a" />
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="b2ca4064-35ec-411c-aed6-65ba5a7a8757" name="AccountController" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <description>Controller</description>
+        <elementDefinition Id="f21b75b3-9151-4500-853c-076f25ddbd7c" />
+        <suppliersInternal>
+          <dependency Id="3d1caeaf-ab8b-4e2c-8070-da49886683bc">
+            <classMoniker Id="df8445ec-61d9-4a08-91c1-b9647ecc9c7c" LastKnownName="AccountService" />
+            <elementDefinition Id="f36f1387-bc1e-4b11-bc15-e3a7a801849b" />
+          </dependency>
+        </suppliersInternal>
+        <generalsInternal>
+          <generalization Id="9cdda5db-f01e-460e-8747-1399ae203101" isSubstitutable="false">
+            <classMoniker Id="ccef3195-7eb3-444b-b912-4a065acedc2e" LastKnownName="BaseController" />
+            <elementDefinition Id="5084f55f-30e2-42d1-9452-6b3a1d494213" />
+          </generalization>
+        </generalsInternal>
+        <ownedOperationsInternal>
+          <operation Id="f3ca30ce-be9c-493a-831c-11281481f1f2" name="loginAction" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="b1ca34cc-141c-4cfc-ba15-45ecfade8b07" />
+          </operation>
+          <operation Id="4c5cab61-c513-48a8-8167-e361774a816e" name="logoutAction" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="a601ad8a-eb32-4e21-8788-4818d3d54933" />
+          </operation>
+          <operation Id="73eca60c-6afb-415d-aadb-d042c82dff32" name="registerAction" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="7d411574-e448-42cb-a7a5-824024d62777" />
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="df8445ec-61d9-4a08-91c1-b9647ecc9c7c" name="AccountService" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="5e689ff9-2eb4-480a-85d2-593af21860a8" />
+        <ownedOperationsInternal>
+          <operation Id="c5113bd5-f0e4-46fa-bf4d-fbf1a5d4fb15" name="Login" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="1477547a-86ee-43e3-b73a-92adc0b03b0e" />
+          </operation>
+          <operation Id="0c3ea3c6-2425-47b5-8a77-2c1591dfe9a0" name="checkbruteforce" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="22be0b8e-405e-47d3-900e-c73fa260aa04" />
+          </operation>
+          <operation Id="35db34b1-0074-41d2-aff6-c27a93be0bf9" name="validateInput" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="8cf3e9f2-64e5-480c-bdde-f5e1a4215ec4" />
+          </operation>
+          <operation Id="a871f51c-12b1-47b8-9ad7-f55172cf39e3" name="createAccount" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="9ec7cf39-004f-4961-bbf1-d390ffd6831c" />
+          </operation>
+          <operation Id="e6c278ca-1d8f-4f07-89f6-2def1ed3bfcf" name="createStudent" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="2f2a54d0-be73-46b0-8b33-704dcedb1681" />
+          </operation>
+          <operation Id="eb7b8309-f20f-4179-b893-b34cc9359b30" name="checkRegistrationCode" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="9793d5b4-49e8-44f5-83d8-d8f06851357d" />
+          </operation>
+          <operation Id="94ee44cf-153d-414f-9a05-81faea9a8253" name="isLoggedIn" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="3297134c-e9ba-4e71-add5-e910db88a0f5" />
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+  </packagedElements>
+  <package Id="3f0e8e12-8153-4d73-b5af-1ae62ef7da78" name="agile">
+    <elementDefinition Id="84dff846-2de2-4e81-b104-097c6683e9aa" />
+    <profileInstances>
+      <packageHasProfileInstances Id="cd88b3ba-a080-4757-8c6f-8eea4a777e8a">
+        <profileInstance Id="e859d9c8-f3c1-42c2-8cce-fe0d4b57ae3d" name="StandardProfileL2">
+          <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+        </profileInstance>
+        <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="0f7e98c3-88a0-4b03-ab28-dbee45f242cb">
+        <profileInstance Id="ec0a58ea-0f2a-4bf2-847f-b01ccd592c97" name="StandardProfileL3">
+          <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+        </profileInstance>
+        <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+      </packageHasProfileInstances>
+    </profileInstances>
+  </package>
+</logicalClassDesignerModel>

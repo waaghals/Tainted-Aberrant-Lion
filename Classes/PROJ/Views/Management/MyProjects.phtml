@@ -23,7 +23,7 @@
                         <th>Location:</th>
                         <th>Start Date:</th>
                         <th>End Date:</th>
-                        <th>Status:</th>
+                        <th colspan="3">Status:</th>
                     </tr>
                     <?php
                     $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
@@ -35,20 +35,21 @@
                             ->orderBy('i.type', 'ASC');
                     $res = $qb->getQuery()->getResult();
                     foreach ($res as $r) {
-                        if ($r->getAproved() == 0) {
-                            $status = 'Pending';
-                        } elseif ($r->getAproved() == 1) {
-                            $status = 'Aproved';
-                        } else {
-                            $status = 'Declined';
-                        }
                         ?>
                         <tr>
                             <td><p><?php echo ucfirst($r->getType()); ?></p></td>
                             <td><p><?php echo $r->getInstitute()->getName(); ?> (<?php echo $r->getInstitute()->getPlace(); ?>)</p></td>
                             <td><p><?php echo $r->getStartDate()->format('F Y'); ?></p></td>
                             <td><p><?php echo $r->getendDate()->format('F Y'); ?></p></td>
-                            <td><p><?php echo $status; ?></p></td>
+                            <td><p><?php echo ucfirst($r->getAcceptanceStatus()); ?></p></td>
+                            <?php
+                            if ($r->getAcceptanceStatus() == 0) {
+                                ?>
+                                <td style="width: 40px;"><img class="action_btn myprojects_update" data-project-id="<?php echo $r->getId(); ?>" src="/images/edit.png" /></td>
+                                <td style="width: 40px;"><img class="action_btn myprojects_remove" data-project-id="<?php echo $r->getId(); ?>" src="/images/delete.png" /></td>
+                                <?php
+                            }
+                            ?>
                         </tr>
                         <?php
                     }

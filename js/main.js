@@ -1,5 +1,10 @@
 var goBackTo = null;
 var tempID = 0;
+
+var monthNames = ["January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"];
+
+
 $(document).ready(function() {
     $('#login_button').click(function() {
         $(this).parent().parent().submit();
@@ -43,6 +48,31 @@ $(document).ready(function() {
                     $("#RemoveLocationName").children().first().html(json.name);
                     $("#RemoveLocationLoc").children().first().html(json.place);
                     $("#RemoveLocationType").children().first().html(json.type);
+                } catch (e) {
+                    //error
+                    $("#removeLocationError").html(data);
+                    $("#removeLocationError").fadeIn();
+                }
+            });
+        });
+    });
+
+    //Remove project icon
+    $('.myprojects_remove').click(function() {
+        var clicked = $(this);
+        tempID = clicked.data("project-id");
+        $('#blackout').fadeIn();
+        $('#blackout').children().filter(':visible').fadeOut();
+        $('.fullscreen_loading_icon').fadeIn(function() {
+            $.post("/ajax/getMyLocationsInfo/", {id: clicked.data("project-id")}, function(data) {
+                $('.fullscreen_loading_icon').fadeOut();
+                $('#blackout_delete_project').fadeIn();
+                try {
+                    json = $.parseJSON(data);
+                    $("#RemoveProjectnLoc").children().first().html(json.institute.name + "(" + json.institute.place + ")");
+                    $("#RemoveProjectType").children().first().html(json.type);
+                    $("#RemoveProjectStartDate").children().first().html(monthNames[json.start_month - 1] + " " + json.start_year);
+                    $("#RemoveProjectEndDate").children().first().html(monthNames[json.end_month - 1] + " " + json.end_year);
                 } catch (e) {
                     //error
                     $("#removeLocationError").html(data);
@@ -104,8 +134,159 @@ $(document).ready(function() {
         });
     });
 
+    //Update review icon
+    $('.myreview_update').click(function() {
+        var clicked = $(this);
+        tempID = clicked.data("review-id");
+
+        //Prepare page
+        $("#review_action").data("action", "update");
+        $("#review_action").children("p").html("Update Review");
+        $('#review_action').show();
+        $("#addReviewError").hide();
+
+        //Start fades
+        $('#blackout').fadeIn();
+        $('#blackout').children().filter(':visible').fadeOut();
+        $('.fullscreen_loading_icon').fadeIn(function() {
+            $.post("/ajax/getReviewInfo/", {id: clicked.data("review-id")}, function(data) {
+                $('.fullscreen_loading_icon').fadeOut();
+                $('#blackout_create_review').fadeIn();
+                try {
+                    json = $.parseJSON(data);
+                    $('[name="create_review_form"]').find('[name="project"]').children().each(function() {
+                        if ($(this).val() == json.project.id) {
+                            $(this).prop('selected', true);
+                        }
+                    });
+                    $('[name="create_review_form"]').find('[name="assignment_score"]').children().each(function() {
+                        if ($(this).val() == json.assignmentrating) {
+                            $(this).prop('selected', true);
+                        }
+                    });
+                    $('[name="create_review_form"]').find('[name="guidance_score"]').children().each(function() {
+                        if ($(this).val() == json.guidancerating) {
+                            $(this).prop('selected', true);
+                        }
+                    });
+                    $('[name="create_review_form"]').find('[name="accomodation_score"]').children().each(function() {
+                        if ($(this).val() == json.accommodationrating) {
+                            $(this).prop('selected', true);
+                        }
+                    });
+                    $('[name="create_review_form"]').find('[name="overall_score"]').children().each(function() {
+                        if ($(this).val() == json.rating) {
+                            $(this).prop('selected', true);
+                        }
+                    });
+
+                    var decodedName = $("<div/>").html(json.text).text();
+                    $('[name="create_review_form"]').find('[name="review"]').val(decodedName);
+                } catch (e) {
+                    //error
+                    $("#removeLocationError").html(data);
+                    $("#removeLocationError").fadeIn();
+                }
+            });
+        });
+    });
+
+    //Remove review icon
+    $('.myreview_remove').click(function() {
+        var clicked = $(this);
+        tempID = clicked.data("review-id");
+        $('#blackout').fadeIn();
+        $('#blackout').children().filter(':visible').fadeOut();
+        $('.fullscreen_loading_icon').fadeIn(function() {
+            $.post("/ajax/getReviewInfo/", {id: clicked.data("review-id")}, function(data) {
+                $('.fullscreen_loading_icon').fadeOut();
+                $('#blackout_delete_review').fadeIn();
+                try {
+                    json = $.parseJSON(data);
+                    $("#RemoveProjectProject").children().first().html(json.project.institute.name + " (" + json.project.institute.place + ")");
+                    $("#RemoveProjectScore").children().first().html(json.rating);
+                } catch (e) {
+                    //error
+                    $("#removeReviewError").html(data);
+                    $("#removeReviewError").fadeIn();
+                }
+            });
+        });
+    });
+
+    //Update projects icon
+    $('.myprojects_update').click(function() {
+        var clicked = $(this);
+        tempID = clicked.data("project-id");
+
+        //Prepare page
+        $("#projects_action").data("action", "update");
+        $("#projects_action").children("p").html("Update Location");
+        $('#projects_action').show();
+        $("#addProjectError").hide();
+
+        //Start fades
+        $('#blackout').fadeIn();
+        $('#blackout').children().filter(':visible').hide();
+        $('.fullscreen_loading_icon').fadeIn(function() {
+            $.post("/ajax/getMyLocationsInfo/", {id: clicked.data("project-id")}, function(data) {
+                $('.fullscreen_loading_icon').fadeOut();
+                $('#blackout_create_project').fadeIn();
+                try {
+                    json = $.parseJSON(data);
+                    $('[name="create_project_form"]').find('[name="type"]').children().each(function() {
+                        if ($(this).html() == json.type) {
+                            $(this).prop('selected', true);
+                        }
+                    });
+                    $('[name="create_project_form"]').find('[name="location"]').children().each(function() {
+                        if ($(this).val() == json.institute.id) {
+                            $(this).prop('selected', true);
+                        }
+                    });
+                    $('[name="create_project_form"]').find('[name="start_year"]').children().each(function() {
+                        if ($(this).val() == json.start_year) {
+                            $(this).prop('selected', true);
+                        }
+                    });
+                    $('[name="create_project_form"]').find('[name="start_month"]').children().each(function() {
+                        if ($(this).val() == json.start_month) {
+                            $(this).prop('selected', true);
+                        }
+                    });
+                    $('[name="create_project_form"]').find('[name="end_year"]').children().each(function() {
+                        if ($(this).val() == json.end_year) {
+                            $(this).prop('selected', true);
+                        }
+                    });
+                    $('[name="create_project_form"]').find('[name="end_month"]').children().each(function() {
+                        if ($(this).val() == json.end_month) {
+                            $(this).prop('selected', true);
+                        }
+                    });
+
+                    $("#RemoveLocationName").children().first().html(json.name);
+                    $("#RemoveLocationLoc").children().first().html(json.place);
+                    $("#RemoveLocationType").children().first().html(json.type);
+                } catch (e) {
+                    //error
+                    $("#addProjectError").html(data);
+                    $("#addProjectError").fadeIn();
+                }
+            });
+        });
+    });
+
     //Create new project button
     $('.myprojects_add').click(function() {
+        //Prepare page
+        $("#projects_action").data("action", "create");
+        $("#projects_action").children("p").html("Create Project");
+        $('[name="create_project_form"]')[0].reset();
+        $('#projects_action').show();
+        $("#addProjectError").hide();
+
+        //Start fade
         $('#blackout').fadeIn();
         $('#blackout').children().filter(':visible').fadeOut();
         $('#blackout_create_project').fadeIn();
@@ -113,6 +294,14 @@ $(document).ready(function() {
 
     //Create new review button
     $('.myreviews_add').click(function() {
+        //Prepare page
+        $("#review_action").data("action", "create");
+        $("#review_action").children("p").html("Create Review");
+        $('[name="create_review_form"]')[0].reset();
+        $('#review_action').show();
+        $("#addReviewError").hide();
+
+        //Start fade
         $('#blackout').fadeIn();
         $('#blackout').children().filter(':visible').fadeOut();
         $('#blackout_create_review').fadeIn();
@@ -154,32 +343,37 @@ $(document).ready(function() {
         });
     });
 
-    //Create new project confirmation button
-    $('#create_project').click(function() {
+    //Create/Update new project confirmation button
+    $('#projects_action').click(function() {
         $(this).hide();
-        $.post("/Ajax/CreateProject", $("[name='create_project_form']").serialize(), function(data) {
+        var data = $("[name='create_project_form']").serializeArray();
+        data.push({name: "action", value: $("#projects_action").data("action")});
+        data.push({name: "id", value: tempID});
+        $.post("/Ajax/SaveProject", data, function(data) {
             if (data == "succes") {
                 $('#blackout').fadeOut(function() {
                     location.reload();
                 });
             } else {
-                $('#create_project').show();
+                $('#projects_action').show();
                 $('#addProjectError').show().children().first().html(data);
             }
         });
     });
 
     //Create new review confirmation button
-    $('#create_review').click(function() {
+    $('#review_action').click(function() {
         $(this).hide();
-        $.post("/Ajax/CreateReview", $("[name='create_review_form']").serialize(), function(data) {
-            console.log(data);
+        var data = $("[name='create_review_form']").serializeArray();
+        data.push({name: "action", value: $("#review_action").data("action")});
+        data.push({name: "id", value: tempID});
+        $.post("/Ajax/SaveReview", data, function(data) {
             if (data == "succes") {
                 $('#blackout').fadeOut(function() {
                     location.reload();
                 });
             } else {
-                $('#create_review').show();
+                $('#review_action').show();
                 $('#addReviewError').show().children().first().html(data);
             }
         });
@@ -196,6 +390,36 @@ $(document).ready(function() {
             } else {
                 $('#remove_location').show();
                 $('#removeLocationError').show().children().first().html(data);
+            }
+        });
+    });
+
+    //Remove location confirmation button
+    $('#remove_review').click(function() {
+        $(this).hide();
+        $.post("/ajax/removeReview/", {id: tempID}, function(data) {
+            if (data == "succes") {
+                $('#blackout').fadeOut(function() {
+                    location.reload();
+                });
+            } else {
+                $('#remove_review').show();
+                $('#removeReviewError').show().children().first().html(data);
+            }
+        });
+    });
+
+    //Remove project confirmation button
+    $('#remove_project').click(function() {
+        $(this).hide();
+        $.post("/ajax/removeProject/", {id: tempID}, function(data) {
+            if (data == "succes") {
+                $('#blackout').fadeOut(function() {
+                    location.reload();
+                });
+            } else {
+                $('#remove_project').show();
+                $('#removeProjectError').show().children().first().html(data);
             }
         });
     });

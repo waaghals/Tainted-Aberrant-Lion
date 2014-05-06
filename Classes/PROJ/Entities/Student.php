@@ -3,9 +3,10 @@
 namespace PROJ\Entities;
 
 /**
- * @Entity 
+ * @Entity
  */
-class Student {
+class Student
+{
 
     /**
      * @Id @Column(type="integer")
@@ -67,105 +68,129 @@ class Student {
      * @OneToMany(targetEntity="\PROJ\Entities\Institute", mappedBy="creator", cascade={"remove"})
      */
     private $institutes;
-    
-    function __construct() {
+
+    function __construct()
+    {
         $this->institutes = new \Doctrine\Common\Collections\ArrayCollection;
     }
 
-        
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
-    public function getFirstname() {
+    public function getFirstname()
+    {
         return $this->firstname;
     }
 
-    public function getSurname() {
+    public function getSurname()
+    {
         return $this->surname;
     }
 
-    public function getCity() {
+    public function getCity()
+    {
         return $this->city;
     }
 
-    public function getZipcode() {
+    public function getZipcode()
+    {
         return $this->zipcode;
     }
 
-    public function getStreet() {
+    public function getStreet()
+    {
         return $this->street;
     }
 
-    public function getHousenumber() {
+    public function getHousenumber()
+    {
         return $this->housenumber;
     }
 
-    public function getAddition() {
+    public function getAddition()
+    {
         return $this->addition;
     }
 
-    public function getEmail() {
+    public function getEmail()
+    {
         return $this->email;
     }
 
-    public function setFirstname($firstname) {
+    public function setFirstname($firstname)
+    {
         $this->firstname = $firstname;
     }
 
-    public function setSurname($surname) {
+    public function setSurname($surname)
+    {
         $this->surname = $surname;
     }
 
-    public function setCity($city) {
+    public function setCity($city)
+    {
         $this->city = $city;
     }
 
-    public function setZipcode($zipcode) {
+    public function setZipcode($zipcode)
+    {
         $this->zipcode = $zipcode;
     }
 
-    public function setStreet($street) {
+    public function setStreet($street)
+    {
         $this->street = $street;
     }
 
-    public function setHousenumber($housenumber) {
+    public function setHousenumber($housenumber)
+    {
         $this->housenumber = $housenumber;
     }
 
-    public function setAddition($addition) {
+    public function setAddition($addition)
+    {
         $this->addition = $addition;
     }
 
-    public function setEmail($email) {
+    public function setEmail($email)
+    {
         $this->email = $email;
     }
 
-    public function getAccount() {
+    public function getAccount()
+    {
         return $this->account;
     }
 
-    public function getProject() {
+    public function getProject()
+    {
         return $this->project;
     }
 
-    public function setAccount($account) {
+    public function setAccount($account)
+    {
         $this->account = $account;
     }
 
-    public function setProject($project) {
+    public function setProject($project)
+    {
         $this->project = $project;
     }
 
-    public function getFullName() {
+    public function getFullName()
+    {
         return sprintf("%s %s", $this->firstname, $this->surname);
     }
-    
-    public function getInstitutes() {
+
+    public function getInstitutes()
+    {
         return $this->institutes;
     }
 
-    public function setInstitutes($institutes) {
+    public function setInstitutes($institutes)
+    {
         $this->institutes = $institutes;
     }
 

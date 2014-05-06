@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<logicalClassDesignerDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="ManagementController">
+  <logicalClassDesignerModelMoniker Id="2fccabb3-4ec5-450b-b20b-215bedcc6b35" />
+  <nestedChildShapes>
+    <classShape Id="6fe23923-f028-4f5a-8611-dce554975a41" absoluteBounds="0.5, 0.875, 2, 1.0624999801317849" hideQualifiedName="false" increaseHeight="0" customColor="181, 193, 223">
+      <classMoniker Id="095475e4-6db6-4382-ba5a-f8fc520ee0ea" LastKnownName="BaseController" />
+      <nestedChildShapes>
+        <AttributeElementListCompartment Id="35713b0a-4504-426f-99ad-e3bde971e5e4" absoluteBounds="0.51500000000000012, 1.2650000000000001, 1.9700000000000002, 0.2011718675494194" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <OperationElementListCompartment Id="d9ec0d86-150f-4a9a-901b-02ac36d70bcf" absoluteBounds="0.51500000000000012, 1.4761718675494193, 1.9700000000000002, 0.36132811258236563" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="1c477196-752a-45b8-a49f-b53bf64a6917" absoluteBounds="2.75, 1, 2, 2.3437499403953552" hideQualifiedName="false" increaseHeight="0" customColor="181, 193, 223">
+      <classMoniker Id="f71da471-c2e2-4a03-a62f-932f3b3220b7" LastKnownName="ManagementController" />
+      <nestedChildShapes>
+        <AttributeElementListCompartment Id="579c6021-4b3a-4ecc-b00f-ea6480c9d2e1" absoluteBounds="2.7649999999999997, 1.3900000000000001, 1.9700000000000002, 0.52148435761531187" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <OperationElementListCompartment Id="a2e00823-ba05-477c-9a6a-ba4571fd7894" absoluteBounds="2.7649999999999997, 1.921484357615312, 1.9700000000000002, 1.3222655827800431" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <generalizationConnector edgePoints="[(2.75 : 1.46874999006589); (2.5 : 1.46874999006589)]" fixedFrom="Algorithm" fixedTo="Algorithm" customColor="113, 111, 110">
+      <generalizationMoniker Id="64498163-e345-4704-8e92-b9c405e0e371" />
+      <relativeChildShapes />
+      <nodes>
+        <classShapeMoniker Id="1c477196-752a-45b8-a49f-b53bf64a6917" />
+        <classShapeMoniker Id="6fe23923-f028-4f5a-8611-dce554975a41" />
+      </nodes>
+    </generalizationConnector>
+    <classShape Id="4d9ed1dd-2c23-4493-a4c1-eeb346d5cdb2" absoluteBounds="5.125, 1, 1.875, 2.0234374503294621" hideQualifiedName="false" increaseHeight="0" customColor="181, 193, 223">
+      <classMoniker Id="f1a53351-aeb9-4090-ab38-c65cbdc6ac18" LastKnownName="AccountService" />
+      <nestedChildShapes>
+        <AttributeElementListCompartment Id="1fd0b169-a8dd-4155-a043-28d995f11a3e" absoluteBounds="5.14, 1.3900000000000001, 1.8450000000000002, 0.2011718675494194" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <OperationElementListCompartment Id="d6b4ad70-2ded-4f5b-899f-209357ca2e60" absoluteBounds="5.14, 1.6011718675494193, 1.8450000000000002, 1.3222655827800431" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <dependencyConnector edgePoints="[(4.75 : 2.01171872516473); (5.125 : 2.01171872516473)]" fixedFrom="Algorithm" fixedTo="Algorithm" customColor="Black">
+      <dependencyMoniker Id="52875af8-a607-40d6-a626-35622d5ab382" />
+      <relativeChildShapes />
+      <nodes>
+        <classShapeMoniker Id="1c477196-752a-45b8-a49f-b53bf64a6917" />
+        <classShapeMoniker Id="4d9ed1dd-2c23-4493-a4c1-eeb346d5cdb2" />
+      </nodes>
+    </dependencyConnector>
+    <commentShape Id="68806b9a-93c4-47a6-b7d3-f1a9f485de2f" absoluteBounds="0.5, 2.125, 1.25, 0.75" customColor="251, 247, 200">
+      <commentMoniker Id="34581798-5af2-43fb-8a67-afd59416ddb1" />
+      <relativeChildShapes />
+    </commentShape>
+  </nestedChildShapes>
+</logicalClassDesignerDiagram>
