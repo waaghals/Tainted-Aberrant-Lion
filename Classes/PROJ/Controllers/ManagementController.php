@@ -191,13 +191,13 @@ class ManagementController extends BaseController
         if ($ac->isLoggedIn()) {
             if ($_POST['email'] == $_POST['rep_email']) {
                 //Check if the email already has an activation code. If so; just resent the email
-                $RegCode = $em->getRepository('\PROJ\Entities\RegistrationCode')->find(array('email' => $_POST['email']));
+                $RegCode = $em->getRepository('\PROJ\Entities\RegistrationCode')->findBy(array('email' => $_POST['email']));
                 if (count($RegCode) > 0) {
                     $this->sendActivationMail($RegCode->getEmail(), $RegCode->getCode());
                 } else {
                     $code = sha1(mt_rand(1, 99999) . time() . session_id());
                     //Prevents duplicate codes
-                    while (count($em->getRepository('\PROJ\Entities\RegistrationCode')->find(array('code' => $code))) > 0) {
+                    while (count($em->getRepository('\PROJ\Entities\RegistrationCode')->findBy(array('code' => $code))) > 0) {
                         $code = sha1(mt_rand(1, 99999) . time() . session_id());
                     }
 
