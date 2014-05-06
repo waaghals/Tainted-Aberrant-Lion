@@ -37,6 +37,12 @@ class ManagementController extends BaseController
         $this->serveManagementTemplate();
     }
 
+    public function UsersAction()
+    {
+        $this->page = "ViewUsers";
+        $this->serveManagementTemplate();
+    }
+
     public function changePasswordAction()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {    //Save account details
