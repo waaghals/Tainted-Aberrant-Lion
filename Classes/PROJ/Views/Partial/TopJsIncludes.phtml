@@ -4,13 +4,12 @@
 <script type="text/javascript" src="/js/flowtype.js"></script>
 <script type="text/javascript" src="/js/main.js"></script>
 <script type="text/javascript" src="/js/Search.js"></script>
-<script type="text/javascript" src="/js/markerclusterer.js"></script>
+<script type="text/javascript" src="/js/markerclustererPlus.js"></script>
 
 <script type="text/javascript">
     var map; /* Main map variable */
     var lastLoadedJson;
     var markerCluster;
-    var markers = new Array();
 
     function fakeMarkerClick(locationId, lat, lng) {
         map.setZoom(16);
@@ -28,7 +27,14 @@
         }
     }
 
+    function initializeMakerClusterer() {
+        markerCluster = new MarkerClusterer(map);
+        markerCluster.setGridSize(15);
+        markerCluster.setIgnoreHidden(true);
+    }
+
     function loadJsonMarkers() {
+        initializeMakerClusterer();
         console.log("Fetching all data from server");
         $.getJSON('/ajax/allLocations/', function(data) {
             lastLoadedJson = data;
@@ -45,9 +51,7 @@
                     country: location.country
                 });
 
-                //Fills an array with markers
-                markers[i] = marker;
-
+                markerCluster.addMarker(marker);
                 google.maps.event.addListener(marker, 'click', function() {
                     map.setZoom(16);
                     map.setCenter(marker.getPosition());
@@ -58,8 +62,6 @@
             });
 
 
-            markerCluster = new MarkerClusterer(map, markers);
-            markerCluster.setGridSize(15);
         });
     }
 
@@ -303,31 +305,35 @@ if (strpos($json, 'Bad Request') === false && strpos($json, 'Not Found') === fal
     });
 
     function filterCountry() {
-        for (var i = 0; i < markers.length; i++) {
-            if (markers[i]["country"]["name"] !== document.getElementById("country").value && document.getElementById("country").value !== "") {
-                markerCluster.removeMarker(markers[i]);
-            }
+        if ($('#country option:selected').val() !== "") {
+            markerCluster.getMarkers().forEach(function(marker) {
+                if (marker.country.name !== $('#country option:selected').val()) {
+                    marker.setVisible(false);
+                }
+            });
         }
     }
 
     function filterType() {
-        for (var i = 0; i < markers.length; i++) {
-            if (markers[i].type !== document.getElementById("locationType").value && document.getElementById("locationType").value !== "") {
-                markerCluster.removeMarker(markers[i]);
-            }
+        if ($('#locationType option:selected').val() !== "") {
+            markerCluster.getMarkers().forEach(function(marker) {
+                if (marker.type !== $('#locationType option:selected').val()) {
+                    marker.setVisible(false);
+                }
+            });
         }
     }
     function applyFilters() {
         showAllMarkers();
         filterCountry();
         filterType();
+        markerCluster.repaint();
     }
 
     function showAllMarkers() {
-        markerCluster.clearMarkers();
-        for (var i = 0; i < markers.length; i++) {
-            markerCluster.addMarker(markers[i]);
-        }
+        markerCluster.getMarkers().forEach(function(marker) {
+            marker.setVisible(true);
+        });
     }
 
     function resetFilters() {
@@ -335,6 +341,7 @@ if (strpos($json, 'Bad Request') === false && strpos($json, 'Not Found') === fal
         document.getElementById("locationType").value = "";
         document.getElementById("country").value = "";
         // document.getElementById("projectType").value = "";
+        markerCluster.repaint();
     }
 
 </script>
