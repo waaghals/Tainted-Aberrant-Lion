@@ -1,4 +1,4 @@
-# Test document
+#Test document
 
 In dit document worden de stappen beschreven waarin de __acceptence criteria__ van de __use cases__ getest worden. Het script dient van boven tot onder doorlopen te worden. Het is niet de bedoeling om steeds één stuk te testen. Het hele testplan moet afgelopen worden zodat zeker is dat de onderdelen onderling werkend blijven.
 
@@ -173,6 +173,73 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
 2. Vul het woord `nope`
 	- [ ] Er komt een dropdownp.
 	- [ ] In de dropdown staat `No search results found`
+	
+###Zoeken op alle tekstvelden:
+
+##Review:
+#Student stad:
+1. Laad de homepage http://localhost/
+    [ ] Rechts boven is een zoekformulier zichtbaar.
+2. Vul het woord `Utrecht` _(Visitor must be able to insert a keyword.)_
+	[ ] Er komt een dropdown met `Review by Harry Bakker` als resultaat.
+3. Klik op een resultaat  _(Results will be shown if found.)_
+	[ ] De sidebar wordt geopend en de betreffende locatie wordt getoont.
+	[ ] Het is mogelijk om vanaf hier de review van `Harry Bakker` te bekijken bij de `McDonald's te 's-Hertogenbosch`.
+
+#Student adres:
+1. Laad de homepage http://localhost/
+    [ ] Rechts boven is een zoekformulier zichtbaar.
+2. Vul het woord `Jansenlaan` _(Visitor must be able to insert a keyword.)_
+	[ ] Er komt een dropdown met `Review by Kees Jansen` als resultaat.
+3. Klik op een resultaat  _(Results will be shown if found.)_
+	[ ] De sidebar wordt geopend en de betreffende locatie wordt getoont.
+	[ ] Het is mogelijk om vanaf hier de review van `Kees Jansen` te bekijken bij de `Avans Hogeschool 's-Hertogenbosch`.
+
+#Student email:
+1. Laad de homepage http://localhost/
+    [ ] Rechts boven is een zoekformulier zichtbaar.
+2. Vul het woord `h.bakker@student.avans.nl` _(Visitor must be able to insert a keyword.)_
+	[ ] Er komt een dropdown met `Review by Harry Bakker` als resultaat.
+3. Klik op een resultaat  _(Results will be shown if found.)_
+	[ ] De sidebar wordt geopend en de betreffende locatie wordt getoont.
+	[ ] Het is mogelijk om vanaf hier de review van `Harry Bakker` te bekijken bij de `McDonald's te 's-Hertogenbosch`.
+
+#Project type:
+1. Laad de homepage http://localhost/
+    [ ] Rechts boven is een zoekformulier zichtbaar.
+2. Vul het woord `Internship` _(Visitor must be able to insert a keyword.)_
+	[ ] Er komt een dropdown met `Review by Kees Jansen` als resultaat.
+3. Klik op een resultaat  _(Results will be shown if found.)_
+	[ ] De sidebar wordt geopend en de betreffende locatie wordt getoont.
+	[ ] Het is mogelijk om vanaf hier de review van `Kees Jansen` te bekijken bij de `Avans Hogeschool 's-Hertogenbosch`.
+
+##Instituut:
+#Locatie:
+1. Laad de homepage http://localhost/
+    [ ] Rechts boven is een zoekformulier zichtbaar.
+2. Vul het woord ``s-Hertogenbosch` _(Visitor must be able to insert a keyword.)_
+	[ ] Er komt een dropdown met `Avans Hogeschool` als resultaat.
+3. Klik op een resultaat  _(Results will be shown if found.)_
+	[ ] De sidebar wordt geopend en de betreffende locatie wordt getoont.
+	[ ] Het is mogelijk om vanaf hier de reviews van `Avans` te bekijken.
+
+#Type:
+1. Laad de homepage http://localhost/
+    [ ] Rechts boven is een zoekformulier zichtbaar.
+2. Vul het woord `business` _(Visitor must be able to insert a keyword.)_
+	[ ] Er komt een dropdown met `McDonald's` als resultaat.
+3. Klik op een resultaat  _(Results will be shown if found.)_
+	[ ] De sidebar wordt geopend en de betreffende locatie wordt getoont.
+	[ ] Het is mogelijk om vanaf hier de reviews van `McDonald's` te bekijken.
+
+
+###Zoeken naar niet bestaande review/instituut:
+
+1. Laad de homepage http://localhost/
+    [ ] Rechts boven is een zoekformulier zichtbaar.
+2. Vul het woord `nope`
+	[ ] Er komt een dropdown.
+	[ ] In de dropdown staat `No search results found`
 
 
 ## Coördinator:
@@ -203,6 +270,7 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
 	* Vul `password` in.
 	* Druk op `save`
 	- [ ] U krijgt de tekst `New passwords didn't match.` te zien
+	
 3.	Druk op de knop `Change Password`
 	* Vul 'pasword' in.
 	* Vul 'pasword' in.
