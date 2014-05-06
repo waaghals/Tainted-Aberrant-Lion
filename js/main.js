@@ -13,6 +13,9 @@ $(document).ready(function() {
     $('#management_save').click(function() {
         $(this).parent().parent().submit();
     });
+    $('#create_user_save').click(function() {
+        $(this).parent().parent().submit();
+    });
     //Create new location button
     $('.mylocation_add').click(function() {
         //Prepare page
