@@ -100,7 +100,11 @@ class AjaxController extends BaseController
                 ->from('\PROJ\Entities\Review', 'review')->leftJoin('review.project', 'project')->leftJoin('project.institute', 'institute')->leftJoin('project.student', 'student')
                 ->where($qb->expr()->like("review.text", $qb->expr()->literal("%" . $tag . "%")))
                 ->orWhere($qb->expr()->like("student.firstname", $qb->expr()->literal("%" . $tag . "%")))
-                ->orWhere($qb->expr()->like("student.surname", $qb->expr()->literal("%" . $tag . "%")));
+                ->orWhere($qb->expr()->like("student.surname", $qb->expr()->literal("%" . $tag . "%")))
+                ->orWhere($qb->expr()->like("student.city", $qb->expr()->literal("%" . $tag . "%")))
+                ->orWhere($qb->expr()->like("student.street", $qb->expr()->literal("%" . $tag . "%")))
+                ->orWhere($qb->expr()->like("student.email", $qb->expr()->literal("%" . $tag . "%")))
+                ->orWhere($qb->expr()->like("project.type", $qb->expr()->literal("%" . $tag . "%")));
 
         $result = $qb->getQuery()->getResult();
         for ($i = 0; $i < count($result); $i++) {
@@ -113,7 +117,9 @@ class AjaxController extends BaseController
         $qb = $em->createQueryBuilder();
         $qb->select(array('student.firstname as studentname', 'student.surname as studentsurname', 'student.email', 'review.text', 'institute.name as institutename', 'institute.place as instituteplace', 'institute.id as instituteid', 'review.rating', 'institute.lat', 'institute.lng'))
                 ->from('\PROJ\Entities\Review', 'review')->leftJoin('review.project', 'project')->leftJoin('project.institute', 'institute')->leftJoin('project.student', 'student')
-                ->where($qb->expr()->like("institute.name", $qb->expr()->literal("%" . $tag . "%")));
+                ->where($qb->expr()->like("institute.name", $qb->expr()->literal("%" . $tag . "%")))
+                ->orWhere($qb->expr()->like("institute.type", $qb->expr()->literal("%" . $tag . "%")))
+                ->orWhere($qb->expr()->like("institute.place", $qb->expr()->literal("%" . $tag . "%")));
 
         $result = $qb->getQuery()->getResult();
         for ($i = 0; $i < count($result); $i++) {

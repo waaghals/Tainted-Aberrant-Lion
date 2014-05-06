@@ -4,17 +4,20 @@ namespace PROJ\Tests;
 
 use PROJ\Services\AccountService;
 
-class RegistrationTest extends \PHPUnit_Framework_TestCase {
+class RegistrationTest extends \PHPUnit_Framework_TestCase
+{
 
     public $dummydata;
     public $service;
 
-    public function __construct() {
-       // $this->ResetData();
+    public function __construct()
+    {
+        // $this->ResetData();
         $this->service = new AccountService();
     }
 
-    public function ResetData() {
+    public function ResetData()
+    {
         $this->dummydata['username'] = "Dummy";
         $this->dummydata['password'] = "Dummy";
         $this->dummydata['passwordagain'] = "Dummy";
@@ -25,13 +28,15 @@ class RegistrationTest extends \PHPUnit_Framework_TestCase {
         $this->dummydata['zipcode'] = "Dummy";
     }
 
-    public function testRegistrationInputValidationCheckPass() {
+    public function testRegistrationInputValidationCheckPass()
+    {
         $this->ResetData();
 
         $this->assertEquals($this->service->validateInput($this->dummydata), true);
     }
 
-    public function testRegistraionInputValidationUsernameFail() {
+    public function testRegistrationInputValidationUsernameFail()
+    {
         $this->ResetData();
 
         $this->dummydata['username'] = "<script>alert('hoi');</script>";
@@ -39,15 +44,18 @@ class RegistrationTest extends \PHPUnit_Framework_TestCase {
         $this->assertNotEquals($this->service->validateInput($this->dummydata), true);
     }
 
-    public function testRegistraionInputValidationPasswordNotEquals() {
+    public function testRegistrationInputValidationPasswordNotEquals()
+    {
         $this->ResetData();
 
         $this->dummydata['passwordagain'] = "NotDummy";
 
         $this->assertNotEquals($this->service->validateInput($this->dummydata), true);
     }
-    
-    public function __toString() {
+
+    public function __toString()
+    {
         return "";
     }
+
 }
