@@ -3,8 +3,8 @@
 Wie|Afgewerkte issues|Total Size
 --------|--------|--------
 Patrick|[#68](https://github.com/waaghals/Tainted-Aberrant-Lion/issues/68) [#49](https://github.com/waaghals/Tainted-Aberrant-Lion/issues/49) [#74](https://github.com/waaghals/Tainted-Aberrant-Lion/issues/74) [#92](https://github.com/waaghals/Tainted-Aberrant-Lion/issues/92)|21
-Jelle|
-Sebastian|
-Thijs|[#61](https://github.com/waaghals/Tainted-Aberrant-Lion/issues/61) [#62](https://github.com/waaghals/Tainted-Aberrant-Lion/issues/62) [#75](https://github.com/waaghals/Tainted-Aberrant-Lion/issues/75) [#77](https://github.com/waaghals/Tainted-Aberrant-Lion/issues/77) [#79](https://github.com/waaghals/Tainted-Aberrant-Lion/issues/79) [#83](https://github.com/waaghals/Tainted-Aberrant-Lion/issues/83) [#84](https://github.com/waaghals/Tainted-Aberrant-Lion/issues/84)|32
+Jelle|[#69](https://github.com/waaghals/Tainted-Aberrant-Lion/issues/69) [#70](https://github.com/waaghals/Tainted-Aberrant-Lion/issues/70)|16
+Sebastian|[#69](https://github.com/waaghals/Tainted-Aberrant-Lion/issues/69) [#70](https://github.com/waaghals/Tainted-Aberrant-Lion/issues/70) [#106](https://github.com/waaghals/Tainted-Aberrant-Lion/issues/106)|17
+Thijs|[#61](https://github.com/waaghals/Tainted-Aberrant-Lion/issues/61) [#62](https://github.com/waaghals/Tainted-Aberrant-Lion/issues/62) [#64](https://github.com/waaghals/Tainted-Aberrant-Lion/issues/64) [#75](https://github.com/waaghals/Tainted-Aberrant-Lion/issues/75) [#77](https://github.com/waaghals/Tainted-Aberrant-Lion/issues/77) [#79](https://github.com/waaghals/Tainted-Aberrant-Lion/issues/79) [#83](https://github.com/waaghals/Tainted-Aberrant-Lion/issues/83) [#84](https://github.com/waaghals/Tainted-Aberrant-Lion/issues/84)|37
 Yorick| [#73](https://github.com/waaghals/Tainted-Aberrant-Lion/issues/73) [#80](https://github.com/waaghals/Tainted-Aberrant-Lion/issues/80)|12
 Sam|
