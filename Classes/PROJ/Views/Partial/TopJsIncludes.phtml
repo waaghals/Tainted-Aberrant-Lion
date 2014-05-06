@@ -9,7 +9,9 @@
 <script type="text/javascript">
     var map; /* Main map variable */
     var lastLoadedJson;
+    var markerCluster;
     var markers = new Array();
+
     function fakeMarkerClick(locationId, lat, lng) {
         map.setZoom(16);
         map.setCenter(new google.maps.LatLng(lat, lng));
@@ -27,8 +29,6 @@
     }
 
     function loadJsonMarkers() {
-        //Array of markers
-
         console.log("Fetching all data from server");
         $.getJSON('/ajax/allLocations/', function(data) {
             lastLoadedJson = data;
@@ -57,7 +57,9 @@
                 });
             });
 
-            clusterMarkers();
+
+            markerCluster = new MarkerClusterer(map, markers);
+            markerCluster.setGridSize(15);
         });
     }
 
@@ -303,7 +305,7 @@ if (strpos($json, 'Bad Request') === false && strpos($json, 'Not Found') === fal
     function filterCountry() {
         for (var i = 0; i < markers.length; i++) {
             if (markers[i]["country"]["name"] !== document.getElementById("country").value && document.getElementById("country").value !== "") {
-                markers[i].setVisible(false);
+                markerCluster.removeMarker(markers[i]);
             }
         }
     }
@@ -311,44 +313,28 @@ if (strpos($json, 'Bad Request') === false && strpos($json, 'Not Found') === fal
     function filterType() {
         for (var i = 0; i < markers.length; i++) {
             if (markers[i].type !== document.getElementById("locationType").value && document.getElementById("locationType").value !== "") {
-                markers[i].setVisible(false);
+                markerCluster.removeMarker(markers[i]);
             }
         }
     }
-
     function applyFilters() {
         showAllMarkers();
-
         filterCountry();
         filterType();
     }
 
     function showAllMarkers() {
+        markerCluster.clearMarkers();
         for (var i = 0; i < markers.length; i++) {
-            markers[i].setVisible(true);
+            markerCluster.addMarker(markers[i]);
         }
     }
 
     function resetFilters() {
         showAllMarkers();
         document.getElementById("locationType").value = "";
-        document.getElementById("projectType").value = "";
         document.getElementById("country").value = "";
-    }
-
-
-    // call this everytime a filter is applied
-    function clusterMarkers() {
-        //Shows a marker instead of multiple markers around one place
-        filteredMarkers = new Array();
-        for (var i = 0; i < markers.length; i++) {
-            if (markers[i].getVisible()) {
-                filteredMarkers[i] = markers[i];
-            }
-        }
-        console.log(filteredMarkers);
-        var markerCluster = new MarkerClusterer(map, filteredMarkers);
-        markerCluster.setGridSize(15);
+        // document.getElementById("projectType").value = "";
     }
 
 </script>
