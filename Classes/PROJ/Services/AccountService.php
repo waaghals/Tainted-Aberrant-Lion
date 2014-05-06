@@ -113,6 +113,7 @@ class AccountService
         if (isset($data['addition']))
             $student->setAddition($data['addition']);
         $student->setCity($data['city']);
+        $student->setEmail($data['email']);
         $student->setAccount($account);
         $em->persist($student);
         $em->flush();

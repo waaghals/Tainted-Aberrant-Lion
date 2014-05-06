@@ -67,11 +67,15 @@ class AjaxController extends BaseController
     {
         $em = DoctrineHelper::instance()->getEntityManager();
 
-        $dql = "SELECT i, p, r, s FROM \PROJ\Entities\Institute i LEFT JOIN i.projects p LEFT JOIN p.review r LEFT JOIN p.student s";
-        $q = $em->createQuery($dql);
-
-        $res = $q->getArrayResult();
-
+        $qb = $em->createQueryBuilder();
+        $res = $qb->select(array('i', 'p', 'r', 's', 'c'))
+                ->from('\PROJ\Entities\Institute', 'i')
+                ->leftJoin('i.projects', 'p')
+                ->leftJoin('p.review', 'r')
+                ->leftJoin('p.student', 's')
+                ->leftJoin('i.country', 'c')
+                ->getQuery()
+                ->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
         echo json_encode($res);
     }
 
@@ -216,7 +220,7 @@ class AjaxController extends BaseController
             } elseif ($_POST['action'] == "update") {
                 $locatie = $em->getRepository('\PROJ\Entities\Institute')->find($_POST['id']);
 
-                //Extra checks
+//Extra checks
                 if ($locatie->getCreator()->getAccount()->getId() == $_SESSION['userID']) {
                     if ($locatie->getAcceptanceStatus() != 0) {
                         echo "The Location has been approved while you tried to edit it.";
@@ -326,7 +330,7 @@ class AjaxController extends BaseController
             } elseif ($_POST['action'] == "update") {
                 $project = $em->getRepository('\PROJ\Entities\Project')->find($_POST['id']);
 
-                //Extra checks
+//Extra checks
                 if ($project->getStudent()->getAccount()->getId() == $_SESSION['userID']) {
                     if ($project->getAcceptanceStatus() != 0) {
                         echo "The Project has been aproved while you tried to edit it.";
@@ -451,7 +455,7 @@ class AjaxController extends BaseController
         } elseif ($_POST['action'] == "update") {
             $review = $em->getRepository('\PROJ\Entities\Review')->find($_POST['id']);
 
-            //Extra checks
+//Extra checks
             if ($review->getProject()->getSTudent()->getAccount()->getId() == $_SESSION['userID']) {
                 if ($review->getAcceptanceStatus() != 0) {
                     echo "The Review has been approved while you tried to edit it.";
@@ -545,6 +549,17 @@ class AjaxController extends BaseController
                 echo "This isn't your Location.";
             }
         }
+    }
+
+    public function getAllCountriesAction()
+    {
+        $em = DoctrineHelper::instance()->getEntityManager();
+        $inst = $em->getRepository('\PROJ\Entities\Country')
+                ->createQueryBuilder('e')
+                ->select('e')
+                ->getQuery()
+                ->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
+        return json_encode($inst);
     }
 
     public function removeReviewAction()

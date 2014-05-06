@@ -309,7 +309,7 @@ $(document).ready(function() {
 
     //Blackout "cancel"
     $('#blackout').click(function(e) {
-        if ($(event.target).is($('#blackout'))) {
+        if ($(e.target).is($('#blackout'))) {
             $('#blackout').fadeOut(function() {
                 $(this).children().hide();
             });
