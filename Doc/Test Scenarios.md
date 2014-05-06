@@ -106,6 +106,24 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
 	- [ ] Je wordt doorgestuurd naar de homepage
     - [ ] Rechtst bovenin de balk is de voornaam `harry` van de test gebruiker zichtbaar.
 
+## Register
+### Correct Access Code Genereren:
+1.	Laad de homepage http://localhost/Management/CreateUser/
+    - [ ] Er is een genereer scherm zichtbaar
+2.  Vul in beide velden in: `test@toip.nl`
+3.  Klik op de knop `Create Access Code`
+	- [ ] In het scherm komt een melding met de tekst: `Created access code succesfully`.
+
+### Incorrect Access Code Genereren:
+1.	Laad de homepage http://localhost/Management/CreateUser/
+    - [ ] Er is een genereer scherm zichtbaar
+2.  Vul in het `E-Mail` veld in: `test@toip.nl`
+    - Vul in het `Repeat E-Mail` veld in: `test1@toip.nl`
+3.  Klik op de knop `Create Access Code`
+	- [ ] In het scherm komt een melding met de tekst: `E-Mail fiels do not match.`.
+3.  Maak een van de twee velden leeg en klik op de knop `Create Access Code`
+	- [ ] In het scherm komt een melding met de tekst: `Not everything is filled in`.
+
 ### Incorrect registreren:
 
 1. Laad de homepage http://localhost/account/register/
@@ -119,6 +137,8 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
 1. Laad de homepage http://localhost/account/register/
     - [ ] Er is een registreerscherm zichtbaar
 2. Vul de gegevens in volgens bijlage 2.
+2. Zoek in PhpMyAdmin, in de tabel `registrationcode` op welke code bij `test@toip.nl` hoort.
+    -   Vul deze code in bij het veld: `Registration Code`
 3. Klik op de knop `Register`
 	- [ ] Je wordt doorgestuurd naar de homepage
 4. Klik op de knop `Log in` rechtsboven in de balk.
@@ -308,6 +328,23 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
     * Druk op de knop `Write review``
     - [ ] Bovenaan zou de error `Not everything is filled in` moeten verschijnen.
 
+###Incorrect een User aanpassen:
+1.    Laad de pagina: http://localhost/Management/Users/
+    * De Pagina laad, en een overzicht van gebruikers is zichtbaar.
+2.    Druk op het potloodje achter de gebruiker `Kees Jansen`
+    * Maak een willekeurig veld leeg en klik op `Update User`
+    - [ ] Bovenaan zou de error `Not everything is filled in` moeten verschijnen.
+3.      Vul het veld weer met de orginele waarde.
+    * Zet in het veld `Username` de tekst `hbakker`.
+    - [ ] Bovenaan zou de error `This username isn't unique` moeten verschijnen.
+
+###Correct een User aanpassen:
+1.    Laad de pagina: http://localhost/Management/Users/
+    * De Pagina laad, en een overzicht van gebruikers is zichtbaar.
+2.    Druk op het potloodje achter de gebruiker `Kees Jansen`
+    * Maak van het veld `Firstname` de waarde `Thijs` en klik op `Update User`
+    - [ ] Het scherm verdwijnt en de voornaam van de gebruiker Jansen wordt verandert naar Thijs.
+
 ###Een Locatie verwijderen:
 1.	Laad de pagina: http://localhost/Management/MyLocations/
     - [ ] Er is een overzicht zichtbaar om je gegevens aan te passen
@@ -340,7 +377,7 @@ Veld|Waarde
 --------|--------
 Username|patrick
 Password|iscool
-E-mail|pat@example.com
+E-mail|test@toip.nl
 First Name|Patrick
 Surname|Berenschot
 City|Arnhem
@@ -348,7 +385,6 @@ Zipcode|6000AA
 Street|Straatnaam
 Streetnumber|12
 Addition|[leeg]
-Registration Code | 1234567890
 
 ###3. Correcte nieuwe locatie
 Veld|Waarde

@@ -297,12 +297,12 @@ class AjaxController extends BaseController
 
         //TODO: Add coordinator check
         if ($ac->isLoggedIn()) {
-            if (count($em->getRepository('\PROJ\Entities\Account')->findBy(array('username' => $_POST['username']))) > 0) {
+            $user = $em->getRepository('\PROJ\Entities\Account')->find($_POST['id']);
+            if (count($em->getRepository('\PROJ\Entities\Account')->findBy(array('username' => $_POST['username']))) > 0 && $user->getUsername() != $_POST['username']) {
                 echo("This username isn't unique.");
                 return;
             }
 
-            $user = $em->getRepository('\PROJ\Entities\Account')->find($_POST['id']);
             $student = $user->getStudent();
 
             $student->setFirstName(\PROJ\Helper\XssHelper::sanitizeInput($_POST['firstname']));
