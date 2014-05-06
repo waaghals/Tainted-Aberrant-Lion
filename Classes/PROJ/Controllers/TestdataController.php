@@ -269,7 +269,7 @@ class TestdataController extends BaseController
         $this->createCountry($em, 'CX', 'CXR', 162, 'KT', 'Christmas Island', 'Flying Fish Cove', 135, 1500, 'AS', '', 'AUD', '.cx');
         $this->createCountry($em, 'CY', 'CYP', 196, 'CY', 'Cyprus', 'Nicosia', 9250, 1102677, 'EU', '', 'EUR', '.cy');
         $this->createCountry($em, 'CZ', 'CZE', 203, 'EZ', 'Czech Republic', 'Prague', 78866, 10476000, 'EU', '', 'CZK', '.cz');
-        $this->createCountry($em, 'DE', 'DEU', 276, 'GM', 'Germany', 'Berlin', 357021, 81802257, 'EU', '', 'EUR', '.de');
+        $duitsland = $this->createCountry($em, 'DE', 'DEU', 276, 'GM', 'Germany', 'Berlin', 357021, 81802257, 'EU', '', 'EUR', '.de');
         $this->createCountry($em, 'DJ', 'DJI', 262, 'DJ', 'Djibouti', 'Djibouti', 23000, 740528, 'AF', '', 'DJF', '.dj');
         $this->createCountry($em, 'DK', 'DNK', 208, 'DA', 'Denmark', 'Copenhagen', 43094, 5484000, 'EU', '', 'DKK', '.dk');
         $this->createCountry($em, 'DM', 'DMA', 212, 'DO', 'Dominica', 'Roseau', 754, 72813, 'NA', '', 'XCD', '.dm');
@@ -474,9 +474,11 @@ class TestdataController extends BaseController
 
         $avans = $this->createInstitute($em, "Avans Hogeschool", "education", "`s-Hertogenbosch", 51.688946, 5.287256, $kees, $nederland, "Onderwijsboulevard", "215", "5223DE", "contact@avans.nl", "(073) 629 52 95");
         $mac = $this->createInstitute($em, "McDonald's", "business", "Arnhem", 51.9635996, 5.8930421, $harry, $nederland, "Rijnstraat", "36", "6811EW", "arnhem@mcdonalds.nl", "026-4456234");
+        $RWTH = $this->createInstitute($em, "RWTH University Aachen", "business", "Aachen", 50.78692, 6.04635, $harry, $duitsland, "Steinbachstrase", "7", "52074", "test@toip.nl", "3292-234659");
 
         $projectX = $this->createProject($em, $kees, $avans, "internship", new \DateTime('03/17/2014'), new \DateTime('05/17/2014'));
         $projectZ = $this->createProject($em, $harry, $mac, "minor", new \DateTime('02/04/2014'), new \DateTime('06/20/2014'));
+        $projectY = $this->createProject($em, $harry, $RWTH, "minor", new \DateTime('07/23/2013'), new \DateTime('02/07/2014'));
 
         $this->createReview($em, $projectX, 5, 3, 4, "Many fun activities to do here!");
         $this->createReview($em, $projectZ, 4, 4, 1, "Just do your job and they're happy.");
