@@ -37,22 +37,6 @@ $user = $em->getRepository('\PROJ\Entities\Account')->find($_SESSION['userID'])-
                 <div style="clear:both;"></div>
 
                 <div class="left_container">
-                    <p>Country: *</p>
-                </div>
-                <div style="width:5%; float:left;">&nbsp;</div>
-                <div class="right_container">
-                    <select name="country" required autofocus>
-                        <option value="">-- Select a country --</option>
-                        <?php
-                        foreach($em->getRepository('\PROJ\Entities\Country')->findAll() as $res) {
-                            echo('<option value="'.$res->getId().'"'.(isset($_POST['country']) ? ($_POST['country'] == $res->getId() ? ' selected' : '') : ($user->getCountry() == $res->getId() ? ' selected' : '')).'>'.$res->getName().'</option>');
-                        };
-                        ?>
-                    </select>
-                </div>
-                <div style="clear:both;"></div>
-
-                <div class="left_container">
                     <p>City: *</p>
                 </div>
                 <div style="width:5%; float:left;">&nbsp;</div>

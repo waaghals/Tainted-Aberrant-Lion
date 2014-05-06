@@ -4,56 +4,72 @@ $ac = new PROJ\Services\AccountService();
 <header class="shadow">
     <nav>
         <h2 style="float:left;"><a href="/">Worldmap</a></h2>
-        <?php if($ac->isLoggedIn()): ?>
-        <button class="headerbutton" onclick=location.href="/Account/Logout">Log uit</button>
-        <button class="headerbutton" onclick=location.href="/Management/Home">Welcome <?php echo sprintf("%s", $_SESSION['user']->getStudent()->getFirstname()); ?></button>
+        <?php if ($ac->isLoggedIn()): ?>
+            <button class="headerbutton" onclick='location.href = "/Account/Logout"'>Log uit</button>
+            <button class="headerbutton" onclick='location.href = "/Management/Home"'>Welcome <?php echo sprintf("%s", $_SESSION['user']->getStudent()->getFirstname()); ?></button>
         <?php else: ?>
-        <button class="headerbutton" onclick=location.href="/Account/Login">Log in</button>
-        <button class="headerbutton" onclick=location.href="/account/Register">Register</button>
+            <button class="headerbutton" onclick='location.href = "/Account/Login"'>Log in</button>
+            <button class="headerbutton" onclick='location.href = "/account/Register"'>Register</button>
         <?php endif; ?>
-        <?php if(isset($search)) { ?>
-        <div style="width:30px; float:right;">
-            &nbsp;
-        </div>
-        <div class="spacerbar"></div>
-        <div style="width:30px; float:right;">
-            &nbsp;
-        </div>
-        <div style="float:right; position: relative; margin: 3px 5px 3px 0px;">
-            <input id="searchbar" type="text" placeholder="Search">
-            <div id="searchresult">
-                
+        <?php if (isset($search)) { ?>
+            <div style="width:30px; float:right;">
+                &nbsp;
             </div>
-        </div>
+            <div class="spacerbar"></div>
+            <div style="width:30px; float:right;">
+                &nbsp;
+            </div>
+            <div style="float:right; position: relative; margin: 3px 5px 3px 0px;">
+                <input id="searchbar" type="text" placeholder="Search">
+                <div id="searchresult">
+
+                </div>
+            </div>
         <?php } ?>
-        <!--
-        <?php if(isset($filter)) { ?>
-        <div style="width:30px; float:right;">
-            &nbsp;
-        </div>
-        <div class="spacerbar"></div>
-        <div style="width:15px; float:right;">
-            &nbsp;
-        </div>
-        <div class="filterblock">
-            <div>Type:</div>
-            <select>
-                <option>Internship</option>
-            </select>
-        </div>
-        <div class="filterblock">
-            <div>Region:</div>
-            <select>
-                <option>Brabant</option>
-            </select>
-        </div>
-        <div class="filterblock">
-            <div>Country:</div>
-            <select>
-                <option>Netherlands</option>
-            </select>
-        </div>
+        <?php if (isset($filter)) { ?>
+            <div style="width:30px; float:right;">
+                &nbsp;
+            </div>
+            <div class="spacerbar"></div>
+            <div style="width:15px; float:right;">
+                &nbsp;
+            </div>
+            <div>
+                <button class="headerbutton" onclick="resetFilters()">Reset</button>
+            </div>
+            <div class="filterblock">
+                <div>Location Type:</div>
+                <select id="locationType" onchange="applyFilters()">
+                    <option></option>
+                    <option>education</option>
+                    <option>business</option>
+                </select>
+            </div>
+
+            <!--    <div class="filterblock">
+                    <div>Project Type:</div>
+                    <select id="projectType">
+                        <option></option>
+                        <option>Minor</option>
+                        <option>EPS</option>
+                        <option>Graduation project</option>
+                        <option>Internship</option>
+                    </select>
+                </div>
+            -->
+            <div class="filterblock">
+                <div>Country:</div>
+                <select id="country" onchange="applyFilters()">
+                    <option></option>
+                    <?php
+                    $ajaxController = new \PROJ\Controllers\AjaxController();
+                    $countryList = json_decode($ajaxController->getAllCountriesAction());
+                    for ($i = 0; $i < sizeof($countryList); $i++) {
+                        echo "<option>" . $countryList[$i]->name . "</option>";
+                    }
+                    ?>
+                </select>
+            </div>
         <?php } ?>
-        -->
     </nav>
 </header>

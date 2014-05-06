@@ -2,10 +2,13 @@
 
 namespace PROJ\Entities;
 
+use PROJ\DBAL\ApprovalStateType as Status;
+
 /**
- * @Entity 
+ * @Entity
  */
-class Institute {
+class Institute
+{
 
     /**
      * @Id @Column(type="integer")
@@ -19,9 +22,9 @@ class Institute {
     private $name;
 
     /**
-     * @Column(type="string")
+     * @Column(type="institutetype")
      */
-    private $type;  //Internship, Minor, Both
+    private $type;
 
     /**
      * @Column(type="float")
@@ -31,18 +34,42 @@ class Institute {
     /**
      * @Column(type="float")
      */
-
     private $lng;
-    
+
     /**
      * @Column(type="string")
      */
     private $place;
-    
+
     /**
-     * @Column(type="boolean")
+     * @Column(type="string")
      */
-    private $aproved = 0;   // 0 = pending, 1 = aproved, 2 = declined
+    private $street;
+
+    /**
+     * @Column(type="string")
+     */
+    private $housenumber;
+
+    /**
+     * @Column(type="string")
+     */
+    private $postalcode;
+
+    /**
+     * @Column(type="string")
+     */
+    private $email;
+
+    /**
+     * @Column(type="string")
+     */
+    private $telephone;
+
+    /**
+     * @Column(type="projectstate")
+     */
+    private $acceptanceStatus = Status::PENDING;
 
     /**
      * @OneToMany(targetEntity="\PROJ\Entities\Project", mappedBy="institute", cascade={"remove"})
@@ -53,93 +80,186 @@ class Institute {
      * @ManyToOne(targetEntity="\PROJ\Entities\Student", inversedBy="institutes")
      */
     private $creator;
-    
-    
-    function __construct() {
+
+    /**
+     * @ManyToOne(targetEntity="\PROJ\Entities\Country")
+     */
+    private $country;
+
+    function __construct()
+    {
         $this->projects = new \Doctrine\Common\Collections\ArrayCollection;
     }
-    
-    public function getId() {
+
+    public function getId()
+    {
         return $this->id;
     }
 
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
-    public function getType() {
+    public function getType()
+    {
         return $this->type;
     }
 
-    public function getLat() {
+    public function getLat()
+    {
         return $this->lat;
     }
 
-    public function getLng() {
+    public function getLng()
+    {
         return $this->lng;
     }
 
-    public function getPlace() {
+    public function getPlace()
+    {
         return $this->place;
     }
 
-    public function getProjects() {
+    public function getProjects()
+    {
         return $this->projects;
     }
 
-    public function getCreator() {
+    public function getCreator()
+    {
         return $this->creator;
     }
 
-    public function setId($id) {
+    public function setId($id)
+    {
         $this->id = $id;
     }
 
-    public function setType($type) {
+    public function setType($type)
+    {
         $this->type = $type;
     }
 
-    public function setLat($lat) {
+    public function setLat($lat)
+    {
         $this->lat = $lat;
     }
 
-    public function setLng($lng) {
+    public function setLng($lng)
+    {
         $this->lng = $lng;
     }
 
-    public function setPlace($place) {
+    public function setPlace($place)
+    {
         $this->place = $place;
     }
 
-    public function setProjects($projects) {
+    public function setProjects($projects)
+    {
         $this->projects = $projects;
     }
 
-    public function setCreator($creator) {
+    public function setCreator($creator)
+    {
         $this->creator = $creator;
     }
-    
-    public function setName($name) {
+
+    public function setName($name)
+    {
         $this->name = $name;
     }
-    
-    public function jsonSerialize() {
+
+    public function jsonSerialize()
+    {
         return array(
-            "type" => $this->getType(),
+            "type" => ucfirst($this->getType()),
             "name" => $this->getName(),
             "lat" => $this->getLat(),
-            "long" => $this->getLong(),
+            "long" => $this->getLng(),
             "id" => $this->getId(),
-            "projects" => $this->getProjects()
+            "projects" => $this->getProjects(),
+            "place" => $this->getPlace(),
+            "country" => $this->getCountry()->getName(),
+            "street" => $this->getStreet(),
+            "housenumber" => $this->getHousenumber(),
+            "postalcode" => $this->getPostalcode(),
+            "email" => $this->getEmail(),
+            "telephone" => $this->getTelephone()
         );
     }
-    
-    public function getAproved() {
-        return $this->aproved;
+
+    public function getCountry()
+    {
+        return $this->country;
     }
 
-    public function setAproved($aproved) {
-        $this->aproved = $aproved;
+    public function setCountry($country)
+    {
+        $this->country = $country;
     }
+
+    public function getStreet()
+    {
+        return $this->street;
+    }
+
+    public function getHousenumber()
+    {
+        return $this->housenumber;
+    }
+
+    public function getPostalcode()
+    {
+        return $this->postalcode;
+    }
+
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    public function getTelephone()
+    {
+        return $this->telephone;
+    }
+
+    public function setStreet($street)
+    {
+        $this->street = $street;
+    }
+
+    public function setHousenumber($housenumber)
+    {
+        $this->housenumber = $housenumber;
+    }
+
+    public function setPostalcode($postalcode)
+    {
+        $this->postalcode = $postalcode;
+    }
+
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+
+    public function setTelephone($telephone)
+    {
+        $this->telephone = $telephone;
+    }
+
+    public function getAcceptanceStatus()
+    {
+        return $this->acceptanceStatus;
+    }
+
+    public function setAcceptanceStatus($acceptanceStatus)
+    {
+        $this->acceptanceStatus = $acceptanceStatus;
+    }
+
 }
+
 ?>

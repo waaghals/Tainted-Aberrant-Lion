@@ -9,7 +9,7 @@ class RegisterController {
      * 
      * returns the message that will be shown to the user.
      */
-    public function validate_input($data) {
+    public function validateInput($data) {
         if (empty($data['username']) || empty($data['password']) || empty($data['passwordagain'])
                 || empty($data['firstname']) || empty($data['surname']) || empty($data['city']) 
                 || empty($data['zipcode']) || empty($data['street']) || 

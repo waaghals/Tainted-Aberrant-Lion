@@ -28,6 +28,52 @@
     display:none;
 }
 
+
+#blackout_delete_location{
+    width: 706px;
+    height: 274px;
+    position: absolute;
+    left:50%;
+    top: 50%;
+    margin-left: -352px;
+    margin-top: -137px;
+    display:none;
+}
+
+
+#blackout_delete_review{
+    width: 706px;
+    height: 274px;
+    position: absolute;
+    left:50%;
+    top: 50%;
+    margin-left: -352px;
+    margin-top: -137px;
+    display:none;
+}
+
+#blackout_delete_project{
+    width: 706px;
+    height: 330px;
+    position: absolute;
+    left:50%;
+    top: 50%;
+    margin-left: -352px;
+    margin-top: -165px;
+    display:none;
+}
+
+#blackout_delete_user{
+    width: 706px;
+    height: 274px;
+    position: absolute;
+    left:50%;
+    top: 50%;
+    margin-left: -352px;
+    margin-top: -137px;
+    display:none;
+}
+
 #blackout_create_project{
     width: 706px;
     height: 390px;
@@ -48,6 +94,15 @@
     margin-left: -352px;
     margin-top: -195px;
     display:none;
+}
+
+.fullscreen_loading_icon{
+    margin-top: -6px;
+    margin-left: -21px;
+    top: 50%;
+    left: 50%;
+    display: none;
+    position: absolute;
 }
 
 #legenda{

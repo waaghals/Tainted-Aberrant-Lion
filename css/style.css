@@ -3,7 +3,7 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 */
-/* 
+/*
     Created on : 23-feb-2014, 22:57:38
     Author     : Patrick
 */
@@ -20,7 +20,7 @@ and open the template in the editor.
     box-sizing: border-box;
 }
 
-/* Small screens (default) 
+/* Small screens (default)
    Note the lack of column definitions
    making all the columns stack for mobile viewing. */
 html {
@@ -80,7 +80,7 @@ aside.closed {
 }
 
 /* Large screens (1024px) */
-@media (min-width: 64rem) { 
+@media (min-width: 64rem) {
     aside { width: 600px; }
     aside.closed {
         left: -540px;
@@ -88,7 +88,7 @@ aside.closed {
 }
 
 /* Huge screens (1200px) */
-@media (min-width: 85rem) { 
+@media (min-width: 85rem) {
     aside { width: 800px; }
     aside.closed {
         left: -740px;
@@ -175,7 +175,7 @@ ul {
 .hidden { display:none; }
 
 .reviewLink {
-    cursor: pointer; 
+    cursor: pointer;
     cursor: hand;
 }
 #searchbar{
@@ -328,6 +328,7 @@ ul {
     font-size:14px;
     width: 100%;
     padding: 10px;
+    float: left;
 }
 
 #blackout textarea{
@@ -521,6 +522,10 @@ nav h2 a{
     float:left;
 }
 
+#register_container_tophalf *{
+    float:none;
+}
+
 #login_container_tophalf {
     width: 342px;
     padding:20px 35px !important;
@@ -550,4 +555,8 @@ div.fancy_button p {
     background-image: url('/images/btn_center.png');
     color: #FFF;
     font-weight: bold;
+}
+
+.action_btn{
+    cursor: pointer;
 }

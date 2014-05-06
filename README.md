@@ -4,13 +4,14 @@ Tainted-Aberrant-Lion
 School project
 
 ##Versie
-Huidige versie is 0.2b na de vierde sprint. Deze is getagd als `Vierde Sprint` met git.
-Er zijn momenteel drie verschillende releases.
+Huidige versie is 0.3 na de vijfde sprint. Deze is getagd als `Vijfde Sprint` met git.
+Er zijn momenteel vier verschillende releases.
 
 * Eerste_Sprint
 * ~~Tweede_Sprint~~
 * Derde_Sprint
 * Vierde_Sprint
+* Vijfde_Sprint
 
 
 ##Pagina's
@@ -38,19 +39,12 @@ Dit commando draai je altijd als eerste om te kijken of de SQL is wat je verwach
 
 Als het dump-sql commando geen errors terug geeft, kun je --force gebruiken om de changes naar de database op te slaan.
 
-<br>
-
-#####Proxy's
-Alles wat in \Classes\PROJ\Proxies staat moet je niet editen. Je kan het wel doen maar Doctrine genereerd die shit vanzelf. Alles wat je doet wordt dus gewoon overschreven.
-
-<br>
 
 #####Debuggen
 Een doctrine entity **NOOIT** print_r of var_dumpen! Altijd de Debug functie hier voor gebruiken.
 
 >\Doctrine\Common\Util\Debug::dump( )
 
-<br>
 
 #####Handige links
 * [Doctrine Mapping](http://docs.doctrine-project.org/en/2.0.x/reference/association-mapping.html)
@@ -61,20 +55,14 @@ Een doctrine entity **NOOIT** print_r of var_dumpen! Altijd de Debug functie hie
 ##MVC
 Het handigste is als we MVC gaan gebruiken. Ik heb het project al zo opgezet dat dit makkelijk moet gaan. In /PROJ/Classes/Controller zet je de controllers die bij URL benaarderbaar moeten zijn. dus bijvoorbeeld {domain}/DemoPage/. De index zorgt er al voor dat deze automatisch aangeroepen worden. **LET OP!** Deze pagina's worden **ALLEEN** aangeroepen als ze de BaseController extenden! Anders krijg je een 404.
 
-In die paginas kun je dan de view aanroepen afhankelijk van overige url parameters ({domain}/Controller/Action/Parm1=Value1/Parm2=Value2). 
+In die paginas kun je dan de view aanroepen afhankelijk van overige url parameters ({domain}/Controller/Action/Parm1=Value1/Parm2=Value2).
 
 Probeer database handelingen zoveel mogelijk in een model te doen. Het makkelijkste is om hier een Singleton van te maken (Zie DemoController.php in /PROJ/Classes/Controller/)
 
-<br>
-##Defenition of Done
+#Netbeans
+Gebruik de Netbeans instellingen zoals deze voor het project zijn ingesteld.
 
+1. Ga naar `Tools > options`
+2. Klik links onderaan op Import...
+3. Kies `Netbeans Settings.zip` uit de project root.
 
-* Het gemaakte werk moet voldoen aan de acceptatie criteria van de user story
-* de broncode  van het gemaakte werk heeft unit tests 
-* De broncode wordt gereviewd door twee anderen teamleden die het te reviewen werk niet gemaakt hebben.
-* Deployement script is getest en werkend met de nieuwe functionalitiet. 
-* Database wordt ook geupdate
-* Documentatie is bijgewerkt. 
-* Zodra een nieuwe functie klaar is, mag je zelf beslissen wanneer het word gepushed naar de dev branch 
-
-<br>

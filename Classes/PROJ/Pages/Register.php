@@ -11,7 +11,7 @@ class Register extends MainPage {
     public function getContent() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $c = new \PROJ\Controllers\RegisterController();
-            $valid = $c->validate_input($_POST);
+            $valid = $c->validateInput($_POST);
             if($valid === "Registration succeeded!"){
                 $account = $c->create_account($_POST);
                 $account = $c->create_student($account, $_POST);

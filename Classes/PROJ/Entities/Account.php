@@ -3,9 +3,10 @@
 namespace PROJ\Entities;
 
 /**
- * @Entity 
+ * @Entity
  */
-class Account {
+class Account
+{
 
     /**
      * @Id @Column(type="integer")
@@ -22,65 +23,84 @@ class Account {
      * @Column(type="string")
      */
     private $password;
-    
+
     /**
      * @Column(type="string")
      */
-    private $salt;    
-    
+    private $salt;
+
     /**
      * @OneToOne(targetEntity="\PROJ\Entities\Student", mappedBy="account")
      */
-    private $student; 
-    
+    private $student;
+
     /**
      * @OneToMany(targetEntity="\PROJ\Entities\LoginAttempt", mappedBy="account", cascade={"remove"})
      */
     private $loginAttempts;
 
-    
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
-    public function getUsername() {
+    public function getUsername()
+    {
         return $this->username;
     }
 
-    public function getPassword() {
+    public function getPassword()
+    {
         return $this->password;
     }
 
-    public function setUsername($username) {
+    public function setUsername($username)
+    {
         $this->username = $username;
     }
 
-    public function setPassword($password) {
+    public function setPassword($password)
+    {
         $this->password = $password;
     }
-    public function getSalt() {
+
+    public function getSalt()
+    {
         return $this->salt;
     }
 
-    public function setSalt($salt) {
+    public function setSalt($salt)
+    {
         $this->salt = $salt;
     }
-    
-    public function getStudent() {
+
+    public function getStudent()
+    {
         return $this->student;
     }
 
-    public function getLoginAttempt() {
+    public function getLoginAttempt()
+    {
         return $this->loginAttempts;
     }
 
-    public function setStudent($student) {
+    public function setStudent($student)
+    {
         $this->student = $student;
     }
 
-    public function setLoginAttempt($loginAttempts) {
+    public function setLoginAttempt($loginAttempts)
+    {
         $this->loginAttempts = $loginAttempst;
     }
+
+    public function jsonSerialize()
+    {
+        return array(
+            "username" => $this->getUsername()
+        );
+    }
+
 }
 
 ?>

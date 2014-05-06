@@ -22,7 +22,7 @@
                         <th>Name:</th>
                         <th>Location:</th>
                         <th>Type:</th>
-                        <th>Status:</th>
+                        <th colspan="3">Status:</th>
                     </tr>
                     <?php
                     $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
@@ -33,29 +33,32 @@
                             ->where($qb->expr()->eq('i.creator', $qb->expr()->literal($user->getStudent()->getId())))
                             ->orderBy('i.name', 'ASC');
                     $res = $qb->getQuery()->getResult();
-                    foreach($res as $r) {
-                        if($r->getAproved() == 0)
-                            $status = 'Pending';
-                        elseif($r->getAproved() == 1)
-                            $status = 'Aproved';
-                        else
-                            $status = 'Declined';
-                    ?>
-                    <tr>
-                        <td><p><?php echo $r->getName(); ?></p></td>
-                        <td><p><?php echo $r->getPlace(); ?></p></td>
-                        <td><p><?php echo ucfirst($r->getType()); ?></p></td>
-                        <td><p><?php echo $status; ?></p></td>
-                    </tr> 
-                    <?php
+
+                    foreach ($res as $r) {
+                        ?>
+                        <tr>
+                            <td><p><?php echo $r->getName(); ?></p></td>
+                            <td><p><?php echo $r->getPlace(); ?></p></td>
+                            <td><p><?php echo ucfirst($r->getType()); ?></p></td>
+                            <td><p><?php echo ucfirst($r->getAcceptanceStatus()); ?></p></td>
+                            <?php
+                            if ($r->getAcceptanceStatus() == 0) {
+                                ?>
+                                <td style="width: 40px;"><img class="action_btn mylocation_update" data-location-id="<?php echo $r->getId(); ?>" src="/images/edit.png" /></td>
+                                <td style="width: 40px;"><img class="action_btn mylocation_remove" data-location-id="<?php echo $r->getId(); ?>" src="/images/delete.png" /></td>
+                                <?php
+                            }
+                            ?>
+                        </tr>
+                        <?php
                     }
-                    
-                    if(count($res) == 0) {
-                    ?>
-                    <tr>
-                        <td colspan="4"><p>No locations found</p></td>
-                    </tr>
-                    <?php
+
+                    if (count($res) == 0) {
+                        ?>
+                        <tr>
+                            <td colspan="4"><p>No locations found</p></td>
+                        </tr>
+                        <?php
                     }
                     ?>
                 </table>
