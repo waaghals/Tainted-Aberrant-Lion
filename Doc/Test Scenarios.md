@@ -298,11 +298,7 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
 ###Correct een Project aanpassen:
 1.	Laad de pagina: http://localhost/Management/MyProjects/
     - [ ] Er is een overzicht zichtbaar om je gegevens aan te passen
-<<<<<<< HEAD
-2.    Druk op de knop potlood icoontje achter het de Minor bij Avans Hogeschool
-=======
 2.    Druk op de knop potlood icoontje achter de Minor bij Avans Hogeschool
->>>>>>> f/Admin62
 3.    Controleer of de gegevens kloppen volgens Bijlage 5.
 4.    Selecteer bij `type` de waarde 'Internship'.
     * Druk op de knop `Update Location`
@@ -311,11 +307,7 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
 ###Incorrect een Project aanpassen:
 1.	Laad de pagina: http://localhost/Management/MyProjects/
     - [ ] Er is een overzicht zichtbaar om je gegevens aan te passen
-<<<<<<< HEAD
-2.    Druk op de knop potlood icoontje achter de Locatie McDonald's
-=======
 2.    Druk op de knop potlood icoontje achter de Minor bij Avans Hogeschool
->>>>>>> f/Admin62
 3.    Volg `Incorrect een nieuwe Project aanmaken` vanaf stap 2.
     * Je hoeft niet op de `Create Project` Knop te drukken
     * De `Create Project` knop bestaat niet, maar heet nu `Update Project`.
@@ -344,8 +336,6 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
     * Druk op de knop `Write review``
     - [ ] Bovenaan zou de error `Not everything is filled in` moeten verschijnen.
 
-<<<<<<< HEAD
-=======
 ###Correct een Review aanpassen:
 1.	Laad de pagina: http://localhost/Management/MyReviews/
     - [ ] Er is een overzicht zichtbaar om je gegevens aan te passen
@@ -364,7 +354,6 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
     * De `Create Review` knop bestaat niet, maar heet nu `Update Review`.
     - [ ] Bovenstaand is met succes uitgevoerd.
 
->>>>>>> f/Admin62
 ###Een Project verwijderen:
 1.	Laad de pagina: http://localhost/Management/MyProjects/
     - [ ] Er is een overzicht zichtbaar om je gegevens aan te passen
