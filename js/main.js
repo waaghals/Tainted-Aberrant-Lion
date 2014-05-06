@@ -130,6 +130,58 @@ $(document).ready(function() {
         });
     });
 
+    //Update location icon
+    $('.users_update').click(function() {
+        var clicked = $(this);
+        tempID = clicked.data("user-id");
+
+        //Prepare page
+        $("#user_action").data("action", "update");
+        $("#user_action").children("p").html("Update User");
+        $('#user_action').show();
+        $("#addUserError").hide();
+
+        //Start fades
+        $('#blackout').fadeIn();
+        $('#blackout').children().filter(':visible').fadeOut();
+        $('.fullscreen_loading_icon').fadeIn(function() {
+            $.post("/ajax/getUserInfo/", {id: clicked.data("user-id")}, function(data) {
+                $('.fullscreen_loading_icon').fadeOut();
+                $('#blackout_create_user').fadeIn();
+                try {
+                    json = $.parseJSON(data);
+                    $('[name="create_location_form"]').find('[name="type"]').children().each(function() {
+                        if ($(this).html() === json.type) {
+                            $(this).prop('selected', true);
+                        }
+                    });
+                    $('[name="create_location_form"]').find('[name="country"]').children().each(function() {
+                        if ($(this).html() === json.country) {
+                            $(this).prop('selected', true);
+                        }
+                    });
+
+                    var decodedName = $("<div/>").html(json.name).text();
+                    $('[name="create_location_form"]').find('[name="name"]').val(decodedName);
+                    $('[name="create_location_form"]').find('[name="city"]').val(json.place);
+                    $('[name="create_location_form"]').find('[name="street"]').val(json.street);
+                    $('[name="create_location_form"]').find('[name="housenumber"]').val(json.housenumber);
+                    $('[name="create_location_form"]').find('[name="postalcode"]').val(json.postalcode);
+                    $('[name="create_location_form"]').find('[name="email"]').val(json.email);
+                    $('[name="create_location_form"]').find('[name="telephone"]').val(json.telephone);
+
+                    $("#RemoveLocationName").children().first().html(json.name);
+                    $("#RemoveLocationLoc").children().first().html(json.place);
+                    $("#RemoveLocationType").children().first().html(json.type);
+                } catch (e) {
+                    //error
+                    $("#removeLocationError").html(data);
+                    $("#removeLocationError").fadeIn();
+                }
+            });
+        });
+    });
+
     //Create new project button
     $('.myprojects_add').click(function() {
         $('#blackout').fadeIn();
