@@ -411,11 +411,19 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
     - [ ] Alle markers verschijnen.
     - [ ] Alle filter opties worden leeg.
 
-##Filteren op locatie type:
+##Filteren op land:
 1.      Laad de homepage http://localhost/
     - [ ] De kaart is zichtbaar met in de menubalk de filter "Country:".
 2.      Selecteer in de filter optie om alleen de "Netherlands" te laten zien.
     - [ ] Alle markers buiten nederland verdwijnen.
+3.      Select in de filter optie om alleen de "" (leeg) te laten zien.
+    - [ ] Alle markers verschijnen.
+
+##Filteren op project type:
+1.      Laad de homepage http://localhost/
+    - [ ] De kaart is zichtbaar met in de menubalk de filter "Project type:".
+2.      Selecteer in de filter optie om alleen de "Minor" te laten zien.
+    - [ ] Alle markers die geen minor hebben verdwijnen
 3.      Select in de filter optie om alleen de "" (leeg) te laten zien.
     - [ ] Alle markers verschijnen.
 
@@ -424,7 +432,8 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
     - [ ] De kaart is zichtbaar met in de menubalk de filter "Country:".
 2.      Selecteer in de filter optie Country om alleen de "Netherlands" te laten zien.
 3.      Selecteer in de filter optie Location Type de "education" te laten zien.
-    - [ ] Alleen markers in nederland zijn zichtbaar met het "education" type.
+4.      Selecteer in de filter optie Project Type om alleen de "minor" te laten zien.
+    - [ ] Alleen markers in nederland met het "education" type en het "internship" type zijn zichtbaar.
 
 ##Bijlage
 ###1. Incorrecte registreren waarden
