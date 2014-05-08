@@ -48,7 +48,8 @@
                     title: location.name,
                     id: location.id,
                     type: location.type,
-                    country: location.country
+                    country: location.country,
+                    projects: location.projects
                 });
 
                 markerCluster.addMarker(marker);
@@ -314,7 +315,7 @@ if (strpos($json, 'Bad Request') === false && strpos($json, 'Not Found') === fal
         }
     }
 
-    function filterType() {
+    function filterLocationType() {
         if ($('#locationType option:selected').val() !== "") {
             markerCluster.getMarkers().forEach(function(marker) {
                 if (marker.type !== $('#locationType option:selected').val()) {
@@ -323,10 +324,27 @@ if (strpos($json, 'Bad Request') === false && strpos($json, 'Not Found') === fal
             });
         }
     }
+    // When we wrote this, only God and we understood what we were doing
+    // Now, only God knows
+    function filterProjectType() {
+        if ($('#projectType option:selected').val() !== "") {
+            markerCluster.getMarkers().forEach(function(marker) {
+                var visibility = false;
+                marker.projects.forEach(function(project) {
+                    if (project.type === $('#projectType option:selected').val()) {
+                        visibility = true;
+                    }
+                });
+                if (!visibility)
+                    marker.setVisible(visibility);
+            });
+        }
+    }
     function applyFilters() {
         showAllMarkers();
+        filterProjectType();
         filterCountry();
-        filterType();
+        filterLocationType();
         markerCluster.repaint();
     }
 
@@ -340,7 +358,7 @@ if (strpos($json, 'Bad Request') === false && strpos($json, 'Not Found') === fal
         showAllMarkers();
         document.getElementById("locationType").value = "";
         document.getElementById("country").value = "";
-        // document.getElementById("projectType").value = "";
+        document.getElementById("projectType").value = "";
         markerCluster.repaint();
     }
 

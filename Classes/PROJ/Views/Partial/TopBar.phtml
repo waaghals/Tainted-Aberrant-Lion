@@ -46,17 +46,17 @@ $ac = new PROJ\Services\AccountService();
                 </select>
             </div>
 
-            <!--    <div class="filterblock">
-                    <div>Project Type:</div>
-                    <select id="projectType">
-                        <option></option>
-                        <option>Minor</option>
-                        <option>EPS</option>
-                        <option>Graduation project</option>
-                        <option>Internship</option>
-                    </select>
-                </div>
-            -->
+            <div class="filterblock">
+                <div>Project Type:</div>
+                <select id="projectType" onchange="applyFilters()">
+                    <option></option>
+                    <option>minor</option>
+                    <option>esp</option>
+                    <option>graduation</option>
+                    <option>internship</option>
+                </select>
+            </div>
+
             <div class="filterblock">
                 <div>Country:</div>
                 <select id="country" onchange="applyFilters()">
