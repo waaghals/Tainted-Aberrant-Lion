@@ -126,6 +126,14 @@ class Review
         $this->acceptanceStatus = $acceptanceStatus;
     }
 
+    public function getApprovedProject()
+    {
+        if ($this->getProject()->acceptanceStatus === 'approved') {
+            return $this->getProject();
+        }
+        return null;
+    }
+
     public function jsonSerialize()
     {
         return array(
@@ -134,7 +142,7 @@ class Review
             "guidancerating" => $this->getGuidanceRating(),
             "accommodationrating" => $this->getAccommodationRating(),
             "rating" => $this->getRating(),
-            "project" => $this->getProject()->jsonSerialize()
+            "project" => $this->getApprovedProject()->jsonSerialize()
         );
     }
 

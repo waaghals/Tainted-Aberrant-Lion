@@ -171,6 +171,17 @@ class Institute
         $this->name = $name;
     }
 
+    public function getApprovedProjects()
+    {
+        $approvedProjects = array();
+        foreach ($this->getProjects() as $project) {
+            if ($project->acceptanceStatus === 'approved') {
+                $approvedProjects[] = $project;
+            }
+        }
+        return $approvedProjects;
+    }
+
     public function jsonSerialize()
     {
         return array(
@@ -179,7 +190,7 @@ class Institute
             "lat" => $this->getLat(),
             "long" => $this->getLng(),
             "id" => $this->getId(),
-            "projects" => $this->getProjects(),
+            "projects" => $this->getApprovedProjects(),
             "place" => $this->getPlace(),
             "country" => $this->getCountry()->getName(),
             "street" => $this->getStreet(),
