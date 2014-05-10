@@ -29,7 +29,8 @@
 
     function initializeMakerClusterer() {
         markerCluster = new MarkerClusterer(map);
-        markerCluster.setGridSize(15);
+        //markerCluster.setGridSize(15);
+        markerCluster.setGridSize(25);
         markerCluster.setIgnoreHidden(true);
     }
 
@@ -40,25 +41,29 @@
             lastLoadedJson = data;
             console.log("Data received");
             $.each(data, function(i, location) {
-                var marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(location.lat, location.lng),
-                    map: map,
-                    icon: getIconPath(location.type),
-                    animation: google.maps.Animation.NONE,
-                    title: location.name,
-                    id: location.id,
-                    type: location.type,
-                    country: location.country
-                });
+                if (location.acceptanceStatus === "approved")
+                {
+                    console.log("Marker approved");
+                    var marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(location.lat, location.lng),
+                        map: map,
+                        icon: getIconPath(location.type),
+                        animation: google.maps.Animation.NONE,
+                        title: location.name,
+                        id: location.id,
+                        type: location.type,
+                        country: location.country
+                    });
 
-                markerCluster.addMarker(marker);
-                google.maps.event.addListener(marker, 'click', function() {
-                    map.setZoom(16);
-                    map.setCenter(marker.getPosition());
-                    console.log("Clicked on marker for: " + marker.title);
-                    loadLocation(marker.id);
-                    openSidebar();
-                });
+                    markerCluster.addMarker(marker);
+                    google.maps.event.addListener(marker, 'click', function() {
+                        map.setZoom(16);
+                        map.setCenter(marker.getPosition());
+                        console.log("Clicked on marker for: " + marker.title);
+                        loadLocation(marker.id);
+                        openSidebar();
+                    });
+                }
             });
 
 
