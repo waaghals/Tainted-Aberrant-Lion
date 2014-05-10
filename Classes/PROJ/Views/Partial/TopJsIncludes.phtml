@@ -41,7 +41,7 @@
             lastLoadedJson = data;
             console.log("Data received");
             $.each(data, function(i, location) {
-                if (location.acceptanceStatus === "approved")
+                if ((location.projects[0].acceptanceStatus === "approved" && location.projects[0].review.acceptanceStatus === "approved") && location.acceptanceStatus === "approved")
                 {
                     console.log("Marker approved");
                     var marker = new google.maps.Marker({
