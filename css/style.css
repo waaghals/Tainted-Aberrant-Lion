@@ -177,7 +177,13 @@ ul {
 .reviewLink {
     cursor: pointer;
     cursor: hand;
+    width: 122px;
 }
+
+.reviewrating .first {
+    width: 194px;
+}
+
 #searchbar{
     width:300px;
     font-size: 14px;
