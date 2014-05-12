@@ -36,11 +36,12 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
     - [ ] De sidebar moet sluiten door naar links te slepen met de muis of vinger indien deze open is.
     - [ ] De sidebar moet openen door deze naar rechts te slepen met de muis of vinger indien deze gesloten is.
 5. Controleer of de `institute`'s op de kaart staan.
-    - [ ] Kijk of de marker uit de database ook op de kaart komen te staan.
+    - [ ] Er zijn markers te zien op de kaart waarvan de locatie uit de database gehaald zijn, mits deze geaccepteerd zijn door de coördinator.
     - [ ] Een `institute` met `type` `education` dient een icoontje van een schoolhoedje te zijn.
     - [ ] Een `institute` met `type` `business` dient een icoontje van een bedrijfsgebouw te zijn.
-6. Klik op de marker in ``s-Hertogenbosch`
+6. Klik op de marker in `'s-Hertogenbosch`
     - [ ] De sidebar is nu geopend indien deze gesloten was.
+    - [ ] Er is minimaal één review op deze locatie te zien die geaccepteerd is door de coördinator.
 7. Klik op de naam `Kees Jansen`  _(Visitor must be able to see all reviews or internships on the map.)_
     - [ ] De tekst van de review is `Many fun activities to do here!`
     - [ ] De review heeft 4 van de 5 sterren.
@@ -132,7 +133,7 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
 
 ### Correcte verzenden:
 
-1.  Op de review van `Kees Jansen` van de `Avans Hogeschool` in `s-Hertogenbosch.
+1.  Op de review van `Kees Jansen` van de `Avans Hogeschool` in 's-Hertogenbosch.
 2.  Klik naast `Neem contact op met` op `Kees` _(Visitor can view a review and press a contact button)_
     - [ ] Er is een contact formulier zichtbaar
     - [ ] In het veld `Aan` staat `Kees Jansen`
@@ -397,34 +398,35 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
 1.      Laad de homepage http://localhost/
     - [ ] De kaart is zichtbaar met in de menubalk de filter "Location Type:".
 2.      Selecteer in de filter optie om alleen de "education" te laten zien.
-    - [ ] Alle markers met een icoontje  van een business verdwijnen.
+    - [ ] Alle markers met een icoontje van een business verdwijnen, mits deze geaccepteerd zijn door de coördinator.
 3.      Select in de filter optie om alleen de "business" te laten zien.
-    - [ ] De markers met een icoontje van een education verdwijnen.
-    - [ ] De markers met een icoontje van een busines verschijnen.
+    - [ ] De markers met een icoontje van een education verdwijnen, mits deze geaccepteerd zijn door de coördinator.
+    - [ ] De markers met een icoontje van een business verschijnen, mits deze geaccepteerd zijn door de coördinator.
 
 ##Reseten van filters:
 1.      Laad de homepage http://localhost/
     - [ ] De kaart is zichtbaar met in de menubalk de button "Reset".
 2.      Selecteer in de filter optie om alleen de "education" te laten zien.
-    - [ ] Alle markers met een icoontje  van een business verdwijnen.
+    - [ ] Alle markers met een icoontje van een business verdwijnen, mits deze geaccepteerd zijn door de coördinator.
 3.      Druk op de "Reset" knop in de menubalk.
-    - [ ] Alle markers verschijnen.
+    - [ ] Alle markers verschijnen, mits deze geaccepteerd zijn door de coördinator.
     - [ ] Alle filter opties worden leeg.
 
 ##Filteren op locatie type:
 1.      Laad de homepage http://localhost/
     - [ ] De kaart is zichtbaar met in de menubalk de filter "Country:".
 2.      Selecteer in de filter optie om alleen de "Netherlands" te laten zien.
-    - [ ] Alle markers buiten nederland verdwijnen.
+    - [ ] Alle markers buiten nederland verdwijnen, mits deze geaccepteerd waren door de coördinator.
 3.      Select in de filter optie om alleen de "" (leeg) te laten zien.
-    - [ ] Alle markers verschijnen.
+    - [ ] Alle markers verschijnen, mits deze geaccepteerd waren door de coördinator.
 
 ##Filters combineren
 1.      Laad de homepage http://localhost/
     - [ ] De kaart is zichtbaar met in de menubalk de filter "Country:".
 2.      Selecteer in de filter optie Country om alleen de "Netherlands" te laten zien.
+    - [ ] Alle markers buiten nederland verdwijnen, mits deze geaccepteerd waren door de coördinator.
 3.      Selecteer in de filter optie Location Type de "education" te laten zien.
-    - [ ] Alleen markers in nederland zijn zichtbaar met het "education" type.
+    - [ ] Alleen markers in nederland zijn zichtbaar met het "education" type, mits deze geaccepteerd waren door de coördinator.
 
 ##Bijlage
 ###1. Incorrecte registreren waarden

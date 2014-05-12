@@ -41,7 +41,16 @@
             lastLoadedJson = data;
             console.log("Data received");
             $.each(data, function(i, location) {
-                if ((location.projects[0].acceptanceStatus === "approved" && location.projects[0].review.acceptanceStatus === "approved") && location.acceptanceStatus === "approved")
+                var foundApprovedProject = false;
+                for (var j = 0; j < location.projects.length; j++)
+                {
+                    if ((location.projects[j].acceptanceStatus === "approved" && location.projects[j].review.acceptanceStatus === "approved") && location.acceptanceStatus === "approved")
+                    {
+                        foundApprovedProject = true;
+                        break;
+                    }
+                }
+                if (foundApprovedProject)
                 {
                     console.log("Marker approved");
                     var marker = new google.maps.Marker({
@@ -130,19 +139,27 @@
 
         var row;
         for (var i = 0; i < location.projects.length; i++) {
-            var project = location.projects[i];
-            sidebar.append("<div class=\"row clearfix reviewLink\" data-review-id=\"" + project.id + "\"><span class=\"column full\">" + project.student.firstname + " " + project.student.surname + "</span></div>");
+            if ((location.projects[i].acceptanceStatus === "approved" && location.projects[i].review.acceptanceStatus === "approved") && location.acceptanceStatus === "approved") {
+                var project = location.projects[i];
+                sidebar.append("<div class=\"row clearfix reviewLink\" data-review-id=\"" + project.id + "\"><span class=\"column full\">" + project.student.firstname + " " + project.student.surname + "</span></div>");
 
 
-            row = $("<p class=\"row clearfix\">");
-            row.append("<span class=\"column half italic\">" + project.type + "</span>");
+                row = $("<p class=\"row clearfix\">");
+                row.append("<span class=\"column half italic\">" + project.type + "</span>");
 
-            var stars = $("<span class=\"column half\"/>");
-            stars.append(getStars(project.review.rating));
+                var stars = $("<span class=\"column half\"/>");
+                stars.append("<table class=\"reviewrating\"><tr><td class='first'>Assignment rating:</td><td>");
+                stars.append(getStars(project.review.assignmentrating));
+                stars.append("</td></tr><tr><td class='first'>Guidance rating:</td><td>");
+                stars.append(getStars(project.review.guidancerating));
+                stars.append("</td></tr><tr><td class='first'>Accomodation rating:</td><td>");
+                stars.append(getStars(project.review.accommodationrating));
+                stars.append("</td></tr></table>");
 
-            row.append(stars);
+                row.append(stars);
 
-            sidebar.append(row);
+                sidebar.append(row);
+            }
         }
     }
 
