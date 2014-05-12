@@ -36,10 +36,8 @@
 
     function loadJsonMarkers() {
         initializeMakerClusterer();
-        console.log("Fetching all data from server");
         $.getJSON('/ajax/allLocations/', function(data) {
             lastLoadedJson = data;
-            console.log("Data received");
             $.each(data, function(i, location) {
                 var foundApprovedProject = false;
                 for (var j = 0; j < location.projects.length; j++)
@@ -52,7 +50,6 @@
                 }
                 if (foundApprovedProject)
                 {
-                    console.log("Marker approved");
                     var marker = new google.maps.Marker({
                         position: new google.maps.LatLng(location.lat, location.lng),
                         map: map,
@@ -68,7 +65,6 @@
                     google.maps.event.addListener(marker, 'click', function() {
                         map.setZoom(16);
                         map.setCenter(marker.getPosition());
-                        console.log("Clicked on marker for: " + marker.title);
                         loadLocation(marker.id);
                         openSidebar();
                     });
@@ -125,7 +121,6 @@
     }
 
     function showLocation(location) {
-        console.log("Showing location " + location.name + " in the sidebar.")
         var sidebar = $('aside');
 
         sidebar.text("");
@@ -178,7 +173,6 @@
 
 
     function showReview(project, location) {
-        console.log("Showing review for " + location.name + " by " + project.student.firstname + " in the sidebar.")
         var sidebar = $('aside');
         sidebar.text("");
         sidebarHeader = $('<div class="row clearfix"/>');
