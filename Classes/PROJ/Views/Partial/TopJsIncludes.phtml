@@ -128,20 +128,9 @@
             row = $("<p class=\"row clearfix\">");
             row.append("<span class=\"column half italic\">" + project.type + "</span>");
 
-            var assignment = project.review.assignmentrating;
-            var guidance = project.review.guidancerating;
-            var accommodation = project.review.accommodationrating;
-            console.log(getStars(assignment));
-            console.log(getStars(guidance));
-            console.log(getStars(accommodation));
             var stars = $("<span class=\"column half\"/>");
-            stars.append("<table class=\"reviewrating\"><tr><td class='first'>Assignment rating:</td><td>");
-            stars.append(getStars(project.review.assignmentrating));
-            stars.append("</td></tr><tr><td class='first'>Guidance rating:</td><td>");
-            stars.append(getStars(project.review.guidancerating));
-            stars.append("</td></tr><tr><td class='first'>Accomodation rating:</td><td>");
-            stars.append(getStars(project.review.accommodationrating));
-            stars.append("</td></tr></table>");
+            stars.append(getStars(project.review.rating));
+
             row.append(stars);
             sidebar.append(row);
         }
@@ -162,7 +151,6 @@
 
 
     function showReview(project, location) {
-        console.log("Showing review for " + location.name + " by " + project.student.firstname + " in the sidebar.")
         var sidebar = $('aside');
         sidebar.text("");
         sidebarHeader = $('<div class="row clearfix"/>');
@@ -176,7 +164,9 @@
         var sideContent = $("<div class=\"column third\"/>");
         sideContent.append("<p>Door: " + project.student.firstname + " " + project.student.surname + "</p>");
         sideContent.append("<p>Type: " + project.type + "</p>");
-        sideContent.append("<p>Beoordeling: " + getStars(project.review.rating).html() + "</p>");
+        sideContent.append("<p>Beoordeling:<br />Assignment rating:<br />" + getStars(project.review.assignmentrating).html() +
+                "<br />Guidance rating:<br />" + getStars(project.review.guidancerating).html() +
+                "<br />Accommodation rating:<br />" + getStars(project.review.accommodationrating).html() + "</p>");
         sideContent.append("<p>Neem contact op met : <a href=\"/contact/show/studentId=" + project.student.id + "/\">" + project.student.firstname + "</a></p>");
         container.append(sideContent);
         sidebar.append(container);
