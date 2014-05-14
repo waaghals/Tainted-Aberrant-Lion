@@ -435,6 +435,23 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
 4.      Selecteer in de filter optie Project Type om alleen de "minor" te laten zien.
     - [ ] Alleen markers in nederland met het "education" type en het "internship" type zijn zichtbaar.
 
+##Correct uploaden excel bestand
+1.      Login als coordinator en ga onder management naar Upload Excelsheet
+2.      Klik op de knop "Bestand kiezen" en kies een bestand met een .xslx extentie.
+3.      Druk op de knop "Upload Excelsheet"
+    - [ ] Als output krijg je een pagina met daarop de naam, type, size en opslaglocatie over het excel bestand.
+
+##Incorrect uploaden excel bestand
+1.      Login als coordinator en ga onder management naar Upload Excelsheet
+2.      Klik op de knop "Bestand kiezen" en kies een bestand met GEEN .xslx extentie.
+3.      Druk op de knop "Upload Excelsheet"
+    - [ ] Als output krijg je een pagina met daarop "invalid filetype"
+
+##Te groot excel bestand uploaden
+1.      Login als coordinator en ga onder management naar Upload Excelsheet
+2.      Klik op de knop "Bestand kiezen" en kies een bestand met een .xslx extentie EN het bestand moet groter zijn dan 1mb.
+3.      Druk op de knop "Upload Excelsheet"
+    - [ ] Als output krijg je een pagina met daarop "Filesize is too big"
 ##Bijlage
 ###1. Incorrecte registreren waarden
 
