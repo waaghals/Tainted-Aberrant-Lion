@@ -143,13 +143,7 @@
                 row.append("<span class=\"column half italic\">" + project.type + "</span>");
 
                 var stars = $("<span class=\"column half\"/>");
-                stars.append("<table class=\"reviewrating\"><tr><td class='first'>Assignment rating:</td><td>");
-                stars.append(getStars(project.review.assignmentrating));
-                stars.append("</td></tr><tr><td class='first'>Guidance rating:</td><td>");
-                stars.append(getStars(project.review.guidancerating));
-                stars.append("</td></tr><tr><td class='first'>Accomodation rating:</td><td>");
-                stars.append(getStars(project.review.accommodationrating));
-                stars.append("</td></tr></table>");
+                stars.append(getStars(project.review.rating));
 
                 row.append(stars);
 
