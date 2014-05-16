@@ -5,7 +5,7 @@ namespace PROJ\Controllers;
 use PROJ\Helper\HeaderHelper;
 use PROJ\Helper\XssHelper;
 use PROJ\Classes\PHPExcel;
-use PROJ\Classes\PHPExcel\PHPExcel_IOFactory;
+use PROJ\Classes\PHPExcel\IOFactory;
 
 /**
  * @author Thijs
@@ -48,7 +48,7 @@ class ManagementController extends BaseController
 
     public function CreateUserAction()
     {
-        //TODO: Add coordinator check
+//TODO: Add coordinator check
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {    //Create new account
             $valid = $this->validateCreateUser();
             if ($valid === "succes") {
@@ -148,11 +148,11 @@ class ManagementController extends BaseController
      */
     private function validateChangePassword()
     {
-        //Get current user
+//Get current user
         $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
         $user = $em->getRepository('\PROJ\Entities\Account')->find($_SESSION['userID']);
 
-        //Valdidate old password
+//Valdidate old password
         $passwordEnteredOld = hash('sha512', $_POST['old_password'] . $user->getSalt());
         if ($passwordEnteredOld == $user->getPassword()) {
             if ($_POST['old_password'] != $_POST['new_password']) {
@@ -162,7 +162,7 @@ class ManagementController extends BaseController
                     $em->persist($user);
                     $em->flush();
 
-                    //Change session to prevent logout
+//Change session to prevent logout
                     $_SESSION['login_string'] = hash('sha512', $user->getPassword() . $_SERVER['HTTP_USER_AGENT'] . $_SERVER['REMOTE_ADDR']);
 
                     return "succes";
@@ -192,13 +192,13 @@ class ManagementController extends BaseController
         $ac = new \PROJ\Services\AccountService();
         if ($ac->isLoggedIn()) {
             if ($_POST['email'] == $_POST['rep_email']) {
-                //Check if the email already has an activation code. If so; just resent the email
+//Check if the email already has an activation code. If so; just resent the email
                 $RegCode = $em->getRepository('\PROJ\Entities\RegistrationCode')->findBy(array('email' => $_POST['email']));
                 if (count($RegCode) > 0) {
                     $this->sendActivationMail($RegCode->getEmail(), $RegCode->getCode());
                 } else {
                     $code = sha1(mt_rand(1, 99999) . time() . session_id());
-                    //Prevents duplicate codes
+//Prevents duplicate codes
                     while (count($em->getRepository('\PROJ\Entities\RegistrationCode')->findBy(array('code' => $code))) > 0) {
                         $code = sha1(mt_rand(1, 99999) . time() . session_id());
                     }
@@ -231,16 +231,35 @@ class ManagementController extends BaseController
         mail($to, "Creation code for Avans WorldMap", $message, $headers);
     }
 
-    public function processExcelAction()
+    public function UploadAction()
     {
-        $this->processExcel("/import.xslx");
+        $this->page = "Upload";
+        $this->serveManagementTemplate();
     }
 
-    public function processExcel($excelFile)
+    public function UploadFileAction()
+    {
+        $temp = explode(".", $_FILES["file"]["name"]);
+        $extension = end($temp);
+        if ($extension === "xlsx") {
+            if ($_FILES["file"]["size"] < 1000000) {
+                if ($_FILES["file"]["error"] > 0) {
+                    echo "Error: " . $_FILES["file"]["error"] . "<br>";
+                } else {
+                    $this->processExcel($_FILES["file"]["tmp_name"]);
+                }
+            } else {
+                echo "Filesize is too big.";
+            }
+        } else {
+            echo "Invalid file type.";
+        }
+    }
+
+    private function processExcel($excelFile)
     {
         echo pathinfo($excelFile, PATHINFO_BASENAME);
-        //$IOFactory = new IOFactory();
-        $objPHPExcel = PHPExcel\IOFactory::load($excelFile);
+        $objPHPExcel = PHPExcel\PHPExcel_IOFactory::load($excelFile);
         $objPHPExcel->setActiveSheetIndex(0);
         $sheetData = $objPHPExcel->getActiveSheet->toArray();
         var_dump($sheetData);

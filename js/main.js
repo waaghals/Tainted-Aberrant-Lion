@@ -21,6 +21,9 @@ $(document).ready(function() {
     $('#create_user_save').click(function() {
         $(this).parent().parent().submit();
     });
+    $('#file_upload').click(function() {
+        $(this).parent().parent().submit();
+    });
     //Create new location button
     $('.mylocation_add').click(function() {
         //Prepare page
@@ -420,7 +423,7 @@ $(document).ready(function() {
         });
     });
 
-	//Create/Update new location confirmation button
+    //Create/Update new location confirmation button
     $('#user_action').click(function() {
         $(this).hide();
         var data = $("[name='create_user_form']").serializeArray();
