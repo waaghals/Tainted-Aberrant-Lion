@@ -4,6 +4,8 @@ namespace PROJ\Controllers;
 
 use PROJ\Helper\HeaderHelper;
 use PROJ\Helper\XssHelper;
+use PROJ\Classes\PHPExcel;
+use PROJ\Classes\PHPExcel\PHPExcel_IOFactory;
 
 /**
  * @author Thijs
@@ -227,6 +229,21 @@ class ManagementController extends BaseController
                 'X-Mailer: PHP/' . phpversion();
 
         mail($to, "Creation code for Avans WorldMap", $message, $headers);
+    }
+
+    public function processExcelAction()
+    {
+        $this->processExcel("/import.xslx");
+    }
+
+    public function processExcel($excelFile)
+    {
+        echo pathinfo($excelFile, PATHINFO_BASENAME);
+        //$IOFactory = new IOFactory();
+        $objPHPExcel = PHPExcel\IOFactory::load($excelFile);
+        $objPHPExcel->setActiveSheetIndex(0);
+        $sheetData = $objPHPExcel->getActiveSheet->toArray();
+        var_dump($sheetData);
     }
 
 }
