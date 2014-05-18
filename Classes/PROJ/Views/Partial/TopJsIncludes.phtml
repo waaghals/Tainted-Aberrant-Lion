@@ -29,36 +29,46 @@
 
     function initializeMakerClusterer() {
         markerCluster = new MarkerClusterer(map);
-        markerCluster.setGridSize(15);
+        //markerCluster.setGridSize(15);
+        markerCluster.setGridSize(25);
         markerCluster.setIgnoreHidden(true);
     }
 
     function loadJsonMarkers() {
         initializeMakerClusterer();
-        console.log("Fetching all data from server");
         $.getJSON('/ajax/allLocations/', function(data) {
             lastLoadedJson = data;
-            console.log("Data received");
             $.each(data, function(i, location) {
-                var marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(location.lat, location.lng),
-                    map: map,
-                    icon: getIconPath(location.type),
-                    animation: google.maps.Animation.NONE,
-                    title: location.name,
-                    id: location.id,
-                    type: location.type,
-                    country: location.country
-                });
+                var foundApprovedProject = false;
+                for (var j = 0; j < location.projects.length; j++)
+                {
+                    if ((location.projects[j].acceptanceStatus === "approved" && location.projects[j].review.acceptanceStatus === "approved") && location.acceptanceStatus === "approved")
+                    {
+                        foundApprovedProject = true;
+                        break;
+                    }
+                }
+                if (foundApprovedProject)
+                {
+                    var marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(location.lat, location.lng),
+                        map: map,
+                        icon: getIconPath(location.type),
+                        animation: google.maps.Animation.NONE,
+                        title: location.name,
+                        id: location.id,
+                        type: location.type,
+                        country: location.country
+                    });
 
-                markerCluster.addMarker(marker);
-                google.maps.event.addListener(marker, 'click', function() {
-                    map.setZoom(16);
-                    map.setCenter(marker.getPosition());
-                    console.log("Clicked on marker for: " + marker.title);
-                    loadLocation(marker.id);
-                    openSidebar();
-                });
+                    markerCluster.addMarker(marker);
+                    google.maps.event.addListener(marker, 'click', function() {
+                        map.setZoom(16);
+                        map.setCenter(marker.getPosition());
+                        loadLocation(marker.id);
+                        openSidebar();
+                    });
+                }
             });
 
 
@@ -111,7 +121,6 @@
     }
 
     function showLocation(location) {
-        console.log("Showing location " + location.name + " in the sidebar.")
         var sidebar = $('aside');
 
         sidebar.text("");
@@ -125,19 +134,21 @@
 
         var row;
         for (var i = 0; i < location.projects.length; i++) {
-            var project = location.projects[i];
-            sidebar.append("<div class=\"row clearfix reviewLink\" data-review-id=\"" + project.id + "\"><span class=\"column full\">" + project.student.firstname + " " + project.student.surname + "</span></div>");
+            if ((location.projects[i].acceptanceStatus === "approved" && location.projects[i].review.acceptanceStatus === "approved") && location.acceptanceStatus === "approved") {
+                var project = location.projects[i];
+                sidebar.append("<div class=\"row clearfix reviewLink\" data-review-id=\"" + project.id + "\"><span class=\"column full\">" + project.student.firstname + " " + project.student.surname + "</span></div>");
 
 
-            row = $("<p class=\"row clearfix\">");
-            row.append("<span class=\"column half italic\">" + project.type + "</span>");
+                row = $("<p class=\"row clearfix\">");
+                row.append("<span class=\"column half italic\">" + project.type + "</span>");
 
-            var stars = $("<span class=\"column half\"/>");
-            stars.append(getStars(project.review.rating));
+                var stars = $("<span class=\"column half\"/>");
+                stars.append(getStars(project.review.rating));
 
-            row.append(stars);
+                row.append(stars);
 
-            sidebar.append(row);
+                sidebar.append(row);
+            }
         }
     }
 
@@ -156,7 +167,6 @@
 
 
     function showReview(project, location) {
-        console.log("Showing review for " + location.name + " by " + project.student.firstname + " in the sidebar.")
         var sidebar = $('aside');
         sidebar.text("");
         sidebarHeader = $('<div class="row clearfix"/>');

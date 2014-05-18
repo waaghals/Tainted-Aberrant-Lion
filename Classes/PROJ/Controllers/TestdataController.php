@@ -472,7 +472,7 @@ class TestdataController extends BaseController
         $kees = $this->createStudent($em, "Kees", "Jansen", "Jansenlaan", 15, "1234AB", "eindhoven", $kjansen, "k.jansen@student.avans.nl");
         $harry = $this->createStudent($em, "Harry", "Bakker", "Bakkersweg", 15, "5678CD", "utrecht", $hbakker, "h.bakker@student.avans.nl");
 
-        $avans = $this->createInstitute($em, "Avans Hogeschool", "education", "`s-Hertogenbosch", 51.688946, 5.287256, $kees, $nederland, "Onderwijsboulevard", "215", "5223DE", "contact@avans.nl", "(073) 629 52 95");
+        $avans = $this->createInstitute($em, "Avans Hogeschool", "education", "'s-Hertogenbosch", 51.688946, 5.287256, $kees, $nederland, "Onderwijsboulevard", "215", "5223DE", "contact@avans.nl", "(073) 629 52 95");
         $mac = $this->createInstitute($em, "McDonald's", "business", "Arnhem", 51.9635996, 5.8930421, $harry, $nederland, "Rijnstraat", "36", "6811EW", "arnhem@mcdonalds.nl", "026-4456234");
         $RWTH = $this->createInstitute($em, "RWTH University Aachen", "business", "Aachen", 50.78692, 6.04635, $harry, $duitsland, "Steinbachstrase", "7", "52074", "test@toip.nl", "3292-234659");
 
