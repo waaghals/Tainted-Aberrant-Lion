@@ -352,7 +352,7 @@ class ManagementController extends BaseController
         $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
         foreach (array_slice($sheet, 1) as $studentData) {
             if ($studentData[0] == $studentId) {
-                return $em->getRepository('\PROJ\Entities\Account')->findOneBy(array('username' => $studentData[10]));
+                return $em->getRepository('\PROJ\Entities\Institute')->findOneBy(array('username' => $studentData[10]));
             }
         }
     }
