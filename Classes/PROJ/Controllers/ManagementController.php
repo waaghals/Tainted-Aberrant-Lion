@@ -289,9 +289,10 @@ class ManagementController extends BaseController
     private function processInstituteSheet($sheet)
     {
         $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
+        $acc = $em->getRepository('PROJ\Entities\Account')->find($_SESSION['userID']);
         foreach (array_slice($sheet, 1) as $instituteData) {
             $institute = new Institute();
-            $institute->setCreator($_SESSION["user"]->getStudent());
+            $institute->setCreator($acc->getStudent());
             $institute->setName($instituteData[1]);
             $institute->setType($instituteData[2]);
             $institute->setLat($instituteData[3]);
@@ -302,13 +303,11 @@ class ManagementController extends BaseController
             $institute->setPostalcode($instituteData[8]);
             $institute->setEmail($instituteData[9]);
             $institute->setTelephone($instituteData[10]);
-            $institute->setCountry($em->getRepository('\PROJ\Entities\Country')->findBy(array('name' => $instituteData[11])));
-            $em->persist($_SESSION["user"]->getStudent());
-            $em->persist($em->getRepository('PROJ\Entities\Account')->find($_SESSION['userID']));
+            $institute->setCountry($em->getRepository('\PROJ\Entities\Country')->findOneBy(array('name' => $instituteData[11])));
+            $em->persist($acc);
             $em->persist($institute);
-            $em->flush();
         }
-//        $em->flush();
+        $em->flush();
     }
 
 }
