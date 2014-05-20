@@ -1,5 +1,7 @@
 <?php
 
+namespace PROJ\Classes\PHPExcel;
+
 /**
  * PHPExcel
  *
@@ -41,7 +43,7 @@ if (!defined('PHPEXCEL_ROOT')) {
  * @package    PHPExcel
  * @copyright  Copyright (c) 2006 - 2014 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_IOFactory
+class IOFactory
 {
 
     /**

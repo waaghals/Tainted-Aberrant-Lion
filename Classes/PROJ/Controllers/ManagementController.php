@@ -4,8 +4,8 @@ namespace PROJ\Controllers;
 
 use PROJ\Helper\HeaderHelper;
 use PROJ\Helper\XssHelper;
-use PROJ\Classes\PHPExcel;
 use PROJ\Classes\PHPExcel\IOFactory;
+use PROJ\Entities\Institute;
 
 /**
  * @author Thijs
@@ -258,11 +258,57 @@ class ManagementController extends BaseController
 
     private function processExcel($excelFile)
     {
-        echo pathinfo($excelFile, PATHINFO_BASENAME);
-        $objPHPExcel = PHPExcel\PHPExcel_IOFactory::load($excelFile);
+        // load the excelFile in the PHPExcel object
+        $objPHPExcel = IOFactory::load($excelFile);
+        // Set the sheet of the file to the first one
         $objPHPExcel->setActiveSheetIndex(0);
-        $sheetData = $objPHPExcel->getActiveSheet->toArray();
-        var_dump($sheetData);
+        $this->processUserSheet($objPHPExcel->getActiveSheet()->toArray());
+        $objPHPExcel->setActiveSheetIndex(1);
+        $this->processInstituteSheet($objPHPExcel->getActiveSheet()->toArray());
+    }
+
+    private function processUserSheet($sheet)
+    {
+        $AccountService = new \PROJ\Services\AccountService();
+        foreach (array_slice($sheet, 1) as $userData) {
+            $user["username"] = $userData[10];
+            $user["password"] = $userData[11];
+            $account = $AccountService->createAccount($user);
+            $student["firstname"] = $userData[2];
+            $student["surname"] = $userData[3];
+            $student["city"] = $userData[4];
+            $student["zipcode"] = $userData[5];
+            $student["street"] = $userData[6];
+            $student["streetnumber"] = $userData[7];
+            $student["addition"] = $userData[8];
+            $student["email"] = $userData[9];
+            $AccountService->createStudent($account, $student);
+        }
+    }
+
+    private function processInstituteSheet($sheet)
+    {
+        $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
+        foreach (array_slice($sheet, 1) as $instituteData) {
+            $institute = new Institute();
+            $institute->setCreator($_SESSION["user"]->getStudent());
+            $institute->setName($instituteData[1]);
+            $institute->setType($instituteData[2]);
+            $institute->setLat($instituteData[3]);
+            $institute->setLng($instituteData[4]);
+            $institute->setPlace($instituteData[5]);
+            $institute->setStreet($instituteData[6]);
+            $institute->setHousenumber($instituteData[7]);
+            $institute->setPostalcode($instituteData[8]);
+            $institute->setEmail($instituteData[9]);
+            $institute->setTelephone($instituteData[10]);
+            $institute->setCountry($em->getRepository('\PROJ\Entities\Country')->findBy(array('name' => $instituteData[11])));
+            $em->persist($_SESSION["user"]->getStudent());
+            $em->persist($em->getRepository('PROJ\Entities\Account')->find($_SESSION['userID']));
+            $em->persist($institute);
+            $em->flush();
+        }
+//        $em->flush();
     }
 
 }
