@@ -6,6 +6,7 @@ use PROJ\Helper\HeaderHelper;
 use PROJ\Helper\XssHelper;
 use PROJ\Classes\PHPExcel\IOFactory;
 use PROJ\Entities\Institute;
+use PROJ\Entities\Project;
 
 /**
  * @author Thijs
@@ -261,7 +262,10 @@ class ManagementController extends BaseController
         // load the excelFile in the PHPExcel object
         $objPHPExcel = IOFactory::load($excelFile);
         // Set the sheet of the file to the first one
+        var_dump($this->getStudentFromExcelId($objPHPExcel, 'S0001')->getStudent());
+        die();
         $objPHPExcel->setActiveSheetIndex(0);
+
         $this->processUserSheet($objPHPExcel->getActiveSheet()->toArray());
         $objPHPExcel->setActiveSheetIndex(1);
         $this->processInstituteSheet($objPHPExcel->getActiveSheet()->toArray());
@@ -303,11 +307,54 @@ class ManagementController extends BaseController
             $institute->setPostalcode($instituteData[8]);
             $institute->setEmail($instituteData[9]);
             $institute->setTelephone($instituteData[10]);
+            $institute->setAcceptanceStatus('approved');
             $institute->setCountry($em->getRepository('\PROJ\Entities\Country')->findOneBy(array('name' => $instituteData[11])));
             $em->persist($acc);
             $em->persist($institute);
         }
         $em->flush();
+    }
+
+    private function processProjectSheet($sheet)
+    {
+        $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
+        foreach (array_slice($sheet, 1) as $projectData) {
+            $project = new Project();
+            $project->setStudent(getStudentFromExcelId($sheet->getParent(), $projectData[0]));
+
+            $project->setStartdate($projectData[3]);
+            $project->setEnddate($projectData[4]);
+            $project->setType($projectData[5]);
+            $project->setAcceptanceStatus('approved');
+            $em->persist($project);
+        }
+        $em->flush();
+    }
+
+    // PHPExcel reader, int
+    private function getStudentFromExcelId($objPHPExcel, $studentId)
+    {
+        $objPHPExcel->setActiveSheetIndex(0);
+        $sheet = $objPHPExcel->getActiveSheet()->toArray();
+        $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
+        foreach (array_slice($sheet, 1) as $studentData) {
+            if ($studentData[0] == $studentId) {
+                return $em->getRepository('\PROJ\Entities\Account')->findOneBy(array('username' => $studentData[10]));
+            }
+        }
+    }
+
+    // PHPExcel reader, int
+    private function getInstituteFromExcelId($objPHPExcel, $studentId)
+    {
+        $objPHPExcel->setActiveSheetIndex(0);
+        $sheet = $objPHPExcel->getActiveSheet()->toArray();
+        $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
+        foreach (array_slice($sheet, 1) as $studentData) {
+            if ($studentData[0] == $studentId) {
+                return $em->getRepository('\PROJ\Entities\Account')->findOneBy(array('username' => $studentData[10]));
+            }
+        }
     }
 
 }
