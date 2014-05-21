@@ -127,33 +127,22 @@
         sidebarHeader.append("<p class=\"column half\">Beoordeling</p>");
         var row;
         for (var i = 0; i < location.projects.length; i++) {
-<<<<<<< HEAD
             if ((location.projects[i].acceptanceStatus === "approved" && location.projects[i].review.acceptanceStatus === "approved") && location.acceptanceStatus === "approved") {
                 var project = location.projects[i];
                 sidebar.append("<div class=\"row clearfix reviewLink\" data-review-id=\"" + project.id + "\"><span class=\"column full\">" + project.student.firstname + " " + project.student.surname + "</span></div>");
-
-
                 row = $("<p class=\"row clearfix\">");
                 row.append("<span class=\"column half italic\">" + project.type + "</span>");
-=======
-            var project = location.projects[i];
-            sidebar.append("<div class=\"row clearfix reviewLink\" data-review-id=\"" + project.id + "\"><span class=\"column full\">" + project.student.firstname + " " + project.student.surname + "</span></div>");
-            row = $("<p class=\"row clearfix\">");
-            row.append("<span class=\"column half italic\">" + project.type + "</span>");
->>>>>>> f/evaluation_review
-
+                var project = location.projects[i];
+                sidebar.append("<div class=\"row clearfix reviewLink\" data-review-id=\"" + project.id + "\"><span class=\"column full\">" + project.student.firstname + " " + project.student.surname + "</span></div>");
+                row = $("<p class=\"row clearfix\">");
+                row.append("<span class=\"column half italic\">" + project.type + "</span>");
                 var stars = $("<span class=\"column half\"/>");
                 stars.append(getStars(project.review.rating));
-
-<<<<<<< HEAD
                 row.append(stars);
-
                 sidebar.append(row);
             }
-=======
             row.append(stars);
             sidebar.append(row);
->>>>>>> f/evaluation_review
         }
     }
 
