@@ -262,19 +262,18 @@ class ManagementController extends BaseController
         // load the excelFile in the PHPExcel object
         $objPHPExcel = IOFactory::load($excelFile);
         // Set the sheet of the file to the first one
-        var_dump($this->getStudentFromExcelId($objPHPExcel, 'S0001')->getStudent());
-        die();
         $objPHPExcel->setActiveSheetIndex(0);
-
-        $this->processUserSheet($objPHPExcel->getActiveSheet()->toArray());
+        $this->processUserSheet($objPHPExcel->getActiveSheet());
         $objPHPExcel->setActiveSheetIndex(1);
-        $this->processInstituteSheet($objPHPExcel->getActiveSheet()->toArray());
+        $this->processInstituteSheet($objPHPExcel->getActiveSheet());
+        $objPHPExcel->setActiveSheetIndex(2);
+        $this->processProjectSheet($objPHPExcel->getActiveSheet());
     }
 
     private function processUserSheet($sheet)
     {
         $AccountService = new \PROJ\Services\AccountService();
-        foreach (array_slice($sheet, 1) as $userData) {
+        foreach (array_slice($sheet->toArray(), 1) as $userData) {
             $user["username"] = $userData[10];
             $user["password"] = $userData[11];
             $account = $AccountService->createAccount($user);
@@ -294,7 +293,7 @@ class ManagementController extends BaseController
     {
         $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
         $acc = $em->getRepository('PROJ\Entities\Account')->find($_SESSION['userID']);
-        foreach (array_slice($sheet, 1) as $instituteData) {
+        foreach (array_slice($sheet->toArray(), 1) as $instituteData) {
             $institute = new Institute();
             $institute->setCreator($acc->getStudent());
             $institute->setName($instituteData[1]);
@@ -318,12 +317,17 @@ class ManagementController extends BaseController
     private function processProjectSheet($sheet)
     {
         $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
-        foreach (array_slice($sheet, 1) as $projectData) {
+        foreach (array_slice($sheet->toArray(), 1) as $projectData) {
             $project = new Project();
-            $project->setStudent(getStudentFromExcelId($sheet->getParent(), $projectData[0]));
-
-            $project->setStartdate($projectData[3]);
-            $project->setEnddate($projectData[4]);
+            $project->setStudent($this->getStudentFromExcelId($sheet->getParent(), $projectData[0]));
+            $project->setInstitute($this->getInstituteFromExcelId($sheet->getParent(), $projectData[2]));
+            $date_array = explode('-', $projectData[3]);
+            $PHPDate = mktime(0, 0, $date_array[1], $date_array[0], $date_array[2]);
+            $project->setStartdate(date('Y-m-d', $PHPDate));
+            $date_array = explode('-', $projectData[4]);
+            $PHPDate = mktime(0, 0, $date_array[1], $date_array[0], $date_array[2]);
+            $project->setEnddate(date('Y-m-d', $PHPDate));
+            var_dump(date('Y-m-d', $PHPDate));
             $project->setType($projectData[5]);
             $project->setAcceptanceStatus('approved');
             $em->persist($project);
@@ -339,20 +343,25 @@ class ManagementController extends BaseController
         $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
         foreach (array_slice($sheet, 1) as $studentData) {
             if ($studentData[0] == $studentId) {
-                return $em->getRepository('\PROJ\Entities\Account')->findOneBy(array('username' => $studentData[10]));
+                $account = $em->getRepository('\PROJ\Entities\Account')->findOneBy(array('username' => $studentData[10]));
+                return $student = $account->getStudent();
             }
         }
     }
 
     // PHPExcel reader, int
-    private function getInstituteFromExcelId($objPHPExcel, $studentId)
+    private function getInstituteFromExcelId($objPHPExcel, $instituteId)
     {
-        $objPHPExcel->setActiveSheetIndex(0);
+        $objPHPExcel->setActiveSheetIndex(1);
         $sheet = $objPHPExcel->getActiveSheet()->toArray();
         $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
-        foreach (array_slice($sheet, 1) as $studentData) {
-            if ($studentData[0] == $studentId) {
-                return $em->getRepository('\PROJ\Entities\Institute')->findOneBy(array('username' => $studentData[10]));
+        foreach (array_slice($sheet, 1) as $instituteData) {
+            if ($instituteData[0] == $instituteId) {
+                return $em->getRepository('\PROJ\Entities\Institute')->findOneBy(array(
+                            'name' => $instituteData[1],
+                            'lat' => $instituteData[3],
+                            'lng' => $instituteData[4]
+                ));
             }
         }
     }
