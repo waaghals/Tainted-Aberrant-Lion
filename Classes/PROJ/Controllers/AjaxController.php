@@ -102,13 +102,24 @@ class AjaxController extends BaseController
         $qb = $em->createQueryBuilder();
         $qb->select(array('student.firstname as studentname', 'student.surname as studentsurname', 'student.email', 'review.text', 'institute.name as institutename', 'review.rating', 'review.id as revid', 'institute.id as instituteid', 'institute.lat', 'institute.lng'))
                 ->from('\PROJ\Entities\Review', 'review')->leftJoin('review.project', 'project')->leftJoin('project.institute', 'institute')->leftJoin('project.student', 'student')
-                ->where($qb->expr()->like("review.text", $qb->expr()->literal("%" . $tag . "%")))
-                ->orWhere($qb->expr()->like("student.firstname", $qb->expr()->literal("%" . $tag . "%")))
-                ->orWhere($qb->expr()->like("student.surname", $qb->expr()->literal("%" . $tag . "%")))
-                ->orWhere($qb->expr()->like("student.city", $qb->expr()->literal("%" . $tag . "%")))
-                ->orWhere($qb->expr()->like("student.street", $qb->expr()->literal("%" . $tag . "%")))
-                ->orWhere($qb->expr()->like("student.email", $qb->expr()->literal("%" . $tag . "%")))
-                ->orWhere($qb->expr()->like("project.type", $qb->expr()->literal("%" . $tag . "%")));
+                ->where(
+                        $qb->expr()->orX(
+                                $qb->expr()->andX(
+                                        $qb->expr()->eq('project.acceptanceStatus', 2), $qb->expr()->eq('review.acceptanceStatus', 2), $qb->expr()->eq('institute.acceptanceStatus', 2)
+                                ), $qb->expr()->andX(
+                                        $qb->expr()->eq('project.acceptanceStatus', 2), $qb->expr()->eq('review.acceptanceStatus', 2)
+                                ), $qb->expr()->andX(
+                                        $qb->expr()->eq('project.acceptanceStatus', 2), $qb->expr()->eq('institute.acceptanceStatus', 2)
+                                ), $qb->expr()->andX(
+                                        $qb->expr()->eq('review.acceptanceStatus', 2), $qb->expr()->eq('institute.acceptanceStatus', 2)
+                                )
+                        )
+                )
+                ->andWhere(
+                        $qb->expr()->orX(
+                                $qb->expr()->like('review.text', $qb->expr()->literal('%' . $tag . '%')), $qb->expr()->like('student.firstname', $qb->expr()->literal('%' . $tag . '%')), $qb->expr()->like('student.surname', $qb->expr()->literal('%' . $tag . '%')), $qb->expr()->like('student.city', $qb->expr()->literal('%' . $tag . '%')), $qb->expr()->like('student.street', $qb->expr()->literal('%' . $tag . '%')), $qb->expr()->like('student.email', $qb->expr()->literal('%' . $tag . '%')), $qb->expr()->like('project.type', $qb->expr()->literal('%' . $tag . '%'))
+                        )
+        );
 
         $result = $qb->getQuery()->getResult();
         for ($i = 0; $i < count($result); $i++) {
@@ -121,9 +132,24 @@ class AjaxController extends BaseController
         $qb = $em->createQueryBuilder();
         $qb->select(array('student.firstname as studentname', 'student.surname as studentsurname', 'student.email', 'review.text', 'institute.name as institutename', 'institute.place as instituteplace', 'institute.id as instituteid', 'review.rating', 'institute.lat', 'institute.lng'))
                 ->from('\PROJ\Entities\Review', 'review')->leftJoin('review.project', 'project')->leftJoin('project.institute', 'institute')->leftJoin('project.student', 'student')
-                ->where($qb->expr()->like("institute.name", $qb->expr()->literal("%" . $tag . "%")))
-                ->orWhere($qb->expr()->like("institute.type", $qb->expr()->literal("%" . $tag . "%")))
-                ->orWhere($qb->expr()->like("institute.place", $qb->expr()->literal("%" . $tag . "%")));
+                ->where(
+                        $qb->expr()->orX(
+                                $qb->expr()->andX(
+                                        $qb->expr()->eq('project.acceptanceStatus', 2), $qb->expr()->eq('review.acceptanceStatus', 2), $qb->expr()->eq('institute.acceptanceStatus', 2)
+                                ), $qb->expr()->andX(
+                                        $qb->expr()->eq('project.acceptanceStatus', 2), $qb->expr()->eq('review.acceptanceStatus', 2)
+                                ), $qb->expr()->andX(
+                                        $qb->expr()->eq('project.acceptanceStatus', 2), $qb->expr()->eq('institute.acceptanceStatus', 2)
+                                ), $qb->expr()->andX(
+                                        $qb->expr()->eq('review.acceptanceStatus', 2), $qb->expr()->eq('institute.acceptanceStatus', 2)
+                                )
+                        )
+                )
+                ->andWhere(
+                        $qb->expr()->orX(
+                                $qb->expr()->like("institute.name", $qb->expr()->literal("%" . $tag . "%")), $qb->expr()->like("institute.type", $qb->expr()->literal("%" . $tag . "%")), $qb->expr()->like("institute.place", $qb->expr()->literal("%" . $tag . "%"))
+                        )
+        );
 
         $result = $qb->getQuery()->getResult();
         for ($i = 0; $i < count($result); $i++) {
@@ -131,11 +157,8 @@ class AjaxController extends BaseController
             $result[$i]["matchedOn"] = "instname";
         }
         $returnArray = array_merge($returnArray, $result);
-
 //Max 8 results
         array_splice($returnArray, 8);
-
-
         echo json_encode($returnArray);
     }
 
@@ -375,7 +398,7 @@ class AjaxController extends BaseController
             $qb->select('i.id')
                     ->from('\PROJ\Entities\Institute', 'i')
                     ->where($qb->expr()->eq('i.creator', $qb->expr()->literal($user->getStudent()->getId())))
-                    ->orWhere($qb->expr()->eq('i.acceptanceStatus', $qb->expr()->literal('approved')))
+                    ->orWhere($qb->expr()->eq('i.acceptanceStatus', $qb->expr()->literal(2)))
                     ->orderBy('i.type', 'ASC');
             $res = $qb->getQuery()->getResult();
 
@@ -710,7 +733,7 @@ class AjaxController extends BaseController
         }
     }
 
-	public function getUserInfoAction()
+    public function getUserInfoAction()
     {
         $em = DoctrineHelper::instance()->getEntityManager();
         $ac = new \PROJ\Services\AccountService();
