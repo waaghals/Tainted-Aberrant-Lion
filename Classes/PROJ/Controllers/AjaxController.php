@@ -105,13 +105,13 @@ class AjaxController extends BaseController
                 ->where(
                         $qb->expr()->orX(
                                 $qb->expr()->andX(
-                                        $qb->expr()->eq('project.acceptanceStatus', 2), $qb->expr()->eq('review.acceptanceStatus', 2), $qb->expr()->eq('institute.acceptanceStatus', 2)
+                                        $qb->expr()->eq('project.acceptanceStatus', $qb->expr()->literal('approved')), $qb->expr()->eq('review.acceptanceStatus', $qb->expr()->literal('approved')), $qb->expr()->eq('institute.acceptanceStatus', $qb->expr()->literal('approved'))
                                 ), $qb->expr()->andX(
-                                        $qb->expr()->eq('project.acceptanceStatus', 2), $qb->expr()->eq('review.acceptanceStatus', 2)
+                                        $qb->expr()->eq('project.acceptanceStatus', $qb->expr()->literal('approved')), $qb->expr()->eq('review.acceptanceStatus', $qb->expr()->literal('approved'))
                                 ), $qb->expr()->andX(
-                                        $qb->expr()->eq('project.acceptanceStatus', 2), $qb->expr()->eq('institute.acceptanceStatus', 2)
+                                        $qb->expr()->eq('project.acceptanceStatus', $qb->expr()->literal('approved')), $qb->expr()->eq('institute.acceptanceStatus', $qb->expr()->literal('approved'))
                                 ), $qb->expr()->andX(
-                                        $qb->expr()->eq('review.acceptanceStatus', 2), $qb->expr()->eq('institute.acceptanceStatus', 2)
+                                        $qb->expr()->eq('review.acceptanceStatus', $qb->expr()->literal('approved')), $qb->expr()->eq('institute.acceptanceStatus', $qb->expr()->literal('approved'))
                                 )
                         )
                 )
@@ -135,13 +135,13 @@ class AjaxController extends BaseController
                 ->where(
                         $qb->expr()->orX(
                                 $qb->expr()->andX(
-                                        $qb->expr()->eq('project.acceptanceStatus', 2), $qb->expr()->eq('review.acceptanceStatus', 2), $qb->expr()->eq('institute.acceptanceStatus', 2)
+                                        $qb->expr()->eq('project.acceptanceStatus', $qb->expr()->literal('approved')), $qb->expr()->eq('review.acceptanceStatus', $qb->expr()->literal('approved')), $qb->expr()->eq('institute.acceptanceStatus', $qb->expr()->literal('approved'))
                                 ), $qb->expr()->andX(
-                                        $qb->expr()->eq('project.acceptanceStatus', 2), $qb->expr()->eq('review.acceptanceStatus', 2)
+                                        $qb->expr()->eq('project.acceptanceStatus', $qb->expr()->literal('approved')), $qb->expr()->eq('review.acceptanceStatus', $qb->expr()->literal('approved'))
                                 ), $qb->expr()->andX(
-                                        $qb->expr()->eq('project.acceptanceStatus', 2), $qb->expr()->eq('institute.acceptanceStatus', 2)
+                                        $qb->expr()->eq('project.acceptanceStatus', $qb->expr()->literal('approved')), $qb->expr()->eq('institute.acceptanceStatus', $qb->expr()->literal('approved'))
                                 ), $qb->expr()->andX(
-                                        $qb->expr()->eq('review.acceptanceStatus', 2), $qb->expr()->eq('institute.acceptanceStatus', 2)
+                                        $qb->expr()->eq('review.acceptanceStatus', $qb->expr()->literal('approved')), $qb->expr()->eq('institute.acceptanceStatus', $qb->expr()->literal('approved'))
                                 )
                         )
                 )
@@ -398,7 +398,7 @@ class AjaxController extends BaseController
             $qb->select('i.id')
                     ->from('\PROJ\Entities\Institute', 'i')
                     ->where($qb->expr()->eq('i.creator', $qb->expr()->literal($user->getStudent()->getId())))
-                    ->orWhere($qb->expr()->eq('i.acceptanceStatus', $qb->expr()->literal(2)))
+                    ->orWhere($qb->expr()->eq('i.acceptanceStatus', $qb->expr()->literal('approved')))
                     ->orderBy('i.type', 'ASC');
             $res = $qb->getQuery()->getResult();
 
