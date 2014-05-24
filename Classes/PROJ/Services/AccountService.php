@@ -12,15 +12,15 @@ class AccountService
 
     public function Login($username, $password)
     {
-        $em = DoctrineHelper::instance()->getEntityManager();
+        $em   = DoctrineHelper::instance()->getEntityManager();
         $user = $em->getRepository('PROJ\Entities\Account')->findOneBy(array('username' => $username));
         if ($user != null) {
             //Check bruteforce
             if ($this->checkbruteforce($user->getId()) !== true) {
                 $passwordEntered = hash('sha512', $password . $user->getSalt());
                 if ($passwordEntered == $user->getPassword()) {
-                    $_SESSION['user'] = $user;
-                    $_SESSION['userID'] = $user->getId();
+                    $_SESSION['user']         = $user;
+                    $_SESSION['userID']       = $user->getId();
                     $_SESSION['login_string'] = hash('sha512', $user->getPassword() . $_SERVER['HTTP_USER_AGENT'] . $_SERVER['REMOTE_ADDR']);
 
                     return true;
@@ -44,7 +44,7 @@ class AccountService
 
     private function checkbruteforce($user_id)
     {
-        $now = time();
+        $now            = time();
         $valid_attempts = $now - (2 * 60 * 60); //Entry's laatste 2 uur
 
 
@@ -89,10 +89,10 @@ class AccountService
 
     public function createAccount($data)
     {
-        $em = DoctrineHelper::instance()->getEntityManager();
-        $hashing = new Hashing();
-        $account = new Account();
-        $passwordsalt = split(';', $hashing->createHash($data['password']));
+        $em           = DoctrineHelper::instance()->getEntityManager();
+        $hashing      = new Hashing();
+        $account      = new Account();
+        $passwordsalt = explode(';', $hashing->createHash($data['password']));
         $account->setUsername($data['username']);
         $account->setPassword($passwordsalt[0]);
         $account->setSalt($passwordsalt[1]);
@@ -103,7 +103,7 @@ class AccountService
 
     public function createStudent($account, $data)
     {
-        $em = DoctrineHelper::instance()->getEntityManager();
+        $em      = DoctrineHelper::instance()->getEntityManager();
         $student = new Student();
         $student->setFirstname($data['firstname']);
         $student->setSurname($data['surname']);
@@ -126,7 +126,7 @@ class AccountService
 
     public function checkRegistrationCode($code, $email)
     {
-        $em = DoctrineHelper::instance()->getEntityManager();
+        $em     = DoctrineHelper::instance()->getEntityManager();
         $result = $em->getRepository('PROJ\Entities\RegistrationCode')->findOneBy(array('email' => $email));
 
         if ($result != null) {
@@ -143,7 +143,7 @@ class AccountService
     {
         $em = DoctrineHelper::instance()->getEntityManager();
         if (isset($_SESSION['userID'], $_SESSION['user'], $_SESSION['login_string'])) {
-            $user_id = $_SESSION['userID'];
+            $user_id      = $_SESSION['userID'];
             $login_string = $_SESSION['login_string'];
 
             $user = $em->getRepository('PROJ\Entities\Account')->findOneBy(array('id' => $user_id));
