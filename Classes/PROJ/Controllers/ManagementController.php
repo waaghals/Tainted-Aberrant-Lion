@@ -4,6 +4,7 @@ namespace PROJ\Controllers;
 
 use PROJ\Helper\HeaderHelper;
 use PROJ\Helper\XssHelper;
+use PROJ\Helper\RightHelper;
 
 /**
  * @author Thijs
@@ -40,23 +41,34 @@ class ManagementController extends BaseController
 
     public function UsersAction()
     {
-        $this->page = "ViewUsers";
-        $this->serveManagementTemplate();
+        if (RightHelper::loggedUserHasRight("VIEW_USERS")) {
+            $this->page = "ViewUsers";
+            $this->serveManagementTemplate();
+        }
+    }
+
+    public function LocationsAction()
+    {
+        if (RightHelper::loggedUserHasRight("VIEW_LOCATIONS")) {
+            $this->page = "ViewLocations";
+            $this->serveManagementTemplate();
+        }
     }
 
     public function CreateUserAction()
     {
-        //TODO: Add coordinator check
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {    //Create new account
-            $valid = $this->validateCreateUser();
-            if ($valid === "succes") {
-                $this->additionalVals = array('error' => 'Created access code succesfully.');
-            } else {
-                $this->additionalVals = array('error' => $valid);
+        if (RightHelper::loggedUserHasRight("CREATE_USER")) {
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {    //Create new account
+                $valid = $this->validateCreateUser();
+                if ($valid === "succes") {
+                    $this->additionalVals = array('error' => 'Created access code succesfully.');
+                } else {
+                    $this->additionalVals = array('error' => $valid);
+                }
             }
+            $this->page = "CreateUser";
+            $this->serveManagementTemplate();
         }
-        $this->page = "CreateUser";
-        $this->serveManagementTemplate();
     }
 
     public function changePasswordAction()

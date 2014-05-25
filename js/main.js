@@ -1,11 +1,16 @@
 var goBackTo = null;
 var tempID = 0;
+var withSelectedAction = null;
+var withSelectedPage = null;
 
 var monthNames = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"];
 
 
 $(document).ready(function() {
+    $("#checkall").change(function() {
+        $(this).closest("form").find(":checkbox").prop('checked', $(this).prop('checked'));
+    });
     $('#login_button').click(function() {
         $(this).parent().parent().submit();
     });
@@ -420,7 +425,7 @@ $(document).ready(function() {
         });
     });
 
-	//Create/Update new location confirmation button
+    //Create/Update new location confirmation button
     $('#user_action').click(function() {
         $(this).hide();
         var data = $("[name='create_user_form']").serializeArray();
@@ -512,6 +517,49 @@ $(document).ready(function() {
             } else {
                 $('#remove_user').show();
                 $('#removeUserError').show().children().first().html(data);
+            }
+        });
+    });
+
+    //Handle Location Apply To all
+    $("#apply_to_all").change(function() {
+        //Only do something when theres checked checkboxes
+        if ($('[name="selection[]"]:checked').length > 0 && $(this).val() != "") {
+            //Generate message
+
+            var status_prefix = 'Are you sure you want to change <span style="font-weight:bold;">' + $('[name="selection[]"]:checked').length + '</span> Location(s) to the ';
+            if ($(this).val() == "status_declined") {
+                $("#with_selected_confirm_message").html(status_prefix + 'status: <span style="font-weight:bold;">Declined</span>?');
+            } else if ($(this).val() == "status_pending") {
+                $("#with_selected_confirm_message").html(status_prefix + 'status: <span style="font-weight:bold;">Pending</span>?');
+            } else if ($(this).val() == "status_approved") {
+                $("#with_selected_confirm_message").html(status_prefix + 'status: <span style="font-weight:bold;">Approved</span>?');
+            } else if ($(this).val() == "type_education") {
+                $("#with_selected_confirm_message").html(status_prefix + 'type: <span style="font-weight:bold;">Education</span>?');
+            } else if ($(this).val() == "type_business") {
+                $("#with_selected_confirm_message").html(status_prefix + 'type: <span style="font-weight:bold;">Business</span>?');
+            } else if ($(this).val() == "remove") {
+                $("#with_selected_confirm_message").html('Are you sure you want to remove <span style="font-weight:bold;">' + $('[name="selection[]"]:checked').length + '</span> Location(s)? This <span style="font-weight:bold;">cannot</span> be undone. Any linked Project and/or Review will be deleted.');
+            }
+
+            withSelectedAction = $(this).val();
+            withSelectedPage = $("#apply_to_all").data("page");
+
+            $('#blackout').fadeIn();
+            $('#blackout').children().filter(':visible').hide();
+            $("#blackout_with_selected").fadeIn();
+        }
+        $(this).children().first().prop("selected", true);
+    });
+
+    //With Selected confirm
+    $("#with_selected_confirm").click(function() {
+        $(this).hide();
+        $.post("/ajax/withSelected/", $("[name=with_selected_form]").serialize() + "&action=" + withSelectedAction + "&page=" + withSelectedPage, function(data) {
+            if (data == "succes") {
+                $('#blackout').fadeOut(function() {
+                    location.reload();
+                });
             }
         });
     });
