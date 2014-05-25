@@ -402,13 +402,8 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
 2.      Selecteer in de filter optie om alleen de "education" te laten zien.
     - [ ] Alle markers met een icoontje van een business verdwijnen, mits deze geaccepteerd zijn door de coördinator.
 3.      Select in de filter optie om alleen de "business" te laten zien.
-<<<<<<< HEAD
-    - [ ] De markers met een icoontje van een education verdwijnen, mits deze geaccepteerd zijn door de coördinator.
-    - [ ] De markers met een icoontje van een business verschijnen, mits deze geaccepteerd zijn door de coördinator.
-=======
     - [ ] De markers met een icoontje van een education verdwijnen.
     - [ ] De markers met een icoontje van een business verschijnen.
->>>>>>> f/evaluation_review
 
 ##Reseten van filters:
 1.      Laad de homepage http://localhost/
