@@ -20,7 +20,7 @@ class RightGroup
     private $name;
 
     /**
-     * @ManyToMany(targetEntity="\PROJ\Entities\Right", mappedBy="rightgroups", cascade={"remove"})
+     * @ManyToMany(targetEntity="\PROJ\Entities\Recht", mappedBy="rightgroups", cascade={"remove"})
      */
     private $rights;
 
@@ -28,6 +28,11 @@ class RightGroup
      * @OneToMany(targetEntity="\PROJ\Entities\Account", mappedBy="rightgroup", cascade={"remove"})
      */
     private $accounts;
+
+    function __construct()
+    {
+        $this->rights = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     public function getId()
     {
@@ -67,6 +72,17 @@ class RightGroup
     public function setAccounts($accounts)
     {
         $this->accounts = $accounts;
+    }
+
+    public function addRight($right)
+    {
+        $this->rights->add($right);
+        $right->__DNUaddRightGroup($this);
+    }
+
+    public function __DNUaddRight($right)
+    {
+        $this->rights->add($right);
     }
 
 }

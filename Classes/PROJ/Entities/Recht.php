@@ -5,7 +5,7 @@ namespace PROJ\Entities;
 /**
  * @Entity
  */
-class Right
+class Recht
 {
 
     /**
@@ -23,6 +23,11 @@ class Right
      * @ManyToMany(targetEntity="\PROJ\Entities\RightGroup", inversedBy="rights")
      */
     private $rightgroups;
+
+    function __construct()
+    {
+        $this->rightgroups = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     public function getId()
     {
@@ -52,6 +57,17 @@ class Right
     public function setRightgroups($rightgroups)
     {
         $this->rightgroups = $rightgroups;
+    }
+
+    public function addRightGroup($group)
+    {
+        $this->rightgroups->add($group);
+        $group->__DNUaddRight($this);
+    }
+
+    public function __DNUaddRightGroup($group)
+    {
+        $this->rightgroups->add($group);
     }
 
 }

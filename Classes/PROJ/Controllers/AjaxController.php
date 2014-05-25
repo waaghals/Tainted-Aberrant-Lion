@@ -305,8 +305,7 @@ class AjaxController extends BaseController
         $em = DoctrineHelper::instance()->getEntityManager();
         $ac = new \PROJ\Services\AccountService();
 
-        //TODO: Add coordinator check
-        if ($ac->isLoggedIn()) {
+        if ($ac->isLoggedIn() && RightHelper::loggedUserHasRight("EDIT_USER")) {
             $user = $em->getRepository('\PROJ\Entities\Account')->find($_POST['id']);
             if (count($em->getRepository('\PROJ\Entities\Account')->findBy(array('username' => $_POST['username']))) > 0 && $user->getUsername() != $_POST['username']) {
                 echo("This username isn't unique.");
@@ -710,7 +709,7 @@ class AjaxController extends BaseController
         }
     }
 
-	public function getUserInfoAction()
+    public function getUserInfoAction()
     {
         $em = DoctrineHelper::instance()->getEntityManager();
         $ac = new \PROJ\Services\AccountService();
@@ -719,9 +718,8 @@ class AjaxController extends BaseController
             echo "Illegal ID";
             return;
         }
-        if ($ac->isLoggedIn()) {
+        if ($ac->isLoggedIn() && RightHelper::loggedUserHasRight("VIEW_USERS")) {
             $student = $em->getRepository('\PROJ\Entities\Student')->find($_POST['id']);
-            //TODO: Add coordinator check
             echo json_encode($student->jsonSerialize());
         }
     }
@@ -735,8 +733,7 @@ class AjaxController extends BaseController
             echo "Illegal ID";
             return;
         }
-        if ($ac->isLoggedIn()) {
-            //TODO: Add coordinator check
+        if ($ac->isLoggedIn() && RightHelper::loggedUserHasRight("DELETE_USER")) {
             $user = $em->getRepository('\PROJ\Entities\Student')->find($_POST['id']);
             if ($user->getProject() != null) {
                 foreach ($user->getProject() as $proj) {

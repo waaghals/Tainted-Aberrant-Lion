@@ -21,6 +21,8 @@ use \PROJ\Entities\Student;
 use \PROJ\Entities\Project;
 use \PROJ\Entities\Review;
 use PROJ\Entities\Country;
+use PROJ\Entities\RightGroup;
+use PROJ\Entities\Recht;
 
 class TestdataController extends BaseController
 {
@@ -79,13 +81,14 @@ class TestdataController extends BaseController
         return $institute;
     }
 
-    private function createUser($em, $username, $password, $salt)
+    private function createUser($em, $username, $password, $salt, $rightGroup)
     {
         $account = new Account();
         $account->setUsername($username);
         $hash = hash('sha512', $password . $salt);
         $account->setPassword($hash);
         $account->setSalt($salt);
+        $account->setRightgroup($rightGroup);
         $em->persist($account);
 
         echo "New account with the following data has been succesfully added to the database:"
@@ -144,6 +147,50 @@ class TestdataController extends BaseController
 
         ob_flush();
         return $project;
+    }
+
+    private function createRightGroup($em, $name)
+    {
+        $rightGroup = new RightGroup();
+        $rightGroup->setName($name);
+        $em->persist($rightGroup);
+
+        echo "New RightGroup with the following data has been succesfully added to the database:"
+        . "<br />Name: " . $rightGroup->getName()
+        . "<br /><br />";
+
+        ob_flush();
+
+        return $rightGroup;
+    }
+
+    private function addRightToRightGroup($em, $right, $rightgroup)
+    {
+        $rightgroup->addRight($right);
+        $em->persist($rightgroup);
+        $em->persist($right);
+
+        echo "a Right has been linked to a RightGroup:"
+        . "<br />Right: " . $right->getName()
+        . "<br />RightGroup: " . $rightgroup->getName()
+        . "<br /><br />";
+
+        ob_flush();
+    }
+
+    private function createRight($em, $name)
+    {
+        $right = new Recht();
+        $right->setName($name);
+        $em->persist($right);
+
+        echo "New Right with the following data has been succesfully added to the database:"
+        . "<br />Name: " . $right->getName()
+        . "<br /><br />";
+
+        ob_flush();
+
+        return $right;
     }
 
     private function createReview($em, $project, $assignRate, $accoRate, $guidRate, $text)
@@ -466,8 +513,29 @@ class TestdataController extends BaseController
         $this->createCountry($em, 'CS', 'SCG', 891, 'YI', 'Serbia and Montenegro', 'Belgrade', 102350, 10829175, 'EU', '', 'RSD', '.cs');
         $this->createCountry($em, 'AN', 'ANT', 530, 'NT', 'Netherlands Antilles', 'Willemstad', 960, 136197, 'NA', '', 'ANG', '.an');
 
-        $kjansen = $this->createUser($em, "kjansen", "qwerty", "HGJDGFSJHDFJHSDf");
-        $hbakker = $this->createUser($em, "hbakker", "password", "E*(%&YUIERHDGFER");
+        $coordinator = $this->createRightGroup($em, "Coordinator");
+
+        $right = $this->createRight($em, "DELETE_LOCATION");
+        $this->addRightToRightGroup($em, $right, $coordinator);
+        $right = $this->createRight($em, "UPDATE_LOCATION");
+        $this->addRightToRightGroup($em, $right, $coordinator);
+        $right = $this->createRight($em, "VIEW_LOCATIONS");
+        $this->addRightToRightGroup($em, $right, $coordinator);
+        $right = $this->createRight($em, "VIEW_USERS");
+        $this->addRightToRightGroup($em, $right, $coordinator);
+        $right = $this->createRight($em, "CREATE_USER");
+        $this->addRightToRightGroup($em, $right, $coordinator);
+        $right = $this->createRight($em, "EDIT_USER");
+        $this->addRightToRightGroup($em, $right, $coordinator);
+        $right = $this->createRight($em, "DELETE_USER");
+        $this->addRightToRightGroup($em, $right, $coordinator);
+        $right = $this->createRight($em, "VIEW_REVIEWS");
+        $this->addRightToRightGroup($em, $right, $coordinator);
+        $right = $this->createRight($em, "VIEW_PROJECTS");
+        $this->addRightToRightGroup($em, $right, $coordinator);
+
+        $kjansen = $this->createUser($em, "kjansen", "qwerty", "HGJDGFSJHDFJHSDf", null);
+        $hbakker = $this->createUser($em, "hbakker", "password", "E*(%&YUIERHDGFER", $coordinator);
 
         $kees = $this->createStudent($em, "Kees", "Jansen", "Jansenlaan", 15, "1234AB", "eindhoven", $kjansen, "k.jansen@student.avans.nl");
         $harry = $this->createStudent($em, "Harry", "Bakker", "Bakkersweg", 15, "5678CD", "utrecht", $hbakker, "h.bakker@student.avans.nl");
