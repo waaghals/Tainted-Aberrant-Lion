@@ -614,3 +614,33 @@ $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
         </form>
     </div>
 </div>
+
+<!-- General Message -->
+
+<div id="blackout_with_selected">
+    <div id="register_container" style="height: 274px; left:auto; top: auto; margin: 0px;">
+        <form name='remove_user_form' method='post' enctype="multipart/form-data">
+            <img src="/images/register_top.png">
+            <div id="register_container_tophalf">
+                <div class="alert" id="removeUserError" style="display:none; margin-bottom:20px; padding: 5px; clear:both;">
+                    <p></p>
+                </div>
+                <p id="with_selected_confirm_message"><!-- Script generated message --></p>
+            </div>
+            <img src="/images/register_split.png">
+            <div id="register_container_bottomhalf">
+                <div class="fancy_button blackout_cancel" style="margin-left:10px;">
+                    <img src="/images/btn_left.png" />
+                    <p>Cancel</p>
+                    <img src="/images/btn_right.png" />
+                </div>
+                <div class="fancy_button" id="remove_user">
+                    <img src="/images/btn_left.png" />
+                    <p>Confirm</p>
+                    <img src="/images/btn_right.png" />
+                </div>
+            </div>
+            <img src="/images/register_bottom.png">
+        </form>
+    </div>
+</div>

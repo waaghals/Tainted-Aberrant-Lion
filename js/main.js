@@ -521,7 +521,29 @@ $(document).ready(function() {
 
     //Handle Location Apply To all
     $("#apply_to_all").change(function() {
-        alert($(this).val());
+        //Only do something when theres checked checkboxes
+        if ($('[name="selection[]"]:checked').length > 0 && $(this).val() != "") {
+            //Generate message
+
+            var status_prefix = 'Are you sure you want to change <span style="font-weight:bold;">' + $('[name="selection[]"]:checked').length + '</span> Location(s) to the ';
+            if ($(this).val() == "status_declined") {
+                $("#with_selected_confirm_message").html(status_prefix + 'status: <span style="font-weight:bold;">Declined</span>?');
+            } else if ($(this).val() == "status_pending") {
+                $("#with_selected_confirm_message").html(status_prefix + 'status: <span style="font-weight:bold;">Pending</span>?');
+            } else if ($(this).val() == "status_approved") {
+                $("#with_selected_confirm_message").html(status_prefix + 'status: <span style="font-weight:bold;">Approved</span>?');
+            } else if ($(this).val() == "type_education") {
+                $("#with_selected_confirm_message").html(status_prefix + 'type: <span style="font-weight:bold;">Education</span>?');
+            } else if ($(this).val() == "type_business") {
+                $("#with_selected_confirm_message").html(status_prefix + 'type: <span style="font-weight:bold;">Business</span>?');
+            } else if ($(this).val() == "remove") {
+                $("#with_selected_confirm_message").html('Are you sure you want to remove <span style="font-weight:bold;">' + $('[name="selection[]"]:checked').length + '</span> Location(s)? This <span style="font-weight:bold;">cannot</span> be undone. Any linked Project and/or Review will be deleted.');
+            }
+
+            $('#blackout').fadeIn();
+            $('#blackout').children().filter(':visible').hide();
+            $("#blackout_with_selected").fadeIn();
+        }
         $(this).children().first().prop("selected", true);
     });
 });

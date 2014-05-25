@@ -525,7 +525,7 @@ class TestdataController extends BaseController
         $this->addRightToRightGroup($em, $right, $coordinator);
         $right = $this->createRight($em, "CREATE_USER");
         $this->addRightToRightGroup($em, $right, $coordinator);
-        $right = $this->createRight($em, "EDIT_USER");
+        $right = $this->createRight($em, "UPDATE_USER");
         $this->addRightToRightGroup($em, $right, $coordinator);
         $right = $this->createRight($em, "DELETE_USER");
         $this->addRightToRightGroup($em, $right, $coordinator);
