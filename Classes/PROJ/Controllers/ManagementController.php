@@ -44,6 +44,12 @@ class ManagementController extends BaseController
         $this->serveManagementTemplate();
     }
 
+    public function LocationsAction()
+    {
+        $this->page = "ViewLocations";
+        $this->serveManagementTemplate();
+    }
+
     public function CreateUserAction()
     {
         //TODO: Add coordinator check

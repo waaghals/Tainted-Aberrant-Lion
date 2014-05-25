@@ -1,0 +1,85 @@
+<div id="management_right">
+    <div id="management_container">
+        <form name='management_account' method='post' enctype="multipart/form-data">
+            <div id="management_container_top">
+                <div class="management_tab">
+                    <a href="/Management/Locations/">Manage Locations</a>
+                </div>
+                <div class="spacerbar" style="float:left; height:37px;"></div>
+                <div class="management_tab">
+                    <a href="/Management/CreateUser/">Create Access Codes</a>
+                </div>
+            </div>
+            <div style="width:100%; position: absolute; top: 50px; height:1px; background-color: #dde0e8;">
+            </div>
+            <div style="width:96%; margin: 2%; overflow: auto; margin-top:50px;" id="scrollable">
+                <table class="ManagementTable">
+                    <tr>
+                        <th><input type="checkbox" id="checkall" style="width:auto; margin-top:3px;"></th>
+                        <th>Name:</th>
+                        <th>Place:</th>
+                        <th>Type:</th>
+                        <th>Email:</th>
+                        <th>Projects:</th>
+                        <th>Status:</th>
+                        <th colspan="2"></th>
+                    </tr>
+                    <?php
+                    $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
+                    $qb = $em->createQueryBuilder();
+                    $qb->select('inst')
+                            ->from('\PROJ\Entities\Institute', 'inst')
+                            ->orderBy('inst.name', 'ASC');
+                    $locaties = $qb->getQuery()->getResult();
+
+                    foreach ($locaties as $locatie) {
+                        //Count number of Projects for student
+                        /*
+                          $qb = $em->createQueryBuilder();
+                          $qb->select('p')
+                          ->from('\PROJ\Entities\Project', 'p')
+                          ->join('p.review', 'r')
+                          ->where($qb->expr()->eq('p.student', $qb->expr()->literal($student->getId())));
+                          $reviews = $qb->getQuery()->getResult(); */
+                        ?>
+                        <tr>
+                            <td><input type="checkbox" name="selection[]" value="<?php echo $locatie->getId(); ?>" style="width:auto; margin-top:3px;"></td>
+                            <td><p><?php echo $locatie->getName(); ?></p></td>
+                            <td><p><?php echo $locatie->getPlace(); ?></p></td>
+                            <td><p><?php echo ucfirst($locatie->getType()); ?></p></td>
+                            <td><p><?php echo $locatie->getEmail(); ?></p></td>
+                            <td><p><?php echo count($locatie->getProjects()); ?></p></td>
+                            <td><p><?php echo ucfirst($locatie->getAcceptanceStatus()); ?></p></td>
+                            <td style="width: 40px;"><img class="action_btn mylocation_update" data-location-id="<?php echo $locatie->getId(); ?>" src="/images/edit.png" /></td>
+                            <td style="width: 40px;"><img class="action_btn mylocation_remove" data-location-id="<?php echo $locatie->getId(); ?>" src="/images/delete.png" /></td>
+                        </tr>
+                        <?php
+                    }
+                    if (count($locaties) == 0) {
+                        ?>
+                        <tr>
+                            <td colspan="7"><p>No Locations found</p></td>
+                        </tr>
+                        <?php
+                    }
+                    ?>
+                </table>
+                <img src="/images/arrow_ltr.png">
+                <select style="width:auto; height:auto; padding: 3px;" id="apply_to_all">
+                    <option>With Selected:</option>
+                    <optgroup label="Status">
+                        <option value="status_declined">Set to Declined</option>
+                        <option value="status_pending">Set to Pending</option>
+                        <option value="status_approved">Set to Approved</option>
+                    </optgroup>
+                    <optgroup label="Type">
+                        <option value="type_education">Set to Education</option>
+                        <option value="type_business">Set to Business</option>
+                    </optgroup>
+                    <optgroup label="Other">
+                        <option value="remove">Remove</option>
+                    </optgroup>
+                </select>
+            </div>
+        </form>
+    </div>

@@ -6,6 +6,9 @@ var monthNames = ["January", "February", "March", "April", "May", "June",
 
 
 $(document).ready(function() {
+    $("#checkall").change(function() {
+        $(this).closest("form").find(":checkbox").prop('checked', $(this).prop('checked'));
+    });
     $('#login_button').click(function() {
         $(this).parent().parent().submit();
     });
@@ -420,7 +423,7 @@ $(document).ready(function() {
         });
     });
 
-	//Create/Update new location confirmation button
+    //Create/Update new location confirmation button
     $('#user_action').click(function() {
         $(this).hide();
         var data = $("[name='create_user_form']").serializeArray();
@@ -514,6 +517,12 @@ $(document).ready(function() {
                 $('#removeUserError').show().children().first().html(data);
             }
         });
+    });
+
+    //Handle Location Apply To all
+    $("#apply_to_all").change(function() {
+        alert($(this).val());
+        $(this).children().first().prop("selected", true);
     });
 });
 
