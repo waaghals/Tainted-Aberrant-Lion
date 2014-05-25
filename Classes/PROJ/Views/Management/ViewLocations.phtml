@@ -1,3 +1,7 @@
+<?php
+
+use PROJ\Helper\RightHelper;
+?>
 <div id="management_right">
     <div id="management_container">
         <form name='with_selected_form' method='post' enctype="multipart/form-data">
@@ -56,18 +60,22 @@
                 <img src="/images/arrow_ltr.png">
                 <select style="width:auto; height:auto; padding: 3px;" id="apply_to_all" data-page="Location">
                     <option>With Selected:</option>
-                    <optgroup label="Status">
-                        <option value="status_declined">Set to Declined</option>
-                        <option value="status_pending">Set to Pending</option>
-                        <option value="status_approved">Set to Approved</option>
-                    </optgroup>
-                    <optgroup label="Type">
-                        <option value="type_education">Set to Education</option>
-                        <option value="type_business">Set to Business</option>
-                    </optgroup>
-                    <optgroup label="Other">
-                        <option value="remove">Remove</option>
-                    </optgroup>
+                    <?php if (RightHelper::loggedUserHasRight("UPDATE_LOCATION")) { ?>
+                        <optgroup label="Status">
+                            <option value="status_declined">Set to Declined</option>
+                            <option value="status_pending">Set to Pending</option>
+                            <option value="status_approved">Set to Approved</option>
+                        </optgroup>
+                        <optgroup label="Type">
+                            <option value="type_education">Set to Education</option>
+                            <option value="type_business">Set to Business</option>
+                        </optgroup>
+                    <?php } ?>
+                    <?php if (RightHelper::loggedUserHasRight("DELETE_LOCATION")) { ?>
+                        <optgroup label="Other">
+                            <option value="remove">Remove</option>
+                        </optgroup>
+                    <?php } ?>
                 </select>
             </div>
         </form>
