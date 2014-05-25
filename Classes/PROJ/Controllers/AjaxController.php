@@ -10,6 +10,7 @@ use PROJ\Exceptions\ServerException;
 use PROJ\Helper\DoctrineHelper;
 use PROJ\Helper\RightHelper;
 use PROJ\DBAL\ApprovalStateType as Status;
+use PROJ\DBAL\InstituteType;
 
 /**
  * Description of HomeController
@@ -757,6 +758,37 @@ class AjaxController extends BaseController
                 }
             }
             $em->remove($user);
+            $em->flush();
+            echo "succes";
+        }
+    }
+
+    public function withSelectedAction()
+    {
+        $em = DoctrineHelper::instance()->getEntityManager();
+        $ac = new \PROJ\Services\AccountService();
+
+        if ($ac->isLoggedIn()) {
+            if ($_POST['page'] == "Location") {
+                foreach ($_POST['selection'] as $id) {
+                    $location = $em->getRepository("\PROJ\Entities\Institute")->find($id);
+                    if ($_POST['action'] == "status_declined" && RightHelper::loggedUserHasRight("UPDATE_LOCATION")) {
+                        $location->setAcceptanceStatus(Status::DECLINED);
+                    } else if ($_POST['action'] == "status_pending" && RightHelper::loggedUserHasRight("UPDATE_LOCATION")) {
+                        $location->setAcceptanceStatus(Status::PENDING);
+                    } else if ($_POST['action'] == "status_approved" && RightHelper::loggedUserHasRight("UPDATE_LOCATION")) {
+                        $location->setAcceptanceStatus(Status::APPROVED);
+                    } else if ($_POST['action'] == "type_education" && RightHelper::loggedUserHasRight("UPDATE_LOCATION")) {
+                        $location->setType(InstituteType::EDUCATION);
+                    } else if ($_POST['action'] == "type_business" && RightHelper::loggedUserHasRight("UPDATE_LOCATION")) {
+                        $location->setType(InstituteType::BUSINESS);
+                    } else if ($_POST['action'] == "remove" && RightHelper::loggedUserHasRight("DELETE_LOCATION")) {
+                        $this->removeInstitute($location);
+                        continue;
+                    }
+                    $em->persist($location);
+                }
+            }
             $em->flush();
             echo "succes";
         }

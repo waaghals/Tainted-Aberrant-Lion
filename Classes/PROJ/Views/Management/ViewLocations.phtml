@@ -1,18 +1,7 @@
 <div id="management_right">
     <div id="management_container">
-        <form name='management_account' method='post' enctype="multipart/form-data">
-            <div id="management_container_top">
-                <div class="management_tab">
-                    <a href="/Management/Locations/">Manage Locations</a>
-                </div>
-                <div class="spacerbar" style="float:left; height:37px;"></div>
-                <div class="management_tab">
-                    <a href="/Management/CreateUser/">Create Access Codes</a>
-                </div>
-            </div>
-            <div style="width:100%; position: absolute; top: 50px; height:1px; background-color: #dde0e8;">
-            </div>
-            <div style="width:96%; margin: 2%; overflow: auto; margin-top:50px;" id="scrollable">
+        <form name='with_selected_form' method='post' enctype="multipart/form-data">
+            <div style="width:96%; margin: 2%; overflow: auto;" id="scrollable">
                 <table class="ManagementTable">
                     <tr>
                         <th><input type="checkbox" id="checkall" style="width:auto; margin-top:3px;"></th>
@@ -65,7 +54,7 @@
                     ?>
                 </table>
                 <img src="/images/arrow_ltr.png">
-                <select style="width:auto; height:auto; padding: 3px;" id="apply_to_all">
+                <select style="width:auto; height:auto; padding: 3px;" id="apply_to_all" data-page="Location">
                     <option>With Selected:</option>
                     <optgroup label="Status">
                         <option value="status_declined">Set to Declined</option>

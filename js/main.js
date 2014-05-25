@@ -1,5 +1,7 @@
 var goBackTo = null;
 var tempID = 0;
+var withSelectedAction = null;
+var withSelectedPage = null;
 
 var monthNames = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"];
@@ -540,11 +542,26 @@ $(document).ready(function() {
                 $("#with_selected_confirm_message").html('Are you sure you want to remove <span style="font-weight:bold;">' + $('[name="selection[]"]:checked').length + '</span> Location(s)? This <span style="font-weight:bold;">cannot</span> be undone. Any linked Project and/or Review will be deleted.');
             }
 
+            withSelectedAction = $(this).val();
+            withSelectedPage = $("#apply_to_all").data("page");
+
             $('#blackout').fadeIn();
             $('#blackout').children().filter(':visible').hide();
             $("#blackout_with_selected").fadeIn();
         }
         $(this).children().first().prop("selected", true);
+    });
+
+    //With Selected confirm
+    $("#with_selected_confirm").click(function() {
+        $(this).hide();
+        $.post("/ajax/withSelected/", $("[name=with_selected_form]").serialize() + "&action=" + withSelectedAction + "&page=" + withSelectedPage, function(data) {
+            if (data == "succes") {
+                $('#blackout').fadeOut(function() {
+                    location.reload();
+                });
+            }
+        });
     });
 });
 
