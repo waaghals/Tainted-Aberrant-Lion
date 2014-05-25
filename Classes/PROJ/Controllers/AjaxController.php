@@ -223,13 +223,13 @@ class AjaxController extends BaseController
                 $locatie = $em->getRepository('\PROJ\Entities\Institute')->find($_POST['id']);
 
                 //Extra checks
-                if ($locatie->getCreator()->getAccount()->getId() == $_SESSION['userID']) {
+                if (RightHelper::loggedUserHasRight("UPDATE_LOCATION")) {
+                    //Toch doorgaan met uitvoeren
+                } else if ($locatie->getCreator()->getAccount()->getId() == $_SESSION['userID']) {
                     if ($locatie->getAcceptanceStatus() != 0) {
                         echo "The Location has been approved while you tried to edit it.";
                         return;
                     }
-                } else if (RightHelper::loggedUserHasRight("UPDATE_LOCATION")) {
-                    //Toch doorgaan met uitvoeren
                 } else {
                     echo "This isn't your Location.";
                     return;
