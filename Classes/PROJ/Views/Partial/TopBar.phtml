@@ -1,12 +1,17 @@
 <?php
 $ac = new PROJ\Services\AccountService();
+
+if (isset($_SESSION['userID'])) {
+    $em = PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
+    $student = $em->getRepository("PROJ\Entities\Account")->find($_SESSION['userID']);
+}
 ?>
 <header class="shadow">
     <nav>
         <h2 style="float:left;"><a href="/">Worldmap</a></h2>
         <?php if ($ac->isLoggedIn()): ?>
             <button class="headerbutton" onclick='location.href = "/Account/Logout"'>Log uit</button>
-            <button class="headerbutton" onclick='location.href = "/Management/Home"'>Welcome <?php echo sprintf("%s", $_SESSION['user']->getStudent()->getFirstname()); ?></button>
+            <button class="headerbutton" onclick='location.href = "/Management/Home"'>Welcome <?php echo sprintf("%s", $student->getStudent()->getFirstname()); ?></button>
         <?php else: ?>
             <button class="headerbutton" onclick='location.href = "/Account/Login"'>Log in</button>
             <button class="headerbutton" onclick='location.href = "/account/Register"'>Register</button>

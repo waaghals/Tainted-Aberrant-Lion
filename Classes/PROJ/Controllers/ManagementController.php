@@ -4,6 +4,7 @@ namespace PROJ\Controllers;
 
 use PROJ\Helper\HeaderHelper;
 use PROJ\Helper\XssHelper;
+use PROJ\Helper\RightHelper;
 
 /**
  * @author Thijs
@@ -40,8 +41,18 @@ class ManagementController extends BaseController
 
     public function UsersAction()
     {
-        $this->page = "ViewUsers";
-        $this->serveManagementTemplate();
+        if (RightHelper::loggedUserHasRight("VIEW_USERS")) {
+            $this->page = "ViewUsers";
+            $this->serveManagementTemplate();
+        }
+    }
+
+    public function LocationsAction()
+    {
+        if (RightHelper::loggedUserHasRight("VIEW_LOCATIONS")) {
+            $this->page = "ViewLocations";
+            $this->serveManagementTemplate();
+        }
     }
 
     public function CreateUserAction()
@@ -54,9 +65,19 @@ class ManagementController extends BaseController
             } else {
                 $this->additionalVals = array('error' => $valid);
             }
+            if (RightHelper::loggedUserHasRight("CREATE_USER")) {
+                if ($_SERVER['REQUEST_METHOD'] === 'POST') {    //Create new account
+                    $valid = $this->validateCreateUser();
+                    if ($valid === "succes") {
+                        $this->additionalVals = array('error' => 'Created access code succesfully.');
+                    } else {
+                        $this->additionalVals = array('error' => $valid);
+                    }
+                }
+                $this->page = "CreateUser";
+                $this->serveManagementTemplate();
+            }
         }
-        $this->page = "CreateUser";
-        $this->serveManagementTemplate();
     }
 
     public function changePasswordAction()
@@ -221,7 +242,7 @@ class ManagementController extends BaseController
 
     private function sendActivationMail($to, $code)
     {
-        $message = "This is your personal activation code to create a account on the Avans WorldMap.\n\rThis code is linked to your E-Mail adress.\n\r\n\rYour code is: " . $code;
+        $message = "This is your personal activation code to create a account on the Avans WorldMap.\n\rThis code is linked to your E-Mail adress.\n\r\n\rYour code is: " . $code . "\n\r\n\r<a href=\"http://stable.toip.nl/account/Register/?registrationcode=" . $code . "\">Click here to register.</a>";
         $headers = "From: coordinator@toip.nl\r\n" .
                 "Reply-To: no-reply@toip.nl\r\n" .
                 'X-Mailer: PHP/' . phpversion();
