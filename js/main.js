@@ -538,8 +538,18 @@ $(document).ready(function() {
                 $("#with_selected_confirm_message").html(status_prefix + 'type: <span style="font-weight:bold;">Education</span>?');
             } else if ($(this).val() == "type_business") {
                 $("#with_selected_confirm_message").html(status_prefix + 'type: <span style="font-weight:bold;">Business</span>?');
-            } else if ($(this).val() == "remove") {
+            } else if ($(this).val() == "type_minor") {
+                $("#with_selected_confirm_message").html(status_prefix + 'type: <span style="font-weight:bold;">Minor</span>?');
+            } else if ($(this).val() == "type_internship") {
+                $("#with_selected_confirm_message").html(status_prefix + 'type: <span style="font-weight:bold;">Internship</span>?');
+            } else if ($(this).val() == "type_graduation") {
+                $("#with_selected_confirm_message").html(status_prefix + 'type: <span style="font-weight:bold;">Graduation</span>?');
+            } else if ($(this).val() == "type_esp") {
+                $("#with_selected_confirm_message").html(status_prefix + 'type: <span style="font-weight:bold;">ESP</span>?');
+            } else if ($(this).val() == "remove" && $("#apply_to_all").data("page") == "Location") {
                 $("#with_selected_confirm_message").html('Are you sure you want to remove <span style="font-weight:bold;">' + $('[name="selection[]"]:checked').length + '</span> Location(s)? This <span style="font-weight:bold;">cannot</span> be undone. Any linked Project and/or Review will be deleted.');
+            } else if ($(this).val() == "remove" && $("#apply_to_all").data("page") == "Review") {
+                $("#with_selected_confirm_message").html('Are you sure you want to remove <span style="font-weight:bold;">' + $('[name="selection[]"]:checked').length + '</span> Review(s)? This <span style="font-weight:bold;">cannot</span> be undone.');
             }
 
             withSelectedAction = $(this).val();

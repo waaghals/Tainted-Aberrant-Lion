@@ -11,6 +11,7 @@ use PROJ\Helper\DoctrineHelper;
 use PROJ\Helper\RightHelper;
 use PROJ\DBAL\ApprovalStateType as Status;
 use PROJ\DBAL\InstituteType;
+use PROJ\DBAL\ProjectType;
 
 /**
  * Description of HomeController
@@ -554,12 +555,8 @@ class AjaxController extends BaseController
         }
         if ($ac->isLoggedIn()) {
             $rev = $em->getRepository('\PROJ\Entities\Review')->find($_POST['id']);
-            if ($rev->getProject()->getStudent()->getAccount()->getId() == $_SESSION['userID']) {
-                if ($rev->getAcceptanceStatus() == 0) {
-                    echo json_encode($rev->jsonSerialize());
-                } else {
-                    echo "The Review has been approved while you tried to delete it.";
-                }
+            if ($rev->getProject()->getStudent()->getAccount()->getId() == $_SESSION['userID'] || RightHelper::loggedUserHasRight("VIEW_REVIEWS")) {
+                echo json_encode($rev->jsonSerialize());
             } else {
                 echo "This isn't your Review.";
             }
@@ -654,14 +651,10 @@ class AjaxController extends BaseController
         }
         if ($ac->isLoggedIn()) {
             $rev = $em->getRepository('\PROJ\Entities\Review')->find($_POST['id']);
-            if ($rev->getProject()->getStudent()->getAccount()->getId() == $_SESSION['userID']) {
-                if ($rev->getAcceptanceStatus() == 0) {
-                    $em->remove($rev);
-                    $em->flush();
-                    echo "succes";
-                } else {
-                    echo "The Review has been approved while you tried to delete it.";
-                }
+            if ($rev->getProject()->getStudent()->getAccount()->getId() == $_SESSION['userID'] || RightHelper::loggedUserHasRight("DELETE_REVIEW")) {
+                $em->remove($rev);
+                $em->flush();
+                echo "succes";
             } else {
                 echo "This isn't your Review.";
             }
@@ -787,6 +780,22 @@ class AjaxController extends BaseController
                         continue;
                     }
                     $em->persist($location);
+                }
+            }
+            if ($_POST['page'] == "Review") {
+                foreach ($_POST['selection'] as $id) {
+                    $review = $em->getRepository("\PROJ\Entities\Review")->find($id);
+                    if ($_POST['action'] == "status_declined" && RightHelper::loggedUserHasRight("UPDATE_REVIEW")) {
+                        $review->setAcceptanceStatus(Status::DECLINED);
+                    } else if ($_POST['action'] == "status_pending" && RightHelper::loggedUserHasRight("UPDATE_REVIEW")) {
+                        $review->setAcceptanceStatus(Status::PENDING);
+                    } else if ($_POST['action'] == "status_approved" && RightHelper::loggedUserHasRight("UPDATE_REVIEW")) {
+                        $review->setAcceptanceStatus(Status::APPROVED);
+                    } else if ($_POST['action'] == "remove" && RightHelper::loggedUserHasRight("DELETE_REVIEW")) {
+                        $em->remove($review);
+                        continue;
+                    }
+                    $em->persist($review);
                 }
             }
             $em->flush();

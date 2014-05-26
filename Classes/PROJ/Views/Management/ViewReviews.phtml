@@ -9,10 +9,9 @@ use PROJ\Helper\RightHelper;
                 <table class="ManagementTable">
                     <tr>
                         <th><input type="checkbox" id="checkall" style="width:auto; margin-top:3px;"></th>
-                        <th>Name:</th>
-                        <th>Place:</th>
+                        <th>Location:</th>
                         <th>Type:</th>
-                        <th>Email:</th>
+                        <th>Overall score:</th>
                         <th>Eigenaar:</th>
                         <th>Status:</th>
                         <th colspan="2"></th>
@@ -20,13 +19,15 @@ use PROJ\Helper\RightHelper;
                     <?php
                     $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
                     $qb = $em->createQueryBuilder();
-                    $qb->select('inst,stud')
-                            ->from('\PROJ\Entities\Institute', 'inst')
-                            ->leftJoin('inst.creator', 'stud')
+                    $qb->select('rev, proj, inst, stud')
+                            ->from('\PROJ\Entities\Review', 'rev')
+                            ->leftjoin('rev.project', 'proj')
+                            ->leftjoin('proj.institute', 'inst')
+                            ->leftjoin('proj.student', 'stud')
                             ->orderBy('inst.name', 'ASC');
-                    $locaties = $qb->getQuery()->getResult();
+                    $reviews = $qb->getQuery()->getResult();
 
-                    foreach ($locaties as $locatie) {
+                    foreach ($reviews as $review) {
                         //Count number of Projects for student
                         /*
                           $qb = $em->createQueryBuilder();
@@ -37,19 +38,18 @@ use PROJ\Helper\RightHelper;
                           $reviews = $qb->getQuery()->getResult(); */
                         ?>
                         <tr>
-                            <td><input type="checkbox" name="selection[]" value="<?php echo $locatie->getId(); ?>" style="width:auto; margin-top:3px;"></td>
-                            <td><p><?php echo $locatie->getName(); ?></p></td>
-                            <td><p><?php echo $locatie->getPlace(); ?></p></td>
-                            <td><p><?php echo ucfirst($locatie->getType()); ?></p></td>
-                            <td><p><?php echo $locatie->getEmail(); ?></p></td>
-                            <td><p><?php echo $locatie->getCreator()->getFullName(); ?></p></td>
-                            <td><p><?php echo ucfirst($locatie->getAcceptanceStatus()); ?></p></td>
-                            <td style="width: 40px;"><img class="action_btn mylocation_update" data-location-id="<?php echo $locatie->getId(); ?>" src="/images/edit.png" /></td>
-                            <td style="width: 40px;"><img class="action_btn mylocation_remove" data-location-id="<?php echo $locatie->getId(); ?>" src="/images/delete.png" /></td>
+                            <td><input type="checkbox" name="selection[]" value="<?php echo $review->getId(); ?>" style="width:auto; margin-top:3px;"></td>
+                            <td><p><?php echo $review->getProject()->getInstitute()->getName() . ' (' . $review->getProject()->getInstitute()->getPlace() . ')'; ?></p></td>
+                            <td><p><?php echo ucfirst($review->getProject()->getType()); ?></p></td>
+                            <td><p><?php echo $review->getRating(); ?></p></td>
+                            <td><p><?php echo ucfirst($review->getProject()->getStudent()->getFullName()); ?></p></td>
+                            <td><p><?php echo ucfirst($review->getAcceptanceStatus()); ?></p></td>
+                            <td style="width: 40px;"><img class="action_btn myreview_update" data-review-id="<?php echo $review->getId(); ?>" src="/images/edit.png" /></td>
+                            <td style="width: 40px;"><img class="action_btn myreview_remove" data-review-id="<?php echo $review->getId(); ?>" src="/images/delete.png" /></td>
                         </tr>
                         <?php
                     }
-                    if (count($locaties) == 0) {
+                    if (count($reviews) == 0) {
                         ?>
                         <tr>
                             <td colspan="7"><p>No Locations found</p></td>
@@ -59,20 +59,16 @@ use PROJ\Helper\RightHelper;
                     ?>
                 </table>
                 <img src="/images/arrow_ltr.png">
-                <select style="width:auto; height:auto; padding: 3px;" id="apply_to_all" data-page="Location">
+                <select style="width:auto; height:auto; padding: 3px;" id="apply_to_all" data-page="Review">
                     <option>With Selected:</option>
-                    <?php if (RightHelper::loggedUserHasRight("UPDATE_LOCATION")) { ?>
+                    <?php if (RightHelper::loggedUserHasRight("UPDATE_REVIEW")) { ?>
                         <optgroup label="Status">
                             <option value="status_declined">Set to Declined</option>
                             <option value="status_pending">Set to Pending</option>
                             <option value="status_approved">Set to Approved</option>
                         </optgroup>
-                        <optgroup label="Type">
-                            <option value="type_education">Set to Education</option>
-                            <option value="type_business">Set to Business</option>
-                        </optgroup>
                     <?php } ?>
-                    <?php if (RightHelper::loggedUserHasRight("DELETE_LOCATION")) { ?>
+                    <?php if (RightHelper::loggedUserHasRight("DELETE_REVIEW")) { ?>
                         <optgroup label="Other">
                             <option value="remove">Remove</option>
                         </optgroup>

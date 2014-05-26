@@ -55,6 +55,14 @@ class ManagementController extends BaseController
         }
     }
 
+    public function ReviewsAction()
+    {
+        if (RightHelper::loggedUserHasRight("VIEW_REVIEWS")) {
+            $this->page = "ViewReviews";
+            $this->serveManagementTemplate();
+        }
+    }
+
     public function CreateUserAction()
     {
         if (RightHelper::loggedUserHasRight("CREATE_USER")) {
