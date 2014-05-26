@@ -245,7 +245,7 @@
             })();
 <?php
 //Ophalen van user location
-$ch = curl_init();
+$ch   = curl_init();
 curl_setopt($ch, CURLOPT_URL, 'http://freegeoip.net/json/' . $_SERVER['REMOTE_ADDR']);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 $json = strip_tags(trim(curl_exec($ch)));
@@ -308,7 +308,7 @@ if (strpos($json, 'Bad Request') === false && strpos($json, 'Not Found') === fal
     function filterCountry() {
         if ($('#country option:selected').val() !== "") {
             markerCluster.getMarkers().forEach(function(marker) {
-                if (marker.country.name !== $('#country option:selected').val()) {
+                if (marker.country.name !== $('#country option:selected').val().toLowerCase()) {
                     marker.setVisible(false);
                 }
             });
@@ -318,20 +318,19 @@ if (strpos($json, 'Bad Request') === false && strpos($json, 'Not Found') === fal
     function filterLocationType() {
         if ($('#locationType option:selected').val() !== "") {
             markerCluster.getMarkers().forEach(function(marker) {
-                if (marker.type !== $('#locationType option:selected').val()) {
+                if (marker.type !== $('#locationType option:selected').val().toLowerCase()) {
                     marker.setVisible(false);
                 }
             });
         }
     }
-    // When we wrote this, only God and we understood what we were doing
-    // Now, only God knows
+
     function filterProjectType() {
         if ($('#projectType option:selected').val() !== "") {
             markerCluster.getMarkers().forEach(function(marker) {
                 var visibility = false;
                 marker.projects.forEach(function(project) {
-                    if (project.type === $('#projectType option:selected').val()) {
+                    if (project.type === $('#projectType option:selected').val().toLowerCase()) {
                         visibility = true;
                     }
                 });

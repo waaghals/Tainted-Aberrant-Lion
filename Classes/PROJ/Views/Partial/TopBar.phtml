@@ -41,8 +41,8 @@ $ac = new PROJ\Services\AccountService();
                 <div>Location Type:</div>
                 <select id="locationType" onchange="applyFilters()">
                     <option></option>
-                    <option>education</option>
-                    <option>business</option>
+                    <option>Education</option>
+                    <option>Business</option>
                 </select>
             </div>
 
@@ -50,10 +50,10 @@ $ac = new PROJ\Services\AccountService();
                 <div>Project Type:</div>
                 <select id="projectType" onchange="applyFilters()">
                     <option></option>
-                    <option>minor</option>
-                    <option>esp</option>
-                    <option>graduation</option>
-                    <option>internship</option>
+                    <option>Minor</option>
+                    <option>Eps</option>
+                    <option>Graduation</option>
+                    <option>Internship</option>
                 </select>
             </div>
 
@@ -63,7 +63,7 @@ $ac = new PROJ\Services\AccountService();
                     <option></option>
                     <?php
                     $ajaxController = new \PROJ\Controllers\AjaxController();
-                    $countryList = json_decode($ajaxController->getAllCountriesAction());
+                    $countryList    = json_decode($ajaxController->getAllCountriesAction());
                     for ($i = 0; $i < sizeof($countryList); $i++) {
                         echo "<option>" . $countryList[$i]->name . "</option>";
                     }

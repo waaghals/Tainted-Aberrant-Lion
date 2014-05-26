@@ -78,7 +78,7 @@ class ManagementController extends BaseController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {    //Save account details
             $valid = $this->validateInput($_POST);
             if ($valid === "succes") {
-                $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
+                $em   = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
                 $user = $em->getRepository('\PROJ\Entities\Account')->find($_SESSION['userID'])->getStudent();
 
                 $user->setCity($_POST['city']);
@@ -106,8 +106,8 @@ class ManagementController extends BaseController
             return;
         }
 
-        $t = new \PROJ\Tools\Template("Management");
-        $t->page = $this->page;
+        $t                   = new \PROJ\Tools\Template("Management");
+        $t->page             = $this->page;
         $t->additionalValues = $this->additionalVals;
         echo $t;
     }
@@ -147,7 +147,7 @@ class ManagementController extends BaseController
     private function validateChangePassword()
     {
 //Get current user
-        $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
+        $em   = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
         $user = $em->getRepository('\PROJ\Entities\Account')->find($_SESSION['userID']);
 
 //Valdidate old password
@@ -237,14 +237,14 @@ class ManagementController extends BaseController
 
     public function UploadFileAction()
     {
-        $temp = explode(".", $_FILES["file"]["name"]);
+        $temp      = explode(".", $_FILES["file"]["name"]);
         $extension = end($temp);
-        if ($extension === "xlsx") {
+        if ($extension === "xlsx" || $extension === "xls") {
             if ($_FILES["file"]["size"] < 1000000) {
                 if ($_FILES["file"]["error"] > 0) {
                     echo "Error: " . $_FILES["file"]["error"] . "<br>";
                 } else {
-                    // TODO: process file 
+                    // TODO: process file
                     echo "Upload: " . $_FILES["file"]["name"] . "<br>";
                     echo "Type: " . $_FILES["file"]["type"] . "<br>";
                     echo "Size: " . ($_FILES["file"]["size"] / 1024) . " kB<br>";

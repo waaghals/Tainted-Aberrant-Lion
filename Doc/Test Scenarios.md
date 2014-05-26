@@ -437,19 +437,19 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
 
 ##Correct uploaden excel bestand
 1.      Login als coordinator en ga onder management naar Upload Excelsheet
-2.      Klik op de knop "Bestand kiezen" en kies een bestand met een .xslx extentie.
+2.      Klik op de knop "Bestand kiezen" en kies een bestand met een .xslx of .xsl extentie.
 3.      Druk op de knop "Upload Excelsheet"
     - [ ] Als output krijg je een pagina met daarop de naam, type, size en opslaglocatie over het excel bestand.
 
 ##Incorrect uploaden excel bestand
 1.      Login als coordinator en ga onder management naar Upload Excelsheet
-2.      Klik op de knop "Bestand kiezen" en kies een bestand met GEEN .xslx extentie.
+2.      Klik op de knop "Bestand kiezen" en kies een bestand met GEEN .xslx of .xsl extentie.
 3.      Druk op de knop "Upload Excelsheet"
     - [ ] Als output krijg je een pagina met daarop "invalid filetype"
 
 ##Te groot excel bestand uploaden
 1.      Login als coordinator en ga onder management naar Upload Excelsheet
-2.      Klik op de knop "Bestand kiezen" en kies een bestand met een .xslx extentie EN het bestand moet groter zijn dan 1mb.
+2.      Klik op de knop "Bestand kiezen" en kies een bestand met een .xslx of .xslextentie EN het bestand moet groter zijn dan 1mb.
 3.      Druk op de knop "Upload Excelsheet"
     - [ ] Als output krijg je een pagina met daarop "Filesize is too big"
 ##Bijlage

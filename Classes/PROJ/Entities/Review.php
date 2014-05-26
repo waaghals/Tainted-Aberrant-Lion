@@ -128,7 +128,7 @@ class Review
 
     public function getApprovedProject()
     {
-        if ($this->getProject()->acceptanceStatus === 'approved') {
+        if ($this->getProject()->acceptanceStatus === Status::APPROVED) {
             return $this->getProject();
         }
         return null;
@@ -137,12 +137,12 @@ class Review
     public function jsonSerialize()
     {
         return array(
-            "text" => $this->getText(),
-            "assignmentrating" => $this->getAssignmentRating(),
-            "guidancerating" => $this->getGuidanceRating(),
+            "text"                => $this->getText(),
+            "assignmentrating"    => $this->getAssignmentRating(),
+            "guidancerating"      => $this->getGuidanceRating(),
             "accommodationrating" => $this->getAccommodationRating(),
-            "rating" => $this->getRating(),
-            "project" => $this->getApprovedProject()->jsonSerialize()
+            "rating"              => $this->getRating(),
+            "project"             => $this->getApprovedProject()->jsonSerialize()
         );
     }
 
