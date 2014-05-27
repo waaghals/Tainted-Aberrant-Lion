@@ -653,7 +653,8 @@ class AjaxController extends BaseController
         }
         if ($ac->isLoggedIn()) {
             $rev = $em->getRepository('\PROJ\Entities\Review')->find($_POST['id']);
-            if ($rev->getProject()->getStudent()->getAccount()->getId() == $_SESSION['userID'] || RightHelper::loggedUserHasRight("DELETE_REVIEW")) {
+            $accid = $rev->getProject()->getStudent()->getAccount()->getId();
+            if ($accid == $_SESSION['userID'] || RightHelper::loggedUserHasRight("DELETE_REVIEW")) {
                 $em->remove($rev);
                 $em->flush();
                 echo "succes";
