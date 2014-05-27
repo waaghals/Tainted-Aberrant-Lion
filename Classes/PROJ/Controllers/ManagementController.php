@@ -76,26 +76,17 @@ class ManagementController extends BaseController
 
     public function CreateUserAction()
     {
-//TODO: Add coordinator check
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {    //Create new account
-            $valid = $this->validateCreateUser();
-            if ($valid === "succes") {
-                $this->additionalVals = array('error' => 'Created access code succesfully.');
-            } else {
-                $this->additionalVals = array('error' => $valid);
-            }
-            if (RightHelper::loggedUserHasRight("CREATE_USER")) {
-                if ($_SERVER['REQUEST_METHOD'] === 'POST') {    //Create new account
-                    $valid = $this->validateCreateUser();
-                    if ($valid === "succes") {
-                        $this->additionalVals = array('error' => 'Created access code succesfully.');
-                    } else {
-                        $this->additionalVals = array('error' => $valid);
-                    }
+        if (RightHelper::loggedUserHasRight("CREATE_USER")) {
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {    //Create new account
+                $valid = $this->validateCreateUser();
+                if ($valid === "succes") {
+                    $this->additionalVals = array('error' => 'Created access code succesfully.');
+                } else {
+                    $this->additionalVals = array('error' => $valid);
                 }
-                $this->page = "CreateUser";
-                $this->serveManagementTemplate();
             }
+            $this->page = "CreateUser";
+            $this->serveManagementTemplate();
         }
     }
 
@@ -292,7 +283,7 @@ class ManagementController extends BaseController
                         echo "Type: " . $_FILES["file"]["type"] . "<br>";
                         echo "Size: " . ($_FILES["file"]["size"] / 1024) . " kB<br>";
                         echo "Stored in: " . $_FILES["file"]["tmp_name"];
-						$this->processExcel($_FILES["file"]["tmp_name"]);
+                        $this->processExcel($_FILES["file"]["tmp_name"]);
                     }
                 } else {
                     echo "Filesize is too big.";
