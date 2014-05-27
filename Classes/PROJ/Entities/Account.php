@@ -39,6 +39,11 @@ class Account
      */
     private $loginAttempts;
 
+    /**
+     * @ManyToOne(targetEntity="\PROJ\Entities\RightGroup", inversedBy="accounts")
+     */
+    private $rightgroup;
+
     public function getId()
     {
         return $this->id;
@@ -99,6 +104,26 @@ class Account
         return array(
             "username" => $this->getUsername()
         );
+    }
+
+    public function getLoginAttempts()
+    {
+        return $this->loginAttempts;
+    }
+
+    public function getRightgroup()
+    {
+        return $this->rightgroup;
+    }
+
+    public function setLoginAttempts($loginAttempts)
+    {
+        $this->loginAttempts = $loginAttempts;
+    }
+
+    public function setRightgroup($rightgroup)
+    {
+        $this->rightgroup = $rightgroup;
     }
 
 }

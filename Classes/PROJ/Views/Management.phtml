@@ -1,6 +1,7 @@
 <?php
 
 use PROJ\Helper\XssHelper;
+use PROJ\Helper\RightHelper;
 
 $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
 $user = $em->getRepository('\PROJ\Entities\Account')->find($_SESSION['userID'])->getStudent();
@@ -37,20 +38,36 @@ $content->additionalValues = $additionalValues;
     <div class="menuitem">
         <a href="/Management/ChangePassword">Change Password</a>
     </div>
-    <h2>Coordinator</h2>
+    <?php if (RightHelper::loggedUserHasRight("VIEW_LOCATIONS") || RightHelper::loggedUserHasRight("VIEW_PROJECTS") || RightHelper::loggedUserHasRight("VIEW_REVIEWS") || RightHelper::loggedUserHasRight("VIEW_USERS")) {
+        ?>
+        <h2>Coordinator</h2>
 
-    <div class="menuitem" style="border-top:1px solid #d2dce1; margin-top:20px;">
-        <a href="/Management/Users">Users</a>
-    </div><!--
-    <div class="menuitem">
-        <a href="/Management/Locations">Locations</a>
-    </div>
-    <div class="menuitem">
-        <a href="/Management/Reviews">Reviews</a>
-    </div>
-    <div class="menuitem">
-        <a href="/Management/Projects">Projects</a>
-    </div>-->
+        <?php if (RightHelper::loggedUserHasRight("VIEW_USERS")) { ?>
+            <div class="menuitem" style="border-top:1px solid #d2dce1; margin-top:20px;">
+                <a href="/Management/Users">Users</a>
+            </div>
+        <?php } ?>
+        <?php if (RightHelper::loggedUserHasRight("VIEW_LOCATIONS")) { ?>
+            <div class="menuitem">
+                <a href="/Management/Locations">Locations</a>
+            </div>
+        <?php } ?>
+        <?php if (RightHelper::loggedUserHasRight("VIEW_REVIEWS")) { ?>
+            <div class="menuitem">
+                <a href="/Management/Reviews">Reviews</a>
+            </div>
+        <?php } ?>
+        <?php if (RightHelper::loggedUserHasRight("VIEW_PROJECTS")) { ?>
+            <div class="menuitem">
+                <a href="/Management/Projects">Projects</a>
+            </div>
+        <?php } ?>
+        <?php if (RightHelper::loggedUserHasRight("UPLOAD_EXCEL")) { ?>
+            <div class="menuitem">
+                <a href="/Management/Upload">Upload Excelsheet</a>
+            <?php } ?>
+        </div>
+    <?php } ?>
 </div>
 
 <?php

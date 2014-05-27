@@ -27,7 +27,7 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
 2. Vergroot en verklein het scherm
     - [ ] Tekst dient kleiner te worden blij kleinere schermen.
     - [ ] Er staan ongeveer tussen de 45 en 75 tekens op één regel
-    - [ ] Bij kleine schermen (zoals voor telefoons) komen meerdere kolommen tekst onder elkaar te staan.
+    - [ ] Bij kleine schermen (zoals voor telefoons) komen meerdere rijen tekst onder elkaar te staan.
 3. Test of de kaart werkt _(Visitor must be able to zoom in / out)_
     - [ ] Je kunt zoomen door te scrollen
     - [ ] Je kunt zoomen door met twee vingers een zoom gesture te maken.
@@ -36,14 +36,17 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
     - [ ] De sidebar moet sluiten door naar links te slepen met de muis of vinger indien deze open is.
     - [ ] De sidebar moet openen door deze naar rechts te slepen met de muis of vinger indien deze gesloten is.
 5. Controleer of de `institute`'s op de kaart staan.
-    - [ ] Kijk of de marker uit de database ook op de kaart komen te staan.
+    - [ ] Er zijn markers te zien op de kaart waarvan de locatie uit de database gehaald zijn, mits deze geaccepteerd zijn door de coördinator.
     - [ ] Een `institute` met `type` `education` dient een icoontje van een schoolhoedje te zijn.
     - [ ] Een `institute` met `type` `business` dient een icoontje van een bedrijfsgebouw te zijn.
-6. Klik op de marker in ``s-Hertogenbosch`
+6. Klik op de marker in `'s-Hertogenbosch`
     - [ ] De sidebar is nu geopend indien deze gesloten was.
+    - [ ] Er is minimaal één review op deze locatie te zien die geaccepteerd is door de coördinator.
 7. Klik op de naam `Kees Jansen`  _(Visitor must be able to see all reviews or internships on the map.)_
     - [ ] De tekst van de review is `Many fun activities to do here!`
-    - [ ] De review heeft 4 van de 5 sterren.
+    - [ ] De review heeft voor `opdrachten` 5 van de 5 sterren.
+    - [ ] De review heeft voor `hulp bieden` 4 van de 5 sterren.
+    - [ ] De review heeft voor `vestiging` 3 van de 5 sterren.
 
 
 ## Login
@@ -55,7 +58,7 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
 2.  Vul als gebruikersnaam `hbakker` en wachtwoord `password` in
 3.  Klik op de knop `login` _(Informant must be able to login)_
     - [ ] Je wordt doorgestuurd naar de homepage
-    - [ ] Rechtst bovenin de balk is de voornaam `harry` van de test gebruiker zichtbaar.
+    - [ ] Rechtst bovenin de balk is de tekst `Welcome Harry` zichtbaar.
 
 ### Uitloggen:
 1.  Klik rechtsboven op `Log uit`
@@ -103,7 +106,7 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
 3.  Vul als gebruikersnaam `hbakker` en wachtwoord `password` in
 4.  Klik op de knop `login` _(Informant must be able to login)_
     - [ ] Je wordt doorgestuurd naar de homepage
-    - [ ] Rechtst bovenin de balk is de voornaam `harry` van de test gebruiker zichtbaar.
+    - [ ] Rechtst bovenin de balk is de tekst `Welcome Harry` zichtbaar.
 
 ### Incorrect registreren:
 
@@ -125,14 +128,14 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
 5.  Vul als gebruikersnaam `patrick` en wachtwoord `iscool` in
 6.  Klik op de knop `login` _(Informant must be able to login)_
     - [ ] Je wordt doorgestuurd naar de homepage
-    - [ ] Rechtst bovenin de balk is de voornaam `Patrick` van de test gebruiker zichtbaar.
+    - [ ] Rechtst bovenin de balk is de tekst `Welcome Patrick` zichtbaar.
 
 ## Contact
 #### (19.) As an visitor I want to be able to get in contact with an informant so I can Ask him questions about the place he went.
 
 ### Correcte verzenden:
 
-1.  Op de review van `Kees Jansen` van de `Avans Hogeschool` in `s-Hertogenbosch.
+1.  Op de review van `Kees Jansen` van de `Avans Hogeschool` in 's-Hertogenbosch.
 2.  Klik naast `Neem contact op met` op `Kees` _(Visitor can view a review and press a contact button)_
     - [ ] Er is een contact formulier zichtbaar
     - [ ] In het veld `Aan` staat `Kees Jansen`
@@ -159,25 +162,39 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
 1. Laad de homepage http://localhost/
     - [ ] Rechts boven is een zoekformulier zichtbaar.
 2. Vul het woord `Avans` _(Visitor must be able to insert a keyword.)_
-    - [ ] Er komt een dropdown met `Avans Hogeschool` als resultaat.
+    - [ ] Er komt een dropdown met `Avans Hogeschool` als resultaat(kunnen meer resultaten uitkomen).
 3. Klik op een resultaat  _(Results will be shown if found.)_
-    - [ ] De sidebar wordt geopend en de betreffende locatie wordt getoont.
+    - [ ] De sidebar wordt geopend en de betreffende locatie/review wordt getoont.
     - [ ] Het is mogelijk om vanaf hier de reviews van `Avans` de bekijken.
 
-
-### Zoeken naar niet bestaande review:
+### Zoeken naar niet bestaand item:
 
 1. Laad de homepage http://localhost/
     - [ ] Rechts boven is een zoekformulier zichtbaar.
-2. Vul het woord `nope`
+2. Vul het woord `nope` in
     - [ ] Er komt een dropdown.
     - [ ] In de dropdown staat `No search results found`
 
+### Zoeken naar bestaande `geapprovede` review:
+
+1. Laad de homepage http://localhost/
+    - [ ] Rechts boven is een zoekformulier zichtbaar.
+2. Vul het woord `job` in
+    - [ ] Er komt een dropdown.
+    - [ ] In de dropdown staat `No search results found`
+
+### Zoeken naar bestaande `geapprovede` locatie:
+
+1. Laad de homepage http://localhost/
+    - [ ] Rechts boven is een zoekformulier zichtbaar.
+2. Vul het woord `McDonalds` in
+    - [ ] Er komt een dropdown.
+    - [ ] In de dropdown staat `No search results found`
 
 ## Coördinator:
 ### Wachtwoord succesvol veranderen:
 1.  Laad de homepage http://localhost/Management/ChangePassword
-    - [ ] Er is een overzicht zichtbaar om je gegevens aan te passen
+    - [ ] Er is een overzicht zichtbaar om je wachtwoord aan te passen
 2.  Druk op de knop `Change Password`
     * Vul `password` in het 'Old Password' veld in.
     * Vul `notsosecret` in het 'New Password' veld in.
@@ -186,7 +203,7 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
 
 ### Wachtwoord niet succesvol veranderen:
 1.  Laad de homepage http://localhost/Management/ChangePassword
-    - [ ] Er is een overzicht zichtbaar om je gegevens aan te passen
+    - [ ] Er is een overzicht zichtbaar om je wachtwoord aan te passen
 2.  Druk op de knop `Change Password`
     * Vul `notoldpassword` in het 'Old Password' veld in.
     * Vul `notsosecret` in het 'New Password' veld in.
@@ -195,7 +212,7 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
     - [ ] U krijgt de tekst `Old password didn't match.` te zien
 
 1.  Laad de homepage http://localhost/Management/ChangePassword
-    - [ ] Er is een overzicht zichtbaar om je gegevens aan te passen
+    - [ ] Er is een overzicht zichtbaar om je wachtwoord aan te passen
 2.  Druk op de knop `Change Password`
     * Vul `notsosecret` in het 'Old Password' veld in.
     * Vul `password` in het 'New Password' veld in.
@@ -219,7 +236,7 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
 1.  Laad de homepage http://localhost/Management/MyAccount
     - [ ] Er is een overzicht zichtbaar om je gegevens aan te passen
 2.  Druk op de knop `My Account`
-        * Druk op de knop `Save`
+    * Druk op de knop `Save`
     - [ ]  U krijgt de tekst `Successfully saved.` te zien
 
 ###Correct een nieuwe Locatie aanmaken:
@@ -384,6 +401,63 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
     * Druk op de knop `Remove`
     - [ ] Het scherm verdwijnt en de locatie wordt verwijdert.
 
+###Locaties mass-updaten door Coordinator
+1.  Laad de pagina: http://localhost/Management/Locations
+    - [ ] Er is een overzicht zichtbaar om je gegevens aan te passen
+2.  Selecteer alle locaties door de bovenste Checkbox aan te vinken.
+    - Kies uit de dropdown box `Set to Approved` onder `status`
+    - [ ] Er komt een popup die meld hoeveel entry's je gaat updaten.
+3.  Klik op `Confirm`.
+    - [ ] Het scherm verdwijnt, en de Entry's hebben nu de status `Approved`
+
+###Locaties mass-removen door Coordinator
+1.  Laad de pagina: http://localhost/Management/Locations
+    - [ ] Er is een overzicht zichtbaar om je gegevens aan te passen
+2.  Selecteer alle locaties door de bovenste Checkbox aan te vinken.
+    - Kies uit de dropdown box `Remove` onder `other`
+    - [ ] Er komt een popup die meld hoeveel entry's je gaat verwijderen.
+3.  Klik op `Confirm`.
+    - [ ] Het scherm verdwijnt, en de Entry's zijn verwijdert.
+4.  Draai het testdata script: http://localhost/testdata/
+
+###Reviews mass-updaten door Coordinator
+1.  Laad de pagina: http://localhost/Management/Reviews
+    - [ ] Er is een overzicht zichtbaar om je gegevens aan te passen
+2.  Selecteer alle reviews door de bovenste Checkbox aan te vinken.
+    - Kies uit de dropdown box `Set to Approved` onder `status`
+    - [ ] Er komt een popup die meld hoeveel entry's je gaat updaten.
+3.  Klik op `Confirm`.
+    - [ ] Het scherm verdwijnt, en de Entry's hebben nu de status `Approved`
+	
+###Reviews mass-removen door Coordinator
+1.  Laad de pagina: http://localhost/Management/Reviews
+    - [ ] Er is een overzicht zichtbaar om je gegevens aan te passen
+2.  Selecteer alle reviews door de bovenste Checkbox aan te vinken.
+    - Kies uit de dropdown box `Remove` onder `other`
+    - [ ] Er komt een popup die meld hoeveel entry's je gaat verwijderen.
+3.  Klik op `Confirm`.
+    - [ ] Het scherm verdwijnt, en de Entry's zijn verwijdert.
+4.  Draai het testdata script: http://localhost/testdata/
+
+###Projects mass-updaten door Coordinator
+1.  Laad de pagina: http://localhost/Management/Projects
+    - [ ] Er is een overzicht zichtbaar om je gegevens aan te passen
+2.  Selecteer alle projects door de bovenste Checkbox aan te vinken.
+    - Kies uit de dropdown box `Set to Approved` onder `status`
+    - [ ] Er komt een popup die meld hoeveel entry's je gaat updaten.
+3.  Klik op `Confirm`.
+    - [ ] Het scherm verdwijnt, en de Entry's hebben nu de status `Approved`
+
+###Projects mass-removen door Coordinator
+1.  Laad de pagina: http://localhost/Management/Projects
+    - [ ] Er is een overzicht zichtbaar om je gegevens aan te passen
+2.  Selecteer alle projects door de bovenste Checkbox aan te vinken.
+    - Kies uit de dropdown box `Remove` onder `other`
+    - [ ] Er komt een popup die meld hoeveel entry's je gaat verwijderen.
+3.  Klik op `Confirm`.
+    - [ ] Het scherm verdwijnt, en de Entry's zijn verwijdert.
+4.  Draai het testdata script: http://localhost/testdata/
+
 ###Een Review verwijderen:
 1.  Laad de pagina: http://localhost/Management/MyReviews/
     - [ ] Er is een overzicht zichtbaar om je gegevens aan te passen
@@ -397,25 +471,33 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
 1.      Laad de homepage http://localhost/
     - [ ] De kaart is zichtbaar met in de menubalk de filter "Location Type:".
 2.      Selecteer in de filter optie om alleen de "education" te laten zien.
-    - [ ] Alle markers met een icoontje  van een business verdwijnen.
+    - [ ] Alle markers met een icoontje van een business verdwijnen, mits deze geaccepteerd zijn door de coördinator.
 3.      Select in de filter optie om alleen de "business" te laten zien.
-    - [ ] De markers met een icoontje van een education verdwijnen.
-    - [ ] De markers met een icoontje van een busines verschijnen.
+    - [ ] De markers met een icoontje van een education verdwijnen, mits deze geaccepteerd zijn door de coördinator.
+    - [ ] De markers met een icoontje van een business verschijnen, mits deze geaccepteerd zijn door de coördinator.
 
 ##Reseten van filters:
 1.      Laad de homepage http://localhost/
     - [ ] De kaart is zichtbaar met in de menubalk de button "Reset".
 2.      Selecteer in de filter optie om alleen de "education" te laten zien.
-    - [ ] Alle markers met een icoontje  van een business verdwijnen.
+    - [ ] Alle markers met een icoontje van een business verdwijnen, mits deze geaccepteerd zijn door de coördinator.
 3.      Druk op de "Reset" knop in de menubalk.
-    - [ ] Alle markers verschijnen.
-    - [ ] Alle filter opties worden leeg.
+    - [ ] Alle markers verschijnen, mits deze geaccepteerd zijn door de coördinator.
+    - [ ] Alle filter opties worden leeggemaakt.
 
-##Filteren op locatie type:
+##Filteren op land:
 1.      Laad de homepage http://localhost/
     - [ ] De kaart is zichtbaar met in de menubalk de filter "Country:".
 2.      Selecteer in de filter optie om alleen de "Netherlands" te laten zien.
-    - [ ] Alle markers buiten nederland verdwijnen.
+    - [ ] Alle markers buiten nederland verdwijnen, mits deze geaccepteerd waren door de coördinator.
+3.      Select in de filter optie om alleen de "" (leeg) te laten zien.
+    - [ ] Alle markers verschijnen, mits deze geaccepteerd waren door de coördinator.
+
+##Filteren op project type:
+1.      Laad de homepage http://localhost/
+    - [ ] De kaart is zichtbaar met in de menubalk de filter "Project type:".
+2.      Selecteer in de filter optie om alleen de "Minor" te laten zien.
+    - [ ] Alle markers die geen minor hebben verdwijnen
 3.      Select in de filter optie om alleen de "" (leeg) te laten zien.
     - [ ] Alle markers verschijnen.
 
@@ -423,8 +505,29 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
 1.      Laad de homepage http://localhost/
     - [ ] De kaart is zichtbaar met in de menubalk de filter "Country:".
 2.      Selecteer in de filter optie Country om alleen de "Netherlands" te laten zien.
+    - [ ] Alle markers buiten nederland verdwijnen, mits deze geaccepteerd waren door de coördinator.
 3.      Selecteer in de filter optie Location Type de "education" te laten zien.
-    - [ ] Alleen markers in nederland zijn zichtbaar met het "education" type.
+4.      Selecteer in de filter optie Project Type om alleen de "minor" te laten zien.
+    - [ ] Alleen markers in nederland met het "education" type en het "internship" type zijn zichtbaar.
+
+##Correct uploaden excel bestand
+1.      Login als coordinator en ga onder management naar Upload Excelsheet
+2.      Klik op de knop "Bestand kiezen" en kies een bestand met een .xslx of .xsl extentie.
+3.      Druk op de knop "Upload Excelsheet"
+    - [ ] Als output krijg je een pagina met daarop de naam, type, size en opslaglocatie over het excel bestand.
+
+##Incorrect uploaden excel bestand
+1.      Login als coordinator en ga onder management naar Upload Excelsheet
+2.      Klik op de knop "Bestand kiezen" en kies een bestand met GEEN .xslx of .xsl extentie.
+3.      Druk op de knop "Upload Excelsheet"
+    - [ ] Als output krijg je een pagina met daarop "invalid filetype"
+
+##Te groot excel bestand uploaden
+1.      Login als coordinator en ga onder management naar Upload Excelsheet
+2.      Klik op de knop "Bestand kiezen" en kies een bestand met een .xslx of .xslextentie EN het bestand moet groter zijn dan 1mb.
+3.      Druk op de knop "Upload Excelsheet"
+    - [ ] Als output krijg je een pagina met daarop "Filesize is too big"
+    - [ ] Alleen markers in nederland zijn zichtbaar met het "education" type, mits deze geaccepteerd waren door de coördinator.
 
 ##Bijlage
 ###1. Incorrecte registreren waarden

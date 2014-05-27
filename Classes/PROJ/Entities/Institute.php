@@ -171,6 +171,17 @@ class Institute
         $this->name = $name;
     }
 
+    public function getApprovedProjects()
+    {
+        $approvedProjects = array();
+        foreach ($this->getProjects() as $project) {
+            if ($project->getAcceptanceStatus() === Status::APPROVED) {
+                $approvedProjects[] = $project;
+            }
+        }
+        return $approvedProjects;
+    }
+
     public function jsonSerialize()
     {
         return array(

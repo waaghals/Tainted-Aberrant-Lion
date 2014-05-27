@@ -116,19 +116,42 @@ class Project
         $this->type = $type;
     }
 
+    public function isApprovedInstitute()
+    {
+        if ($this->getInstitute()->getAcceptanceStatus() === Status::APPROVED) {
+            return $this->getInstitute();
+        }
+        return null;
+    }
+
+    public function isApprovedReview()
+    {
+        if ($this->getReview()->getAcceptanceStatus() === Status::APPROVED) {
+            return $this->getReview();
+        }
+        return null;
+    }
+
     public function jsonSerialize()
     {
-        return array(
+        $return = array(
             "id" => $this->getId(),
-            "review" => $this->getReview(),
             "author" => $this->getStudent(),
             "start_year" => $this->getStartdate()->Format("Y"),
             "start_month" => $this->getStartdate()->Format("n"),
             "end_year" => $this->getEnddate()->Format("Y"),
             "end_month" => $this->getEnddate()->Format("n"),
-            "type" => ucfirst($this->getType()),
-            "institute" => $this->getInstitute()->jsonSerialize()
+            "type" => ucfirst($this->getType())
         );
+
+        if ($this->getReview() != null) {
+            $return["review"] = $this->getReview();
+        }
+        if ($this->getInstitute() != null) {
+            $return["institute"] = $this->getInstitute()->jsonSerialize();
+        }
+
+        return $return;
     }
 
     public function getAcceptanceStatus()

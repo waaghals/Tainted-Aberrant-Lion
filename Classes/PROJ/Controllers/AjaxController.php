@@ -8,7 +8,10 @@ namespace PROJ\Controllers;
 
 use PROJ\Exceptions\ServerException;
 use PROJ\Helper\DoctrineHelper;
+use PROJ\Helper\RightHelper;
 use PROJ\DBAL\ApprovalStateType as Status;
+use PROJ\DBAL\InstituteType;
+use PROJ\DBAL\ProjectType;
 
 /**
  * Description of HomeController
@@ -102,13 +105,14 @@ class AjaxController extends BaseController
         $qb = $em->createQueryBuilder();
         $qb->select(array('student.firstname as studentname', 'student.surname as studentsurname', 'student.email', 'review.text', 'institute.name as institutename', 'review.rating', 'review.id as revid', 'institute.id as instituteid', 'institute.lat', 'institute.lng'))
                 ->from('\PROJ\Entities\Review', 'review')->leftJoin('review.project', 'project')->leftJoin('project.institute', 'institute')->leftJoin('project.student', 'student')
-                ->where($qb->expr()->like("review.text", $qb->expr()->literal("%" . $tag . "%")))
-                ->orWhere($qb->expr()->like("student.firstname", $qb->expr()->literal("%" . $tag . "%")))
-                ->orWhere($qb->expr()->like("student.surname", $qb->expr()->literal("%" . $tag . "%")))
-                ->orWhere($qb->expr()->like("student.city", $qb->expr()->literal("%" . $tag . "%")))
-                ->orWhere($qb->expr()->like("student.street", $qb->expr()->literal("%" . $tag . "%")))
-                ->orWhere($qb->expr()->like("student.email", $qb->expr()->literal("%" . $tag . "%")))
-                ->orWhere($qb->expr()->like("project.type", $qb->expr()->literal("%" . $tag . "%")));
+                ->where(
+                        $qb->expr()->eq('project.acceptanceStatus', $qb->expr()->literal('approved')), $qb->expr()->eq('review.acceptanceStatus', $qb->expr()->literal('approved')), $qb->expr()->eq('institute.acceptanceStatus', $qb->expr()->literal('approved'))
+                )
+                ->andWhere(
+                        $qb->expr()->orX(
+                                $qb->expr()->like('review.text', $qb->expr()->literal('%' . $tag . '%')), $qb->expr()->like('student.firstname', $qb->expr()->literal('%' . $tag . '%')), $qb->expr()->like('student.surname', $qb->expr()->literal('%' . $tag . '%')), $qb->expr()->like('student.city', $qb->expr()->literal('%' . $tag . '%')), $qb->expr()->like('student.street', $qb->expr()->literal('%' . $tag . '%')), $qb->expr()->like('student.email', $qb->expr()->literal('%' . $tag . '%')), $qb->expr()->like('project.type', $qb->expr()->literal('%' . $tag . '%'))
+                        )
+        );
 
         $result = $qb->getQuery()->getResult();
         for ($i = 0; $i < count($result); $i++) {
@@ -121,9 +125,14 @@ class AjaxController extends BaseController
         $qb = $em->createQueryBuilder();
         $qb->select(array('student.firstname as studentname', 'student.surname as studentsurname', 'student.email', 'review.text', 'institute.name as institutename', 'institute.place as instituteplace', 'institute.id as instituteid', 'review.rating', 'institute.lat', 'institute.lng'))
                 ->from('\PROJ\Entities\Review', 'review')->leftJoin('review.project', 'project')->leftJoin('project.institute', 'institute')->leftJoin('project.student', 'student')
-                ->where($qb->expr()->like("institute.name", $qb->expr()->literal("%" . $tag . "%")))
-                ->orWhere($qb->expr()->like("institute.type", $qb->expr()->literal("%" . $tag . "%")))
-                ->orWhere($qb->expr()->like("institute.place", $qb->expr()->literal("%" . $tag . "%")));
+                ->where(
+                        $qb->expr()->eq('project.acceptanceStatus', $qb->expr()->literal('approved')), $qb->expr()->eq('review.acceptanceStatus', $qb->expr()->literal('approved')), $qb->expr()->eq('institute.acceptanceStatus', $qb->expr()->literal('approved'))
+                )
+                ->andWhere(
+                        $qb->expr()->orX(
+                                $qb->expr()->like("institute.name", $qb->expr()->literal("%" . $tag . "%")), $qb->expr()->like("institute.type", $qb->expr()->literal("%" . $tag . "%")), $qb->expr()->like("institute.place", $qb->expr()->literal("%" . $tag . "%"))
+                        )
+        );
 
         $result = $qb->getQuery()->getResult();
         for ($i = 0; $i < count($result); $i++) {
@@ -131,11 +140,8 @@ class AjaxController extends BaseController
             $result[$i]["matchedOn"] = "instname";
         }
         $returnArray = array_merge($returnArray, $result);
-
 //Max 8 results
         array_splice($returnArray, 8);
-
-
         echo json_encode($returnArray);
     }
 
@@ -220,8 +226,10 @@ class AjaxController extends BaseController
             } elseif ($_POST['action'] == "update") {
                 $locatie = $em->getRepository('\PROJ\Entities\Institute')->find($_POST['id']);
 
-//Extra checks
-                if ($locatie->getCreator()->getAccount()->getId() == $_SESSION['userID']) {
+                //Extra checks
+                if (RightHelper::loggedUserHasRight("UPDATE_LOCATION")) {
+                    //Toch doorgaan met uitvoeren
+                } else if ($locatie->getCreator()->getAccount()->getId() == $_SESSION['userID']) {
                     if ($locatie->getAcceptanceStatus() != 0) {
                         echo "The Location has been approved while you tried to edit it.";
                         return;
@@ -305,8 +313,7 @@ class AjaxController extends BaseController
         $em = DoctrineHelper::instance()->getEntityManager();
         $ac = new \PROJ\Services\AccountService();
 
-        //TODO: Add coordinator check
-        if ($ac->isLoggedIn()) {
+        if ($ac->isLoggedIn() && RightHelper::loggedUserHasRight("UPDATE_USER")) {
             $user = $em->getRepository('\PROJ\Entities\Account')->find($_POST['id']);
             if (count($em->getRepository('\PROJ\Entities\Account')->findBy(array('username' => $_POST['username']))) > 0 && $user->getUsername() != $_POST['username']) {
                 echo("This username isn't unique.");
@@ -327,7 +334,7 @@ class AjaxController extends BaseController
         }
     }
 
-    public function createProjectAction()
+    public function saveProjectAction($unitTest = null)
     {
         if ($unitTest != null) {
             $_POST = $unitTest;
@@ -373,10 +380,12 @@ class AjaxController extends BaseController
             $user = $em->getRepository('\PROJ\Entities\Account')->find($_SESSION['userID']);
             $qb = $em->createQueryBuilder();
             $qb->select('i.id')
-                    ->from('\PROJ\Entities\Institute', 'i')
-                    ->where($qb->expr()->eq('i.creator', $qb->expr()->literal($user->getStudent()->getId())))
-                    ->orWhere($qb->expr()->eq('i.acceptanceStatus', $qb->expr()->literal('approved')))
-                    ->orderBy('i.type', 'ASC');
+                    ->from('\PROJ\Entities\Institute', 'i');
+            if (!RightHelper::loggedUserHasRight("UPDATE_PROJECT")) {
+                $qb->where($qb->expr()->eq('i.creator', $qb->expr()->literal($user->getStudent()->getId())))
+                        ->orWhere($qb->expr()->eq('i.acceptanceStatus', $qb->expr()->literal('approved')));
+            }
+            $qb->orderBy('i.type', 'ASC');
             $res = $qb->getQuery()->getResult();
 
 
@@ -401,7 +410,9 @@ class AjaxController extends BaseController
                 $project = $em->getRepository('\PROJ\Entities\Project')->find($_POST['id']);
 
 //Extra checks
-                if ($project->getStudent()->getAccount()->getId() == $_SESSION['userID']) {
+                if (RightHelper::loggedUserHasRight("UPDATE_PROJECT")) {
+
+                } elseif ($project->getStudent()->getAccount()->getId() == $_SESSION['userID']) {
                     if ($project->getAcceptanceStatus() != 0) {
                         echo "The Project has been aproved while you tried to edit it.";
                         return;
@@ -415,7 +426,9 @@ class AjaxController extends BaseController
             $project->setReview(null);
             $project->setStartdate(new \DateTime($_POST['start_year'] . '-' . $_POST['start_month'] . '-1'));
             $project->setendDate(new \DateTime($_POST['end_year'] . '-' . $_POST['end_month'] . '-1'));
-            $project->setStudent($user->getStudent());
+            if ($_POST['action'] == "create") {
+                $project->setStudent($user->getStudent());
+            }
             $project->setType($_POST['type']);
 
             $em->persist($project);
@@ -473,8 +486,10 @@ class AjaxController extends BaseController
 
             $qb = $em->createQueryBuilder();
             $qb->select('p.id')
-                    ->from('\PROJ\Entities\Project', 'p')
-                    ->where($qb->expr()->eq('p.student', $qb->expr()->literal($user->getStudent()->getId())));
+                    ->from('\PROJ\Entities\Project', 'p');
+            if (!RightHelper::loggedUserHasRight("UPDATE_REVIEW")) {
+                $qb->where($qb->expr()->eq('p.student', $qb->expr()->literal($user->getStudent()->getId())));
+            }
             $res = $qb->getQuery()->getResult();
 
             $found = false;
@@ -519,6 +534,7 @@ class AjaxController extends BaseController
 
     private function getReviewEntitie()
     {
+        $em = DoctrineHelper::instance()->getEntityManager();
         if ($_POST['action'] == "create") {
             $review = new \PROJ\Entities\Review();
             $review->setAcceptanceStatus(Status::PENDING);
@@ -526,7 +542,9 @@ class AjaxController extends BaseController
             $review = $em->getRepository('\PROJ\Entities\Review')->find($_POST['id']);
 
 //Extra checks
-            if ($review->getProject()->getSTudent()->getAccount()->getId() == $_SESSION['userID']) {
+            if (RightHelper::loggedUserHasRight("UPDATE_REVIEW")) {
+
+            } elseif ($review->getProject()->getSTudent()->getAccount()->getId() == $_SESSION['userID']) {
                 if ($review->getAcceptanceStatus() != 0) {
                     echo "The Review has been approved while you tried to edit it.";
                     return null;
@@ -551,12 +569,9 @@ class AjaxController extends BaseController
         }
         if ($ac->isLoggedIn()) {
             $rev = $em->getRepository('\PROJ\Entities\Review')->find($_POST['id']);
-            if ($rev->getProject()->getStudent()->getAccount()->getId() == $_SESSION['userID']) {
-                if ($rev->getAcceptanceStatus() == 0) {
-                    echo json_encode($rev->jsonSerialize());
-                } else {
-                    echo "The Review has been approved while you tried to delete it.";
-                }
+            $accId = $rev->getProject()->getStudent()->getAccount()->getId();
+            if ($accId == $_SESSION['userID'] || RightHelper::loggedUserHasRight("VIEW_REVIEWS")) {
+                echo json_encode($rev->jsonSerialize());
             } else {
                 echo "This isn't your Review.";
             }
@@ -574,16 +589,42 @@ class AjaxController extends BaseController
         }
         if ($ac->isLoggedIn()) {
             $inst = $em->getRepository('\PROJ\Entities\Institute')->find($_POST['id']);
-            if ($inst->getCreator()->getAccount()->getId() == $_SESSION['userID']) {
-                if ($inst->getAcceptanceStatus() == 0) {
-                    echo json_encode($inst->jsonSerialize());
-                } else {
-                    echo "The Location has been approved while you tried to delete it.";
-                }
+            $accId = $inst->getCreator()->getAccount()->getId();
+            if ($accId == $_SESSION['userID'] || RightHelper::loggedUserHasRight("VIEW_LOCATIONS")) {
+                echo json_encode($inst->jsonSerialize());
             } else {
                 echo "This isn't your Location.";
             }
         }
+    }
+
+    private function removeProject($proj)
+    {
+        $em = DoctrineHelper::instance()->getEntityManager();
+        if ($proj->getReview() != null) {
+            foreach ($proj->getReview() as $rev) {
+                $em->remove($rev);
+            }
+        }
+        $em->remove($proj);
+        $em->flush();
+    }
+
+    private function removeInstitute($inst)
+    {
+        $em = DoctrineHelper::instance()->getEntityManager();
+        if ($inst->getProjects() != null) {
+            foreach ($inst->getProjects() as $proj) {
+                if ($proj->getReview() != null) {
+                    foreach ($proj->getReview() as $rev) {
+                        $em->remove($rev);
+                    }
+                }
+                $em->remove($proj);
+            }
+        }
+        $em->remove($inst);
+        $em->flush();
     }
 
     public function removeLocationAction()
@@ -597,20 +638,15 @@ class AjaxController extends BaseController
         }
         if ($ac->isLoggedIn()) {
             $inst = $em->getRepository('\PROJ\Entities\Institute')->find($_POST['id']);
+            //Check if it's someone with more rights
+            if (RightHelper::loggedUserHasRight("DELETE_LOCATION")) {
+                $this->removeInstitute($inst);
+                echo "succes";
+                return;
+            }
             if ($inst->getCreator()->getAccount()->getId() == $_SESSION['userID']) {
                 if ($inst->getAcceptanceStatus() == 0) {
-                    if ($inst->getProjects() != null) {
-                        foreach ($inst->getProjects() as $proj) {
-                            if ($proj->getReview() != null) {
-                                foreach ($proj->getReview() as $rev) {
-                                    $em->remove($rev);
-                                }
-                            }
-                            $em->remove($proj);
-                        }
-                    }
-                    $em->remove($inst);
-                    $em->flush();
+                    $this->removeInstitute($inst);
                     echo "succes";
                 } else {
                     echo "The Location has been approved while you tried to delete it.";
@@ -643,14 +679,11 @@ class AjaxController extends BaseController
         }
         if ($ac->isLoggedIn()) {
             $rev = $em->getRepository('\PROJ\Entities\Review')->find($_POST['id']);
-            if ($rev->getProject()->getStudent()->getAccount()->getId() == $_SESSION['userID']) {
-                if ($rev->getAcceptanceStatus() == 0) {
-                    $em->remove($rev);
-                    $em->flush();
-                    echo "succes";
-                } else {
-                    echo "The Review has been approved while you tried to delete it.";
-                }
+            $accid = $rev->getProject()->getStudent()->getAccount()->getId();
+            if ($accid == $_SESSION['userID'] || RightHelper::loggedUserHasRight("DELETE_REVIEW")) {
+                $em->remove($rev);
+                $em->flush();
+                echo "succes";
             } else {
                 echo "This isn't your Review.";
             }
@@ -668,19 +701,16 @@ class AjaxController extends BaseController
         }
         if ($ac->isLoggedIn()) {
             $proj = $em->getRepository('\PROJ\Entities\Project')->find($_POST['id']);
-            if ($proj->getStudent()->getAccount()->getId() == $_SESSION['userID']) {
-                if ($proj->getAcceptanceStatus() == 0) {
-                    if ($proj->getReview() != null) {
-                        foreach ($proj->getReview() as $rev) {
-                            $em->remove($rev);
-                        }
+            $projid = $proj->getStudent()->getAccount()->getId();
+            if ($projid == $_SESSION['userID'] || RightHelper::loggedUserHasRight("DELETE_PROJECT")) {
+                if ($proj->getReview() != null) {
+                    foreach ($proj->getReview() as $rev) {
+                        $em->remove($rev);
                     }
-                    $em->remove($proj);
-                    $em->flush();
-                    echo "succes";
-                } else {
-                    echo "The Project has been aproved while you tried to delete it.";
                 }
+                $em->remove($proj);
+                $em->flush();
+                echo "succes";
             } else {
                 echo "This isn't your Project.";
             }
@@ -698,19 +728,15 @@ class AjaxController extends BaseController
         }
         if ($ac->isLoggedIn()) {
             $proj = $em->getRepository('\PROJ\Entities\Project')->find($_POST['id']);
-            if ($proj->getStudent()->getId() == $_SESSION['userID']) {
-                if ($proj->getAcceptanceStatus() == 0) {
-                    echo json_encode($proj->jsonSerialize());
-                } else {
-                    echo "The Project has been aproved while you tried to delete it.";
-                }
+            if ($proj->getStudent()->getId() == $_SESSION['userID'] || RightHelper::loggedUserHasRight("VIEW_PROJECTS")) {
+                echo json_encode($proj->jsonSerialize());
             } else {
                 echo "This isn't your Project.";
             }
         }
     }
 
-	public function getUserInfoAction()
+    public function getUserInfoAction()
     {
         $em = DoctrineHelper::instance()->getEntityManager();
         $ac = new \PROJ\Services\AccountService();
@@ -719,9 +745,8 @@ class AjaxController extends BaseController
             echo "Illegal ID";
             return;
         }
-        if ($ac->isLoggedIn()) {
+        if ($ac->isLoggedIn() && RightHelper::loggedUserHasRight("VIEW_USERS")) {
             $student = $em->getRepository('\PROJ\Entities\Student')->find($_POST['id']);
-            //TODO: Add coordinator check
             echo json_encode($student->jsonSerialize());
         }
     }
@@ -735,8 +760,7 @@ class AjaxController extends BaseController
             echo "Illegal ID";
             return;
         }
-        if ($ac->isLoggedIn()) {
-            //TODO: Add coordinator check
+        if ($ac->isLoggedIn() && RightHelper::loggedUserHasRight("DELETE_USER")) {
             $user = $em->getRepository('\PROJ\Entities\Student')->find($_POST['id']);
             if ($user->getProject() != null) {
                 foreach ($user->getProject() as $proj) {
@@ -749,6 +773,69 @@ class AjaxController extends BaseController
                 }
             }
             $em->remove($user);
+            $em->flush();
+            echo "succes";
+        }
+    }
+
+    public function withSelectedAction()
+    {
+        $em = DoctrineHelper::instance()->getEntityManager();
+        $ac = new \PROJ\Services\AccountService();
+
+        if ($ac->isLoggedIn()) {
+            if ($_POST['page'] == "Location") {
+                foreach ($_POST['selection'] as $id) {
+                    $location = $em->getRepository("\PROJ\Entities\Institute")->find($id);
+                    if ($_POST['action'] == "status_declined" && RightHelper::loggedUserHasRight("UPDATE_LOCATION")) {
+                        $location->setAcceptanceStatus(Status::DECLINED);
+                    } else if ($_POST['action'] == "status_pending" && RightHelper::loggedUserHasRight("UPDATE_LOCATION")) {
+                        $location->setAcceptanceStatus(Status::PENDING);
+                    } else if ($_POST['action'] == "status_approved" && RightHelper::loggedUserHasRight("UPDATE_LOCATION")) {
+                        $location->setAcceptanceStatus(Status::APPROVED);
+                    } else if ($_POST['action'] == "type_education" && RightHelper::loggedUserHasRight("UPDATE_LOCATION")) {
+                        $location->setType(InstituteType::EDUCATION);
+                    } else if ($_POST['action'] == "type_business" && RightHelper::loggedUserHasRight("UPDATE_LOCATION")) {
+                        $location->setType(InstituteType::BUSINESS);
+                    } else if ($_POST['action'] == "remove" && RightHelper::loggedUserHasRight("DELETE_LOCATION")) {
+                        $this->removeInstitute($location);
+                        continue;
+                    }
+                    $em->persist($location);
+                }
+            }
+            if ($_POST['page'] == "Review") {
+                foreach ($_POST['selection'] as $id) {
+                    $review = $em->getRepository("\PROJ\Entities\Review")->find($id);
+                    if ($_POST['action'] == "status_declined" && RightHelper::loggedUserHasRight("UPDATE_REVIEW")) {
+                        $review->setAcceptanceStatus(Status::DECLINED);
+                    } else if ($_POST['action'] == "status_pending" && RightHelper::loggedUserHasRight("UPDATE_REVIEW")) {
+                        $review->setAcceptanceStatus(Status::PENDING);
+                    } else if ($_POST['action'] == "status_approved" && RightHelper::loggedUserHasRight("UPDATE_REVIEW")) {
+                        $review->setAcceptanceStatus(Status::APPROVED);
+                    } else if ($_POST['action'] == "remove" && RightHelper::loggedUserHasRight("DELETE_REVIEW")) {
+                        $em->remove($review);
+                        continue;
+                    }
+                    $em->persist($review);
+                }
+            }
+            if ($_POST['page'] == "Project") {
+                foreach ($_POST['selection'] as $id) {
+                    $project = $em->getRepository("\PROJ\Entities\Project")->find($id);
+                    if ($_POST['action'] == "status_declined" && RightHelper::loggedUserHasRight("UPDATE_PROJECT")) {
+                        $project->setAcceptanceStatus(Status::DECLINED);
+                    } else if ($_POST['action'] == "status_pending" && RightHelper::loggedUserHasRight("UPDATE_PROJECT")) {
+                        $project->setAcceptanceStatus(Status::PENDING);
+                    } else if ($_POST['action'] == "status_approved" && RightHelper::loggedUserHasRight("UPDATE_PROJECT")) {
+                        $project->setAcceptanceStatus(Status::APPROVED);
+                    } else if ($_POST['action'] == "remove" && RightHelper::loggedUserHasRight("DELETE_LOCATION")) {
+                        $this->removeProject($project);
+                        continue;
+                    }
+                    $em->persist($project);
+                }
+            }
             $em->flush();
             echo "succes";
         }
