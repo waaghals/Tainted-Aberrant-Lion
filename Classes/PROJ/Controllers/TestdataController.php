@@ -533,6 +533,8 @@ class TestdataController extends BaseController
         $this->addRightToRightGroup($em, $right, $coordinator);
         $right = $this->createRight($em, "VIEW_PROJECTS");
         $this->addRightToRightGroup($em, $right, $coordinator);
+        $right = $this->createRight($em, "UPLOAD_EXCEL");
+        $this->addRightToRightGroup($em, $right, $coordinator);
 
         $kjansen = $this->createUser($em, "kjansen", "qwerty", "HGJDGFSJHDFJHSDf", null);
         $hbakker = $this->createUser($em, "hbakker", "password", "E*(%&YUIERHDGFER", $coordinator);
