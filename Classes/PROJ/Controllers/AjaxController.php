@@ -444,8 +444,9 @@ class AjaxController extends BaseController
             $project->setReview(null);
             $project->setStartdate(new \DateTime($_POST['start_year'] . '-' . $_POST['start_month'] . '-1'));
             $project->setendDate(new \DateTime($_POST['end_year'] . '-' . $_POST['end_month'] . '-1'));
-            if ($_POST['action'] == "create")
+            if ($_POST['action'] == "create") {
                 $project->setStudent($user->getStudent());
+            }
             $project->setType($_POST['type']);
 
             $em->persist($project);
@@ -503,8 +504,10 @@ class AjaxController extends BaseController
 
             $qb = $em->createQueryBuilder();
             $qb->select('p.id')
-                    ->from('\PROJ\Entities\Project', 'p')
-                    ->where($qb->expr()->eq('p.student', $qb->expr()->literal($user->getStudent()->getId())));
+                    ->from('\PROJ\Entities\Project', 'p');
+            if (!RightHelper::loggedUserHasRight("UPDATE_REVIEW")) {
+                $qb->where($qb->expr()->eq('p.student', $qb->expr()->literal($user->getStudent()->getId())));
+            }
             $res = $qb->getQuery()->getResult();
 
             $found = false;
@@ -549,6 +552,7 @@ class AjaxController extends BaseController
 
     private function getReviewEntitie()
     {
+        $em = DoctrineHelper::instance()->getEntityManager();
         if ($_POST['action'] == "create") {
             $review = new \PROJ\Entities\Review();
             $review->setAcceptanceStatus(Status::PENDING);
@@ -556,7 +560,9 @@ class AjaxController extends BaseController
             $review = $em->getRepository('\PROJ\Entities\Review')->find($_POST['id']);
 
 //Extra checks
-            if ($review->getProject()->getSTudent()->getAccount()->getId() == $_SESSION['userID']) {
+            if (RightHelper::loggedUserHasRight("UPDATE_REVIEW")) {
+
+            } elseif ($review->getProject()->getSTudent()->getAccount()->getId() == $_SESSION['userID']) {
                 if ($review->getAcceptanceStatus() != 0) {
                     echo "The Review has been approved while you tried to edit it.";
                     return null;
