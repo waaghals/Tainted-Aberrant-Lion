@@ -531,6 +531,10 @@ class TestdataController extends BaseController
         $this->addRightToRightGroup($em, $right, $coordinator);
         $right = $this->createRight($em, "VIEW_REVIEWS");
         $this->addRightToRightGroup($em, $right, $coordinator);
+        $right = $this->createRight($em, "DELETE_REVIEW");
+        $this->addRightToRightGroup($em, $right, $coordinator);
+        $right = $this->createRight($em, "UPDATE_REVIEW");
+        $this->addRightToRightGroup($em, $right, $coordinator);
         $right = $this->createRight($em, "VIEW_PROJECTS");
         $this->addRightToRightGroup($em, $right, $coordinator);
 
