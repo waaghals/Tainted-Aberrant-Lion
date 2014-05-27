@@ -24,9 +24,11 @@ class RightHelper
         $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
         $user = $em->getRepository('\PROJ\Entities\Account')->find($_SESSION['userID']);
         if ($user != null) {
-            foreach ($user->getRightgroup()->getRights() as $right) {
-                if ($right->getName() == $rightName) {
-                    return true;
+            if ($user->getRightgroup() != null) {
+                foreach ($user->getRightgroup()->getRights() as $right) {
+                    if ($right->getName() == $rightName) {
+                        return true;
+                    }
                 }
             }
         }

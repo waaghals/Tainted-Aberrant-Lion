@@ -252,7 +252,7 @@ class ManagementController extends BaseController
 
     private function sendActivationMail($to, $code)
     {
-        $message = "This is your personal activation code to create a account on the Avans WorldMap.\n\rThis code is linked to your E-Mail adress.\n\r\n\rYour code is: " . $code . "\n\r\n\r<a href=\"http://stable.toip.nl/account/Register/?registrationcode=" . $code . "\">Click here to register.</a>";
+        $message = "This is your personal activation code to create a account on the Avans WorldMap.\n\rThis code is linked to your E-Mail adress.\n\r\n\rYour code is: " . $code . "\n\r\n\rClick the following link to register: http://stable.toip.nl/account/Register/?registrationcode=" . $code;
         $headers = "From: coordinator@toip.nl\r\n" .
                 "Reply-To: no-reply@toip.nl\r\n" .
                 'X-Mailer: PHP/' . phpversion();
