@@ -55,6 +55,14 @@ class ManagementController extends BaseController
         }
     }
 
+    public function ProjectsAction()
+    {
+        if (RightHelper::loggedUserHasRight("VIEW_PROJECTS")) {
+            $this->page = "ViewProjects";
+            $this->serveManagementTemplate();
+        }
+    }
+
     public function CreateUserAction()
     {
 //TODO: Add coordinator check
