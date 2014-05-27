@@ -105,13 +105,24 @@ class AjaxController extends BaseController
         $qb = $em->createQueryBuilder();
         $qb->select(array('student.firstname as studentname', 'student.surname as studentsurname', 'student.email', 'review.text', 'institute.name as institutename', 'review.rating', 'review.id as revid', 'institute.id as instituteid', 'institute.lat', 'institute.lng'))
                 ->from('\PROJ\Entities\Review', 'review')->leftJoin('review.project', 'project')->leftJoin('project.institute', 'institute')->leftJoin('project.student', 'student')
-                ->where($qb->expr()->like("review.text", $qb->expr()->literal("%" . $tag . "%")))
-                ->orWhere($qb->expr()->like("student.firstname", $qb->expr()->literal("%" . $tag . "%")))
-                ->orWhere($qb->expr()->like("student.surname", $qb->expr()->literal("%" . $tag . "%")))
-                ->orWhere($qb->expr()->like("student.city", $qb->expr()->literal("%" . $tag . "%")))
-                ->orWhere($qb->expr()->like("student.street", $qb->expr()->literal("%" . $tag . "%")))
-                ->orWhere($qb->expr()->like("student.email", $qb->expr()->literal("%" . $tag . "%")))
-                ->orWhere($qb->expr()->like("project.type", $qb->expr()->literal("%" . $tag . "%")));
+                ->where(
+                        $qb->expr()->orX(
+                                $qb->expr()->andX(
+                                        $qb->expr()->eq('project.acceptanceStatus', $qb->expr()->literal('approved')), $qb->expr()->eq('review.acceptanceStatus', $qb->expr()->literal('approved')), $qb->expr()->eq('institute.acceptanceStatus', $qb->expr()->literal('approved'))
+                                ), $qb->expr()->andX(
+                                        $qb->expr()->eq('project.acceptanceStatus', $qb->expr()->literal('approved')), $qb->expr()->eq('review.acceptanceStatus', $qb->expr()->literal('approved'))
+                                ), $qb->expr()->andX(
+                                        $qb->expr()->eq('project.acceptanceStatus', $qb->expr()->literal('approved')), $qb->expr()->eq('institute.acceptanceStatus', $qb->expr()->literal('approved'))
+                                ), $qb->expr()->andX(
+                                        $qb->expr()->eq('review.acceptanceStatus', $qb->expr()->literal('approved')), $qb->expr()->eq('institute.acceptanceStatus', $qb->expr()->literal('approved'))
+                                )
+                        )
+                )
+                ->andWhere(
+                        $qb->expr()->orX(
+                                $qb->expr()->like('review.text', $qb->expr()->literal('%' . $tag . '%')), $qb->expr()->like('student.firstname', $qb->expr()->literal('%' . $tag . '%')), $qb->expr()->like('student.surname', $qb->expr()->literal('%' . $tag . '%')), $qb->expr()->like('student.city', $qb->expr()->literal('%' . $tag . '%')), $qb->expr()->like('student.street', $qb->expr()->literal('%' . $tag . '%')), $qb->expr()->like('student.email', $qb->expr()->literal('%' . $tag . '%')), $qb->expr()->like('project.type', $qb->expr()->literal('%' . $tag . '%'))
+                        )
+        );
 
         $result = $qb->getQuery()->getResult();
         for ($i = 0; $i < count($result); $i++) {
@@ -124,9 +135,24 @@ class AjaxController extends BaseController
         $qb = $em->createQueryBuilder();
         $qb->select(array('student.firstname as studentname', 'student.surname as studentsurname', 'student.email', 'review.text', 'institute.name as institutename', 'institute.place as instituteplace', 'institute.id as instituteid', 'review.rating', 'institute.lat', 'institute.lng'))
                 ->from('\PROJ\Entities\Review', 'review')->leftJoin('review.project', 'project')->leftJoin('project.institute', 'institute')->leftJoin('project.student', 'student')
-                ->where($qb->expr()->like("institute.name", $qb->expr()->literal("%" . $tag . "%")))
-                ->orWhere($qb->expr()->like("institute.type", $qb->expr()->literal("%" . $tag . "%")))
-                ->orWhere($qb->expr()->like("institute.place", $qb->expr()->literal("%" . $tag . "%")));
+                ->where(
+                        $qb->expr()->orX(
+                                $qb->expr()->andX(
+                                        $qb->expr()->eq('project.acceptanceStatus', $qb->expr()->literal('approved')), $qb->expr()->eq('review.acceptanceStatus', $qb->expr()->literal('approved')), $qb->expr()->eq('institute.acceptanceStatus', $qb->expr()->literal('approved'))
+                                ), $qb->expr()->andX(
+                                        $qb->expr()->eq('project.acceptanceStatus', $qb->expr()->literal('approved')), $qb->expr()->eq('review.acceptanceStatus', $qb->expr()->literal('approved'))
+                                ), $qb->expr()->andX(
+                                        $qb->expr()->eq('project.acceptanceStatus', $qb->expr()->literal('approved')), $qb->expr()->eq('institute.acceptanceStatus', $qb->expr()->literal('approved'))
+                                ), $qb->expr()->andX(
+                                        $qb->expr()->eq('review.acceptanceStatus', $qb->expr()->literal('approved')), $qb->expr()->eq('institute.acceptanceStatus', $qb->expr()->literal('approved'))
+                                )
+                        )
+                )
+                ->andWhere(
+                        $qb->expr()->orX(
+                                $qb->expr()->like("institute.name", $qb->expr()->literal("%" . $tag . "%")), $qb->expr()->like("institute.type", $qb->expr()->literal("%" . $tag . "%")), $qb->expr()->like("institute.place", $qb->expr()->literal("%" . $tag . "%"))
+                        )
+        );
 
         $result = $qb->getQuery()->getResult();
         for ($i = 0; $i < count($result); $i++) {
@@ -134,11 +160,8 @@ class AjaxController extends BaseController
             $result[$i]["matchedOn"] = "instname";
         }
         $returnArray = array_merge($returnArray, $result);
-
 //Max 8 results
         array_splice($returnArray, 8);
-
-
         echo json_encode($returnArray);
     }
 
