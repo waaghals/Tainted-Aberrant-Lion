@@ -1,4 +1,47 @@
 <?php
+
+/*
+ * 1 Worldmap
+ * 2 Log uit
+ * 3 welkom
+ * 4 log in
+ * 5 register
+ * 6 location type
+ * 7 education
+ * 8 busines
+ * 9 project type
+ * 10 minor
+ * 11 eps
+ * 12 graduation
+ * 13 internship
+ * 14 country
+ * 15 contact formulier
+ * 16 to
+ * 17 from
+ * 18 subject
+ * 19 message
+ * 20 Fields marked with asterisk (*) are required.
+ * 21 send
+ * 22 Your message was sent successfully.
+ * 23 back
+ * 24 Login
+ * 25 Username
+ * 26 Password
+ * 27 E-Mail
+ * 28 First name
+ * 29 Surname
+ * 30 Zip code
+ * 31 Street
+ * 32 Street number
+ * 33 Addition
+ * 34 Registration code
+ * 35 Register
+ * 
+ */
+
+$toTranslate = array(1,2,3,4,5,6,7,8,9,10,11,12,13,14);
+$translated = PROJ\Services\TranslationService::translateAll($toTranslate);
+
 $ac = new PROJ\Services\AccountService();
 
 if (isset($_SESSION['userID'])) {
@@ -8,13 +51,13 @@ if (isset($_SESSION['userID'])) {
 ?>
 <header class="shadow">
     <nav>
-        <h2 style="float:left;"><a href="/">Worldmap</a></h2>
+        <h2 style="float:left;"><a href="/"><?php echo $translated[0] ?></a></h2>
         <?php if ($ac->isLoggedIn()): ?>
-            <button class="headerbutton" onclick='location.href = "/Account/Logout"'>Log uit</button>
-            <button class="headerbutton" onclick='location.href = "/Management/Home"'>Welcome <?php echo sprintf("%s", $student->getStudent()->getFirstname()); ?></button>
+            <button class="headerbutton" onclick='location.href = "/Account/Logout"'><?php echo $translated[1] ?></button>
+            <button class="headerbutton" onclick='location.href = "/Management/Home"'><?php echo $translated[2] ?> <?php echo sprintf("%s", $student->getStudent()->getFirstname()); ?></button>
         <?php else: ?>
-            <button class="headerbutton" onclick='location.href = "/Account/Login"'>Log in</button>
-            <button class="headerbutton" onclick='location.href = "/account/Register"'>Register</button>
+            <button class="headerbutton" onclick='location.href = "/Account/Login"'><?php echo $translated[3] ?></button>
+            <button class="headerbutton" onclick='location.href = "/account/Register"'><?php echo $translated[4] ?></button>
         <?php endif; ?>
         <?php if (isset($search)) { ?>
             <div style="width:30px; float:right;">
@@ -43,27 +86,27 @@ if (isset($_SESSION['userID'])) {
                 <button class="headerbutton" onclick="resetFilters()">Reset</button>
             </div>
             <div class="filterblock">
-                <div>Location Type:</div>
+                <div><?php echo $translated[5] ?>:</div>
                 <select id="locationType" onchange="applyFilters()">
                     <option></option>
-                    <option>Education</option>
-                    <option>Business</option>
+                    <option><?php echo $translated[6] ?></option>
+                    <option><?php echo $translated[7] ?></option>
                 </select>
             </div>
 
             <div class="filterblock">
-                <div>Project Type:</div>
+                <div><?php echo $translated[8] ?>:</div>
                 <select id="projectType" onchange="applyFilters()">
                     <option></option>
-                    <option>Minor</option>
-                    <option>Eps</option>
-                    <option>Graduation</option>
-                    <option>Internship</option>
+                    <option><?php echo $translated[9] ?></option>
+                    <option><?php echo $translated[10] ?></option>
+                    <option><?php echo $translated[11] ?></option>
+                    <option><?php echo $translated[12] ?></option>
                 </select>
             </div>
 
             <div class="filterblock">
-                <div>Country:</div>
+                <div><?php echo $translated[13] ?>:</div>
                 <select id="country" onchange="applyFilters()">
                     <option></option>
                     <?php

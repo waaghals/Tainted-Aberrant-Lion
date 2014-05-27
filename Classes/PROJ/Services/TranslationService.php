@@ -6,7 +6,7 @@ use PROJ\Exceptions\ServerException;
 
 class TranslationService {
 
-    public function translate($sentenceId) {
+    public static function translate($sentenceId) {
 
         if (!isset($_SESSION['language']) || empty($_SESSION['language'])) {
             $_SESSION['language'] = "english";
@@ -18,7 +18,7 @@ class TranslationService {
         return $translation->getTranslation();
     }
 
-    public function translateAll($sentenceIdArray) {
+    public static function translateAll($sentenceIdArray) {
         
         $array = array();
         
