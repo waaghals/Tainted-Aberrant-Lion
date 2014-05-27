@@ -152,10 +152,6 @@
                 sidebar.append("<div class=\"row clearfix reviewLink\" data-review-id=\"" + project.id + "\"><span class=\"column full\">" + project.student.firstname + " " + project.student.surname + "</span></div>");
                 row = $("<p class=\"row clearfix\">");
                 row.append("<span class=\"column half italic\">" + project.type + "</span>");
-                var project = location.projects[i];
-                sidebar.append("<div class=\"row clearfix reviewLink\" data-review-id=\"" + project.id + "\"><span class=\"column full\">" + project.student.firstname + " " + project.student.surname + "</span></div>");
-                row = $("<p class=\"row clearfix\">");
-                row.append("<span class=\"column half italic\">" + project.type + "</span>");
                 var stars = $("<span class=\"column half\"/>");
                 stars.append(getStars(project.review.rating));
                 row.append(stars);
