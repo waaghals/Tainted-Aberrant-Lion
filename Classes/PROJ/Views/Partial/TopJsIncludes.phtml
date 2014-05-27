@@ -38,26 +38,6 @@
         $.getJSON('/ajax/allLocations/', function(data) {
             lastLoadedJson = data;
             $.each(data, function(i, location) {
-                var marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(location.lat, location.lng),
-                    map: map,
-                    icon: getIconPath(location.type),
-                    animation: google.maps.Animation.NONE,
-                    title: location.name,
-                    id: location.id,
-                    type: location.type,
-                    country: location.country,
-                    projects: location.projects
-                });
-
-                markerCluster.addMarker(marker);
-                google.maps.event.addListener(marker, 'click', function() {
-                    map.setZoom(16);
-                    map.setCenter(marker.getPosition());
-                    console.log("Clicked on marker for: " + marker.title);
-                    loadLocation(marker.id);
-                    openSidebar();
-                });
                 var foundApprovedProject = false;
                 for (var j = 0; j < location.projects.length; j++)
                 {
@@ -261,7 +241,7 @@
             })();
 <?php
 //Ophalen van user location
-$ch   = curl_init();
+$ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, 'http://freegeoip.net/json/' . $_SERVER['REMOTE_ADDR']);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 $json = strip_tags(trim(curl_exec($ch)));
