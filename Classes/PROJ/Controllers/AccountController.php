@@ -12,18 +12,19 @@ use PROJ\Tools\Template;
  * @author Patrick
  * @author Thijs
  */
+class AccountController extends BaseController
+{
 
-class AccountController extends BaseController {
-
-    public function loginAction() {
+    public function loginAction()
+    {
         $accountService = new AccountService();
-        
+
         $t = new Template("Login");
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $validCredentials = $accountService->Login($_POST['username'], $_POST['password']);
             $t->error = $validCredentials;
         }
-        
+
         $loggedIn = $accountService->isLoggedIn();
         if ($loggedIn) {
             HeaderHelper::redirect("/");
@@ -32,12 +33,14 @@ class AccountController extends BaseController {
         echo $t;
     }
 
-    public function logoutAction() {
+    public function logoutAction()
+    {
         session_destroy();
         HeaderHelper::redirect();
     }
 
-    public function registerAction() {
+    public function registerAction()
+    {
         $error = false;
         $hasErrors = false;
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -45,7 +48,7 @@ class AccountController extends BaseController {
             $accountService = new AccountService();
             $error = $accountService->validateInput($_POST);
             $hasErrors = ($error !== false);
-            
+
             if (!$hasErrors) {
                 $account = $accountService->createAccount($_POST);
                 $accountService->createStudent($account, $_POST);

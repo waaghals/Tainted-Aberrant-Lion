@@ -4,6 +4,7 @@ namespace PROJ\Controllers;
 
 use PROJ\Helper\HeaderHelper;
 use PROJ\Helper\XssHelper;
+use PROJ\Helper\RightHelper;
 
 /**
  * @author Thijs
@@ -40,13 +41,23 @@ class ManagementController extends BaseController
 
     public function UsersAction()
     {
-        $this->page = "ViewUsers";
-        $this->serveManagementTemplate();
+        if (RightHelper::loggedUserHasRight("VIEW_USERS")) {
+            $this->page = "ViewUsers";
+            $this->serveManagementTemplate();
+        }
+    }
+
+    public function LocationsAction()
+    {
+        if (RightHelper::loggedUserHasRight("VIEW_LOCATIONS")) {
+            $this->page = "ViewLocations";
+            $this->serveManagementTemplate();
+        }
     }
 
     public function CreateUserAction()
     {
-        //TODO: Add coordinator check
+//TODO: Add coordinator check
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {    //Create new account
             $valid = $this->validateCreateUser();
             if ($valid === "succes") {
@@ -54,9 +65,19 @@ class ManagementController extends BaseController
             } else {
                 $this->additionalVals = array('error' => $valid);
             }
+            if (RightHelper::loggedUserHasRight("CREATE_USER")) {
+                if ($_SERVER['REQUEST_METHOD'] === 'POST') {    //Create new account
+                    $valid = $this->validateCreateUser();
+                    if ($valid === "succes") {
+                        $this->additionalVals = array('error' => 'Created access code succesfully.');
+                    } else {
+                        $this->additionalVals = array('error' => $valid);
+                    }
+                }
+                $this->page = "CreateUser";
+                $this->serveManagementTemplate();
+            }
         }
-        $this->page = "CreateUser";
-        $this->serveManagementTemplate();
     }
 
     public function changePasswordAction()
@@ -78,7 +99,7 @@ class ManagementController extends BaseController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {    //Save account details
             $valid = $this->validateInput($_POST);
             if ($valid === "succes") {
-                $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
+                $em   = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
                 $user = $em->getRepository('\PROJ\Entities\Account')->find($_SESSION['userID'])->getStudent();
 
                 $user->setCity($_POST['city']);
@@ -106,8 +127,8 @@ class ManagementController extends BaseController
             return;
         }
 
-        $t = new \PROJ\Tools\Template("Management");
-        $t->page = $this->page;
+        $t                   = new \PROJ\Tools\Template("Management");
+        $t->page             = $this->page;
         $t->additionalValues = $this->additionalVals;
         echo $t;
     }
@@ -146,11 +167,11 @@ class ManagementController extends BaseController
      */
     private function validateChangePassword()
     {
-        //Get current user
-        $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
+//Get current user
+        $em   = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
         $user = $em->getRepository('\PROJ\Entities\Account')->find($_SESSION['userID']);
 
-        //Valdidate old password
+//Valdidate old password
         $passwordEnteredOld = hash('sha512', $_POST['old_password'] . $user->getSalt());
         if ($passwordEnteredOld == $user->getPassword()) {
             if ($_POST['old_password'] != $_POST['new_password']) {
@@ -160,7 +181,7 @@ class ManagementController extends BaseController
                     $em->persist($user);
                     $em->flush();
 
-                    //Change session to prevent logout
+//Change session to prevent logout
                     $_SESSION['login_string'] = hash('sha512', $user->getPassword() . $_SERVER['HTTP_USER_AGENT'] . $_SERVER['REMOTE_ADDR']);
 
                     return "succes";
@@ -190,13 +211,13 @@ class ManagementController extends BaseController
         $ac = new \PROJ\Services\AccountService();
         if ($ac->isLoggedIn()) {
             if ($_POST['email'] == $_POST['rep_email']) {
-                //Check if the email already has an activation code. If so; just resent the email
+//Check if the email already has an activation code. If so; just resent the email
                 $RegCode = $em->getRepository('\PROJ\Entities\RegistrationCode')->findBy(array('email' => $_POST['email']));
                 if (count($RegCode) > 0) {
                     $this->sendActivationMail($RegCode->getEmail(), $RegCode->getCode());
                 } else {
                     $code = sha1(mt_rand(1, 99999) . time() . session_id());
-                    //Prevents duplicate codes
+//Prevents duplicate codes
                     while (count($em->getRepository('\PROJ\Entities\RegistrationCode')->findBy(array('code' => $code))) > 0) {
                         $code = sha1(mt_rand(1, 99999) . time() . session_id());
                     }
@@ -221,12 +242,41 @@ class ManagementController extends BaseController
 
     private function sendActivationMail($to, $code)
     {
-        $message = "This is your personal activation code to create a account on the Avans WorldMap.\n\rThis code is linked to your E-Mail adress.\n\r\n\rYour code is: " . $code;
+        $message = "This is your personal activation code to create a account on the Avans WorldMap.\n\rThis code is linked to your E-Mail adress.\n\r\n\rYour code is: " . $code . "\n\r\n\r<a href=\"http://stable.toip.nl/account/Register/?registrationcode=" . $code . "\">Click here to register.</a>";
         $headers = "From: coordinator@toip.nl\r\n" .
                 "Reply-To: no-reply@toip.nl\r\n" .
                 'X-Mailer: PHP/' . phpversion();
 
         mail($to, "Creation code for Avans WorldMap", $message, $headers);
+    }
+
+    public function UploadAction()
+    {
+        $this->page = "Upload";
+        $this->serveManagementTemplate();
+    }
+
+    public function UploadFileAction()
+    {
+        $temp      = explode(".", $_FILES["file"]["name"]);
+        $extension = end($temp);
+        if ($extension === "xlsx" || $extension === "xls") {
+            if ($_FILES["file"]["size"] < 1000000) {
+                if ($_FILES["file"]["error"] > 0) {
+                    echo "Error: " . $_FILES["file"]["error"] . "<br>";
+                } else {
+                    // TODO: process file
+                    echo "Upload: " . $_FILES["file"]["name"] . "<br>";
+                    echo "Type: " . $_FILES["file"]["type"] . "<br>";
+                    echo "Size: " . ($_FILES["file"]["size"] / 1024) . " kB<br>";
+                    echo "Stored in: " . $_FILES["file"]["tmp_name"];
+                }
+            } else {
+                echo "Filesize is too big.";
+            }
+        } else {
+            echo "Invalid file type.";
+        }
     }
 
 }

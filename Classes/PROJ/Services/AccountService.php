@@ -19,7 +19,6 @@ class AccountService
             if ($this->checkbruteforce($user->getId()) !== true) {
                 $passwordEntered = hash('sha512', $password . $user->getSalt());
                 if ($passwordEntered == $user->getPassword()) {
-                    $_SESSION['user'] = $user;
                     $_SESSION['userID'] = $user->getId();
                     $_SESSION['login_string'] = hash('sha512', $user->getPassword() . $_SERVER['HTTP_USER_AGENT'] . $_SERVER['REMOTE_ADDR']);
 
@@ -142,7 +141,7 @@ class AccountService
     public function isLoggedIn()
     {
         $em = DoctrineHelper::instance()->getEntityManager();
-        if (isset($_SESSION['userID'], $_SESSION['user'], $_SESSION['login_string'])) {
+        if (isset($_SESSION['userID'], $_SESSION['login_string'])) {
             $user_id = $_SESSION['userID'];
             $login_string = $_SESSION['login_string'];
 

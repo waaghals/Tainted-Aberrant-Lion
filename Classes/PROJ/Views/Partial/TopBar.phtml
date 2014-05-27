@@ -1,12 +1,17 @@
 <?php
 $ac = new PROJ\Services\AccountService();
+
+if (isset($_SESSION['userID'])) {
+    $em = PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
+    $student = $em->getRepository("PROJ\Entities\Account")->find($_SESSION['userID']);
+}
 ?>
 <header class="shadow">
     <nav>
         <h2 style="float:left;"><a href="/">Worldmap</a></h2>
         <?php if ($ac->isLoggedIn()): ?>
             <button class="headerbutton" onclick='location.href = "/Account/Logout"'>Log uit</button>
-            <button class="headerbutton" onclick='location.href = "/Management/Home"'>Welcome <?php echo sprintf("%s", $_SESSION['user']->getStudent()->getFirstname()); ?></button>
+            <button class="headerbutton" onclick='location.href = "/Management/Home"'>Welcome <?php echo sprintf("%s", $student->getStudent()->getFirstname()); ?></button>
         <?php else: ?>
             <button class="headerbutton" onclick='location.href = "/Account/Login"'>Log in</button>
             <button class="headerbutton" onclick='location.href = "/account/Register"'>Register</button>
@@ -41,29 +46,29 @@ $ac = new PROJ\Services\AccountService();
                 <div>Location Type:</div>
                 <select id="locationType" onchange="applyFilters()">
                     <option></option>
-                    <option>education</option>
-                    <option>business</option>
+                    <option>Education</option>
+                    <option>Business</option>
                 </select>
             </div>
 
-            <!--    <div class="filterblock">
-                    <div>Project Type:</div>
-                    <select id="projectType">
-                        <option></option>
-                        <option>Minor</option>
-                        <option>EPS</option>
-                        <option>Graduation project</option>
-                        <option>Internship</option>
-                    </select>
-                </div>
-            -->
+            <div class="filterblock">
+                <div>Project Type:</div>
+                <select id="projectType" onchange="applyFilters()">
+                    <option></option>
+                    <option>Minor</option>
+                    <option>Eps</option>
+                    <option>Graduation</option>
+                    <option>Internship</option>
+                </select>
+            </div>
+
             <div class="filterblock">
                 <div>Country:</div>
                 <select id="country" onchange="applyFilters()">
                     <option></option>
                     <?php
                     $ajaxController = new \PROJ\Controllers\AjaxController();
-                    $countryList = json_decode($ajaxController->getAllCountriesAction());
+                    $countryList    = json_decode($ajaxController->getAllCountriesAction());
                     for ($i = 0; $i < sizeof($countryList); $i++) {
                         echo "<option>" . $countryList[$i]->name . "</option>";
                     }

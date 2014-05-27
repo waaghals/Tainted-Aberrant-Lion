@@ -8,7 +8,9 @@ namespace PROJ\Controllers;
 
 use PROJ\Exceptions\ServerException;
 use PROJ\Helper\DoctrineHelper;
+use PROJ\Helper\RightHelper;
 use PROJ\DBAL\ApprovalStateType as Status;
+use PROJ\DBAL\InstituteType;
 
 /**
  * Description of HomeController
@@ -220,8 +222,10 @@ class AjaxController extends BaseController
             } elseif ($_POST['action'] == "update") {
                 $locatie = $em->getRepository('\PROJ\Entities\Institute')->find($_POST['id']);
 
-//Extra checks
-                if ($locatie->getCreator()->getAccount()->getId() == $_SESSION['userID']) {
+                //Extra checks
+                if (RightHelper::loggedUserHasRight("UPDATE_LOCATION")) {
+                    //Toch doorgaan met uitvoeren
+                } else if ($locatie->getCreator()->getAccount()->getId() == $_SESSION['userID']) {
                     if ($locatie->getAcceptanceStatus() != 0) {
                         echo "The Location has been approved while you tried to edit it.";
                         return;
@@ -305,8 +309,7 @@ class AjaxController extends BaseController
         $em = DoctrineHelper::instance()->getEntityManager();
         $ac = new \PROJ\Services\AccountService();
 
-        //TODO: Add coordinator check
-        if ($ac->isLoggedIn()) {
+        if ($ac->isLoggedIn() && RightHelper::loggedUserHasRight("UPDATE_USER")) {
             $user = $em->getRepository('\PROJ\Entities\Account')->find($_POST['id']);
             if (count($em->getRepository('\PROJ\Entities\Account')->findBy(array('username' => $_POST['username']))) > 0 && $user->getUsername() != $_POST['username']) {
                 echo("This username isn't unique.");
@@ -574,16 +577,29 @@ class AjaxController extends BaseController
         }
         if ($ac->isLoggedIn()) {
             $inst = $em->getRepository('\PROJ\Entities\Institute')->find($_POST['id']);
-            if ($inst->getCreator()->getAccount()->getId() == $_SESSION['userID']) {
-                if ($inst->getAcceptanceStatus() == 0) {
-                    echo json_encode($inst->jsonSerialize());
-                } else {
-                    echo "The Location has been approved while you tried to delete it.";
-                }
+            if ($inst->getCreator()->getAccount()->getId() == $_SESSION['userID'] || RightHelper::loggedUserHasRight("VIEW_LOCATIONS")) {
+                echo json_encode($inst->jsonSerialize());
             } else {
                 echo "This isn't your Location.";
             }
         }
+    }
+
+    private function removeInstitute($inst)
+    {
+        $em = DoctrineHelper::instance()->getEntityManager();
+        if ($inst->getProjects() != null) {
+            foreach ($inst->getProjects() as $proj) {
+                if ($proj->getReview() != null) {
+                    foreach ($proj->getReview() as $rev) {
+                        $em->remove($rev);
+                    }
+                }
+                $em->remove($proj);
+            }
+        }
+        $em->remove($inst);
+        $em->flush();
     }
 
     public function removeLocationAction()
@@ -597,20 +613,15 @@ class AjaxController extends BaseController
         }
         if ($ac->isLoggedIn()) {
             $inst = $em->getRepository('\PROJ\Entities\Institute')->find($_POST['id']);
+            //Check if it's someone with more rights
+            if (RightHelper::loggedUserHasRight("DELETE_LOCATION")) {
+                $this->removeInstitute($inst);
+                echo "succes";
+                return;
+            }
             if ($inst->getCreator()->getAccount()->getId() == $_SESSION['userID']) {
                 if ($inst->getAcceptanceStatus() == 0) {
-                    if ($inst->getProjects() != null) {
-                        foreach ($inst->getProjects() as $proj) {
-                            if ($proj->getReview() != null) {
-                                foreach ($proj->getReview() as $rev) {
-                                    $em->remove($rev);
-                                }
-                            }
-                            $em->remove($proj);
-                        }
-                    }
-                    $em->remove($inst);
-                    $em->flush();
+                    $this->removeInstitute($inst);
                     echo "succes";
                 } else {
                     echo "The Location has been approved while you tried to delete it.";
@@ -710,7 +721,7 @@ class AjaxController extends BaseController
         }
     }
 
-	public function getUserInfoAction()
+    public function getUserInfoAction()
     {
         $em = DoctrineHelper::instance()->getEntityManager();
         $ac = new \PROJ\Services\AccountService();
@@ -719,9 +730,8 @@ class AjaxController extends BaseController
             echo "Illegal ID";
             return;
         }
-        if ($ac->isLoggedIn()) {
+        if ($ac->isLoggedIn() && RightHelper::loggedUserHasRight("VIEW_USERS")) {
             $student = $em->getRepository('\PROJ\Entities\Student')->find($_POST['id']);
-            //TODO: Add coordinator check
             echo json_encode($student->jsonSerialize());
         }
     }
@@ -735,8 +745,7 @@ class AjaxController extends BaseController
             echo "Illegal ID";
             return;
         }
-        if ($ac->isLoggedIn()) {
-            //TODO: Add coordinator check
+        if ($ac->isLoggedIn() && RightHelper::loggedUserHasRight("DELETE_USER")) {
             $user = $em->getRepository('\PROJ\Entities\Student')->find($_POST['id']);
             if ($user->getProject() != null) {
                 foreach ($user->getProject() as $proj) {
@@ -749,6 +758,37 @@ class AjaxController extends BaseController
                 }
             }
             $em->remove($user);
+            $em->flush();
+            echo "succes";
+        }
+    }
+
+    public function withSelectedAction()
+    {
+        $em = DoctrineHelper::instance()->getEntityManager();
+        $ac = new \PROJ\Services\AccountService();
+
+        if ($ac->isLoggedIn()) {
+            if ($_POST['page'] == "Location") {
+                foreach ($_POST['selection'] as $id) {
+                    $location = $em->getRepository("\PROJ\Entities\Institute")->find($id);
+                    if ($_POST['action'] == "status_declined" && RightHelper::loggedUserHasRight("UPDATE_LOCATION")) {
+                        $location->setAcceptanceStatus(Status::DECLINED);
+                    } else if ($_POST['action'] == "status_pending" && RightHelper::loggedUserHasRight("UPDATE_LOCATION")) {
+                        $location->setAcceptanceStatus(Status::PENDING);
+                    } else if ($_POST['action'] == "status_approved" && RightHelper::loggedUserHasRight("UPDATE_LOCATION")) {
+                        $location->setAcceptanceStatus(Status::APPROVED);
+                    } else if ($_POST['action'] == "type_education" && RightHelper::loggedUserHasRight("UPDATE_LOCATION")) {
+                        $location->setType(InstituteType::EDUCATION);
+                    } else if ($_POST['action'] == "type_business" && RightHelper::loggedUserHasRight("UPDATE_LOCATION")) {
+                        $location->setType(InstituteType::BUSINESS);
+                    } else if ($_POST['action'] == "remove" && RightHelper::loggedUserHasRight("DELETE_LOCATION")) {
+                        $this->removeInstitute($location);
+                        continue;
+                    }
+                    $em->persist($location);
+                }
+            }
             $em->flush();
             echo "succes";
         }

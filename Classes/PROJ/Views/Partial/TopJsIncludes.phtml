@@ -10,7 +10,6 @@
     var map; /* Main map variable */
     var lastLoadedJson;
     var markerCluster;
-
     function fakeMarkerClick(locationId, lat, lng) {
         map.setZoom(16);
         map.setCenter(new google.maps.LatLng(lat, lng));
@@ -39,6 +38,26 @@
         $.getJSON('/ajax/allLocations/', function(data) {
             lastLoadedJson = data;
             $.each(data, function(i, location) {
+                var marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(location.lat, location.lng),
+                    map: map,
+                    icon: getIconPath(location.type),
+                    animation: google.maps.Animation.NONE,
+                    title: location.name,
+                    id: location.id,
+                    type: location.type,
+                    country: location.country,
+                    projects: location.projects
+                });
+
+                markerCluster.addMarker(marker);
+                google.maps.event.addListener(marker, 'click', function() {
+                    map.setZoom(16);
+                    map.setCenter(marker.getPosition());
+                    console.log("Clicked on marker for: " + marker.title);
+                    loadLocation(marker.id);
+                    openSidebar();
+                });
                 var foundApprovedProject = false;
                 for (var j = 0; j < location.projects.length; j++)
                 {
@@ -60,7 +79,6 @@
                         type: location.type,
                         country: location.country
                     });
-
                     markerCluster.addMarker(marker);
                     google.maps.event.addListener(marker, 'click', function() {
                         map.setZoom(16);
@@ -70,8 +88,6 @@
                     });
                 }
             });
-
-
         });
     }
 
@@ -111,7 +127,6 @@
             var projects = lastLoadedJson[i].projects;
             for (var j = 0; j < projects.length; j++) {
                 project = projects[j];
-
                 if (project.id === projectId) {
                     showReview(project, lastLoadedJson[i]);
                     return;
@@ -122,7 +137,6 @@
 
     function showLocation(location) {
         var sidebar = $('aside');
-
         sidebar.text("");
         sidebarHeader = $('<div class="row clearfix"/>');
         sidebarHeader.append("<h2 class=\"column full highlight\">" + location.name + "</h2>");
@@ -131,22 +145,20 @@
         sidebar.append(sidebarHeader);
         sidebarHeader.append("<p class=\"column half\">Door</p>");
         sidebarHeader.append("<p class=\"column half\">Beoordeling</p>");
-
         var row;
         for (var i = 0; i < location.projects.length; i++) {
             if ((location.projects[i].acceptanceStatus === "approved" && location.projects[i].review.acceptanceStatus === "approved") && location.acceptanceStatus === "approved") {
                 var project = location.projects[i];
                 sidebar.append("<div class=\"row clearfix reviewLink\" data-review-id=\"" + project.id + "\"><span class=\"column full\">" + project.student.firstname + " " + project.student.surname + "</span></div>");
-
-
                 row = $("<p class=\"row clearfix\">");
                 row.append("<span class=\"column half italic\">" + project.type + "</span>");
-
+                var project = location.projects[i];
+                sidebar.append("<div class=\"row clearfix reviewLink\" data-review-id=\"" + project.id + "\"><span class=\"column full\">" + project.student.firstname + " " + project.student.surname + "</span></div>");
+                row = $("<p class=\"row clearfix\">");
+                row.append("<span class=\"column half italic\">" + project.type + "</span>");
                 var stars = $("<span class=\"column half\"/>");
                 stars.append(getStars(project.review.rating));
-
                 row.append(stars);
-
                 sidebar.append(row);
             }
         }
@@ -174,19 +186,17 @@
         sidebarHeader.append("<h3 class=\"column half italic\">" + location.place + "</h3>");
         sidebarHeader.append("<h3 class=\"column half\">" + location.type + "</h3>");
         sidebar.append(sidebarHeader);
-
         var container;
-
         container = $("<div class=\"row clearfix\">");
         container.append("<div class=\"column two-thirds\">" + project.review.text + "</div>");
-
         var sideContent = $("<div class=\"column third\"/>");
         sideContent.append("<p>Door: " + project.student.firstname + " " + project.student.surname + "</p>");
         sideContent.append("<p>Type: " + project.type + "</p>");
-        sideContent.append("<p>Beoordeling: " + getStars(project.review.rating).html() + "</p>");
+        sideContent.append("<p>Beoordeling:<br />Assignment rating:<br />" + getStars(project.review.assignmentrating).html() +
+                "<br />Guidance rating:<br />" + getStars(project.review.guidancerating).html() +
+                "<br />Accommodation rating:<br />" + getStars(project.review.accommodationrating).html() + "</p>");
         sideContent.append("<p>Neem contact op met : <a href=\"/contact/show/studentId=" + project.student.id + "/\">" + project.student.firstname + "</a></p>");
         container.append(sideContent);
-
         sidebar.append(container);
     }
 
@@ -197,7 +207,6 @@
             maximum: 1200,
             fontRatio: 50
         });
-
         $('aside').hammer().on('dragright', function(e) {
             e.preventDefault();
             openSidebar();
@@ -213,7 +222,6 @@
             e.preventDefault();
             toggleSidebar();
         });
-
         //subtrackt the header size from the map canvas, removing the scrollbar
         function correctHeaderOffset() {
             var h = $(window).height();
@@ -224,7 +232,6 @@
             $('#map').css('height', h);
             $('aside').css('top', headerHeight);
             $('aside').css('height', h - headerHeight);
-
             //Auto size container of management
             $('#management_right').css('height', h - headerHeight);
             $('#management_right').css('top', headerHeight);
@@ -254,7 +261,7 @@
             })();
 <?php
 //Ophalen van user location
-$ch = curl_init();
+$ch   = curl_init();
 curl_setopt($ch, CURLOPT_URL, 'http://freegeoip.net/json/' . $_SERVER['REMOTE_ADDR']);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 $json = strip_tags(trim(curl_exec($ch)));
@@ -296,7 +303,6 @@ if (strpos($json, 'Bad Request') === false && strpos($json, 'Not Found') === fal
                         var headerHeight = $('header').height();
                         $('#map').css('height', (mainHeight - headerHeight));
                     });
-
                     //Force a recalculation of the map height
                     correctHeaderOffset();
                     loadJsonMarkers();
@@ -307,36 +313,50 @@ if (strpos($json, 'Bad Request') === false && strpos($json, 'Not Found') === fal
         google.maps.event.addDomListener(window, 'load', initialize);
         //Register the correctHeaderOffset callback on windows resizing.
         $(window).resize(correctHeaderOffset).resize();
-
         $(document).on("click", ".reviewLink", function(e) {
             var pid = $(this).data('review-id');
             loadReview(pid);
         });
     });
-
     function filterCountry() {
         if ($('#country option:selected').val() !== "") {
             markerCluster.getMarkers().forEach(function(marker) {
-                if (marker.country.name !== $('#country option:selected').val()) {
+                if (marker.country.name !== $('#country option:selected').val().toLowerCase()) {
                     marker.setVisible(false);
                 }
             });
         }
     }
 
-    function filterType() {
+    function filterLocationType() {
         if ($('#locationType option:selected').val() !== "") {
             markerCluster.getMarkers().forEach(function(marker) {
-                if (marker.type !== $('#locationType option:selected').val()) {
+                if (marker.type !== $('#locationType option:selected').val().toLowerCase()) {
                     marker.setVisible(false);
                 }
+            });
+        }
+    }
+
+    function filterProjectType() {
+        if ($('#projectType option:selected').val() !== "") {
+            markerCluster.getMarkers().forEach(function(marker) {
+                var visibility = false;
+                marker.projects.forEach(function(project) {
+                    if (project.type === $('#projectType option:selected').val().toLowerCase()) {
+                        visibility = true;
+                    }
+                });
+                if (!visibility)
+                    marker.setVisible(visibility);
             });
         }
     }
     function applyFilters() {
         showAllMarkers();
+        filterProjectType();
         filterCountry();
-        filterType();
+        filterLocationType();
         markerCluster.repaint();
     }
 
@@ -350,7 +370,7 @@ if (strpos($json, 'Bad Request') === false && strpos($json, 'Not Found') === fal
         showAllMarkers();
         document.getElementById("locationType").value = "";
         document.getElementById("country").value = "";
-        // document.getElementById("projectType").value = "";
+        document.getElementById("projectType").value = "";
         markerCluster.repaint();
     }
 

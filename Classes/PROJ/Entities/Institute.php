@@ -171,22 +171,33 @@ class Institute
         $this->name = $name;
     }
 
+    public function getApprovedProjects()
+    {
+        $approvedProjects = array();
+        foreach ($this->getProjects() as $project) {
+            if ($project->acceptanceStatus === Status::APPROVED) {
+                $approvedProjects[] = $project;
+            }
+        }
+        return $approvedProjects;
+    }
+
     public function jsonSerialize()
     {
         return array(
-            "type" => ucfirst($this->getType()),
-            "name" => $this->getName(),
-            "lat" => $this->getLat(),
-            "long" => $this->getLng(),
-            "id" => $this->getId(),
-            "projects" => $this->getProjects(),
-            "place" => $this->getPlace(),
-            "country" => $this->getCountry()->getName(),
-            "street" => $this->getStreet(),
+            "type"        => ucfirst($this->getType()),
+            "name"        => $this->getName(),
+            "lat"         => $this->getLat(),
+            "long"        => $this->getLng(),
+            "id"          => $this->getId(),
+            "projects"    => $this->getApprovedProjects(),
+            "place"       => $this->getPlace(),
+            "country"     => $this->getCountry()->getName(),
+            "street"      => $this->getStreet(),
             "housenumber" => $this->getHousenumber(),
-            "postalcode" => $this->getPostalcode(),
-            "email" => $this->getEmail(),
-            "telephone" => $this->getTelephone()
+            "postalcode"  => $this->getPostalcode(),
+            "email"       => $this->getEmail(),
+            "telephone"   => $this->getTelephone()
         );
     }
 
