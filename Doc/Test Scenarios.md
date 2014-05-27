@@ -167,15 +167,29 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
     - [ ] De sidebar wordt geopend en de betreffende locatie/review wordt getoont.
     - [ ] Het is mogelijk om vanaf hier de reviews van `Avans` de bekijken.
 
-
-### Zoeken naar niet bestaande review:
+### Zoeken naar niet bestaand item:
 
 1. Laad de homepage http://localhost/
     - [ ] Rechts boven is een zoekformulier zichtbaar.
-2. Vul het woord `nope`
+2. Vul het woord `nope` in
     - [ ] Er komt een dropdown.
     - [ ] In de dropdown staat `No search results found`
 
+### Zoeken naar bestaande `geapprovede` review:
+
+1. Laad de homepage http://localhost/
+    - [ ] Rechts boven is een zoekformulier zichtbaar.
+2. Vul het woord `job` in
+    - [ ] Er komt een dropdown.
+    - [ ] In de dropdown staat `No search results found`
+
+### Zoeken naar bestaande `geapprovede` locatie:
+
+1. Laad de homepage http://localhost/
+    - [ ] Rechts boven is een zoekformulier zichtbaar.
+2. Vul het woord `McDonalds` in
+    - [ ] Er komt een dropdown.
+    - [ ] In de dropdown staat `No search results found`
 
 ## Coördinator:
 ### Wachtwoord succesvol veranderen:
