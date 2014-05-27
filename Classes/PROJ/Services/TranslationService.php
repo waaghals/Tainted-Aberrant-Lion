@@ -13,7 +13,7 @@ class TranslationService {
         }
 
         $em = DoctrineHelper::instance()->getEntityManager();
-        $translation = $em->getRepository('PROJ\Entities\Translation')->findOneBy(array('sentenceId' => $sentenceId), array('language' => $_SESSION["language"]));
+        $translation = $em->getRepository('PROJ\Entities\Translation')->findOneBy(array('sentenceId' => $sentenceId, 'language' => $_SESSION["language"]));
         
         return $translation->getTranslation();
     }
@@ -22,7 +22,7 @@ class TranslationService {
         
         $array = array();
         
-        foreach(@sentenceIdArray as $sentenceId){
+        foreach($sentenceIdArray as $sentenceId){
             $array[] = $this->translate($sentenceId);
         }
         

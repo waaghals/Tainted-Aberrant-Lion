@@ -3,11 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/Classes/PROJ/Entities/RegistrationCode.php</file>
-            <file>file:/C:/xampp/htdocs/Test%20document.md</file>
-            <file>file:/C:/xampp/htdocs/Classes/PROJ/Views/Register.phtml</file>
-            <file>file:/C:/xampp/htdocs/Classes/PROJ/Controllers/TestdataController.php</file>
-            <file>file:/C:/xampp/htdocs/Classes/PROJ/Services/AccountService.php</file>
+            <file>file:/D:/GitHub/TAL/Classes/PROJ/Views/MainMapView.phtml</file>
+            <file>file:/D:/GitHub/TAL/Classes/PROJ/Views/ContactForm.phtml</file>
+            <file>file:/D:/GitHub/TAL/Classes/PROJ/Views/ContactFormSucces.phtml</file>
+            <file>file:/D:/GitHub/TAL/Classes/PROJ/Views/Partial/TopBar.phtml</file>
+            <file>file:/D:/GitHub/TAL/Classes/PROJ/Services/TranslationService.php</file>
+            <file>file:/D:/GitHub/TAL/Classes/PROJ/Views/Login.phtml</file>
+            <file>file:/D:/GitHub/TAL/Classes/PROJ/Views/Register.phtml</file>
         </group>
     </open-files>
 </project-private>
