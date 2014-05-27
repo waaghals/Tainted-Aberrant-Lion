@@ -145,7 +145,7 @@ class Project
         );
 
         if ($this->getReview() != null) {
-            $return["review"] = $this->getReview()->jsonSerialize();
+            $return["review"] = $this->getReview();
         }
         if ($this->getInstitute() != null) {
             $return["institute"] = $this->getInstitute()->jsonSerialize();

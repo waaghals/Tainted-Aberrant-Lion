@@ -380,10 +380,12 @@ class AjaxController extends BaseController
             $user = $em->getRepository('\PROJ\Entities\Account')->find($_SESSION['userID']);
             $qb = $em->createQueryBuilder();
             $qb->select('i.id')
-                    ->from('\PROJ\Entities\Institute', 'i')
-                    ->where($qb->expr()->eq('i.creator', $qb->expr()->literal($user->getStudent()->getId())))
-                    ->orWhere($qb->expr()->eq('i.acceptanceStatus', $qb->expr()->literal('approved')))
-                    ->orderBy('i.type', 'ASC');
+                    ->from('\PROJ\Entities\Institute', 'i');
+            if (!RightHelper::loggedUserHasRight("UPDATE_PROJECT")) {
+                $qb->where($qb->expr()->eq('i.creator', $qb->expr()->literal($user->getStudent()->getId())))
+                        ->orWhere($qb->expr()->eq('i.acceptanceStatus', $qb->expr()->literal('approved')));
+            }
+            $qb->orderBy('i.type', 'ASC');
             $res = $qb->getQuery()->getResult();
 
 

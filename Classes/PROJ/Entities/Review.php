@@ -142,7 +142,8 @@ class Review
             "assignmentrating" => $this->getAssignmentRating(),
             "guidancerating" => $this->getGuidanceRating(),
             "accommodationrating" => $this->getAccommodationRating(),
-            "rating" => $this->getRating()
+            "rating" => $this->getRating(),
+            "project" => $this->getProject()->jsonSerialize()
         );
     }
 
