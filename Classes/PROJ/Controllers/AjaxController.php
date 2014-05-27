@@ -694,7 +694,8 @@ class AjaxController extends BaseController
         }
         if ($ac->isLoggedIn()) {
             $proj = $em->getRepository('\PROJ\Entities\Project')->find($_POST['id']);
-            if ($proj->getStudent()->getAccount()->getId() == $_SESSION['userID'] || RightHelper::loggedUserHasRight("DELETE_PROJECT")) {
+            $projid = $proj->getStudent()->getAccount()->getId();
+            if ($projid == $_SESSION['userID'] || RightHelper::loggedUserHasRight("DELETE_PROJECT")) {
                 if ($proj->getReview() != null) {
                     foreach ($proj->getReview() as $rev) {
                         $em->remove($rev);

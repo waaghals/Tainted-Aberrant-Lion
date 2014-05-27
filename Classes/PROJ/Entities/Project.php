@@ -144,10 +144,12 @@ class Project
             "type" => ucfirst($this->getType())
         );
 
-        if ($this->getReview() != null)
+        if ($this->getReview() != null) {
             $return["review"] = $this->getReview()->jsonSerialize();
-        if ($this->getInstitute() != null)
+        }
+        if ($this->getInstitute() != null) {
             $return["institute"] = $this->getInstitute()->jsonSerialize();
+        }
 
         return $return;
     }
