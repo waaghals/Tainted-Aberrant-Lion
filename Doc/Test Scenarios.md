@@ -394,7 +394,7 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
     - Kies uit de dropdown box `Set to Approved` onder `status`
     - [ ] Er komt een popup die meld hoeveel entry's je gaat updaten.
 3.  Klik op `Confirm`.
-    - [ ] Het scherm verdwijnt, en de Entry's zijn verwijdert.
+    - [ ] Het scherm verdwijnt, en de Entry's hebben nu de status `Approved`
 
 ###Locaties mass-removen door Coordinator
 1.  Laad de pagina: http://localhost/Management/Locations
@@ -403,7 +403,7 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
     - Kies uit de dropdown box `Remove` onder `other`
     - [ ] Er komt een popup die meld hoeveel entry's je gaat verwijderen.
 3.  Klik op `Confirm`.
-    - [ ] Het scherm verdwijnt, en de Entry's hebben nu de status `Approved`
+    - [ ] Het scherm verdwijnt, en de Entry's zijn verwijdert.
 4.  Draai het testdata script: http://localhost/testdata/
 
 ###Reviews mass-updaten door Coordinator
@@ -413,7 +413,7 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
     - Kies uit de dropdown box `Set to Approved` onder `status`
     - [ ] Er komt een popup die meld hoeveel entry's je gaat updaten.
 3.  Klik op `Confirm`.
-    - [ ] Het scherm verdwijnt, en de Entry's zijn verwijdert.
+    - [ ] Het scherm verdwijnt, en de Entry's hebben nu de status `Approved`
 
 ###Reviews mass-removen door Coordinator
 1.  Laad de pagina: http://localhost/Management/Reviews
@@ -422,7 +422,7 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
     - Kies uit de dropdown box `Remove` onder `other`
     - [ ] Er komt een popup die meld hoeveel entry's je gaat verwijderen.
 3.  Klik op `Confirm`.
-    - [ ] Het scherm verdwijnt, en de Entry's hebben nu de status `Approved`
+    - [ ] Het scherm verdwijnt, en de Entry's zijn verwijdert.
 4.  Draai het testdata script: http://localhost/testdata/
 
 ###Een Review verwijderen:

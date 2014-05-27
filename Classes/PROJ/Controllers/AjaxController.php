@@ -555,7 +555,8 @@ class AjaxController extends BaseController
         }
         if ($ac->isLoggedIn()) {
             $rev = $em->getRepository('\PROJ\Entities\Review')->find($_POST['id']);
-            if ($rev->getProject()->getStudent()->getAccount()->getId() == $_SESSION['userID'] || RightHelper::loggedUserHasRight("VIEW_REVIEWS")) {
+            $accId = $rev->getProject()->getStudent()->getAccount()->getId();
+            if ($accId == $_SESSION['userID'] || RightHelper::loggedUserHasRight("VIEW_REVIEWS")) {
                 echo json_encode($rev->jsonSerialize());
             } else {
                 echo "This isn't your Review.";
@@ -574,7 +575,8 @@ class AjaxController extends BaseController
         }
         if ($ac->isLoggedIn()) {
             $inst = $em->getRepository('\PROJ\Entities\Institute')->find($_POST['id']);
-            if ($inst->getCreator()->getAccount()->getId() == $_SESSION['userID'] || RightHelper::loggedUserHasRight("VIEW_LOCATIONS")) {
+            $accId = $inst->getCreator()->getAccount()->getId();
+            if ($accId == $_SESSION['userID'] || RightHelper::loggedUserHasRight("VIEW_LOCATIONS")) {
                 echo json_encode($inst->jsonSerialize());
             } else {
                 echo "This isn't your Location.";
