@@ -189,7 +189,7 @@ $(document).ready(function() {
                 try {
                     json = $.parseJSON(data);
                     $('[name="create_review_form"]').find('[name="project"]').children().each(function() {
-                        if ($(this).val() == json.project.id) {
+                        if ($(this).val() == json.id) {
                             $(this).prop('selected', true);
                         }
                     });
@@ -541,7 +541,7 @@ $(document).ready(function() {
                 $("#with_selected_confirm_message").html(status_prefix + 'type: <span style="font-weight:bold;">Education</span>?');
             } else if ($(this).val() == "type_business") {
                 $("#with_selected_confirm_message").html(status_prefix + 'type: <span style="font-weight:bold;">Business</span>?');
-			} else if ($(this).val() == "type_minor") {
+            } else if ($(this).val() == "type_minor") {
                 $("#with_selected_confirm_message").html(status_prefix + 'type: <span style="font-weight:bold;">Minor</span>?');
             } else if ($(this).val() == "type_internship") {
                 $("#with_selected_confirm_message").html(status_prefix + 'type: <span style="font-weight:bold;">Internship</span>?');

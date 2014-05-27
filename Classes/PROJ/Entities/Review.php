@@ -137,6 +137,7 @@ class Review
     public function jsonSerialize()
     {
         return array(
+            "id" => $this->getId(),
             "text" => $this->getText(),
             "assignmentrating" => $this->getAssignmentRating(),
             "guidancerating" => $this->getGuidanceRating(),
