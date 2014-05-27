@@ -3,10 +3,10 @@
 use PROJ\Helper\XssHelper;
 use PROJ\Helper\RightHelper;
 
-$em   = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
+$em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
 $user = $em->getRepository('\PROJ\Entities\Account')->find($_SESSION['userID'])->getStudent();
 
-$header        = new \PROJ\Tools\Template("Partial/Header");
+$header = new \PROJ\Tools\Template("Partial/Header");
 $header->title = "User Management";
 
 echo $header;
@@ -14,12 +14,12 @@ echo $header;
 $bar = new \PROJ\Tools\Template("Partial/TopBar");
 echo $bar;
 
-$content                   = new \PROJ\Tools\Template("Management/" . $page);
+$content = new \PROJ\Tools\Template("Management/" . $page);
 $content->additionalValues = $additionalValues;
 ?>
 <div id="blackout">
     <?php
-    $blackoutContent           = new \PROJ\Tools\Template("Management/Partial/BlackoutContent");
+    $blackoutContent = new \PROJ\Tools\Template("Management/Partial/BlackoutContent");
     echo $blackoutContent;
     ?>
 </div>
@@ -42,21 +42,6 @@ $content->additionalValues = $additionalValues;
         ?>
         <h2>Coordinator</h2>
 
-        <div class="menuitem" style="border-top:1px solid #d2dce1; margin-top:20px;">
-            <a href="/Management/Users">Users</a>
-        </div>
-        <div class="menuitem">
-            <a href="/Management/Upload">Upload Excelsheet</a>
-        </div><!--
-        <div class="menuitem">
-            <a href="/Management/Locations">Locations</a>
-        </div>
-        <div class="menuitem">
-            <a href="/Management/Reviews">Reviews</a>
-        </div>
-        <div class="menuitem">
-            <a href="/Management/Projects">Projects</a>
-        </div>-->
         <?php if (RightHelper::loggedUserHasRight("VIEW_USERS")) { ?>
             <div class="menuitem" style="border-top:1px solid #d2dce1; margin-top:20px;">
                 <a href="/Management/Users">Users</a>
@@ -77,6 +62,11 @@ $content->additionalValues = $additionalValues;
                 <a href="/Management/Projects">Projects</a>
             </div>
         <?php } ?>
+        <?php if (RightHelper::loggedUserHasRight("UPLOAD_EXCEL")) { ?>
+            <div class="menuitem">
+                <a href="/Management/Upload">Upload Excelsheet</a>
+            <?php } ?>
+        </div>
     <?php } ?>
 </div>
 

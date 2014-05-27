@@ -1,0 +1,80 @@
+<?php
+
+use PROJ\Helper\RightHelper;
+?>
+<div id="management_right">
+    <div id="management_container">
+        <form name='with_selected_form' method='post' enctype="multipart/form-data">
+            <div style="width:96%; margin: 2%; overflow: auto;" id="scrollable">
+                <table class="ManagementTable">
+                    <tr>
+                        <th><input type="checkbox" id="checkall" style="width:auto; margin-top:3px;"></th>
+                        <th>Type:</th>
+                        <th>Location:</th>
+                        <th>Start Date:</th>
+                        <th>End Date:</th>
+                        <th>Owner:</th>
+                        <th>Status:</th>
+                        <th colspan="2"></th>
+                    </tr>
+                    <?php
+                    $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
+                    $user = $em->getRepository('\PROJ\Entities\Account')->find($_SESSION['userID']);
+                    $qb = $em->createQueryBuilder();
+                    $qb->select('i')
+                            ->from('\PROJ\Entities\Project', 'i')
+                            ->leftJoin('i.student', 'stud')
+                            ->orderBy('stud.firstname', 'ASC');
+                    $projects = $qb->getQuery()->getResult();
+
+                    foreach ($projects as $project) {
+                        //Count number of Projects for student
+                        /*
+                          $qb = $em->createQueryBuilder();
+                          $qb->select('p')
+                          ->from('\PROJ\Entities\Project', 'p')
+                          ->join('p.review', 'r')
+                          ->where($qb->expr()->eq('p.student', $qb->expr()->literal($student->getId())));
+                          $reviews = $qb->getQuery()->getResult(); */
+                        ?>
+                        <tr>
+                            <td><input type="checkbox" name="selection[]" value="<?php echo $project->getId(); ?>" style="width:auto; margin-top:3px;"></td>
+                            <td><p><?php echo ucfirst($project->getType()); ?></p></td>
+                            <td><p><?php echo $project->getInstitute()->getName(); ?> (<?php echo $project->getInstitute()->getPlace(); ?>)</p></td>
+                            <td><p><?php echo $project->getStartDate()->format('F Y'); ?></p></td>
+                            <td><p><?php echo $project->getendDate()->format('F Y'); ?></p></td>
+                            <td><p><?php echo $project->getStudent()->getFullName(); ?></p></td>
+                            <td><p><?php echo ucfirst($project->getAcceptanceStatus()); ?></p></td>
+                            <td style="width: 40px;"><img class="action_btn myprojects_update" data-project-id="<?php echo $project->getId(); ?>" src="/images/edit.png" /></td>
+                            <td style="width: 40px;"><img class="action_btn myprojects_remove" data-project-id="<?php echo $project->getId(); ?>" src="/images/delete.png" /></td>
+                        </tr>
+                        <?php
+                    }
+                    if (count($projects) == 0) {
+                        ?>
+                        <tr>
+                            <td colspan="7"><p>No Locations found</p></td>
+                        </tr>
+                        <?php
+                    }
+                    ?>
+                </table>
+                <img src="/images/arrow_ltr.png">
+                <select style="width:auto; height:auto; padding: 3px;" id="apply_to_all" data-page="Project">
+                    <option>With Selected:</option>
+                    <?php if (RightHelper::loggedUserHasRight("UPDATE_PROJECT")) { ?>
+                        <optgroup label="Status">
+                            <option value="status_declined">Set to Declined</option>
+                            <option value="status_pending">Set to Pending</option>
+                            <option value="status_approved">Set to Approved</option>
+                        </optgroup>
+                    <?php } ?>
+                    <?php if (RightHelper::loggedUserHasRight("DELETE_PROJECT")) { ?>
+                        <optgroup label="Other">
+                            <option value="remove">Remove</option>
+                        </optgroup>
+                    <?php } ?>
+                </select>
+            </div>
+        </form>
+    </div>

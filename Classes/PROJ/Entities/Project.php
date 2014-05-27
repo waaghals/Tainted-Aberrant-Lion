@@ -118,7 +118,7 @@ class Project
 
     public function isApprovedInstitute()
     {
-        if ($this->getInstitute()->acceptanceStatus === Status::APPROVED) {
+        if ($this->getInstitute()->getAcceptanceStatus() === Status::APPROVED) {
             return $this->getInstitute();
         }
         return null;
@@ -126,7 +126,7 @@ class Project
 
     public function isApprovedReview()
     {
-        if ($this->getReview()->acceptanceStatus === Status::APPROVED) {
+        if ($this->getReview()->getAcceptanceStatus() === Status::APPROVED) {
             return $this->getReview();
         }
         return null;
@@ -134,17 +134,24 @@ class Project
 
     public function jsonSerialize()
     {
-        return array(
-            "id"          => $this->getId(),
-            "review"      => $this->getApprovedReview(),
-            "author"      => $this->getStudent(),
-            "start_year"  => $this->getStartdate()->Format("Y"),
+        $return = array(
+            "id" => $this->getId(),
+            "author" => $this->getStudent(),
+            "start_year" => $this->getStartdate()->Format("Y"),
             "start_month" => $this->getStartdate()->Format("n"),
-            "end_year"    => $this->getEnddate()->Format("Y"),
-            "end_month"   => $this->getEnddate()->Format("n"),
-            "type"        => ucfirst($this->getType()),
-            "institute"   => $this->getApprovedInstitute()->jsonSerialize()
+            "end_year" => $this->getEnddate()->Format("Y"),
+            "end_month" => $this->getEnddate()->Format("n"),
+            "type" => ucfirst($this->getType())
         );
+
+        if ($this->getReview() != null) {
+            $return["review"] = $this->getReview()->jsonSerialize();
+        }
+        if ($this->getInstitute() != null) {
+            $return["institute"] = $this->getInstitute()->jsonSerialize();
+        }
+
+        return $return;
     }
 
     public function getAcceptanceStatus()

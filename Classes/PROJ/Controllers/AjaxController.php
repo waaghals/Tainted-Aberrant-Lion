@@ -331,7 +331,7 @@ class AjaxController extends BaseController
         }
     }
 
-    public function createProjectAction()
+    public function saveProjectAction($unitTest = null)
     {
         if ($unitTest != null) {
             $_POST = $unitTest;
@@ -405,7 +405,9 @@ class AjaxController extends BaseController
                 $project = $em->getRepository('\PROJ\Entities\Project')->find($_POST['id']);
 
 //Extra checks
-                if ($project->getStudent()->getAccount()->getId() == $_SESSION['userID']) {
+                if (RightHelper::loggedUserHasRight("UPDATE_PROJECT")) {
+
+                } elseif ($project->getStudent()->getAccount()->getId() == $_SESSION['userID']) {
                     if ($project->getAcceptanceStatus() != 0) {
                         echo "The Project has been aproved while you tried to edit it.";
                         return;
@@ -419,7 +421,8 @@ class AjaxController extends BaseController
             $project->setReview(null);
             $project->setStartdate(new \DateTime($_POST['start_year'] . '-' . $_POST['start_month'] . '-1'));
             $project->setendDate(new \DateTime($_POST['end_year'] . '-' . $_POST['end_month'] . '-1'));
-            $project->setStudent($user->getStudent());
+            if ($_POST['action'] == "create")
+                $project->setStudent($user->getStudent());
             $project->setType($_POST['type']);
 
             $em->persist($project);
@@ -584,6 +587,18 @@ class AjaxController extends BaseController
         }
     }
 
+    private function removeProject($proj)
+    {
+        $em = DoctrineHelper::instance()->getEntityManager();
+        if ($proj->getReview() != null) {
+            foreach ($proj->getReview() as $rev) {
+                $em->remove($rev);
+            }
+        }
+        $em->remove($proj);
+        $em->flush();
+    }
+
     private function removeInstitute($inst)
     {
         $em = DoctrineHelper::instance()->getEntityManager();
@@ -675,19 +690,16 @@ class AjaxController extends BaseController
         }
         if ($ac->isLoggedIn()) {
             $proj = $em->getRepository('\PROJ\Entities\Project')->find($_POST['id']);
-            if ($proj->getStudent()->getAccount()->getId() == $_SESSION['userID']) {
-                if ($proj->getAcceptanceStatus() == 0) {
-                    if ($proj->getReview() != null) {
-                        foreach ($proj->getReview() as $rev) {
-                            $em->remove($rev);
-                        }
+            $projid = $proj->getStudent()->getAccount()->getId();
+            if ($projid == $_SESSION['userID'] || RightHelper::loggedUserHasRight("DELETE_PROJECT")) {
+                if ($proj->getReview() != null) {
+                    foreach ($proj->getReview() as $rev) {
+                        $em->remove($rev);
                     }
-                    $em->remove($proj);
-                    $em->flush();
-                    echo "succes";
-                } else {
-                    echo "The Project has been aproved while you tried to delete it.";
                 }
+                $em->remove($proj);
+                $em->flush();
+                echo "succes";
             } else {
                 echo "This isn't your Project.";
             }
@@ -705,12 +717,8 @@ class AjaxController extends BaseController
         }
         if ($ac->isLoggedIn()) {
             $proj = $em->getRepository('\PROJ\Entities\Project')->find($_POST['id']);
-            if ($proj->getStudent()->getId() == $_SESSION['userID']) {
-                if ($proj->getAcceptanceStatus() == 0) {
-                    echo json_encode($proj->jsonSerialize());
-                } else {
-                    echo "The Project has been aproved while you tried to delete it.";
-                }
+            if ($proj->getStudent()->getId() == $_SESSION['userID'] || RightHelper::loggedUserHasRight("VIEW_PROJECTS")) {
+                echo json_encode($proj->jsonSerialize());
             } else {
                 echo "This isn't your Project.";
             }
@@ -799,6 +807,22 @@ class AjaxController extends BaseController
                         continue;
                     }
                     $em->persist($review);
+                }
+            }
+            if ($_POST['page'] == "Project") {
+                foreach ($_POST['selection'] as $id) {
+                    $project = $em->getRepository("\PROJ\Entities\Project")->find($id);
+                    if ($_POST['action'] == "status_declined" && RightHelper::loggedUserHasRight("UPDATE_PROJECT")) {
+                        $project->setAcceptanceStatus(Status::DECLINED);
+                    } else if ($_POST['action'] == "status_pending" && RightHelper::loggedUserHasRight("UPDATE_PROJECT")) {
+                        $project->setAcceptanceStatus(Status::PENDING);
+                    } else if ($_POST['action'] == "status_approved" && RightHelper::loggedUserHasRight("UPDATE_PROJECT")) {
+                        $project->setAcceptanceStatus(Status::APPROVED);
+                    } else if ($_POST['action'] == "remove" && RightHelper::loggedUserHasRight("DELETE_LOCATION")) {
+                        $this->removeProject($project);
+                        continue;
+                    }
+                    $em->persist($project);
                 }
             }
             $em->flush();
