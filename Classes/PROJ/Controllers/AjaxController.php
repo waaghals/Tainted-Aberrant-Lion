@@ -106,17 +106,7 @@ class AjaxController extends BaseController
         $qb->select(array('student.firstname as studentname', 'student.surname as studentsurname', 'student.email', 'review.text', 'institute.name as institutename', 'review.rating', 'review.id as revid', 'institute.id as instituteid', 'institute.lat', 'institute.lng'))
                 ->from('\PROJ\Entities\Review', 'review')->leftJoin('review.project', 'project')->leftJoin('project.institute', 'institute')->leftJoin('project.student', 'student')
                 ->where(
-                        $qb->expr()->orX(
-                                $qb->expr()->andX(
-                                        $qb->expr()->eq('project.acceptanceStatus', $qb->expr()->literal('approved')), $qb->expr()->eq('review.acceptanceStatus', $qb->expr()->literal('approved')), $qb->expr()->eq('institute.acceptanceStatus', $qb->expr()->literal('approved'))
-                                ), $qb->expr()->andX(
-                                        $qb->expr()->eq('project.acceptanceStatus', $qb->expr()->literal('approved')), $qb->expr()->eq('review.acceptanceStatus', $qb->expr()->literal('approved'))
-                                ), $qb->expr()->andX(
-                                        $qb->expr()->eq('project.acceptanceStatus', $qb->expr()->literal('approved')), $qb->expr()->eq('institute.acceptanceStatus', $qb->expr()->literal('approved'))
-                                ), $qb->expr()->andX(
-                                        $qb->expr()->eq('review.acceptanceStatus', $qb->expr()->literal('approved')), $qb->expr()->eq('institute.acceptanceStatus', $qb->expr()->literal('approved'))
-                                )
-                        )
+                        $qb->expr()->eq('project.acceptanceStatus', $qb->expr()->literal('approved')), $qb->expr()->eq('review.acceptanceStatus', $qb->expr()->literal('approved')), $qb->expr()->eq('institute.acceptanceStatus', $qb->expr()->literal('approved'))
                 )
                 ->andWhere(
                         $qb->expr()->orX(
@@ -136,17 +126,7 @@ class AjaxController extends BaseController
         $qb->select(array('student.firstname as studentname', 'student.surname as studentsurname', 'student.email', 'review.text', 'institute.name as institutename', 'institute.place as instituteplace', 'institute.id as instituteid', 'review.rating', 'institute.lat', 'institute.lng'))
                 ->from('\PROJ\Entities\Review', 'review')->leftJoin('review.project', 'project')->leftJoin('project.institute', 'institute')->leftJoin('project.student', 'student')
                 ->where(
-                        $qb->expr()->orX(
-                                $qb->expr()->andX(
-                                        $qb->expr()->eq('project.acceptanceStatus', $qb->expr()->literal('approved')), $qb->expr()->eq('review.acceptanceStatus', $qb->expr()->literal('approved')), $qb->expr()->eq('institute.acceptanceStatus', $qb->expr()->literal('approved'))
-                                ), $qb->expr()->andX(
-                                        $qb->expr()->eq('project.acceptanceStatus', $qb->expr()->literal('approved')), $qb->expr()->eq('review.acceptanceStatus', $qb->expr()->literal('approved'))
-                                ), $qb->expr()->andX(
-                                        $qb->expr()->eq('project.acceptanceStatus', $qb->expr()->literal('approved')), $qb->expr()->eq('institute.acceptanceStatus', $qb->expr()->literal('approved'))
-                                ), $qb->expr()->andX(
-                                        $qb->expr()->eq('review.acceptanceStatus', $qb->expr()->literal('approved')), $qb->expr()->eq('institute.acceptanceStatus', $qb->expr()->literal('approved'))
-                                )
-                        )
+                        $qb->expr()->eq('project.acceptanceStatus', $qb->expr()->literal('approved')), $qb->expr()->eq('review.acceptanceStatus', $qb->expr()->literal('approved')), $qb->expr()->eq('institute.acceptanceStatus', $qb->expr()->literal('approved'))
                 )
                 ->andWhere(
                         $qb->expr()->orX(
