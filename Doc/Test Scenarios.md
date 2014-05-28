@@ -529,6 +529,31 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
     - [ ] Als output krijg je een pagina met daarop "Filesize is too big"
     - [ ] Alleen markers in nederland zijn zichtbaar met het "education" type, mits deze geaccepteerd waren door de coördinator.
 
+##Excel bestand succesvol uploaden
+1.      Log in als coordinator en ga naar het admin gedeelte
+    - [ ] De knop "Excelsheet Uploaden" is zichtbaar.
+2.      Klik op "Excelsheet Uploaden" en upload het bestand import.xlsx en klik op "Upload"
+    - [ ] Je komt op een volgende pagina waar er verwerkt word.
+
+##Excel bestand onsuccesvol uploaden
+1.      Log in als coordinator en ga naar het admin gedeelte
+    - [ ] De knop "Excelsheet Uploaden" is zichtbaar.
+2.      Klik op "Excelsheet Uploaden" en upload een bestand zonder .xslx extentie en klik op "Upload"
+    - [ ] Je komt op een volgende pagina waar een error weergeven word.
+    - 
+##Excel bestand onsuccesvol uploaden (2)
+1.      Log in als coordinator en ga naar het admin gedeelte
+    - [ ] De knop "Excelsheet Uploaden" is zichtbaar.
+2.      Klik op "Excelsheet Uploaden" en upload een met .xslx EN die groter is dan 1mb extentie en klik op "Upload"
+    - [ ] Je komt op een volgende pagina waar een error weergeven word.
+
+##Excel bestand verwerken
+1.      Log in als coordinator en ga naar het admin gedeelte
+    - [ ] De knop "Excelsheet Uploaden" is zichtbaar.
+2.      Klik op "Excelsheet Uploaden" en upload een import.xlsx en klik op "Upload"
+    - [ ] Je komt op een volgende pagina waar een error weergeven word.
+    - [ ] In de database staan de waardes uit het import bestand.
+
 ##Bijlage
 ###1. Incorrecte registreren waarden
 
