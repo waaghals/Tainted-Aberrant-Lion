@@ -1,4 +1,4 @@
-# Taken Sprint 5
+# Taken Sprint 4
 
 Wie|Afgewerkte issues|Total Size
 --------|--------|--------
@@ -10,7 +10,7 @@ Yorick| [#73](https://github.com/waaghals/Tainted-Aberrant-Lion/issues/73) [#80]
 Sam|[#72](https://github.com/waaghals/Tainted-Aberrant-Lion/issues/72)|3
 
 
-# Taken Sprint 6
+# Taken Sprint 5
 
 Wie|Afgewerkte issues|Total Size
 --------|--------|--------
