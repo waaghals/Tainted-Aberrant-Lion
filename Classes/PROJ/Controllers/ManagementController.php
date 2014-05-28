@@ -9,6 +9,8 @@ use PROJ\Classes\PHPExcel\IOFactory;
 use PROJ\Entities\Institute;
 use PROJ\Entities\Project;
 use PROJ\Entities\Review;
+use PROJ\DBAL\ApprovalStateType as Status;
+use PROJ\DBAL\ProjectType;
 
 /**
  * @author Thijs
@@ -272,7 +274,7 @@ class ManagementController extends BaseController
     public function UploadFileAction()
     {
         if (RightHelper::loggedUserHasRight("UPLOAD_EXCEL")) {
-            $temp = explode(".", $_FILES["file"]["name"]);
+            $temp      = explode(".", $_FILES["file"]["name"]);
             $extension = end($temp);
             if ($extension === "xlsx" || $extension === "xls") {
                 if ($_FILES["file"]["size"] < 1000000) {
@@ -344,7 +346,7 @@ class ManagementController extends BaseController
             $institute->setPostalcode($instituteData[8]);
             $institute->setEmail($instituteData[9]);
             $institute->setTelephone($instituteData[10]);
-            $institute->setAcceptanceStatus('approved');
+            $institute->setAcceptanceStatus(Status::APPROVED);
             $institute->setCountry($em->getRepository('\PROJ\Entities\Country')->findOneBy(array('name' => $instituteData[11])));
             $em->persist($acc);
             $em->persist($institute);
@@ -361,8 +363,21 @@ class ManagementController extends BaseController
             $project->setInstitute($this->getInstituteFromExcelId($sheet->getParent(), $projectData[2]));
             $project->setStartdate($this->getDateTimeFromExcel($projectData[3]));
             $project->setEnddate($this->getDateTimeFromExcel($projectData[4]));
-            $project->setType($projectData[5]);
-            $project->setAcceptanceStatus('approved');
+            switch ($projectData[5]) {
+                case "Stage":
+                    $project->setType(ProjectType::INTERNSHIP);
+                    break;
+                case "Minor":
+                    $project->setType(ProjectType::MINOR);
+                    break;
+                case "Afstudeerstage":
+                    $project->setType(ProjectType::GRADUATION);
+                    break;
+                case "ESP":
+                    $project->setType(ProjectType::EPS);
+                    break;
+            }
+            $project->setAcceptanceStatus(Status::APPROVED);
             $em->persist($project);
         }
         $em->flush();
@@ -378,7 +393,7 @@ class ManagementController extends BaseController
             $project->setStartdate($this->getDateTimeFromExcel($projectData[3]));
             $project->setEnddate($this->getDateTimeFromExcel($projectData[4]));
             $project->setType($projectData[5]);
-            $project->setAcceptanceStatus('approved');
+            $project->setAcceptanceStatus(Status::APPROVED);
             $em->persist($project);
         }
         $em->flush();
@@ -386,9 +401,7 @@ class ManagementController extends BaseController
 
     private function getDateTimeFromExcel($cel)
     {
-        $date      = new \DateTime();
-        $dateArray = explode("-", $cel);
-        $date->setDate("20" . $dateArray[2], $dateArray[1], $dateArray[0]);
+        $date = \DateTime::createFromFormat("j-M-y", $cel);
         return $date;
     }
 
