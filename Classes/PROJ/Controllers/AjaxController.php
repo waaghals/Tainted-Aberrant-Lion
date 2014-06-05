@@ -663,6 +663,7 @@ class AjaxController extends BaseController
         $inst = $em->getRepository('\PROJ\Entities\Country')
                 ->createQueryBuilder('e')
                 ->select('e')
+                ->orderBy('e.name')
                 ->getQuery()
                 ->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
         return json_encode($inst);
