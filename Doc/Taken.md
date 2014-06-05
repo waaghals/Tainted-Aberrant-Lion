@@ -20,3 +20,15 @@ Sebastian|[#88](https://github.com/waaghals/Tainted-Aberrant-Lion/issues/88) [#7
 Thijs|[#65](https://github.com/waaghals/Tainted-Aberrant-Lion/issues/65) [#110](https://github.com/waaghals/Tainted-Aberrant-Lion/issues/110) [#66](https://github.com/waaghals/Tainted-Aberrant-Lion/issues/66) [#67](https://github.com/waaghals/Tainted-Aberrant-Lion/issues/67)|25
 Yorick||0
 Sam|[#104](https://github.com/waaghals/Tainted-Aberrant-Lion/issues/104) [#113](https://github.com/waaghals/Tainted-Aberrant-Lion/issues/113) [#114](https://github.com/waaghals/Tainted-Aberrant-Lion/issues/114) [#119](https://github.com/waaghals/Tainted-Aberrant-Lion/issues/119)|12
+
+
+# Taken Sprint 6
+
+Wie|Afgewerkte issues|Total Size
+--------|--------|--------
+Patrick||0
+Jelle||0
+Sebastian||0
+Thijs||0
+Yorick||0
+Sam|[#118](https://github.com/waaghals/Tainted-Aberrant-Lion/issues/118)|1
