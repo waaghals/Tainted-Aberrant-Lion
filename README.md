@@ -1,7 +1,7 @@
 Tainted-Aberrant-Lion
 =====================
 
-School project
+School project [![Build Status](https://secure.travis-ci.org/waaghals/Tainted-Aberrant-Lion.png?branch=dev)](https://secure.travis-ci.org/waaghals/Tainted-Aberrant-Lion)
 
 ##Versie
 Huidige versie is 0.4 na de zesde sprint. Deze is getagd als `Zesde Sprint` met git.
@@ -22,8 +22,6 @@ Er zijn momenteel vijf verschillende releases.
 ##Doctrine
 #####Instellingen
 De database instellingen zitten een beetje verborgen maar je kan ze vinden in: /PROJ/Classes/Helper/DoctrineHelper.php
-
-<br>
 
 #####Doctrine Database Commands
 Met doctrine heb je verschillende commands nodig om de database structuur te updaten. Deze kun je invoeren op /console.php
