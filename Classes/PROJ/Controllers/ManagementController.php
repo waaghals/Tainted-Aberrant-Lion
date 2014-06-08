@@ -346,17 +346,18 @@ class ManagementController extends BaseController
             } else if ($user["password"] > 254 || $user["password"] == null) {
                 break;
             }
+
             $account = $AccountService->createAccount($user);
-            $student["firstname"] = $userData[2];
-            $student["surname"] = $userData[3];
-            $student["city"] = $userData[4];
-            $student["zipcode"] = $userData[5];
-            $student["street"] = $userData[6];
-            $student["streetnumber"] = $userData[7];
-            $student["addition"] = $userData[8];
-            $student["email"] = $userData[9];
-            $AccountService->createStudent($account, $student);
         }
+        $student["firstname"] = $userData[2];
+        $student["surname"] = $userData[3];
+        $student["city"] = $userData[4];
+        $student["zipcode"] = $userData[5];
+        $student["street"] = $userData[6];
+        $student["streetnumber"] = $userData[7];
+        $student["addition"] = $userData[8];
+        $student["email"] = $userData[9];
+        $AccountService->createStudent($account, $student);
     }
 
     private function processInstituteSheet($sheet)
@@ -384,8 +385,13 @@ class ManagementController extends BaseController
             $institute->setTelephone($instituteData[10]);
             $institute->setAcceptanceStatus(Status::APPROVED);
             $institute->setCountry($em->getRepository('\PROJ\Entities\Country')->findOneBy(array('name' => $instituteData[11])));
-            $em->persist($acc);
-            $em->persist($institute);
+            if (!$this->isInstituteDuplicate($institute)) {
+                $em->persist($acc);
+                $em->persist($institute);
+            } else {
+                echo "Institute: " . $institute->getName() . "does already exist. <br />";
+                break;
+            }
         }
         $em->flush();
     }
@@ -406,7 +412,17 @@ class ManagementController extends BaseController
             }
             $i++;
         }
+    }
 
+    private function isInstituteDuplicate($institute)
+    {
+        if ($institute == null) {
+            return false;
+        }
+        $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
+        if ($em->getRepository('\PROJ\Entities\Institute')->findOneBy(array('name' => $institute->getName(), 'lat' => $institute->getLat(), 'lng' => $institute->getLng())) == null) {
+            return false;
+        }
         return true;
     }
 
@@ -434,9 +450,26 @@ class ManagementController extends BaseController
                     break;
             }
             $project->setAcceptanceStatus(Status::APPROVED);
-            $em->persist($project);
+            if (!$this->isProjectDuplicate($project)) {
+                $em->persist($project);
+            } else {
+                echo $project->getStudent()->getFirstname() . " " . $project->getStudent()->getSurname() . "'s Project already exists. <br />";
+                break;
+            }
         }
         $em->flush();
+    }
+
+    private function isProjectDuplicate($project)
+    {
+        if ($project->getInstitute() || $project->getStudent() == null) {
+            return false;
+        }
+        $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
+        if ($em->getRepository('\PROJ\Entities\Project')->findOneBy(array('institute_id' => $project->getInstitute()->getId(), 'student_id' => $project->getStudent()->getId())) == null) {
+            return false;
+        }
+        return true;
     }
 
     private function processReviewSheet($sheet)
@@ -452,12 +485,31 @@ class ManagementController extends BaseController
             $review->setGuidanceRating($reviewData[4]);
             $review->setAccommodationRating($reviewData[5]);
             $review->setAcceptanceStatus(Status::APPROVED);
-            if ($project != null) {
+
+            if (!$this->isReviewDuplicate($review)) {
                 $em->persist($review);
                 $em->persist($project);
+            } else {
+                echo "Review already exists <br />";
+                break;
             }
         }
         $em->flush();
+    }
+
+    private function isReviewDuplicate($review)
+    {
+        $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
+        if ($review == null) {
+            return false;
+        }
+        if ($review->getProject() == null) {
+            return false;
+        }
+        if ($em->getRepository('\PROJ\Entities\Review')->findOneBy(array('project' => $review->getProject())) == null) {
+            return false;
+        }
+        return true;
     }
 
     private function getDateTimeFromExcel($cel)
@@ -466,7 +518,7 @@ class ManagementController extends BaseController
         return $date;
     }
 
-    // PHPExcel reader, int
+// PHPExcel reader, int
     private function getStudentFromExcelId($objPHPExcel, $studentId)
     {
         $objPHPExcel->setActiveSheetIndex(0);
@@ -480,7 +532,7 @@ class ManagementController extends BaseController
         }
     }
 
-    // PHPExcel reader, int
+// PHPExcel reader, int
     private function getInstituteFromExcelId($objPHPExcel, $instituteId)
     {
         $objPHPExcel->setActiveSheetIndex(1);

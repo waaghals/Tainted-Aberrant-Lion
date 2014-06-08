@@ -19,7 +19,7 @@ class AccountService
             if ($this->checkbruteforce($user->getId()) !== true) {
                 $passwordEntered = hash('sha512', $password . $user->getSalt());
                 if ($passwordEntered == $user->getPassword()) {
-                    $_SESSION['userID'] = $user->getId();
+                    $_SESSION['userID']       = $user->getId();
                     $_SESSION['login_string'] = hash('sha512', $user->getPassword() . $_SERVER['HTTP_USER_AGENT'] . $_SERVER['REMOTE_ADDR']);
 
                     return true;
@@ -88,7 +88,11 @@ class AccountService
 
     public function createAccount($data)
     {
-        $em           = DoctrineHelper::instance()->getEntityManager();
+        $em = DoctrineHelper::instance()->getEntityManager();
+        if (!$em->getRepository('\PROJ\Entities\Account')->findOneBy(array('username' => $data['username'])) == null) {
+            echo "User: " . $data['username'] . " already exists. <br>";
+            return;
+        }
         $hashing      = new Hashing();
         $account      = new Account();
         $passwordsalt = explode(';', $hashing->createHash($data['password']));
