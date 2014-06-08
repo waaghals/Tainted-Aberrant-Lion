@@ -277,6 +277,8 @@ class ManagementController extends BaseController
         if (RightHelper::loggedUserHasRight("UPLOAD_EXCEL")) {
             $file = $_FILES["file"];
             $allowed = $this->isFileAllowed($file);
+            var_dump($this->isFileValid($file["tmp_name"]));
+            die();
             if ($allowed) {
                 $this->processExcel($file["tmp_name"]);
             } else {
@@ -378,10 +380,32 @@ class ManagementController extends BaseController
             $institute->setTelephone($instituteData[10]);
             $institute->setAcceptanceStatus(Status::APPROVED);
             $institute->setCountry($em->getRepository('\PROJ\Entities\Country')->findOneBy(array('name' => $instituteData[11])));
-            $em->persist($acc);
-            $em->persist($institute);
+            if ($this->isInstituteValid($instituteData)) {
+                $em->persist($acc);
+                $em->persist($institute);
+            }
         }
         $em->flush();
+    }
+
+    private function isFileValid($file)
+    {
+        $objPHPExcel = IOFactory::load($file);
+        $sheetCount = $objPHPExcel->getSheetCount();
+        for ($i = 0; $i < $sheetCount; $i++) {
+            $objPHPExcel->setActiveSheetIndex($i);
+            $sheet = $objPHPExcel->getActiveSheet()->toArray();
+            foreach ($sheet as $row) {
+                foreach ($row as $item) {
+                    if ($item == null) {
+                        return false;
+                    }
+                }
+            }
+            $i++;
+        }
+
+        return true;
     }
 
     private function processProjectSheet($sheet)
