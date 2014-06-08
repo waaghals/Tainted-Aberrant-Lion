@@ -277,8 +277,11 @@ class ManagementController extends BaseController
         if (RightHelper::loggedUserHasRight("UPLOAD_EXCEL")) {
             $file = $_FILES["file"];
             $allowed = $this->isFileAllowed($file);
-            var_dump($this->isFileValid($file["tmp_name"]));
-            die();
+            if (!$this->isFileValid($file["tmp_name"])) {
+                echo "The submitted file is not valid. \n";
+                echo "Please make sure you are using the right format.";
+                return;
+            }
             if ($allowed) {
                 $this->processExcel($file["tmp_name"]);
             } else {
@@ -286,6 +289,7 @@ class ManagementController extends BaseController
                     echo $message;
                 }
             }
+            echo "het lukte";
         }
     }
 
@@ -380,10 +384,8 @@ class ManagementController extends BaseController
             $institute->setTelephone($instituteData[10]);
             $institute->setAcceptanceStatus(Status::APPROVED);
             $institute->setCountry($em->getRepository('\PROJ\Entities\Country')->findOneBy(array('name' => $instituteData[11])));
-            if ($this->isInstituteValid($instituteData)) {
-                $em->persist($acc);
-                $em->persist($institute);
-            }
+            $em->persist($acc);
+            $em->persist($institute);
         }
         $em->flush();
     }
@@ -450,7 +452,7 @@ class ManagementController extends BaseController
             $review->setGuidanceRating($reviewData[4]);
             $review->setAccommodationRating($reviewData[5]);
             $review->setAcceptanceStatus(Status::APPROVED);
-            if ($review->getText() != null && $project != null) {
+            if ($project != null) {
                 $em->persist($review);
                 $em->persist($project);
             }
