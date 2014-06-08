@@ -11,74 +11,65 @@ use PROJ\Entities\Project;
 use PROJ\Entities\Review;
 use PROJ\DBAL\ApprovalStateType as Status;
 use PROJ\DBAL\ProjectType;
+use PROJ\DBAL\InstituteType;
 
 /**
  * @author Thijs
  */
-class ManagementController extends BaseController
-{
+class ManagementController extends BaseController {
 
     private $page;
     private $additionalVals = array();
 
-    public function homeAction()
-    {
+    public function homeAction() {
         $this->page = "Home";
         $this->serveManagementTemplate();
     }
 
-    public function myReviewsAction()
-    {
+    public function myReviewsAction() {
         $this->page = "MyReviews";
         $this->serveManagementTemplate();
     }
 
-    public function myLocationsAction()
-    {
+    public function myLocationsAction() {
         $this->page = "MyLocation";
         $this->serveManagementTemplate();
     }
 
-    public function myProjectsAction()
-    {
+    public function myProjectsAction() {
         $this->page = "MyProjects";
         $this->serveManagementTemplate();
     }
 
-    public function UsersAction()
-    {
+    public function UsersAction() {
         if (RightHelper::loggedUserHasRight("VIEW_USERS")) {
             $this->page = "ViewUsers";
             $this->serveManagementTemplate();
         }
     }
 
-    public function LocationsAction()
-    {
+    public function LocationsAction() {
         if (RightHelper::loggedUserHasRight("VIEW_LOCATIONS")) {
             $this->page = "ViewLocations";
             $this->serveManagementTemplate();
         }
     }
 
-    public function ProjectsAction()
-    {
+    public function ProjectsAction() {
         if (RightHelper::loggedUserHasRight("VIEW_PROJECTS")) {
             $this->page = "ViewProjects";
             $this->serveManagementTemplate();
         }
     }
 
-    public function ReviewsAction()
-    {
+    public function ReviewsAction() {
         if (RightHelper::loggedUserHasRight("VIEW_REVIEWS")) {
             $this->page = "ViewReviews";
             $this->serveManagementTemplate();
         }
     }
 
-    public function CreateUserAction()
-    {
+    public function CreateUserAction() {
         if (RightHelper::loggedUserHasRight("CREATE_USER")) {
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {    //Create new account
                 $valid = $this->validateCreateUser();
@@ -93,8 +84,7 @@ class ManagementController extends BaseController
         }
     }
 
-    public function changePasswordAction()
-    {
+    public function changePasswordAction() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {    //Save account details
             $valid = $this->validateChangePassword();
             if ($valid === "succes") {
@@ -107,12 +97,11 @@ class ManagementController extends BaseController
         $this->serveManagementTemplate();
     }
 
-    public function myAccountAction()
-    {
+    public function myAccountAction() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {    //Save account details
             $valid = $this->validateInput($_POST);
             if ($valid === "succes") {
-                $em   = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
+                $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
                 $user = $em->getRepository('\PROJ\Entities\Account')->find($_SESSION['userID'])->getStudent();
 
                 $user->setCity($_POST['city']);
@@ -132,16 +121,15 @@ class ManagementController extends BaseController
         $this->serveManagementTemplate();
     }
 
-    private function serveManagementTemplate()
-    {
+    private function serveManagementTemplate() {
         $ac = new \PROJ\Services\AccountService();
         if (!$ac->isLoggedIn()) {
             HeaderHelper::redirect("/");
             return;
         }
 
-        $t                   = new \PROJ\Tools\Template("Management");
-        $t->page             = $this->page;
+        $t = new \PROJ\Tools\Template("Management");
+        $t->page = $this->page;
         $t->additionalValues = $this->additionalVals;
         echo $t;
     }
@@ -151,8 +139,7 @@ class ManagementController extends BaseController
      * @param type $data (POST)
      * @return string
      */
-    private function validateInput($data)
-    {
+    private function validateInput($data) {
         if (empty($data['city']) || empty($data['zipcode']) || empty($data['street']) || empty($data['housenumber']) || empty($data['email'])) {
             return "Not everything is filled in";
         }
@@ -178,10 +165,9 @@ class ManagementController extends BaseController
      * Function to validate if the new entered passwords are allowed.
      * @return string
      */
-    private function validateChangePassword()
-    {
+    private function validateChangePassword() {
 //Get current user
-        $em   = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
+        $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
         $user = $em->getRepository('\PROJ\Entities\Account')->find($_SESSION['userID']);
 
 //Valdidate old password
@@ -214,8 +200,7 @@ class ManagementController extends BaseController
      * Also saves code to the database.
      * @return string
      */
-    private function validateCreateUser()
-    {
+    private function validateCreateUser() {
         if (empty($_POST['email']) || empty($_POST['rep_email'])) {
             return "Not everything is filled in";
         }
@@ -253,8 +238,7 @@ class ManagementController extends BaseController
         }
     }
 
-    private function sendActivationMail($to, $code)
-    {
+    private function sendActivationMail($to, $code) {
         $message = "This is your personal activation code to create a account on the Avans WorldMap.\n\rThis code is linked to your E-Mail adress.\n\r\n\rYour code is: " . $code . "\n\r\n\rClick the following link to register: http://stable.toip.nl/account/Register/?registrationcode=" . $code;
         $headers = "From: coordinator@toip.nl\r\n" .
                 "Reply-To: no-reply@toip.nl\r\n" .
@@ -263,42 +247,53 @@ class ManagementController extends BaseController
         mail($to, "Creation code for Avans WorldMap", $message, $headers);
     }
 
-    public function UploadAction()
-    {
+    public function uploadAction() {
         if (RightHelper::loggedUserHasRight("UPLOAD_EXCEL")) {
             $this->page = "Upload";
             $this->serveManagementTemplate();
         }
     }
 
-    public function UploadFileAction()
-    {
+    public function uploadFileAction() {
         if (RightHelper::loggedUserHasRight("UPLOAD_EXCEL")) {
-            $temp      = explode(".", $_FILES["file"]["name"]);
-            $extension = end($temp);
-            if ($extension === "xlsx" || $extension === "xls") {
-                if ($_FILES["file"]["size"] < 1000000) {
-                    if ($_FILES["file"]["error"] > 0) {
-                        echo "Error: " . $_FILES["file"]["error"] . "<br>";
-                    } else {
-                        // TODO: process file
-                        echo "Upload: " . $_FILES["file"]["name"] . "<br>";
-                        echo "Type: " . $_FILES["file"]["type"] . "<br>";
-                        echo "Size: " . ($_FILES["file"]["size"] / 1024) . " kB<br>";
-                        echo "Stored in: " . $_FILES["file"]["tmp_name"];
-                        $this->processExcel($_FILES["file"]["tmp_name"]);
-                    }
-                } else {
-                    echo "Filesize is too big.";
-                }
+            $file = $_FILES["file"];
+            $allowed = $this->isFileAllowed($file);
+            if($allowed){
+                $this->processExcel($file["tmp_name"]);
             } else {
-                echo "Invalid file type.";
+                foreach($allowed as $message){
+                    echo $message;
+                }
             }
         }
     }
 
-    private function processExcel($excelFile)
-    {
+    /*
+     * Dynamic use of php.
+     * Return true if the file is allowed.
+     * Return array containing error messages if the file
+     * is not allowed.
+     */
+    private function isFileAllowed($file) {
+        $errormsg = array();
+        $temp = explode(".", $file["name"]);
+        $extension = end($temp);
+        if (!($extension === "xlsx" || $extension === "xls")) {
+            $errormsg[] = "The used file extension isn't allowed.";
+        }
+        if ($_FILES["file"]["size"] > 1000000) {
+            $errormsg[] = "The used file is too big.";
+        }
+        if ($_FILES["file"]["error"] > 0) {
+            $errormsg[] = "Error: " . $file["error"] . "<br />";
+        }
+        if(sizeof($errormsg) == 0){
+            return true;
+        }
+        return $errormsg;
+    }
+
+    private function processExcel($excelFile) {
         // load the excelFile in the PHPExcel object
         $objPHPExcel = IOFactory::load($excelFile);
         // Set the sheet of the file to the first one
@@ -308,36 +303,46 @@ class ManagementController extends BaseController
         $this->processInstituteSheet($objPHPExcel->getActiveSheet());
         $objPHPExcel->setActiveSheetIndex(2);
         $this->processProjectSheet($objPHPExcel->getActiveSheet());
+        $objPHPExcel->setActiveSheetIndex(3);
+        $this->processReviewSheet($objPHPExcel->getActiveSheet());
     }
 
-    private function processUserSheet($sheet)
-    {
+    private function processUserSheet($sheet) {
         $AccountService = new \PROJ\Services\AccountService();
         foreach (array_slice($sheet->toArray(), 1) as $userData) {
-            $user["username"]        = $userData[10];
-            $user["password"]        = $userData[11];
-            $account                 = $AccountService->createAccount($user);
-            $student["firstname"]    = $userData[2];
-            $student["surname"]      = $userData[3];
-            $student["city"]         = $userData[4];
-            $student["zipcode"]      = $userData[5];
-            $student["street"]       = $userData[6];
+            $user["username"] = $userData[10];
+            $user["password"] = $userData[11];
+            if($user["username"] > 254 && $user["username"] != null)
+                break;
+            if($user["password"] > 254 && $user["password"] != null)
+                break;
+            $account = $AccountService->createAccount($user);
+            $student["firstname"] = $userData[2];
+            $student["surname"] = $userData[3];
+            $student["city"] = $userData[4];
+            $student["zipcode"] = $userData[5];
+            $student["street"] = $userData[6];
             $student["streetnumber"] = $userData[7];
-            $student["addition"]     = $userData[8];
-            $student["email"]        = $userData[9];
+            $student["addition"] = $userData[8];
+            $student["email"] = $userData[9];
             $AccountService->createStudent($account, $student);
         }
     }
 
-    private function processInstituteSheet($sheet)
-    {
-        $em  = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
+    private function processInstituteSheet($sheet) {
+        $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
         $acc = $em->getRepository('PROJ\Entities\Account')->find($_SESSION['userID']);
         foreach (array_slice($sheet->toArray(), 1) as $instituteData) {
             $institute = new Institute();
+            if($instituteData[2] == "education"){
+                $institute->setType(InstituteType::EDUCATION);
+            } else if($instituteData[2] == "business"){
+                $institute->setType(InstituteType::BUSINESS);
+            } else {
+                break;
+            }
             $institute->setCreator($acc->getStudent());
             $institute->setName($instituteData[1]);
-            $institute->setType($instituteData[2]);
             $institute->setLat($instituteData[3]);
             $institute->setLng($instituteData[4]);
             $institute->setPlace($instituteData[5]);
@@ -354,8 +359,7 @@ class ManagementController extends BaseController
         $em->flush();
     }
 
-    private function processProjectSheet($sheet)
-    {
+    private function processProjectSheet($sheet) {
         $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
         foreach (array_slice($sheet->toArray(), 1) as $projectData) {
             $project = new Project();
@@ -373,7 +377,7 @@ class ManagementController extends BaseController
                 case "Afstudeerstage":
                     $project->setType(ProjectType::GRADUATION);
                     break;
-                case "ESP":
+                case "EPS":
                     $project->setType(ProjectType::EPS);
                     break;
             }
@@ -383,34 +387,36 @@ class ManagementController extends BaseController
         $em->flush();
     }
 
-    private function processReviewSheet($sheet)
-    {
+    private function processReviewSheet($sheet) {
         $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
         foreach (array_slice($sheet->toArray(), 1) as $reviewData) {
             $review = new Review();
-            $review->setStudent($this->getStudentFromExcelId($sheet->getParent(), $reviewData[0]));
-            $project->setInstitute($this->getInstituteFromExcelId($sheet->getParent(), $projectData[2]));
-            $project->setStartdate($this->getDateTimeFromExcel($projectData[3]));
-            $project->setEnddate($this->getDateTimeFromExcel($projectData[4]));
-            $project->setType($projectData[5]);
-            $project->setAcceptanceStatus(Status::APPROVED);
-            $em->persist($project);
+            $project = $this->getProjectFromExcelId($sheet->getParent(), $reviewData[0]);
+            $review->setProject($project);
+            $review->setRating($reviewData[1]);
+            $review->setText($reviewData[2]);
+            $review->setAssignmentRating($reviewData[3]);
+            $review->setGuidanceRating($reviewData[4]);
+            $review->setAccommodationRating($reviewData[5]);
+            $review->setAcceptanceStatus(Status::APPROVED);
+            if($review->getText() != null && $project != null){
+                $em->persist($review);
+                $em->persist($project);
+            }
         }
         $em->flush();
     }
 
-    private function getDateTimeFromExcel($cel)
-    {
+    private function getDateTimeFromExcel($cel) {
         $date = \DateTime::createFromFormat("j-M-y", $cel);
         return $date;
     }
-
+    
     // PHPExcel reader, int
-    private function getStudentFromExcelId($objPHPExcel, $studentId)
-    {
+    private function getStudentFromExcelId($objPHPExcel, $studentId) {
         $objPHPExcel->setActiveSheetIndex(0);
         $sheet = $objPHPExcel->getActiveSheet()->toArray();
-        $em    = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
+        $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
         foreach (array_slice($sheet, 1) as $studentData) {
             if ($studentData[0] == $studentId) {
                 $account = $em->getRepository('\PROJ\Entities\Account')->findOneBy(array('username' => $studentData[10]));
@@ -420,36 +426,32 @@ class ManagementController extends BaseController
     }
 
     // PHPExcel reader, int
-    private function getInstituteFromExcelId($objPHPExcel, $instituteId)
-    {
+    private function getInstituteFromExcelId($objPHPExcel, $instituteId) {
         $objPHPExcel->setActiveSheetIndex(1);
         $sheet = $objPHPExcel->getActiveSheet()->toArray();
-        $em    = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
+        $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
         foreach (array_slice($sheet, 1) as $instituteData) {
             if ($instituteData[0] == $instituteId) {
                 return $em->getRepository('\PROJ\Entities\Institute')->findOneBy(array(
                             'name' => $instituteData[1],
-                            'lat'  => $instituteData[3],
-                            'lng'  => $instituteData[4]
+                            'lat' => $instituteData[3],
+                            'lng' => $instituteData[4]
                 ));
             }
         }
     }
 
-    private function getProjectFromExcelId($objPHPExcel, $projectId)
-    {
+    private function getProjectFromExcelId($objPHPExcel, $projectId) {
         $objPHPExcel->setActiveSheetIndex(2);
         $sheet = $objPHPExcel->getActiveSheet()->toArray();
-        $em    = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
+        $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
         foreach (array_slice($sheet, 1) as $projectData) {
-            if ($projectData[0] == $projectId) {
+            if ($projectData[1] == $projectId) {
+                $student = $this->getStudentFromExcelId($objPHPExcel, $projectData[0]);
                 return $em->getRepository('\PROJ\Entities\Project')->findOneBy(array(
-                            'studentId' => $projectData[0],
-                            'startdate' => $projectData[0],
-                            'enddate'   => $projectData[0]
+                            'student' => $student
                 ));
             }
         }
     }
-
 }
