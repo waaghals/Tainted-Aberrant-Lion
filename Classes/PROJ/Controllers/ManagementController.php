@@ -113,7 +113,7 @@ class ManagementController extends BaseController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {    //Save account details
             $valid = $this->validateInput($_POST);
             if ($valid === "succes") {
-                $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
+                $em   = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
                 $user = $em->getRepository('\PROJ\Entities\Account')->find($_SESSION['userID'])->getStudent();
 
                 $user->setCity($_POST['city']);
@@ -141,8 +141,8 @@ class ManagementController extends BaseController
             return;
         }
 
-        $t = new \PROJ\Tools\Template("Management");
-        $t->page = $this->page;
+        $t                   = new \PROJ\Tools\Template("Management");
+        $t->page             = $this->page;
         $t->additionalValues = $this->additionalVals;
         echo $t;
     }
@@ -182,7 +182,7 @@ class ManagementController extends BaseController
     private function validateChangePassword()
     {
 //Get current user
-        $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
+        $em   = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
         $user = $em->getRepository('\PROJ\Entities\Account')->find($_SESSION['userID']);
 
 //Valdidate old password
@@ -275,7 +275,7 @@ class ManagementController extends BaseController
     public function uploadFileAction()
     {
         if (RightHelper::loggedUserHasRight("UPLOAD_EXCEL")) {
-            $file = $_FILES["file"];
+            $file    = $_FILES["file"];
             $allowed = $this->isFileAllowed($file);
             if (!$this->isFileValid($file["tmp_name"])) {
                 echo "The submitted file is not valid. \n";
@@ -302,8 +302,8 @@ class ManagementController extends BaseController
 
     private function isFileAllowed($file)
     {
-        $errormsg = array();
-        $temp = explode(".", $file["name"]);
+        $errormsg  = array();
+        $temp      = explode(".", $file["name"]);
         $extension = end($temp);
         if (!($extension === "xlsx" || $extension === "xls")) {
             $errormsg[] = "The used file extension isn't allowed.";
@@ -348,21 +348,22 @@ class ManagementController extends BaseController
             }
 
             $account = $AccountService->createAccount($user);
+
+            $student["firstname"]    = $userData[2];
+            $student["surname"]      = $userData[3];
+            $student["city"]         = $userData[4];
+            $student["zipcode"]      = $userData[5];
+            $student["street"]       = $userData[6];
+            $student["streetnumber"] = $userData[7];
+            $student["addition"]     = $userData[8];
+            $student["email"]        = $userData[9];
+            $AccountService->createStudent($account, $student);
         }
-        $student["firstname"] = $userData[2];
-        $student["surname"] = $userData[3];
-        $student["city"] = $userData[4];
-        $student["zipcode"] = $userData[5];
-        $student["street"] = $userData[6];
-        $student["streetnumber"] = $userData[7];
-        $student["addition"] = $userData[8];
-        $student["email"] = $userData[9];
-        $AccountService->createStudent($account, $student);
     }
 
     private function processInstituteSheet($sheet)
     {
-        $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
+        $em  = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
         $acc = $em->getRepository('PROJ\Entities\Account')->find($_SESSION['userID']);
         foreach (array_slice($sheet->toArray(), 1) as $instituteData) {
             $institute = new Institute();
@@ -399,7 +400,7 @@ class ManagementController extends BaseController
     private function isFileValid($file)
     {
         $objPHPExcel = IOFactory::load($file);
-        $sheetCount = $objPHPExcel->getSheetCount();
+        $sheetCount  = $objPHPExcel->getSheetCount();
         for ($i = 0; $i < $sheetCount; $i++) {
             $objPHPExcel->setActiveSheetIndex($i);
             $sheet = $objPHPExcel->getActiveSheet()->toArray();
@@ -412,6 +413,7 @@ class ManagementController extends BaseController
             }
             $i++;
         }
+        return true;
     }
 
     private function isInstituteDuplicate($institute)
@@ -476,7 +478,7 @@ class ManagementController extends BaseController
     {
         $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
         foreach (array_slice($sheet->toArray(), 1) as $reviewData) {
-            $review = new Review();
+            $review  = new Review();
             $project = $this->getProjectFromExcelId($sheet->getParent(), $reviewData[0]);
             $review->setProject($project);
             $review->setRating($reviewData[1]);
@@ -485,7 +487,9 @@ class ManagementController extends BaseController
             $review->setGuidanceRating($reviewData[4]);
             $review->setAccommodationRating($reviewData[5]);
             $review->setAcceptanceStatus(Status::APPROVED);
-
+            if ($review->getText() == null) {
+                break;
+            }
             if (!$this->isReviewDuplicate($review)) {
                 $em->persist($review);
                 $em->persist($project);
@@ -523,7 +527,7 @@ class ManagementController extends BaseController
     {
         $objPHPExcel->setActiveSheetIndex(0);
         $sheet = $objPHPExcel->getActiveSheet()->toArray();
-        $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
+        $em    = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
         foreach (array_slice($sheet, 1) as $studentData) {
             if ($studentData[0] == $studentId) {
                 $account = $em->getRepository('\PROJ\Entities\Account')->findOneBy(array('username' => $studentData[10]));
@@ -537,13 +541,13 @@ class ManagementController extends BaseController
     {
         $objPHPExcel->setActiveSheetIndex(1);
         $sheet = $objPHPExcel->getActiveSheet()->toArray();
-        $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
+        $em    = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
         foreach (array_slice($sheet, 1) as $instituteData) {
             if ($instituteData[0] == $instituteId) {
                 return $em->getRepository('\PROJ\Entities\Institute')->findOneBy(array(
                             'name' => $instituteData[1],
-                            'lat' => $instituteData[3],
-                            'lng' => $instituteData[4]
+                            'lat'  => $instituteData[3],
+                            'lng'  => $instituteData[4]
                 ));
             }
         }
@@ -553,7 +557,7 @@ class ManagementController extends BaseController
     {
         $objPHPExcel->setActiveSheetIndex(2);
         $sheet = $objPHPExcel->getActiveSheet()->toArray();
-        $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
+        $em    = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
         foreach (array_slice($sheet, 1) as $projectData) {
             if ($projectData[1] == $projectId) {
                 $student = $this->getStudentFromExcelId($objPHPExcel, $projectData[0]);
