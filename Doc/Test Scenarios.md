@@ -552,7 +552,11 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
     - [ ] De knop "Excelsheet Uploaden" is zichtbaar.
 2.      Klik op "Excelsheet Uploaden" en upload een import.xlsx en klik op "Upload"
     - [ ] Je komt op een volgende pagina waar een error weergeven word.
-    - [ ] In de database staan de waardes uit het import bestand.
+    - [ ] In de database staan de waardes uit het import bestand.    - 
+
+##Clippy
+1.      Bekijk een willekeurige pagina en klik op Clippy.
+    - [ ] Clippy geeft hulp over de huidige pagina.
 
 ##Bijlage
 ###1. Incorrecte registreren waarden
