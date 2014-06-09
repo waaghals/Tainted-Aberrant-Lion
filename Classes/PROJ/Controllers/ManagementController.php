@@ -477,11 +477,11 @@ class ManagementController extends BaseController
 
     private function isProjectDuplicate($project)
     {
-        if ($project->getInstitute() || $project->getStudent() == null) {
+        if ($project == null) {
             return false;
         }
         $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
-        if ($em->getRepository('\PROJ\Entities\Project')->findOneBy(array('institute_id' => $project->getInstitute()->getId(), 'student_id' => $project->getStudent()->getId())) == null) {
+        if ($em->getRepository('\PROJ\Entities\Project')->findOneBy(array('institute' => $project->getInstitute(), 'student' => $project->getStudent())) == null) {
             return false;
         }
         return true;
@@ -539,6 +539,7 @@ class ManagementController extends BaseController
         $sheet = $objPHPExcel->getActiveSheet()->toArray();
         $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
         foreach (array_slice($sheet, 1) as $studentData) {
+            $studentData = $this->getSanitizedData($studentData);
             if ($studentData[0] == $studentId) {
                 $account = $em->getRepository('\PROJ\Entities\Account')->findOneBy(array('username' => $studentData[10]));
                 return $student = $account->getStudent();
@@ -553,6 +554,7 @@ class ManagementController extends BaseController
         $sheet = $objPHPExcel->getActiveSheet()->toArray();
         $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
         foreach (array_slice($sheet, 1) as $instituteData) {
+            $instituteData = $this->getSanitizedData($instituteData);
             if ($instituteData[0] == $instituteId) {
                 return $em->getRepository('\PROJ\Entities\Institute')->findOneBy(array(
                             'name' => $instituteData[1],
@@ -569,6 +571,7 @@ class ManagementController extends BaseController
         $sheet = $objPHPExcel->getActiveSheet()->toArray();
         $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
         foreach (array_slice($sheet, 1) as $projectData) {
+            $projectData = $this->getSanitizedData($projectData);
             if ($projectData[1] == $projectId) {
                 $student = $this->getStudentFromExcelId($objPHPExcel, $projectData[0]);
                 return $em->getRepository('\PROJ\Entities\Project')->findOneBy(array(
