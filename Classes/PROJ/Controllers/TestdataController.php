@@ -24,6 +24,7 @@ use PROJ\Entities\Country;
 use PROJ\Entities\RightGroup;
 use PROJ\Entities\Recht;
 use PROJ\Entities\Clippy;
+use PROJ\DBAL\ApprovalStateType as Status;
 
 class TestdataController extends BaseController
 {
@@ -214,6 +215,7 @@ class TestdataController extends BaseController
         . "<br /><br />";
 
         ob_flush();
+        return $review;
     }
 
     private function createCountry($em, $iso_alpha2, $iso_alpha3, $iso_numeric, $fips_code, $name, $capital, $areainsqkm, $population, $continent, $tld, $currency, $languages)
@@ -591,10 +593,17 @@ class TestdataController extends BaseController
         $projectZ = $this->createProject($em, $harry, $mac, "minor", new \DateTime('02/04/2014'), new \DateTime('06/20/2014'));
         $projectY = $this->createProject($em, $harry, $RWTH, "minor", new \DateTime('07/23/2013'), new \DateTime('02/07/2014'));
 
-        $this->createReview($em, $projectX, 5, 3, 4, "Many fun activities to do here!");
-        $this->createReview($em, $projectZ, 4, 4, 1, "Just do your job and they're happy.");
+        $review1 = $this->createReview($em, $projectX, 5, 3, 4, "Many fun activities to do here!");
+        $review2 = $this->createReview($em, $projectZ, 4, 4, 1, "Just do your job and they're happy.");
 
-
+        $avans->setAcceptanceStatus(Status::APPROVED);
+        $mac->setAcceptanceStatus(Status::APPROVED);
+        $RWTH->setAcceptanceStatus(Status::APPROVED);
+        $projectX->setAcceptanceStatus(Status::APPROVED);
+        $projectZ->setAcceptanceStatus(Status::APPROVED);
+        $projectY->setAcceptanceStatus(Status::APPROVED);
+        $review1->setAcceptanceStatus(Status::APPROVED);
+        $review2->setAcceptanceStatus(Status::APPROVED);
 
         $em->flush();
         ob_end_flush();
