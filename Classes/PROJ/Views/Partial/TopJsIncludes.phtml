@@ -5,11 +5,13 @@
 <script type="text/javascript" src="/js/main.js"></script>
 <script type="text/javascript" src="/js/Search.js"></script>
 <script type="text/javascript" src="/js/markerClustererPlus.js"></script>
+<script type="text/javascript" src="/js/clippy.min.js"></script>
 
 <script type="text/javascript">
     var map; /* Main map variable */
     var lastLoadedJson;
     var markerCluster;
+    var agent;
     function fakeMarkerClick(locationId, lat, lng) {
         map.setZoom(16);
         map.setCenter(new google.maps.LatLng(lat, lng));
@@ -348,6 +350,46 @@ if (strpos($json, 'Bad Request') === false && strpos($json, 'Not Found') === fal
         document.getElementById("country").value = "";
         document.getElementById("projectType").value = "";
         markerCluster.repaint();
+    }
+    clippy.load('Clippy', function(agent) {
+        // do anything with the loaded agent
+        agent.show();
+        this.agent = agent;
+        agent.speak("Click me for help.");
+    });
+
+    setTimeout(addClippOnclick, 500);
+    function addClippOnclick() {
+        $('.clippy').click(function() {
+            helpUser();
+        });
+    }
+
+    function helpUser() {
+        var el = document.createElement('a');
+        el.href = document.URL;
+        el = el.pathname.split('/');
+
+        if (el[1] == "") {
+            agent.speak.getPos($('#country'));
+        } else {
+            $.ajax({
+                type: "POST",
+                url: "/ajax/getHelpInformation",
+                data: {controller: el[1], action: el[2]}
+            }).done(function(data) {
+                agent.speak(data);
+            });
+        }
+    }
+
+    function getPos(el) {
+        // yay readability
+        for (var lx = 0, ly = 0;
+                el != null;
+                lx += el.offsetLeft, ly += el.offsetTop, el = el.offsetParent)
+            ;
+        return {x: lx, y: ly};
     }
 
 </script>

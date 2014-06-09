@@ -23,6 +23,7 @@ use \PROJ\Entities\Review;
 use PROJ\Entities\Country;
 use PROJ\Entities\RightGroup;
 use PROJ\Entities\Recht;
+use PROJ\Entities\Clippy;
 
 class TestdataController extends BaseController
 {
@@ -249,6 +250,20 @@ class TestdataController extends BaseController
 
         ob_flush();
         return $country;
+    }
+
+    private function createClippy($em, $controller, $action, $description)
+    {
+        $clippy = new Clippy();
+        $clippy->setController($controller);
+        $clippy->setAction($action);
+        $clippy->setDescription($description);
+        $em->persist($clippy);
+
+        echo "iest toegevoegd";
+
+        ob_flush();
+        return $clippy;
     }
 
     public function IndexAction()
@@ -544,6 +559,24 @@ class TestdataController extends BaseController
         $right = $this->createRight($em, "UPLOAD_EXCEL");
         $this->addRightToRightGroup($em, $right, $coordinator);
 
+        $this->createClippy($em, "home", "index", "This is the map overview. Click on a marker to view the info.");
+        $this->createClippy($em, "account", "login", "Here you can login to the system.");
+        $this->createClippy($em, "account", "register", "Here you can register for the website.");
+        $this->createClippy($em, "contact", "show", "Here you can contact the person who wrote the review.");
+        $this->createClippy($em, "management", "home", "Here you can manage the content of the website.");
+        $this->createClippy($em, "management", "myreviews", "Here you can view and edit your reviews.");
+        $this->createClippy($em, "management", "myprojects", "Here you can view and edit your projects.");
+        $this->createClippy($em, "management", "mylocations", "Here you can view and edit your locations.");
+        $this->createClippy($em, "management", "myaccount", "Here you can change your personal information.");
+        $this->createClippy($em, "management", "changepassword", "Here you can change your password.");
+        $this->createClippy($em, "management", "users", "Here you can manage all the users.");
+        $this->createClippy($em, "management", "createuser", "Just type in an email twice and the person will be notified to create an account.");
+        $this->createClippy($em, "management", "locations", "Here you can change the status of locations.");
+        $this->createClippy($em, "management", "reviews", "Here you can change the status of reviews.");
+        $this->createClippy($em, "management", "projects", "Here you can change the status of projects.");
+        $this->createClippy($em, "management", "upload", "Select an Excel file to be imported into the system.");
+        $this->createClippy($em, "management", "uploadfile", "Here you can view what has been added and what already existed.");
+
         $kjansen = $this->createUser($em, "kjansen", "qwerty", "HGJDGFSJHDFJHSDf", null);
         $hbakker = $this->createUser($em, "hbakker", "password", "E*(%&YUIERHDGFER", $coordinator);
 
@@ -560,6 +593,8 @@ class TestdataController extends BaseController
 
         $this->createReview($em, $projectX, 5, 3, 4, "Many fun activities to do here!");
         $this->createReview($em, $projectZ, 4, 4, 1, "Just do your job and they're happy.");
+
+
 
         $em->flush();
         ob_end_flush();
