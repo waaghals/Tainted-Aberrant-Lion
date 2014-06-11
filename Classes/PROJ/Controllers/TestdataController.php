@@ -23,6 +23,7 @@ use \PROJ\Entities\Review;
 use PROJ\Entities\Country;
 use PROJ\Entities\RightGroup;
 use PROJ\Entities\Recht;
+use PROJ\Entities\RegistrationCode;
 
 class TestdataController extends BaseController
 {
@@ -79,6 +80,22 @@ class TestdataController extends BaseController
 
         ob_flush();
         return $institute;
+    }
+
+    private function createRegistrationCode($em, $email, $code)
+    {
+        $regcode = new RegistrationCode();
+        $regcode->setEmail($email);
+        $regcode->setCode($code);
+        $em->persist($regcode);
+
+        echo "New registrationcode with the following data has been succesfully added to the database:"
+        . "<br />Email: " . $email
+        . "<br />Code: " . $code
+        . "<br /><br />";
+
+        ob_flush();
+        return $regcode;
     }
 
     private function createUser($em, $username, $password, $salt, $rightGroup)
@@ -543,6 +560,8 @@ class TestdataController extends BaseController
         $this->addRightToRightGroup($em, $right, $coordinator);
         $right = $this->createRight($em, "UPLOAD_EXCEL");
         $this->addRightToRightGroup($em, $right, $coordinator);
+
+        $this->createRegistrationCode($em, "samsam_31393@hotmail.com", "24f38a16d81a5a4662c8efc0a1fc879aaba9b051");
 
         $kjansen = $this->createUser($em, "kjansen", "qwerty", "HGJDGFSJHDFJHSDf", null);
         $hbakker = $this->createUser($em, "hbakker", "password", "E*(%&YUIERHDGFER", $coordinator);
