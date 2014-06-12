@@ -326,6 +326,37 @@ class ManagementController extends BaseController
         return $errormsg;
     }
 
+    private function isFileValid($file)
+    {
+        if (IOFactory::identify($file) !== "Excel2007") {
+            return false;
+        }
+        $objPHPExcel = IOFactory::load($file);
+        $sheetCount  = $objPHPExcel->getSheetCount();
+        for ($i = 0; $i < $sheetCount; $i++) {
+            $objPHPExcel->setActiveSheetIndex($i);
+            $sheet = $objPHPExcel->getActiveSheet()->toArray();
+            foreach ($sheet as $row) {
+                foreach ($row as $item) {
+                    if ($item == null) {
+                        return false;
+                    }
+                }
+            }
+            $i++;
+        }
+        return true;
+    }
+
+    private function iskHeaderCorrect($sheet, $headers)
+    {
+        foreach ($sheet as $row) {
+            foreach ($row as $item) {
+                // check if headers are correct
+            }
+        }
+    }
+
     private function getSanitizedData($data)
     {
         $sanitizedData = array();
@@ -416,28 +447,6 @@ class ManagementController extends BaseController
             }
         }
         $em->flush();
-    }
-
-    private function isFileValid($file)
-    {
-        if (IOFactory::identify($file) !== "Excel2007") {
-            return false;
-        }
-        $objPHPExcel = IOFactory::load($file);
-        $sheetCount  = $objPHPExcel->getSheetCount();
-        for ($i = 0; $i < $sheetCount; $i++) {
-            $objPHPExcel->setActiveSheetIndex($i);
-            $sheet = $objPHPExcel->getActiveSheet()->toArray();
-            foreach ($sheet as $row) {
-                foreach ($row as $item) {
-                    if ($item == null) {
-                        return false;
-                    }
-                }
-            }
-            $i++;
-        }
-        return true;
     }
 
     private function isInstituteDuplicate($institute)
