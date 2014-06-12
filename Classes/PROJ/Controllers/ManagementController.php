@@ -317,7 +317,7 @@ class ManagementController extends BaseController
         if ($file["size"] > 1000000) {
             $errormsg[] = "The used file is too big.";
         }
-        if ($files["error"] > 0) {
+        if ($file["error"] > 0) {
             $errormsg[] = "Error: " . $file["error"] . "<br />";
         }
         if (sizeof($errormsg) == 0) {
@@ -420,6 +420,9 @@ class ManagementController extends BaseController
 
     private function isFileValid($file)
     {
+        if (IOFactory::identify($file) !== "Excel2007") {
+            return false;
+        }
         $objPHPExcel = IOFactory::load($file);
         $sheetCount  = $objPHPExcel->getSheetCount();
         for ($i = 0; $i < $sheetCount; $i++) {
@@ -444,7 +447,7 @@ class ManagementController extends BaseController
         }
         $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
         if ($em->getRepository('\PROJ\Entities\Institute')->findOneBy(array('name' => $institute->getName(),
-                    'lat' => $institute->getLat(), 'lng' => $institute->getLng())) == null) {
+                    'lat'  => $institute->getLat(), 'lng'  => $institute->getLng())) == null) {
             return false;
         }
         return true;
@@ -493,7 +496,7 @@ class ManagementController extends BaseController
         }
         $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
         if ($em->getRepository('\PROJ\Entities\Project')->findOneBy(array('institute' => $project->getInstitute(),
-                    'student' => $project->getStudent())) == null) {
+                    'student'   => $project->getStudent())) == null) {
             return false;
         }
         return true;
