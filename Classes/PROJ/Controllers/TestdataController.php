@@ -912,15 +912,6 @@ class TestdataController extends BaseController
         $review2 = $this->createReview($em, $projectZ, 4, 4, 1,
                 "Just do your job and they're happy.");
 
-        $avans->setAcceptanceStatus(Status::APPROVED);
-        $mac->setAcceptanceStatus(Status::APPROVED);
-        $RWTH->setAcceptanceStatus(Status::APPROVED);
-        $projectX->setAcceptanceStatus(Status::APPROVED);
-        $projectZ->setAcceptanceStatus(Status::APPROVED);
-        $projectY->setAcceptanceStatus(Status::APPROVED);
-        $review1->setAcceptanceStatus(Status::APPROVED);
-        $review2->setAcceptanceStatus(Status::APPROVED);
-
         $em->flush();
         ob_end_flush();
     }
