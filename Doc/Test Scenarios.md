@@ -428,7 +428,7 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
     - [ ] Er komt een popup die meld hoeveel entry's je gaat updaten.
 3.  Klik op `Confirm`.
     - [ ] Het scherm verdwijnt, en de Entry's hebben nu de status `Approved`
-	
+
 ###Reviews mass-removen door Coordinator
 1.  Laad de pagina: http://localhost/Management/Reviews
     - [ ] Er is een overzicht zichtbaar om je gegevens aan te passen
@@ -540,7 +540,7 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
     - [ ] De knop "Excelsheet Uploaden" is zichtbaar.
 2.      Klik op "Excelsheet Uploaden" en upload een bestand zonder .xslx extentie en klik op "Upload"
     - [ ] Je komt op een volgende pagina waar een error weergeven word.
-    - 
+    -
 ##Excel bestand onsuccesvol uploaden (2)
 1.      Log in als coordinator en ga naar het admin gedeelte
     - [ ] De knop "Excelsheet Uploaden" is zichtbaar.
@@ -552,7 +552,7 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
     - [ ] De knop "Excelsheet Uploaden" is zichtbaar.
 2.      Klik op "Excelsheet Uploaden" en upload een import.xlsx en klik op "Upload"
     - [ ] Je komt op een volgende pagina waar een error weergeven word.
-    - [ ] In de database staan de waardes uit het import bestand.    - 
+    - [ ] In de database staan de waardes uit het import bestand.
 
 ##Clippy
 1.      Bekijk een willekeurige pagina en klik op Clippy.
