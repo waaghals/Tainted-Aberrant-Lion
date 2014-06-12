@@ -42,7 +42,7 @@
                             <td><p><?php echo ucfirst($r->getType()); ?></p></td>
                             <td><p><?php echo ucfirst($r->getAcceptanceStatus()); ?></p></td>
                             <?php
-                            if ($r->getAcceptanceStatus() == 0) {
+                            if ($r->getAcceptanceStatus() == "pending") {
                                 ?>
                                 <td style="width: 40px;"><img class="action_btn mylocation_update" data-location-id="<?php echo $r->getId(); ?>" src="/images/edit.png" /></td>
                                 <td style="width: 40px;"><img class="action_btn mylocation_remove" data-location-id="<?php echo $r->getId(); ?>" src="/images/delete.png" /></td>
