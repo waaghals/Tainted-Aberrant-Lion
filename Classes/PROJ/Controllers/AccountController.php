@@ -21,8 +21,9 @@ class AccountController extends BaseController
 
         $t = new Template("Login");
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $validCredentials = $accountService->Login($_POST['username'], $_POST['password']);
-            $t->error = $validCredentials;
+            $validCredentials = $accountService->Login($_POST['username'],
+                    $_POST['password']);
+            $t->error         = $validCredentials;
         }
 
         $loggedIn = $accountService->isLoggedIn();
@@ -41,22 +42,24 @@ class AccountController extends BaseController
 
     public function registerAction()
     {
-        $error = false;
+        $t         = new Template("Register");
+        $error     = false;
         $hasErrors = false;
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             //Form submitted
             $accountService = new AccountService();
-            $error = $accountService->validateInput($_POST);
-            $hasErrors = ($error !== false);
+            $error          = $accountService->validateInput($_POST);
+            $hasErrors      = ($error !== false);
 
             if (!$hasErrors) {
-                $account = $accountService->createAccount($_POST);
+                $account      = $accountService->createAccount($_POST);
                 $accountService->createStudent($account, $_POST);
-                HeaderHelper::redirect();
+                $t->error     = "Registration is completed.";
+                $t->hasErrors = true;
             }
         }
-        $t = new Template("Register");
-        $t->error = $error;
+
+        $t->error     = $error;
         $t->hasErrors = $hasErrors;
         echo $t;
     }
