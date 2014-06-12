@@ -540,7 +540,7 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
     - [ ] De knop "Excelsheet Uploaden" is zichtbaar.
 2.      Klik op "Excelsheet Uploaden" en upload een bestand zonder .xslx extentie en klik op "Upload"
     - [ ] Je komt op een volgende pagina waar een error weergeven word.
-    -
+
 ##Excel bestand onsuccesvol uploaden (2)
 1.      Log in als coordinator en ga naar het admin gedeelte
     - [ ] De knop "Excelsheet Uploaden" is zichtbaar.
@@ -553,6 +553,15 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
 2.      Klik op "Excelsheet Uploaden" en upload een import.xlsx en klik op "Upload"
     - [ ] Je komt op een volgende pagina waar een error weergeven word.
     - [ ] In de database staan de waardes uit het import bestand.
+
+##Excel bestand dubbel uploaden
+1.      Log in als coordinator en ga naar het admin gedeelte
+    - [ ] De knop "Excelsheet Uploaden" is zichtbaar.
+2.      Kies het import bestand en druk op "Excelsheet Uploaden".
+3.      Ga terug naar het upload scherm.
+4.      Kiet het import bestand en druk op "Excelsheet Uploaden".
+    - [ ] Op het scherm komt te staan dat de ingevoerde data al bestaat.
+    - [ ] De data komt niet dubbel voor in de database.
 
 ##Clippy
 1.      Bekijk een willekeurige pagina en klik op Clippy.

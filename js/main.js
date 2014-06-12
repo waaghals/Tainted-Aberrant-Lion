@@ -29,6 +29,9 @@ $(document).ready(function() {
     $('#file_upload').click(function() {
         $(this).parent().parent().submit();
     });
+    $('#to_file_upload').click(function() {
+        window.location.replace("/Management/Upload");
+    });
     //Create new location button
     $('.mylocation_add').click(function() {
         //Prepare page
