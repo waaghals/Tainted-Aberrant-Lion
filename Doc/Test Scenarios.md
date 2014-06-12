@@ -428,7 +428,7 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
     - [ ] Er komt een popup die meld hoeveel entry's je gaat updaten.
 3.  Klik op `Confirm`.
     - [ ] Het scherm verdwijnt, en de Entry's hebben nu de status `Approved`
-	
+
 ###Reviews mass-removen door Coordinator
 1.  Laad de pagina: http://localhost/Management/Reviews
     - [ ] Er is een overzicht zichtbaar om je gegevens aan te passen
@@ -562,6 +562,10 @@ Onder deze stappen is het mogelijk dat er bepaalde eisen staan. Deze eisen moete
 4.      Kiet het import bestand en druk op "Excelsheet Uploaden".
     - [ ] Op het scherm komt te staan dat de ingevoerde data al bestaat.
     - [ ] De data komt niet dubbel voor in de database.
+
+##Clippy
+1.      Bekijk een willekeurige pagina en klik op Clippy.
+    - [ ] Clippy geeft hulp over de huidige pagina.
 
 ##Bijlage
 ###1. Incorrecte registreren waarden

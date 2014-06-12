@@ -12,6 +12,7 @@ use PROJ\Helper\RightHelper;
 use PROJ\DBAL\ApprovalStateType as Status;
 use PROJ\DBAL\InstituteType;
 use PROJ\DBAL\ProjectType;
+use PROJ\Entities\Clippy;
 
 /**
  * Description of HomeController
@@ -839,6 +840,22 @@ class AjaxController extends BaseController
             }
             $em->flush();
             echo "succes";
+        }
+    }
+
+    public function getHelpInformationAction()
+    {
+        $em = DoctrineHelper::instance()->getEntityManager();
+        $controller = $_POST["controller"];
+        $action = $_POST["action"];
+        $result = $em->getRepository("\PROJ\Entities\Clippy")->findOneBy(array(
+            'controller' => $controller,
+            'action' => $action
+        ));
+        if ($result != null) {
+            echo $result->getDescription();
+        } else {
+            echo "Nothing could be found";
         }
     }
 

@@ -5,11 +5,13 @@
 <script type="text/javascript" src="/js/main.js"></script>
 <script type="text/javascript" src="/js/Search.js"></script>
 <script type="text/javascript" src="/js/markerClustererPlus.js"></script>
+<script type="text/javascript" src="/js/clippy.min.js"></script>
 
 <script type="text/javascript">
     var map; /* Main map variable */
     var lastLoadedJson;
     var markerCluster;
+    var agent;
     function fakeMarkerClick(locationId, lat, lng) {
         map.setZoom(16);
         map.setCenter(new google.maps.LatLng(lat, lng));
@@ -348,6 +350,98 @@ if (strpos($json, 'Bad Request') === false && strpos($json, 'Not Found') === fal
         document.getElementById("country").value = "";
         document.getElementById("projectType").value = "";
         markerCluster.repaint();
+    }
+
+    clippy.load('Clippy', function(agent) {
+        // do anything with the loaded agent
+        agent.show();
+        this.agent = agent;
+        agent.speak("Click me for help.");
+    });
+
+    setTimeout(addClippOnclick, 500);
+    function addClippOnclick() {
+        $('.clippy').click(function() {
+            helpUser();
+        });
+    }
+
+    function helpUser() {
+        var el = document.createElement('a');
+        el.href = document.URL;
+        el = el.pathname.split('/');
+
+        if (el[1] == "") {
+            doTutorial();
+        } else {
+            $.ajax({
+                type: "POST",
+                url: "/ajax/getHelpInformation",
+                data: {controller: el[1], action: el[2]}
+            }).done(function(data) {
+                agent.speak(data);
+            });
+        }
+    }
+
+    function doTutorial()
+    {
+        //country filter
+        var pos = document.getElementById('country').getBoundingClientRect();
+        agent.speak("Hi, and welcome to our website!");
+        agent.speak("Let's start with a quick tutorial.");
+        agent.moveTo(pos.left, pos.top + 100);
+        agent.play("GestureUp");
+        agent.speak("This is the country filter.");
+        agent.speak("With this filter you can show the projects in a specific country.");
+
+        //projecttype filter
+        pos = document.getElementById('projectType').getBoundingClientRect();
+        agent.moveTo(pos.left, pos.top + 100);
+        agent.play("GestureUp");
+        agent.speak("This is the projecttype filter");
+        agent.speak("With this filter you can filter the projects by type.");
+        agent.speak("The types are: Minor, EPS, Internship, and Graduation.");
+
+        //locationtype filter
+        pos = document.getElementById('locationType').getBoundingClientRect();
+        agent.moveTo(pos.left, pos.top + 100);
+        agent.play("GestureUp");
+        agent.speak("This is the locationtype filter");
+        agent.speak("With this filter you can filter the projects by locationtype.");
+        agent.speak("The types are: Education and Business.");
+
+        //searchbar
+        pos = document.getElementById('searchbar').getBoundingClientRect();
+        agent.moveTo(pos.left, pos.top + 100);
+        agent.play("GestureUp");
+        agent.speak("This is the search bar.");
+        agent.speak("You can basically search on everything you like.");
+        agent.speak("Such as Student name, Institute name, Review Text, and a lot more.");
+        agent.moveTo(window.screen.availWidth / 2 + 125, window.screen.availHeight / 2 - 100);
+
+        //wait till clippy is ready then do fake click
+        setTimeout(function() {
+            fakeMarkerClick(markerCluster.getMarkers()[0].id, markerCluster.getMarkers()[0].position.k, markerCluster.getMarkers()[0].position.A);
+
+        }, 42000);
+
+        //explain review view
+        agent.play("GestureRight");
+        agent.speak("This is a marker.");
+        agent.speak("If you click on a marker the screen on the left will become visible.");
+        pos = document.getElementById('country').getBoundingClientRect();
+        agent.moveTo(pos.left + 200, pos.top + 150);
+        agent.play("GestureRight");
+        agent.speak("These are all the reviews available for this institute.");
+        agent.speak("You can click on the name to view the full review.");
+
+        //the end
+        pos = document.getElementsByClassName('headerbutton')[0].getBoundingClientRect();
+        agent.moveTo(pos.left - 100, pos.top + 100);
+        agent.speak("This is the end of the tutorial");
+        agent.speak("Thank you for watching and if you need anything in the future, just click me :)");
+        agent.play("IdleSnooze");
     }
 
 </script>
