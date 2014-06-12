@@ -113,7 +113,7 @@ class ManagementController extends BaseController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {    //Save account details
             $valid = $this->validateInput($_POST);
             if ($valid === "succes") {
-                $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
+                $em   = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
                 $user = $em->getRepository('\PROJ\Entities\Account')->find($_SESSION['userID'])->getStudent();
 
                 $user->setCity($_POST['city']);
@@ -141,8 +141,8 @@ class ManagementController extends BaseController
             return;
         }
 
-        $t = new \PROJ\Tools\Template("Management");
-        $t->page = $this->page;
+        $t                   = new \PROJ\Tools\Template("Management");
+        $t->page             = $this->page;
         $t->additionalValues = $this->additionalVals;
         echo $t;
     }
@@ -182,21 +182,24 @@ class ManagementController extends BaseController
     private function validateChangePassword()
     {
 //Get current user
-        $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
+        $em   = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
         $user = $em->getRepository('\PROJ\Entities\Account')->find($_SESSION['userID']);
 
 //Valdidate old password
-        $passwordEnteredOld = hash('sha512', $_POST['old_password'] . $user->getSalt());
+        $passwordEnteredOld = hash('sha512',
+                $_POST['old_password'] . $user->getSalt());
         if ($passwordEnteredOld == $user->getPassword()) {
             if ($_POST['old_password'] != $_POST['new_password']) {
                 if ($_POST['new_password'] == $_POST['rep_new_password']) {
-                    $passwordEnteredNew = hash('sha512', $_POST['new_password'] . $user->getSalt());
+                    $passwordEnteredNew = hash('sha512',
+                            $_POST['new_password'] . $user->getSalt());
                     $user->setPassword($passwordEnteredNew);
                     $em->persist($user);
                     $em->flush();
 
 //Change session to prevent logout
-                    $_SESSION['login_string'] = hash('sha512', $user->getPassword() . $_SERVER['HTTP_USER_AGENT'] . $_SERVER['REMOTE_ADDR']);
+                    $_SESSION['login_string'] = hash('sha512',
+                            $user->getPassword() . $_SERVER['HTTP_USER_AGENT'] . $_SERVER['REMOTE_ADDR']);
 
                     return "succes";
                 } else {
@@ -226,13 +229,16 @@ class ManagementController extends BaseController
         if ($ac->isLoggedIn()) {
             if ($_POST['email'] == $_POST['rep_email']) {
 //Check if the email already has an activation code. If so; just resent the email
-                $RegCode = $em->getRepository('\PROJ\Entities\RegistrationCode')->findBy(array('email' => $_POST['email']));
+                $RegCode = $em->getRepository('\PROJ\Entities\RegistrationCode')->findBy(array(
+                    'email' => $_POST['email']));
                 if (count($RegCode) > 0) {
-                    $this->sendActivationMail($RegCode->getEmail(), $RegCode->getCode());
+                    $this->sendActivationMail($RegCode->getEmail(),
+                            $RegCode->getCode());
                 } else {
                     $code = sha1(mt_rand(1, 99999) . time() . session_id());
 //Prevents duplicate codes
-                    while (count($em->getRepository('\PROJ\Entities\RegistrationCode')->findBy(array('code' => $code))) > 0) {
+                    while (count($em->getRepository('\PROJ\Entities\RegistrationCode')->findBy(array(
+                                'code' => $code))) > 0) {
                         $code = sha1(mt_rand(1, 99999) . time() . session_id());
                     }
 
@@ -243,7 +249,8 @@ class ManagementController extends BaseController
                     $em->persist($activation);
                     $em->flush();
 
-                    $this->sendActivationMail(XssHelper::sanitizeInput($_POST['email']), $code);
+                    $this->sendActivationMail(XssHelper::sanitizeInput($_POST['email']),
+                            $code);
                 }
                 return "succes";
             } else {
@@ -277,7 +284,7 @@ class ManagementController extends BaseController
         if (RightHelper::loggedUserHasRight("UPLOAD_EXCEL")) {
             $this->page = "ProcessExcel";
 
-            $file = $_FILES["file"];
+            $file    = $_FILES["file"];
             $allowed = $this->isFileAllowed($file);
             if ($allowed !== true) {
                 $this->additionalVals = $allowed;
@@ -301,16 +308,16 @@ class ManagementController extends BaseController
 
     private function isFileAllowed($file)
     {
-        $errormsg = array();
-        $temp = explode(".", $file["name"]);
+        $errormsg  = array();
+        $temp      = explode(".", $file["name"]);
         $extension = end($temp);
         if (!($extension === "xlsx" || $extension === "xls")) {
             $errormsg[] = "The used file extension isn't allowed.";
         }
-        if ($_FILES["file"]["size"] > 1000000) {
+        if ($file["size"] > 1000000) {
             $errormsg[] = "The used file is too big.";
         }
-        if ($_FILES["file"]["error"] > 0) {
+        if ($files["error"] > 0) {
             $errormsg[] = "Error: " . $file["error"] . "<br />";
         }
         if (sizeof($errormsg) == 0) {
@@ -359,14 +366,14 @@ class ManagementController extends BaseController
             $account = $AccountService->createAccount($user);
 
             if (is_object($account)) {
-                $student["firstname"] = $userData[2];
-                $student["surname"] = $userData[3];
-                $student["city"] = $userData[4];
-                $student["zipcode"] = $userData[5];
-                $student["street"] = $userData[6];
+                $student["firstname"]    = $userData[2];
+                $student["surname"]      = $userData[3];
+                $student["city"]         = $userData[4];
+                $student["zipcode"]      = $userData[5];
+                $student["street"]       = $userData[6];
                 $student["streetnumber"] = $userData[7];
-                $student["addition"] = $userData[8];
-                $student["email"] = $userData[9];
+                $student["addition"]     = $userData[8];
+                $student["email"]        = $userData[9];
                 $AccountService->createStudent($account, $student);
             } else {
                 $this->additionalVals[] = $account;
@@ -376,7 +383,7 @@ class ManagementController extends BaseController
 
     private function processInstituteSheet($sheet)
     {
-        $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
+        $em  = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
         $acc = $em->getRepository('PROJ\Entities\Account')->find($_SESSION['userID']);
         foreach (array_slice($sheet->toArray(), 1) as $instituteData) {
             $institute = new Institute();
@@ -399,7 +406,8 @@ class ManagementController extends BaseController
             $institute->setEmail($instituteData[9]);
             $institute->setTelephone($instituteData[10]);
             $institute->setAcceptanceStatus(Status::APPROVED);
-            $institute->setCountry($em->getRepository('\PROJ\Entities\Country')->findOneBy(array('name' => $instituteData[11])));
+            $institute->setCountry($em->getRepository('\PROJ\Entities\Country')->findOneBy(array(
+                        'name' => $instituteData[11])));
             if (!$this->isInstituteDuplicate($institute)) {
                 $em->persist($acc);
                 $em->persist($institute);
@@ -413,7 +421,7 @@ class ManagementController extends BaseController
     private function isFileValid($file)
     {
         $objPHPExcel = IOFactory::load($file);
-        $sheetCount = $objPHPExcel->getSheetCount();
+        $sheetCount  = $objPHPExcel->getSheetCount();
         for ($i = 0; $i < $sheetCount; $i++) {
             $objPHPExcel->setActiveSheetIndex($i);
             $sheet = $objPHPExcel->getActiveSheet()->toArray();
@@ -435,7 +443,8 @@ class ManagementController extends BaseController
             return false;
         }
         $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
-        if ($em->getRepository('\PROJ\Entities\Institute')->findOneBy(array('name' => $institute->getName(), 'lat' => $institute->getLat(), 'lng' => $institute->getLng())) == null) {
+        if ($em->getRepository('\PROJ\Entities\Institute')->findOneBy(array('name' => $institute->getName(),
+                    'lat' => $institute->getLat(), 'lng' => $institute->getLng())) == null) {
             return false;
         }
         return true;
@@ -445,10 +454,12 @@ class ManagementController extends BaseController
     {
         $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
         foreach (array_slice($sheet->toArray(), 1) as $projectData) {
-            $project = new Project();
+            $project     = new Project();
             $projectData = $this->getSanitizedData($projectData);
-            $project->setStudent($this->getStudentFromExcelId($sheet->getParent(), $projectData[0]));
-            $project->setInstitute($this->getInstituteFromExcelId($sheet->getParent(), $projectData[2]));
+            $project->setStudent($this->getStudentFromExcelId($sheet->getParent(),
+                            $projectData[0]));
+            $project->setInstitute($this->getInstituteFromExcelId($sheet->getParent(),
+                            $projectData[2]));
             $project->setStartdate($this->getDateTimeFromExcel($projectData[3]));
             $project->setEnddate($this->getDateTimeFromExcel($projectData[4]));
             switch ($projectData[5]) {
@@ -481,7 +492,8 @@ class ManagementController extends BaseController
             return false;
         }
         $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
-        if ($em->getRepository('\PROJ\Entities\Project')->findOneBy(array('institute' => $project->getInstitute(), 'student' => $project->getStudent())) == null) {
+        if ($em->getRepository('\PROJ\Entities\Project')->findOneBy(array('institute' => $project->getInstitute(),
+                    'student' => $project->getStudent())) == null) {
             return false;
         }
         return true;
@@ -491,9 +503,10 @@ class ManagementController extends BaseController
     {
         $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
         foreach (array_slice($sheet->toArray(), 1) as $reviewData) {
-            $review = new Review();
+            $review     = new Review();
             $reviewData = $this->getSanitizedData($reviewData);
-            $project = $this->getProjectFromExcelId($sheet->getParent(), $reviewData[0]);
+            $project    = $this->getProjectFromExcelId($sheet->getParent(),
+                    $reviewData[0]);
             $review->setProject($project);
             $review->setRating($reviewData[1]);
             $review->setText($reviewData[2]);
@@ -537,11 +550,12 @@ class ManagementController extends BaseController
     {
         $objPHPExcel->setActiveSheetIndex(0);
         $sheet = $objPHPExcel->getActiveSheet()->toArray();
-        $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
+        $em    = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
         foreach (array_slice($sheet, 1) as $studentData) {
             $studentData = $this->getSanitizedData($studentData);
             if ($studentData[0] == $studentId) {
-                $account = $em->getRepository('\PROJ\Entities\Account')->findOneBy(array('username' => $studentData[10]));
+                $account = $em->getRepository('\PROJ\Entities\Account')->findOneBy(array(
+                    'username' => $studentData[10]));
                 return $student = $account->getStudent();
             }
         }
@@ -552,14 +566,14 @@ class ManagementController extends BaseController
     {
         $objPHPExcel->setActiveSheetIndex(1);
         $sheet = $objPHPExcel->getActiveSheet()->toArray();
-        $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
+        $em    = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
         foreach (array_slice($sheet, 1) as $instituteData) {
             $instituteData = $this->getSanitizedData($instituteData);
             if ($instituteData[0] == $instituteId) {
                 return $em->getRepository('\PROJ\Entities\Institute')->findOneBy(array(
                             'name' => $instituteData[1],
-                            'lat' => $instituteData[3],
-                            'lng' => $instituteData[4]
+                            'lat'  => $instituteData[3],
+                            'lng'  => $instituteData[4]
                 ));
             }
         }
@@ -569,11 +583,12 @@ class ManagementController extends BaseController
     {
         $objPHPExcel->setActiveSheetIndex(2);
         $sheet = $objPHPExcel->getActiveSheet()->toArray();
-        $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
+        $em    = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
         foreach (array_slice($sheet, 1) as $projectData) {
             $projectData = $this->getSanitizedData($projectData);
             if ($projectData[1] == $projectId) {
-                $student = $this->getStudentFromExcelId($objPHPExcel, $projectData[0]);
+                $student = $this->getStudentFromExcelId($objPHPExcel,
+                        $projectData[0]);
                 return $em->getRepository('\PROJ\Entities\Project')->findOneBy(array(
                             'student' => $student
                 ));
