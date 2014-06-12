@@ -286,17 +286,74 @@ class ManagementController extends BaseController
 
             $file    = $_FILES["file"];
             $allowed = $this->isFileAllowed($file);
-            if ($allowed !== true) {
+
+            if (!$allowed) {
                 $this->additionalVals = $allowed;
             } else if (!$this->isFileValid($file["tmp_name"])) {
-                $this->additionalVals[] = "The submitted file is not valid. \n";
+                $this->additionalVals[] = "The submitted file is not valid. <br />";
                 $this->additionalVals[] = "Please make sure you are using the right format.";
-            } else {
+                $allowed                = false;
+            }
+
+            if ($allowed) {
+                if (!$this->checkSheets($file)) {
+                    $allowed = false;
+                }
+            }
+
+            if ($allowed) {
                 $this->processExcel($file["tmp_name"]);
-                $this->additionalVals[] = "Het toevoegen van de nog niet bestaande informatie is gelukt.";
+                $this->additionalVals[] = "All the additional information has been added to the system.";
             }
         }
         $this->serveManagementTemplate();
+    }
+
+    private function checkSheets($file)
+    {
+        $objPHPExcel = IOFactory::load($file["tmp_name"]);
+        if ($objPHPExcel->getSheetCount() !== 4) {
+            $this->additionalVals[] = "Not enough sheets are provided. <br />";
+            return false;
+        }
+        $objPHPExcel->setActiveSheetIndex(0);
+        $headers = array("Student_nr", "Opdracht_nr", "Voonaam", "Achternaam",
+            "Stad", "Postcode", "Straat", "Huisnummer", "Toevoeging", "Email",
+            "Gebruikersnaam", "Wachtwoord");
+        if ($this->isHeaderCorrect($objPHPExcel->getActiveSheet()->toArray(),
+                        $headers)) {
+            $this->additionalVals[] = "The student sheet is not in the correct format. <br />";
+            return false;
+        }
+
+        $objPHPExcel->setActiveSheetIndex(1);
+        $headers = array("Locatie_nr", "Locatie_naam", "Locatie_type", "Locatie_lat",
+            "Locatie_lon", "Stad", "Street", "Huisnummer", "Postcode", "Email", "Telefoonnummer",
+            "Land (engels)");
+        if ($this->isHeaderCorrect($objPHPExcel->getActiveSheet()->toArray(),
+                        $headers)) {
+            $this->additionalVals[] = "The institute sheet is not in the correct format. <br />";
+            return false;
+        }
+
+        $objPHPExcel->setActiveSheetIndex(2);
+        $headers = array("Student_nr", "Opdracht_nr", "Locatie_nr", "Start_datum",
+            "Eind_datum", "Opdracht_type");
+        if ($this->isHeaderCorrect($objPHPExcel->getActiveSheet()->toArray(),
+                        $headers)) {
+            $this->additionalVals[] = "The project sheet is not in the correct format. <br />";
+            return false;
+        }
+
+        $objPHPExcel->setActiveSheetIndex(3);
+        $headers = array("Project_Id", "Beoordeling_score", "Beoordeling_omschrijving",
+            "Assignment_rating", "Guidance_rating", "Accomodation_rating", "Rating");
+        if ($this->isHeaderCorrect($objPHPExcel->getActiveSheet()->toArray(),
+                        $headers)) {
+            $this->additionalVals[] = "The review sheet is not in the correct format. <br />";
+            return false;
+        }
+        return true;
     }
 
     /*
@@ -348,11 +405,13 @@ class ManagementController extends BaseController
         return true;
     }
 
-    private function iskHeaderCorrect($sheet, $headers)
+    private function isHeaderCorrect($sheet, $headers)
     {
-        foreach ($sheet as $row) {
-            foreach ($row as $item) {
-                // check if headers are correct
+        // The first row in the sheet are the headers
+        $i = 0;
+        foreach ($sheet[0] as $item) {
+            if ($item != $headers[$i++]) {
+                return false;
             }
         }
     }
