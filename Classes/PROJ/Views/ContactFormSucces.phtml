@@ -1,50 +1,17 @@
 <?php
 
 /*
- * 1 Worldmap
- * 2 Log uit
- * 3 welkom
- * 4 log in
- * 5 register
- * 6 location type
- * 7 education
- * 8 busines
- * 9 project type
- * 10 minor
- * 11 eps
- * 12 graduation
- * 13 internship
- * 14 country
- * 15 contact formulier
- * 16 to
- * 17 from
- * 18 subject
- * 19 message
- * 20 Fields marked with asterisk (*) are required.
  * 21 send
  * 22 Your message was sent successfully.
  * 23 back
- * 24 Login
- * 25 Username
- * 26 Password
- * 27 E-Mail
- * 28 First name
- * 29 Surname
- * 30 Zip code
- * 31 Street
- * 32 Street number
- * 33 Addition
- * 34 Registration code
- * 35 Register
- * 
  */
 
-$toTranslate = array(15,22,23);
+$toTranslate = array("contact_form","successfully","back");
 $translated = PROJ\Services\TranslationService::translateAll($toTranslate);
 
 use PROJ\Helper\XssHelper;
 $header = new \PROJ\Tools\Template("Partial/Header");
-$header->title = $translated[0];
+$header->title = $translated["contact_form"];
 
 echo $header;
 
@@ -55,13 +22,13 @@ echo $bar;
     <form name='contact' method='post' enctype="multipart/form-data">
         <img src="/images/login_top.png">
         <div id="login_container_tophalf">
-            <p><?php echo $translated[1] ?></p>
+            <p><?php echo $translated["successfully"] ?></p>
         </div>
         <img src="/images/login_split.png">
         <div id="login_container_bottomhalf">
             <div class="fancy_button" onclick="window.location='/';" style="left: 335px; top: 160px;">
                 <img src="/images/btn_left.png" />
-                <p><?php echo $translated[2] ?></p>
+                <p><?php echo $translated["back"] ?></p>
                 <img src="/images/btn_right.png" />
             </div>
         </div>

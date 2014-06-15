@@ -8,9 +8,9 @@ namespace PROJ\Entities;
 class Translation {
 
     /**
-     *  @id @Column(type="integer")
+     *  @id @unique @Column(type="String")
      */
-    private $sentenceId;
+    private $sentenceKey;
 
     /**
      * @id @Column(type="string")
@@ -22,8 +22,8 @@ class Translation {
      */
     private $translation;
 
-    public function getSentenceId() {
-        return $this->sentenceId;
+    public function getSentenceKey() {
+        return $this->sentenceKey;
     }
 
     public function getLanguage() {
@@ -34,8 +34,8 @@ class Translation {
         return $this->translation;
     }
 
-    public function setSentenceId($sentenceId) {
-        $this->sentenceId = $sentenceId;
+    public function setSentenceKey($sentenceKey) {
+        $this->sentenceKey = $sentenceKey;
     }
 
     public function setLanguage($language) {

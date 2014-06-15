@@ -1,32 +1,10 @@
 <?php
 
 /*
- * 1 Worldmap
- * 2 Log uit
- * 3 welkom
- * 4 log in
- * 5 register
- * 6 location type
- * 7 education
- * 8 busines
- * 9 project type
- * 10 minor
- * 11 eps
- * 12 graduation
- * 13 internship
- * 14 country
- * 15 contact formulier
- * 16 to
- * 17 from
- * 18 subject
- * 19 message
  * 20 Fields marked with asterisk (*) are required.
- * 21 send
- * 22 Your message was sent successfully.
- * 23 back
- * 24 Login
  * 25 Username
  * 26 Password
+ *    Repeat Password
  * 27 E-Mail
  * 28 First name
  * 29 Surname
@@ -40,13 +18,13 @@
  * 
  */
 
-$toTranslate = array(36,25,26,26,27,28,29,30,31,32,33,34,35,20,36);
+$toTranslate = array("register","username","password","repeat_password","email","first_name","surname","city","zip","street","street_number","addition","registration_code","fields_marked");
 $translated = PROJ\Services\TranslationService::translateAll($toTranslate);
 
 use PROJ\Helper\XssHelper;
 
 $header = new \PROJ\Tools\Template("Partial/Header");
-$header->title = $translated[0];
+$header->title = $translated["register"];
 
 echo $header;
 
@@ -67,40 +45,40 @@ echo $bar;
             endif;
             ?>
             <div style="width: 282px; margin-right: 70px; float:left;">
-                <p><?php echo $translated[1] ?>: *</p>
+                <p><?php echo $translated["username"] ?>: *</p>
                 <input name="username" value="<?php echo(isset($_POST['username']) ? XssHelper::sanitizeInput($_POST['username']) : ''); ?>" type="text" style="margin-top: 10px;" maxlength="50" required autofocus />
-                <p style="margin-top:15px;"><?php echo $translated[2] ?>: *</p>
+                <p style="margin-top:15px;"><?php echo $translated["password"] ?>: *</p>
                 <input name="password" type="password" name="password" style="margin-top: 10px;" maxlength="50" required />
-                <p style="margin-top:15px;"><?php echo $translated[3] ?>: *</p>
+                <p style="margin-top:15px;"><?php echo $translated["repeat_password"] ?>: *</p>
                 <input name="passwordagain" type="password" name="password" style="margin-top: 10px;" maxlength="50" required />
-                <p style="margin-top:15px;"><?php echo $translated[4] ?>: *</p>
+                <p style="margin-top:15px;"><?php echo $translated["email"] ?>: *</p>
                 <input name="email" value="<?php echo(isset($_POST['email']) ? XssHelper::sanitizeInput($_POST['email']) : ''); ?>" type="email" style="margin-top: 10px;" maxlength="50" required />
-                <p style="margin-top:15px;"><?php echo $translated[5] ?>: *</p>
+                <p style="margin-top:15px;"><?php echo $translated["first_name"] ?>: *</p>
                 <input name="firstname" value="<?php echo(isset($_POST['firstname']) ? XssHelper::sanitizeInput($_POST['firstname']) : ''); ?>" type="text" style="margin-top: 10px;" maxlength="50" required />
-                <p style="margin-top:15px;"><?php echo $translated[6] ?>: *</p>
+                <p style="margin-top:15px;"><?php echo $translated["surname"] ?>: *</p>
                 <input name="surname" value="<?php echo(isset($_POST['surname']) ? XssHelper::sanitizeInput($_POST['surname']) : ''); ?>" type="text" style="margin-top: 10px;" maxlength="50" required />
             </div>
             <div style="width: 282px; float:left;">
-                <p><?php echo $translated[7] ?>: *</p>
+                <p><?php echo $translated["city"] ?>: *</p>
                 <input name="city" value="<?php echo(isset($_POST['city']) ? XssHelper::sanitizeInput($_POST['city']) : ''); ?>" type="text" style="margin-top: 10px;" required />
-                <p style="margin-top:15px;"><?php echo $translated[8] ?>: *</p>
+                <p style="margin-top:15px;"><?php echo $translated["zip"] ?>: *</p>
                 <input name="zipcode" value="<?php echo(isset($_POST['zipcode']) ? XssHelper::sanitizeInput($_POST['zipcode']) : ''); ?>" type="text" style="margin-top: 10px;" maxlength="6" required />
-                <p style="margin-top:15px;"><?php echo $translated[9] ?>: *</p>
+                <p style="margin-top:15px;"><?php echo $translated["street"] ?>: *</p>
                 <input name="street" value="<?php echo(isset($_POST['street']) ? XssHelper::sanitizeInput($_POST['street']) : ''); ?>" type="text" style="margin-top: 10px;" maxlength="50" required />
-                <p style="margin-top:15px;"><?php echo $translated[10] ?>: *</p>
+                <p style="margin-top:15px;"><?php echo $translated["streetnumber"] ?>: *</p>
                 <input name="streetnumber" value="<?php echo(isset($_POST['streetnumber']) ? XssHelper::sanitizeInput($_POST['streetnumber']) : ''); ?>" type="text" style="margin-top: 10px;" maxlength="50" required />
-                <p style="margin-top:15px;"><?php echo $translated[11] ?>:</p>
+                <p style="margin-top:15px;"><?php echo $translated["addition"] ?>:</p>
                 <input name="addition" value="<?php echo(isset($_POST['addition']) ? XssHelper::sanitizeInput($_POST['addition']) : ''); ?>" type="text" style="margin-top: 10px;" maxlength="3" required />
-                <p style="margin-top:15px;"><?php echo $translated[12] ?>: *</p>
+                <p style="margin-top:15px;"><?php echo $translated["registration_code"] ?>: *</p>
                 <input name="registrationcode" value="<?php echo(isset($_GET['registrationcode']) ? XssHelper::sanitizeInput($_GET['registrationcode']) : ''); ?>" type="text" style="margin-top: 10px;" maxlength="255" required />
             </div>
-            <p style="margin-top:25px; font-size:10px; color: #a1a1a1;"><?php echo $translated[13] ?></p>
+            <p style="margin-top:25px; font-size:10px; color: #a1a1a1;"><?php echo $translated["fields_marked"] ?></p>
         </div>
         <img src="/images/register_split.png">
         <div id="register_container_bottomhalf">
             <div class="fancy_button" id="register_button" style="left: 335px; top: 160px;">
                 <img src="/images/btn_left.png" />
-                <p><?php echo $translated[14] ?></p>
+                <p><?php echo $translated["register"] ?></p>
                 <img src="/images/btn_right.png" />
             </div>
         </div>
