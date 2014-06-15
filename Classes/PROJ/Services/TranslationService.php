@@ -6,19 +6,18 @@ use PROJ\Exceptions\ServerException;
 
 class TranslationService {
 
-    public static function translate($sentenceKey) {
+    public function translate($sentenceKey) {
 
         if (!isset($_SESSION['language']) || empty($_SESSION['language'])) {
-            $_SESSION['language'] = "english";
+            $_SESSION['language'] = "dutch";
         }
 
-        $em = DoctrineHelper::instance()->getEntityManager();
+        $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
         $translation = $em->getRepository('PROJ\Entities\Translation')->findOneBy(array('sentenceKey' => strtolower($sentenceKey), 'language' => $_SESSION["language"]));
-        
         return $translation->getTranslation();
     }
 
-    public static function translateAll($sentenceKeyArray) {
+    public function translateAll($sentenceKeyArray) {
         
         $array = array();
         

@@ -1,7 +1,8 @@
 <?php
 
 $toTranslate = array("worldmap","logout","welcome","login","register","search","reset","location_type","education","business","project_type","minor","eps","graduation","internship","country");
-$translated = PROJ\Services\TranslationService::translateAll($toTranslate);
+$translator = new PROJ\Services\TranslationService();
+$translated = $translator->translateAll($toTranslate);
 
 $ac = new PROJ\Services\AccountService();
 

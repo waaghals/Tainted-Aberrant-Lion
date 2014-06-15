@@ -8,7 +8,7 @@ namespace PROJ\Entities;
 class Translation {
 
     /**
-     *  @id @unique @Column(type="String")
+     *  @id @Column(type="string")
      */
     private $sentenceKey;
 
@@ -31,7 +31,11 @@ class Translation {
     }
 
     public function getTranslation() {
-        return $this->translation;
+        if(empty($this->translation)) {
+            return "--empty--";
+        } else {
+            return $this->translation;
+        }
     }
 
     public function setSentenceKey($sentenceKey) {

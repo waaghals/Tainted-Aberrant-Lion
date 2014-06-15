@@ -7,7 +7,8 @@
  */
 
 $toTranslate = array("login","username","password");
-$translated = PROJ\Services\TranslationService::translateAll($toTranslate);
+$translator = new PROJ\Services\TranslationService();
+$translated = $translator->translateAll($toTranslate);
 
 $header = new \PROJ\Tools\Template("Partial/Header");
 $header->title = $translated["login"];
@@ -31,7 +32,7 @@ echo $bar;
             ?>
             <p><?php echo $translated["username"] ?>:</p>
             <input type="text" value="" name="username" style="margin-top: 10px;" />
-            <p style="margin-top:15px;"><?php echo $translated["[assword"] ?>:</p>
+            <p style="margin-top:15px;"><?php echo $translated["password"] ?>:</p>
             <input type="password" value="" name="password" style="margin-top: 10px;" />
         </div>
         <img src="/images/login_split.png">

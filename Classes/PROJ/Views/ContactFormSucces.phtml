@@ -7,7 +7,8 @@
  */
 
 $toTranslate = array("contact_form","successfully","back");
-$translated = PROJ\Services\TranslationService::translateAll($toTranslate);
+$translator = new PROJ\Services\TranslationService();
+$translated = $translator->translateAll($toTranslate);
 
 use PROJ\Helper\XssHelper;
 $header = new \PROJ\Tools\Template("Partial/Header");

@@ -18,8 +18,9 @@
  * 
  */
 
-$toTranslate = array("register","username","password","repeat_password","email","first_name","surname","city","zip","street","street_number","addition","registration_code","fields_marked");
-$translated = PROJ\Services\TranslationService::translateAll($toTranslate);
+$toTranslate = array("register","username","password","repeat_password","email","first_name","surname","city","zipcode","street","street_number","addition","registration_code","fields_marked");
+$translator = new PROJ\Services\TranslationService();
+$translated = $translator->translateAll($toTranslate);
 
 use PROJ\Helper\XssHelper;
 
@@ -61,11 +62,11 @@ echo $bar;
             <div style="width: 282px; float:left;">
                 <p><?php echo $translated["city"] ?>: *</p>
                 <input name="city" value="<?php echo(isset($_POST['city']) ? XssHelper::sanitizeInput($_POST['city']) : ''); ?>" type="text" style="margin-top: 10px;" required />
-                <p style="margin-top:15px;"><?php echo $translated["zip"] ?>: *</p>
+                <p style="margin-top:15px;"><?php echo $translated["zipcode"] ?>: *</p>
                 <input name="zipcode" value="<?php echo(isset($_POST['zipcode']) ? XssHelper::sanitizeInput($_POST['zipcode']) : ''); ?>" type="text" style="margin-top: 10px;" maxlength="6" required />
                 <p style="margin-top:15px;"><?php echo $translated["street"] ?>: *</p>
                 <input name="street" value="<?php echo(isset($_POST['street']) ? XssHelper::sanitizeInput($_POST['street']) : ''); ?>" type="text" style="margin-top: 10px;" maxlength="50" required />
-                <p style="margin-top:15px;"><?php echo $translated["streetnumber"] ?>: *</p>
+                <p style="margin-top:15px;"><?php echo $translated["street_number"] ?>: *</p>
                 <input name="streetnumber" value="<?php echo(isset($_POST['streetnumber']) ? XssHelper::sanitizeInput($_POST['streetnumber']) : ''); ?>" type="text" style="margin-top: 10px;" maxlength="50" required />
                 <p style="margin-top:15px;"><?php echo $translated["addition"] ?>:</p>
                 <input name="addition" value="<?php echo(isset($_POST['addition']) ? XssHelper::sanitizeInput($_POST['addition']) : ''); ?>" type="text" style="margin-top: 10px;" maxlength="3" required />

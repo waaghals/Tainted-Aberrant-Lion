@@ -23,12 +23,11 @@ use \PROJ\Entities\Review;
 use PROJ\Entities\Country;
 use PROJ\Entities\RightGroup;
 use PROJ\Entities\Recht;
+use PROJ\Entities\Translation;
 
-class TestdataController extends BaseController
-{
+class TestdataController extends BaseController {
 
-    private function emptyTables($em)
-    {
+    private function emptyTables($em) {
         $helperSet = new \Symfony\Component\Console\Helper\HelperSet(array(
             'em' => new \Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper($em)
         ));
@@ -44,8 +43,7 @@ class TestdataController extends BaseController
         ob_flush();
     }
 
-    private function createInstitute($em, $name, $type, $place, $lat, $long, $creator, $country, $street, $housenumber, $postalcode, $email, $telephone)
-    {
+    private function createInstitute($em, $name, $type, $place, $lat, $long, $creator, $country, $street, $housenumber, $postalcode, $email, $telephone) {
         $institute = new Institute();
         $institute->setName($name);
         $institute->setType($type);
@@ -81,8 +79,7 @@ class TestdataController extends BaseController
         return $institute;
     }
 
-    private function createUser($em, $username, $password, $salt, $rightGroup)
-    {
+    private function createUser($em, $username, $password, $salt, $rightGroup) {
         $account = new Account();
         $account->setUsername($username);
         $hash = hash('sha512', $password . $salt);
@@ -101,8 +98,7 @@ class TestdataController extends BaseController
         return $account;
     }
 
-    private function createStudent($em, $fName, $sName, $street, $housenr, $zipcode, $city, $account, $email)
-    {
+    private function createStudent($em, $fName, $sName, $street, $housenr, $zipcode, $city, $account, $email) {
         $student = new Student();
         $student->setFirstname($fName);
         $student->setSurname($sName);
@@ -129,8 +125,7 @@ class TestdataController extends BaseController
         return $student;
     }
 
-    private function createProject($em, $student, $institute, $type, $startDate, $endDate)
-    {
+    private function createProject($em, $student, $institute, $type, $startDate, $endDate) {
         $project = new Project();
         $project->setStudent($student);
         $project->setInstitute($institute);
@@ -149,8 +144,7 @@ class TestdataController extends BaseController
         return $project;
     }
 
-    private function createRightGroup($em, $name)
-    {
+    private function createRightGroup($em, $name) {
         $rightGroup = new RightGroup();
         $rightGroup->setName($name);
         $em->persist($rightGroup);
@@ -164,8 +158,7 @@ class TestdataController extends BaseController
         return $rightGroup;
     }
 
-    private function addRightToRightGroup($em, $right, $rightgroup)
-    {
+    private function addRightToRightGroup($em, $right, $rightgroup) {
         $rightgroup->addRight($right);
         $em->persist($rightgroup);
         $em->persist($right);
@@ -178,8 +171,7 @@ class TestdataController extends BaseController
         ob_flush();
     }
 
-    private function createRight($em, $name)
-    {
+    private function createRight($em, $name) {
         $right = new Recht();
         $right->setName($name);
         $em->persist($right);
@@ -193,8 +185,7 @@ class TestdataController extends BaseController
         return $right;
     }
 
-    private function createReview($em, $project, $assignRate, $accoRate, $guidRate, $text)
-    {
+    private function createReview($em, $project, $assignRate, $accoRate, $guidRate, $text) {
         $review = new Review();
         $review->setProject($project);
         $review->setAssignmentRating($assignRate);
@@ -215,8 +206,7 @@ class TestdataController extends BaseController
         ob_flush();
     }
 
-    private function createCountry($em, $iso_alpha2, $iso_alpha3, $iso_numeric, $fips_code, $name, $capital, $areainsqkm, $population, $continent, $tld, $currency, $languages)
-    {
+    private function createCountry($em, $iso_alpha2, $iso_alpha3, $iso_numeric, $fips_code, $name, $capital, $areainsqkm, $population, $continent, $tld, $currency, $languages) {
         $country = new Country();
         $country->setIso_alpha2($iso_alpha2);
         $country->setIso_alpha3($iso_alpha3);
@@ -251,8 +241,24 @@ class TestdataController extends BaseController
         return $country;
     }
 
-    public function IndexAction()
-    {
+    private function createTranslation($em, $key, $language, $translation) {
+        $translator = new Translation();
+        $translator->setSentenceKey($key);
+        $translator->setLanguage($language);
+        $translator->setTranslation($translation);
+
+        $em->persist($translator);
+
+        echo "New Translation with the following data has been succesfully added to the database:"
+        . "<br />Key: " . $key
+        . "<br />Language: " . $language
+        . "<br />Translation: " . $translation
+        . "<br /><br />";
+
+        ob_flush();
+    }
+
+    public function IndexAction() {
         $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
 
         ob_start();
@@ -550,6 +556,85 @@ class TestdataController extends BaseController
 
         $this->createReview($em, $projectX, 5, 3, 4, "Many fun activities to do here!");
         $this->createReview($em, $projectZ, 4, 4, 1, "Just do your job and they're happy.");
+
+        //Engels
+        $this->createTranslation($em, "worldmap", "english", "Worldmap");
+        $this->createTranslation($em, "logout", "english", "Logout");
+        $this->createTranslation($em, "welcome", "english", "Welcome");
+        $this->createTranslation($em, "login", "english", "Login");
+        $this->createTranslation($em, "register", "english", "Register");
+        $this->createTranslation($em, "location_type", "english", "Location Type");
+        $this->createTranslation($em, "education", "english", "Education");
+        $this->createTranslation($em, "business", "english", "Business");
+        $this->createTranslation($em, "project_type", "english", "Project Type");
+        $this->createTranslation($em, "minor", "english", "Minor");
+        $this->createTranslation($em, "eps", "english", "EPS");
+        $this->createTranslation($em, "graduation", "english", "Graduation");
+        $this->createTranslation($em, "internship", "english", "Internship");
+        $this->createTranslation($em, "country", "english", "Country");
+        $this->createTranslation($em, "contact_form", "english", "Contact Form");
+        $this->createTranslation($em, "to", "english", "To");
+        $this->createTranslation($em, "from", "english", "From");
+        $this->createTranslation($em, "subject", "english", "Subject");
+        $this->createTranslation($em, "message", "english", "Message");
+        $this->createTranslation($em, "fields_marked", "english", "Fields marked with asterisk (*) are required.");
+        $this->createTranslation($em, "send", "english", "Send");
+        $this->createTranslation($em, "successfully", "english", "Your message was sent successfully.");
+        $this->createTranslation($em, "back", "english", "Back");
+        $this->createTranslation($em, "username", "english", "Username");
+        $this->createTranslation($em, "password", "english", "Password");
+        $this->createTranslation($em, "repeat_password", "english", "Repeat Password");
+        $this->createTranslation($em, "email", "english", "E-Mail");
+        $this->createTranslation($em, "first_name", "english", "First name");
+        $this->createTranslation($em, "surname", "english", "Surname");
+        $this->createTranslation($em, "city", "english", "City");
+        $this->createTranslation($em, "zipcode", "english", "Zip code");
+        $this->createTranslation($em, "street", "english", "Street");
+        $this->createTranslation($em, "street_number", "english", "Street number");
+        $this->createTranslation($em, "addition", "english", "Addition");
+        $this->createTranslation($em, "registration_code", "english", "Registration Code");
+        $this->createTranslation($em, "search", "english", "Search");
+        $this->createTranslation($em, "reset", "english", "Reset");
+
+        //Nederlands
+        $this->createTranslation($em, "worldmap", "dutch", "Wereldkaart");
+        $this->createTranslation($em, "logout", "dutch", "Log uit");
+        $this->createTranslation($em, "welcome", "dutch", "Welkom");
+        $this->createTranslation($em, "login", "dutch", "Log in");
+        $this->createTranslation($em, "register", "dutch", "Registreren");
+        $this->createTranslation($em, "location_type", "dutch", "Locatie Type");
+        $this->createTranslation($em, "education", "dutch", "Opleidingsinstituut");
+        $this->createTranslation($em, "business", "dutch", "Bedrijf");
+        $this->createTranslation($em, "project_type", "dutch", "Project Type");
+        $this->createTranslation($em, "minor", "dutch", "Minor");
+        $this->createTranslation($em, "eps", "dutch", "EPS");
+        $this->createTranslation($em, "graduation", "dutch", "Afstudeer stage");
+        $this->createTranslation($em, "internship", "dutch", "Meeloop stage");
+        $this->createTranslation($em, "country", "dutch", "Land");
+        $this->createTranslation($em, "contact_form", "dutch", "Contact Formulier");
+        $this->createTranslation($em, "to", "dutch", "Aan");
+        $this->createTranslation($em, "from", "dutch", "Van");
+        $this->createTranslation($em, "subject", "dutch", "Onderwerp");
+        $this->createTranslation($em, "message", "dutch", "Bericht");
+        $this->createTranslation($em, "fields_marked", "dutch", "Velden met een asterisk (*) zijn verplicht.");
+        $this->createTranslation($em, "send", "dutch", "Stuur");
+        $this->createTranslation($em, "successfully", "dutch", "Jouw bericht is succesvol verstuurd.");
+        $this->createTranslation($em, "back", "dutch", "Terug");
+        $this->createTranslation($em, "username", "dutch", "Gebruikersnaam");
+        $this->createTranslation($em, "password", "dutch", "Wachtwoord");
+        $this->createTranslation($em, "repeat_password", "dutch", "Herhaal Wachtwoord");
+        $this->createTranslation($em, "email", "dutch", "E-Mail");
+        $this->createTranslation($em, "first_name", "dutch", "Voornaam");
+        $this->createTranslation($em, "surname", "dutch", "Achternaam");
+        $this->createTranslation($em, "city", "dutch", "Stad");
+        $this->createTranslation($em, "zipcode", "dutch", "Postcode");
+        $this->createTranslation($em, "street", "dutch", "Straat");
+        $this->createTranslation($em, "street_number", "dutch", "Straat nummer");
+        $this->createTranslation($em, "addition", "dutch", "Toevoeging");
+        $this->createTranslation($em, "registration_code", "dutch", "Registratie Code");
+        $this->createTranslation($em, "search", "dutch", "Zoeken");
+        $this->createTranslation($em, "reset", "dutch", "Reset");
+
 
         $em->flush();
         ob_end_flush();
