@@ -595,6 +595,9 @@ class TestdataController extends BaseController {
         $this->createTranslation($em, "registration_code", "english", "Registration Code");
         $this->createTranslation($em, "search", "english", "Search");
         $this->createTranslation($em, "reset", "english", "Reset");
+        $this->createTranslation($em, "language", "english", "Language");
+        $this->createTranslation($em, "dutch", "english", "Dutch");
+        $this->createTranslation($em, "english", "english", "English");
 
         //Nederlands
         $this->createTranslation($em, "worldmap", "dutch", "Wereldkaart");
@@ -634,6 +637,9 @@ class TestdataController extends BaseController {
         $this->createTranslation($em, "registration_code", "dutch", "Registratie Code");
         $this->createTranslation($em, "search", "dutch", "Zoeken");
         $this->createTranslation($em, "reset", "dutch", "Reset");
+        $this->createTranslation($em, "language", "dutch", "Taal");
+        $this->createTranslation($em, "dutch", "dutch", "Nederlands");
+        $this->createTranslation($em, "english", "dutch", "Engels");
 
 
         $em->flush();

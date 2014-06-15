@@ -1,6 +1,6 @@
 <?php
 
-$toTranslate = array("worldmap","logout","welcome","login","register","search","reset","location_type","education","business","project_type","minor","eps","graduation","internship","country");
+$toTranslate = array("worldmap","logout","welcome","login","register","search","reset","location_type","education","business","project_type","minor","eps","graduation","internship","country","language","english","dutch");
 $translator = new PROJ\Services\TranslationService();
 $translated = $translator->translateAll($toTranslate);
 
@@ -44,6 +44,17 @@ if (isset($_SESSION['userID'])) {
             <div style="width:15px; float:right;">
                 &nbsp;
             </div>
+            <div class="filterblock">
+                <form action="ajax/changeLanguage" method="post">
+                <div><?php echo $translated["language"] ?>:</div>
+                <select id="language" name="language" onchange="this.form.submit()">
+                    <option value="english" <?php if($_SESSION['language']=="english") echo "selected" ?>><?php echo $translated["english"] ?></option>
+                    <option value="dutch" <?php if($_SESSION['language']=="dutch") echo "selected" ?>><?php echo $translated["dutch"] ?></option>
+                </select>
+                
+                </form>
+            </div>
+            
             <div>
                 <button class="headerbutton" onclick="resetFilters()"><?php echo $translated["reset"] ?></button>
             </div>
