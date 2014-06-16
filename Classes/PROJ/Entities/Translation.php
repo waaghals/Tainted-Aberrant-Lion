@@ -8,12 +8,12 @@ namespace PROJ\Entities;
 class Translation {
 
     /**
-     *  @id @Column(type="string")
+     *  @Id @Column(type="string")
      */
     private $sentenceKey;
 
     /**
-     * @id @Column(type="string")
+     * @Id @Column(type="languagetype")
      */
     private $language;
 

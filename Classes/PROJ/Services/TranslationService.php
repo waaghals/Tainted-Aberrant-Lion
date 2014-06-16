@@ -5,6 +5,13 @@ namespace PROJ\Services;
 use PROJ\Exceptions\ServerException;
 
 class TranslationService {
+    
+    private $em;
+    
+    function __construct() 
+    { 
+        $this->em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
+    } 
 
     public function translate($sentenceKey) {
 
@@ -12,8 +19,7 @@ class TranslationService {
             $_SESSION['language'] = "english";
         }
 
-        $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
-        $translation = $em->getRepository('PROJ\Entities\Translation')->findOneBy(array('sentenceKey' => strtolower($sentenceKey), 'language' => $_SESSION["language"]));
+        $translation = $this->em->getRepository('PROJ\Entities\Translation')->findOneBy(array('sentenceKey' => strtolower($sentenceKey), 'language' => $_SESSION["language"]));
         return $translation->getTranslation();
     }
 
