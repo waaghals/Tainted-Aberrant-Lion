@@ -12,8 +12,15 @@ class RegistrationTest extends \PHPUnit_Framework_TestCase
 
     public function __construct()
     {
-        // $this->ResetData();
         $this->service = new AccountService();
+        $observer      = $this->getMock('PROJ\Services\AccountService',
+                                        array('checkRegistrationCode'));
+
+        $observer->expects($this->many())
+                ->method('checkRegistrationCode')
+                ->will($this->returnValue(true));
+
+        $this->service->attach($observer);
     }
 
     public function ResetData()
@@ -28,6 +35,7 @@ class RegistrationTest extends \PHPUnit_Framework_TestCase
         $this->dummydata['zipcode']          = "5111AA";
         $this->dummydata['streetnumber']     = "256";
         $this->dummydata['registrationcode'] = "abc";
+        $this->dummydata['email']            = "test@example.com";
     }
 
     public function testRegistrationInputValidationCheckPass()
