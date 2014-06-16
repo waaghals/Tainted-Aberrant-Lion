@@ -10,6 +10,8 @@ class RegistrationTest extends \PHPUnit_Framework_TestCase
 
     public function __construct()
     {
+        parent::__construct();
+
         $this->service = $this->getMock('\PROJ\Services\AccountService');
 
         $this->service->expects($this->many())
