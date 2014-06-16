@@ -2,8 +2,6 @@
 
 namespace PROJ\Tests;
 
-use PROJ\Services\AccountService;
-
 class RegistrationTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -12,15 +10,11 @@ class RegistrationTest extends \PHPUnit_Framework_TestCase
 
     public function __construct()
     {
-        $this->service = new AccountService();
-        $observer      = $this->getMock('PROJ\Services\AccountService',
-                                        array('checkRegistrationCode'));
+        $this->service = $this->getMock('\PROJ\Services\AccountService');
 
-        $observer->expects($this->many())
+        $this->service->expects($this->many())
                 ->method('checkRegistrationCode')
                 ->will($this->returnValue(true));
-
-        $this->service->attach($observer);
     }
 
     public function ResetData()
