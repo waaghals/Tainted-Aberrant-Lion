@@ -39,7 +39,7 @@ class RegistrationTest extends \PHPUnit_Framework_TestCase
         $this->ResetData();
 
         $this->assertEquals($this->service->validateInput($this->dummydata),
-                                                          true);
+                                                          false);
     }
 
     public function testRegistrationInputValidationUsernameFail()
