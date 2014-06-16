@@ -12,9 +12,8 @@ class RegistrationTest extends \PHPUnit_Framework_TestCase
     {
         parent::__construct();
 
-        $this->service = $this->getMock('\PROJ\Services\AccountService');
-
-        $this->service->setMethods(array('checkRegistrationCode'));
+        $this->service = $this->getMock('\PROJ\Services\AccountService',
+                                        array('checkRegistrationCode'));
         $this->service->expects($this->any())
                 ->method('checkRegistrationCode')
                 ->will($this->returnValue(true));
