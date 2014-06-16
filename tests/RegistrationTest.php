@@ -14,6 +14,7 @@ class RegistrationTest extends \PHPUnit_Framework_TestCase
 
         $this->service = $this->getMock('\PROJ\Services\AccountService');
 
+        $this->service->setMethods(array('checkRegistrationCode'));
         $this->service->expects($this->any())
                 ->method('checkRegistrationCode')
                 ->will($this->returnValue(true));
