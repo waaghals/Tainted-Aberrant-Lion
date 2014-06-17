@@ -13,15 +13,16 @@ class AccountService
 
     public function Login($username, $password)
     {
-        $em = DoctrineHelper::instance()->getEntityManager();
+        $em   = DoctrineHelper::instance()->getEntityManager();
         $user = $em->getRepository('PROJ\Entities\Account')->findOneBy(array('username' => $username));
         if ($user != null) {
             //Check bruteforce
             if ($this->checkbruteforce($user->getId()) !== true) {
                 $passwordEntered = hash('sha512', $password . $user->getSalt());
                 if ($passwordEntered == $user->getPassword()) {
-                    $_SESSION['userID'] = $user->getId();
-                    $_SESSION['login_string'] = hash('sha512', $user->getPassword() . $_SERVER['HTTP_USER_AGENT'] . $_SERVER['REMOTE_ADDR']);
+                    $_SESSION['userID']       = $user->getId();
+                    $_SESSION['login_string'] = hash('sha512',
+                                                     $user->getPassword() . $_SERVER['HTTP_USER_AGENT'] . $_SERVER['REMOTE_ADDR']);
 
                     return true;
                 } else {
@@ -44,7 +45,7 @@ class AccountService
 
     private function checkbruteforce($user_id)
     {
-        $now = time();
+        $now            = time();
         $valid_attempts = $now - (2 * 60 * 60); //Entry's laatste 2 uur
 
 
@@ -52,8 +53,10 @@ class AccountService
         $qb = $em->createQueryBuilder();
         $qb->select('la')
                 ->from('\PROJ\Entities\LoginAttempt', 'la')
-                ->where($qb->expr()->gte('la.time', $qb->expr()->literal($valid_attempts)))
-                ->andWhere($qb->expr()->eq('la.account', $qb->expr()->literal($user_id)));
+                ->where($qb->expr()->gte('la.time',
+                                         $qb->expr()->literal($valid_attempts)))
+                ->andWhere($qb->expr()->eq('la.account',
+                                           $qb->expr()->literal($user_id)));
 
         //3 login attempts
         if (count($qb->getQuery()->getResult()) > 3) {
@@ -66,7 +69,7 @@ class AccountService
     public function validateInput($data)
     {
         if (empty($data['username']) || empty($data['password']) || empty($data['passwordagain']) || empty($data['firstname']) || empty($data['surname']) || empty($data['city']) || empty($data['zipcode']) || empty($data['street']) ||
-                empty($data['streetnumber']) || empty($data['registrationcode'])) {
+                empty($data['streetnumber']) || empty($data['registrationcode']) || empty($data['email'])) {
             return "Not everything is filled in";
         }
         foreach ($data as $input) {
@@ -81,7 +84,8 @@ class AccountService
             return "Streetnumber is not a number";
         if (!($data['password'] === $data['passwordagain']))
             return "Passwords did not match";
-        if (!$this->checkRegistrationCode($data['registrationcode'], $data['email']))
+        if (!$this->checkRegistrationCode($data['registrationcode'],
+                                          $data['email']))
             return "Registration code is not valid.";
         //return "Registration succeeded!";
         return false;
@@ -93,8 +97,8 @@ class AccountService
         if (!$em->getRepository('\PROJ\Entities\Account')->findOneBy(array('username' => $data['username'])) == null) {
             return "User: " . XssHelper::sanitizeInput($data['username']) . " already exists. <br>";
         }
-        $hashing = new Hashing();
-        $account = new Account();
+        $hashing      = new Hashing();
+        $account      = new Account();
         $passwordsalt = explode(';', $hashing->createHash($data['password']));
         $account->setUsername($data['username']);
         $account->setPassword($passwordsalt[0]);
@@ -106,7 +110,7 @@ class AccountService
 
     public function createStudent($account, $data)
     {
-        $em = DoctrineHelper::instance()->getEntityManager();
+        $em      = DoctrineHelper::instance()->getEntityManager();
         $student = new Student();
         $student->setFirstname($data['firstname']);
         $student->setSurname($data['surname']);
@@ -129,8 +133,9 @@ class AccountService
 
     public function checkRegistrationCode($code, $email)
     {
-        $em = DoctrineHelper::instance()->getEntityManager();
-        $result = $em->getRepository('PROJ\Entities\RegistrationCode')->findOneBy(array('email' => $email));
+        $em     = DoctrineHelper::instance()->getEntityManager();
+        $result = $em->getRepository('PROJ\Entities\RegistrationCode')->findOneBy(array(
+            'email' => $email));
 
         if ($result != null) {
             if ($result->getCode() === $code) {
@@ -146,12 +151,14 @@ class AccountService
     {
         $em = DoctrineHelper::instance()->getEntityManager();
         if (isset($_SESSION['userID'], $_SESSION['login_string'])) {
-            $user_id = $_SESSION['userID'];
+            $user_id      = $_SESSION['userID'];
             $login_string = $_SESSION['login_string'];
 
-            $user = $em->getRepository('PROJ\Entities\Account')->findOneBy(array('id' => $user_id));
+            $user = $em->getRepository('PROJ\Entities\Account')->findOneBy(array(
+                'id' => $user_id));
             if ($user != null) {
-                $login_check = hash('sha512', $user->getPassword() . $_SERVER['HTTP_USER_AGENT'] . $_SERVER['REMOTE_ADDR']);
+                $login_check = hash('sha512',
+                                    $user->getPassword() . $_SERVER['HTTP_USER_AGENT'] . $_SERVER['REMOTE_ADDR']);
                 if ($login_check == $login_string) {
                     return true;
                 }
