@@ -45,8 +45,8 @@
                             <td><p><?php echo count($em->getRepository('\PROJ\Entities\Institute')->findBy(array('creator' => $student->getId()))); ?></p></td>
                             <td><p><?php echo count($em->getRepository('\PROJ\Entities\Project')->findBy(array('student' => $student->getId()))); ?></p></td>
                             <td><p><?php echo count($reviews); ?></p></td>
-                            <td style="width: 40px;"><img class="action_btn users_update" data-user-id="<?php echo $student->getId(); ?>" src="/images/edit.png" /></td>
-                            <td style="width: 40px;"><img class="action_btn users_remove" data-user-id="<?php echo $student->getId(); ?>" src="/images/delete.png" /></td>
+                            <td style="width: 40px;"><img class="action_btn users_update update_<?php echo $student->getId(); ?>" data-user-id="<?php echo $student->getId(); ?>" src="/images/edit.png" /></td>
+                            <td style="width: 40px;"><img class="action_btn users_remove remove_<?php echo $student->getId(); ?>" data-user-id="<?php echo $student->getId(); ?>" src="/images/delete.png" /></td>
                         </tr>
                         <?php
                     }
