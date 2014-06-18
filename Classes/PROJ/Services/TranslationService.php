@@ -3,23 +3,24 @@
 namespace PROJ\Services;
 
 use PROJ\Exceptions\ServerException;
+use PROJ\DBAL\LanguageType;
 
 class TranslationService {
     
-    private $em;
+    private $repo;
     
     function __construct() 
     { 
-        $this->em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
+        $this->repo = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager()->getRepository('PROJ\Entities\Translation');
     } 
 
     public function translate($sentenceKey) {
 
         if (!isset($_SESSION['language']) || empty($_SESSION['language'])) {
-            $_SESSION['language'] = "english";
+            $_SESSION['language'] = LanguageType::ENGLISH;
         }
 
-        $translation = $this->em->getRepository('PROJ\Entities\Translation')->findOneBy(array('sentenceKey' => strtolower($sentenceKey), 'language' => $_SESSION["language"]));
+        $translation = $this->repo->findOneBy(array('sentenceKey' => strtolower($sentenceKey), 'language' => $_SESSION["language"]));
         return $translation->getTranslation();
     }
 

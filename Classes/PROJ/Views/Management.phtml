@@ -3,6 +3,10 @@
 use PROJ\Helper\XssHelper;
 use PROJ\Helper\RightHelper;
 
+$toTranslate = array("management", "home", "rpl", "my_account", "change_password", "users", "upload_excelsheet", "locations", "reviews", "projects", "coordinator");
+$translator = new PROJ\Services\TranslationService();
+$translated = $translator->translateAll($toTranslate);
+
 $em   = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
 $user = $em->getRepository('\PROJ\Entities\Account')->find($_SESSION['userID'])->getStudent();
 
@@ -24,29 +28,29 @@ $content->additionalValues = $additionalValues;
     ?>
 </div>
 <div id="management_left">
-    <h2>Management</h2>
+    <h2><?php echo $translated["management"] ?></h2>
 
     <div class="menuitem" style="border-top:1px solid #d2dce1; margin-top:20px;">
-        <a href="/Management/Home">Home</a>
+        <a href="/Management/Home"><?php echo $translated["home"] ?></a>
     </div>
     <div class="menuitem">
-        <a href="/Management/MyReviews">Reviews, Projects & Locations</a>
+        <a href="/Management/MyReviews"><?php echo $translated["rpl"] ?></a>
     </div>
     <div class="menuitem">
-        <a href="/Management/MyAccount">My Account</a>
+        <a href="/Management/MyAccount"><?php echo $translated["my_account"] ?></a>
     </div>
     <div class="menuitem">
-        <a href="/Management/ChangePassword">Change Password</a>
+        <a href="/Management/ChangePassword"><?php echo $translated["change_password"] ?></a>
     </div>
     <?php if (RightHelper::loggedUserHasRight("VIEW_LOCATIONS") || RightHelper::loggedUserHasRight("VIEW_PROJECTS") || RightHelper::loggedUserHasRight("VIEW_REVIEWS") || RightHelper::loggedUserHasRight("VIEW_USERS")) {
         ?>
-        <h2>Coordinator</h2>
+        <h2><?php echo $translated["coordinator"] ?></h2>
 
         <div class="menuitem" style="border-top:1px solid #d2dce1; margin-top:20px;">
-            <a href="/Management/Users">Users</a>
+            <a href="/Management/Users"><?php echo $translated["users"] ?></a>
         </div>
         <div class="menuitem">
-            <a href="/Management/Upload">Upload Excelsheet</a>
+            <a href="/Management/Upload"><?php echo $translated["upload_excelsheet"] ?></a>
         </div><!--
         <div class="menuitem">
             <a href="/Management/Locations">Locations</a>
@@ -59,22 +63,22 @@ $content->additionalValues = $additionalValues;
         </div>-->
         <?php if (RightHelper::loggedUserHasRight("VIEW_USERS")) { ?>
             <div class="menuitem" style="border-top:1px solid #d2dce1; margin-top:20px;">
-                <a href="/Management/Users">Users</a>
+                <a href="/Management/Users"><?php echo $translated["users"] ?></a>
             </div>
         <?php } ?>
         <?php if (RightHelper::loggedUserHasRight("VIEW_LOCATIONS")) { ?>
             <div class="menuitem">
-                <a href="/Management/Locations">Locations</a>
+                <a href="/Management/Locations"><?php echo $translated["locations"] ?></a>
             </div>
         <?php } ?>
         <?php if (RightHelper::loggedUserHasRight("VIEW_REVIEWS")) { ?>
             <div class="menuitem">
-                <a href="/Management/Reviews">Reviews</a>
+                <a href="/Management/Reviews"><?php echo $translated["reviews"] ?></a>
             </div>
         <?php } ?>
         <?php if (RightHelper::loggedUserHasRight("VIEW_PROJECTS")) { ?>
             <div class="menuitem">
-                <a href="/Management/Projects">Projects</a>
+                <a href="/Management/Projects"><?php echo $translated["projects"] ?></a>
             </div>
         <?php } ?>
     <?php } ?>
