@@ -26,7 +26,7 @@ Sam|[#104](https://github.com/waaghals/Tainted-Aberrant-Lion/issues/104) [#113](
 
 Wie|Afgewerkte issues|Total Size
 --------|--------|--------
-Patrick|[#135](https://github.com/waaghals/Tainted-Aberrant-Lion/issues/135)|21
+Patrick|[#135](https://github.com/waaghals/Tainted-Aberrant-Lion/issues/135) [#142](https://github.com/waaghals/Tainted-Aberrant-Lion/issues/142)|26
 Jelle||0
 Sebastian||0
 Thijs||0
