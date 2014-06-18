@@ -842,6 +842,11 @@ class AjaxController extends BaseController
             echo "succes";
         }
     }
+    
+    public function changeLanguageAction(){
+        $_SESSION['language'] = $_POST['language'];
+        \PROJ\Helper\HeaderHelper::redirect();
+    }
 
     public function getHelpInformationAction()
     {
