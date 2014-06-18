@@ -27,6 +27,10 @@ use PROJ\Entities\Clippy;
 use PROJ\DBAL\ApprovalStateType as Status;
 use PROJ\Entities\Translation;
 use PROJ\DBAL\LanguageType as Language;
+use PROJ\Entities\RegistrationCode;
+use PROJ\Entities\Clippy;
+use PROJ\DBAL\ApprovalStateType as Status;
+use PROJ\Entities\Translation;
 
 class TestdataController extends BaseController
 {
@@ -89,6 +93,22 @@ class TestdataController extends BaseController
 
         ob_flush();
         return $institute;
+    }
+
+    private function createRegistrationCode($em, $email, $code)
+    {
+        $regcode = new RegistrationCode();
+        $regcode->setEmail($email);
+        $regcode->setCode($code);
+        $em->persist($regcode);
+
+        echo "New registrationcode with the following data has been succesfully added to the database:"
+        . "<br />Email: " . $email
+        . "<br />Code: " . $code
+        . "<br /><br />";
+
+        ob_flush();
+        return $regcode;
     }
 
     private function createUser($em, $username, $password, $salt, $rightGroup)
@@ -266,6 +286,7 @@ class TestdataController extends BaseController
 
     private function createClippy($em, $controller, $action, $description)
     {
+
         $clippy = new Clippy();
         $clippy->setController($controller);
         $clippy->setAction($action);
@@ -280,6 +301,7 @@ class TestdataController extends BaseController
 
     private function createTranslation($em, $key, $language, $translation)
     {
+
         $translator = new Translation();
         $translator->setSentenceKey($key);
         $translator->setLanguage($language);
@@ -864,6 +886,42 @@ class TestdataController extends BaseController
         $right = $this->createRight($em, "UPLOAD_EXCEL");
         $this->addRightToRightGroup($em, $right, $coordinator);
 
+        $this->createRegistrationCode($em, "samsam_31393@hotmail.com",
+                "24f38a16d81a5a4662c8efc0a1fc879aaba9b051");
+
+        $kjansen = $this->createUser($em, "kjansen", "qwerty",
+                "HGJDGFSJHDFJHSDf", null);
+        $hbakker = $this->createUser($em, "hbakker", "password",
+                "E*(%&YUIERHDGFER", $coordinator);
+
+        $kees  = $this->createStudent($em, "Kees", "Jansen", "Jansenlaan", 15,
+                "1234AB", "eindhoven", $kjansen, "k.jansen@student.avans.nl");
+        $harry = $this->createStudent($em, "Harry", "Bakker", "Bakkersweg", 15,
+                "5678CD", "utrecht", $hbakker, "h.bakker@student.avans.nl");
+
+        $avans = $this->createInstitute($em, "Avans Hogeschool", "education",
+                "'s-Hertogenbosch", 51.688946, 5.287256, $kees, $nederland,
+                "Onderwijsboulevard", "215", "5223DE", "contact@avans.nl",
+                "(073) 629 52 95");
+        $mac   = $this->createInstitute($em, "McDonald's", "business", "Arnhem",
+                51.9635996, 5.8930421, $harry, $nederland, "Rijnstraat", "36",
+                "6811EW", "arnhem@mcdonalds.nl", "026-4456234");
+        $RWTH  = $this->createInstitute($em, "RWTH University Aachen",
+                "business", "Aachen", 50.78692, 6.04635, $harry, $duitsland,
+                "Steinbachstrase", "7", "52074", "test@toip.nl", "3292-234659");
+
+        $projectX = $this->createProject($em, $kees, $avans, "internship",
+                new \DateTime('03/17/2014'), new \DateTime('05/17/2014'));
+        $projectZ = $this->createProject($em, $harry, $mac, "minor",
+                new \DateTime('02/04/2014'), new \DateTime('06/20/2014'));
+        $projectY = $this->createProject($em, $harry, $RWTH, "minor",
+                new \DateTime('07/23/2013'), new \DateTime('02/07/2014'));
+
+        $this->createReview($em, $projectX, 5, 3, 4,
+                "Many fun activities to do here!");
+        $this->createReview($em, $projectZ, 4, 4, 1,
+                "Just do your job and they're happy.");
+
         $this->createClippy($em, "home", "index",
                 "This is the map overview. Click on a marker to view the info.");
         $this->createClippy($em, "account", "login",
@@ -898,39 +956,6 @@ class TestdataController extends BaseController
                 "Select an Excel file to be imported into the system.");
         $this->createClippy($em, "management", "uploadfile",
                 "Here you can view what has been added and what already existed.");
-
-        $kjansen = $this->createUser($em, "kjansen", "qwerty",
-                "HGJDGFSJHDFJHSDf", null);
-        $hbakker = $this->createUser($em, "hbakker", "password",
-                "E*(%&YUIERHDGFER", $coordinator);
-
-        $kees  = $this->createStudent($em, "Kees", "Jansen", "Jansenlaan", 15,
-                "1234AB", "eindhoven", $kjansen, "k.jansen@student.avans.nl");
-        $harry = $this->createStudent($em, "Harry", "Bakker", "Bakkersweg", 15,
-                "5678CD", "utrecht", $hbakker, "h.bakker@student.avans.nl");
-
-        $avans = $this->createInstitute($em, "Avans Hogeschool", "education",
-                "'s-Hertogenbosch", 51.688946, 5.287256, $kees, $nederland,
-                "Onderwijsboulevard", "215", "5223DE", "contact@avans.nl",
-                "(073) 629 52 95");
-        $mac   = $this->createInstitute($em, "McDonald's", "business", "Arnhem",
-                51.9635996, 5.8930421, $harry, $nederland, "Rijnstraat", "36",
-                "6811EW", "arnhem@mcdonalds.nl", "026-4456234");
-        $RWTH  = $this->createInstitute($em, "RWTH University Aachen",
-                "business", "Aachen", 50.78692, 6.04635, $harry, $duitsland,
-                "Steinbachstrase", "7", "52074", "test@toip.nl", "3292-234659");
-
-        $projectX = $this->createProject($em, $kees, $avans, "internship",
-                new \DateTime('03/17/2014'), new \DateTime('05/17/2014'));
-        $projectZ = $this->createProject($em, $harry, $mac, "minor",
-                new \DateTime('02/04/2014'), new \DateTime('06/20/2014'));
-        $projectY = $this->createProject($em, $harry, $RWTH, "minor",
-                new \DateTime('07/23/2013'), new \DateTime('02/07/2014'));
-
-        $review1 = $this->createReview($em, $projectX, 5, 3, 4,
-                "Many fun activities to do here!");
-        $review2 = $this->createReview($em, $projectZ, 4, 4, 1,
-                "Just do your job and they're happy.");
 
         //Engels
         $this->createTranslation($em, "worldmap", "english", "Worldmap");

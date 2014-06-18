@@ -2,8 +2,6 @@
 
 namespace PROJ\Tests;
 
-use PROJ\Services\AccountService;
-
 class RegistrationTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -12,27 +10,36 @@ class RegistrationTest extends \PHPUnit_Framework_TestCase
 
     public function __construct()
     {
-        // $this->ResetData();
-        $this->service = new AccountService();
+        parent::__construct();
+
+        $this->service = $this->getMock('\PROJ\Services\AccountService',
+                                        array('checkRegistrationCode'));
+        $this->service->expects($this->any())
+                ->method('checkRegistrationCode')
+                ->will($this->returnValue(true));
     }
 
     public function ResetData()
     {
-        $this->dummydata['username'] = "Dummy";
-        $this->dummydata['password'] = "Dummy";
-        $this->dummydata['passwordagain'] = "Dummy";
-        $this->dummydata['firstname'] = "Dummy";
-        $this->dummydata['surname'] = "Dummy";
-        $this->dummydata['city'] = "Dummy";
-        $this->dummydata['street'] = "Dummy";
-        $this->dummydata['zipcode'] = "Dummy";
+        $this->dummydata['username']         = "Patrick";
+        $this->dummydata['password']         = "test";
+        $this->dummydata['passwordagain']    = "test";
+        $this->dummydata['firstname']        = "Patrick";
+        $this->dummydata['surname']          = "Berenschot";
+        $this->dummydata['city']             = "'s -Hertogenbosch";
+        $this->dummydata['street']           = "Straatnaam";
+        $this->dummydata['zipcode']          = "5111AA";
+        $this->dummydata['streetnumber']     = "256";
+        $this->dummydata['registrationcode'] = "abc";
+        $this->dummydata['email']            = "test@example.com";
     }
 
     public function testRegistrationInputValidationCheckPass()
     {
         $this->ResetData();
 
-        $this->assertEquals($this->service->validateInput($this->dummydata), true);
+        $this->assertEquals($this->service->validateInput($this->dummydata),
+                                                          false);
     }
 
     public function testRegistrationInputValidationUsernameFail()
@@ -41,7 +48,8 @@ class RegistrationTest extends \PHPUnit_Framework_TestCase
 
         $this->dummydata['username'] = "<script>alert('hoi');</script>";
 
-        $this->assertNotEquals($this->service->validateInput($this->dummydata), true);
+        $this->assertNotEquals($this->service->validateInput($this->dummydata),
+                                                             true);
     }
 
     public function testRegistrationInputValidationPasswordNotEquals()
@@ -50,7 +58,8 @@ class RegistrationTest extends \PHPUnit_Framework_TestCase
 
         $this->dummydata['passwordagain'] = "NotDummy";
 
-        $this->assertNotEquals($this->service->validateInput($this->dummydata), true);
+        $this->assertNotEquals($this->service->validateInput($this->dummydata),
+                                                             true);
     }
 
     public function __toString()
