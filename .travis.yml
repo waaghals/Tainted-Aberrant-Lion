@@ -6,8 +6,8 @@ php:
   - 5.5
 
 before_script:
-  - npm install junit
+  - npm install java
   
 script:
   - phpunit --configuration phpunit.xml
-  - junit tests/Selenium/executeSeleniumTests.sh
+  - junit /tests/Selenium/executeSeleniumTests.sh
