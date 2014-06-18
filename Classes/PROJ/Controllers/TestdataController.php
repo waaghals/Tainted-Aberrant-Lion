@@ -81,6 +81,22 @@ class TestdataController extends BaseController {
         ob_flush();
         return $institute;
     }
+    
+    private function createRegistrationCode($em, $email, $code)
+    {
+        $regcode = new RegistrationCode();
+        $regcode->setEmail($email);
+        $regcode->setCode($code);
+        $em->persist($regcode);
+
+        echo "New registrationcode with the following data has been succesfully added to the database:"
+        . "<br />Email: " . $email
+        . "<br />Code: " . $code
+        . "<br /><br />";
+
+        ob_flush();
+        return $regcode;
+    }
 
     private function createUser($em, $username, $password, $salt, $rightGroup) {
         $account = new Account();
