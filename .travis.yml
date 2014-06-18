@@ -10,4 +10,4 @@ before_script:
   
 script:
   - phpunit --configuration phpunit.xml
-  - junit /tests/Selenium/executeSeleniumTests.sh
+  - junit Runnable Selenium Tests.jar
