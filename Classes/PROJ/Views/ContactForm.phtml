@@ -1,7 +1,22 @@
 <?php
+
+/*
+ * 15 contact formulier
+ * 16 to
+ * 17 from
+ * 18 subject
+ * 19 message
+ * 20 Fields marked with asterisk (*) are required.
+ * 21 send
+ */
+
+$toTranslate = array("contact_form","to","from","subject","message","fields_marked","send");
+$translator = new PROJ\Services\TranslationService();
+$translated = $translator->translateAll($toTranslate);
+
 use PROJ\Helper\XssHelper;
 $header = new \PROJ\Tools\Template("Partial/Header");
-$header->title = "Contact Formulier";
+$header->title = $translated["contact_form"];
 
 echo $header;
 
@@ -18,21 +33,21 @@ echo $bar;
             </div>
             <div style="clear:both;"></div>
             <?php endif; ?>
-            <p>To: *</p>
+            <p><?php echo $translated["to"] ?>: *</p>
             <input type="text" value="<?php echo $studentName; ?>" name="mailTo" style="margin-top: 10px;" disabled />
-            <p style="margin-top:15px;">From: *</p>
+            <p style="margin-top:15px;"><?php echo $translated["from"] ?>: *</p>
             <input type="text" value="<?php echo(isset($_POST['mailFrom']) ? XssHelper::sanitizeInput($_POST['mailFrom']) : ''); ?>" name="mailFrom" style="margin-top: 10px;" autofocus />
-            <p style="margin-top:15px;">Subject: *</p>
+            <p style="margin-top:15px;"><?php echo $translated["subject"] ?>: *</p>
             <input type="text" value="<?php echo(isset($_POST['mailSubject']) ? XssHelper::sanitizeInput($_POST['mailSubject']) : ''); ?>" name="mailSubject" style="margin-top: 10px;" />
-            <p style="margin-top:15px;">Message: *</p>
+            <p style="margin-top:15px;"><?php echo $translated["message"] ?>: *</p>
             <textarea name="mailContent" style="margin-top: 10px;"><?php echo(isset($_POST['mailContent']) ? XssHelper::sanitizeInput($_POST['mailContent']) : ''); ?></textarea>
-            <p style="margin-top:25px; font-size:10px; color: #a1a1a1;">Fields marked with asterisk (*) are required.</p>
+            <p style="margin-top:25px; font-size:10px; color: #a1a1a1;"><?php echo $translated["fields_marked"] ?></p>
         </div>
         <img src="/images/login_split.png">
         <div id="login_container_bottomhalf">
             <div class="fancy_button" id="login_button" style="left: 335px; top: 160px;">
                 <img src="/images/btn_left.png" />
-                <p>Send</p>
+                <p><?php echo $translated["send"] ?></p>
                 <img src="/images/btn_right.png" />
             </div>
         </div>

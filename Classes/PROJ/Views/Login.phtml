@@ -1,6 +1,17 @@
 <?php
+
+/*
+ * 24 Login
+ * 25 Username
+ * 26 Password
+ */
+
+$toTranslate = array("login","username","password");
+$translator = new PROJ\Services\TranslationService();
+$translated = $translator->translateAll($toTranslate);
+
 $header = new \PROJ\Tools\Template("Partial/Header");
-$header->title = "Login";
+$header->title = $translated["login"];
 
 echo $header;
 
@@ -19,16 +30,16 @@ echo $bar;
             <?php
             endif;
             ?>
-            <p>Username:</p>
+            <p><?php echo $translated["username"] ?>:</p>
             <input type="text" value="" name="username" style="margin-top: 10px;" />
-            <p style="margin-top:15px;">Password:</p>
+            <p style="margin-top:15px;"><?php echo $translated["password"] ?>:</p>
             <input type="password" value="" name="password" style="margin-top: 10px;" />
         </div>
         <img src="/images/login_split.png">
         <div id="login_container_bottomhalf">
             <div class="fancy_button" id="login_button" style="left: 335px; top: 160px;">
                 <img src="/images/btn_left.png" />
-                <p>Login</p>
+                <p><?php echo $translated["login"] ?></p>
                 <img src="/images/btn_right.png" />
             </div>
         </div>

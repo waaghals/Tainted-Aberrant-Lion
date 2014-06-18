@@ -74,6 +74,7 @@ class DoctrineHelper
         \Doctrine\DBAL\Types\Type::addType('projectstate', 'PROJ\DBAL\ApprovalStateType');
         \Doctrine\DBAL\Types\Type::addType('institutetype', 'PROJ\DBAL\InstituteType');
         \Doctrine\DBAL\Types\Type::addType('projecttype', 'PROJ\DBAL\ProjectType');
+        \Doctrine\DBAL\Types\Type::addType('languagetype', 'PROJ\DBAL\LanguageType');
 
         $conn = $em->getConnection();
 

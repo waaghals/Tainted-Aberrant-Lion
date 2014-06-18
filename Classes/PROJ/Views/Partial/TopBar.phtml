@@ -1,4 +1,9 @@
 <?php
+
+$toTranslate = array("worldmap","logout","welcome","login","register","search","reset","location_type","education","business","project_type","minor","eps","graduation","internship","country","language","english","dutch");
+$translator = new PROJ\Services\TranslationService();
+$translated = $translator->translateAll($toTranslate);
+
 $ac = new PROJ\Services\AccountService();
 
 if (isset($_SESSION['userID'])) {
@@ -8,13 +13,13 @@ if (isset($_SESSION['userID'])) {
 ?>
 <header class="shadow">
     <nav>
-        <h2 style="float:left;"><a href="/">Worldmap</a></h2>
+        <h2 style="float:left;"><a href="/"><?php echo $translated["worldmap"] ?></a></h2>
         <?php if ($ac->isLoggedIn()): ?>
-            <button class="headerbutton" onclick='location.href = "/Account/Logout"'>Log uit</button>
-            <button class="headerbutton" onclick='location.href = "/Management/Home"'>Welcome <?php echo sprintf("%s", $student->getStudent()->getFirstname()); ?></button>
+            <button class="headerbutton" onclick='location.href = "/Account/Logout"'><?php echo $translated["logout"] ?></button>
+            <button class="headerbutton" onclick='location.href = "/Management/Home"'><?php echo $translated["welcome"] ?> <?php echo sprintf("%s", $student->getStudent()->getFirstname()); ?></button>
         <?php else: ?>
-            <button class="headerbutton" onclick='location.href = "/Account/Login"'>Log in</button>
-            <button class="headerbutton" onclick='location.href = "/account/Register"'>Register</button>
+            <button class="headerbutton" onclick='location.href = "/Account/Login"'><?php echo $translated["login"] ?></button>
+            <button class="headerbutton" onclick='location.href = "/account/Register"'><?php echo $translated["register"] ?></button>
         <?php endif; ?>
         <?php if (isset($search)) { ?>
             <div style="width:30px; float:right;">
@@ -25,7 +30,7 @@ if (isset($_SESSION['userID'])) {
                 &nbsp;
             </div>
             <div style="float:right; position: relative; margin: 3px 5px 3px 0px;">
-                <input id="searchbar" type="text" placeholder="Search">
+                <input id="searchbar" type="text" placeholder="<?php echo $translated["search"] ?>">
                 <div id="searchresult">
 
                 </div>
@@ -39,31 +44,42 @@ if (isset($_SESSION['userID'])) {
             <div style="width:15px; float:right;">
                 &nbsp;
             </div>
+            <div class="filterblock">
+                <form action="ajax/changeLanguage" method="post">
+                <div><?php echo $translated["language"] ?>:</div>
+                <select id="language" name="language" onchange="this.form.submit()">
+                    <option value="english" <?php if($_SESSION['language']=="english") echo "selected" ?>><?php echo $translated["english"] ?></option>
+                    <option value="dutch" <?php if($_SESSION['language']=="dutch") echo "selected" ?>><?php echo $translated["dutch"] ?></option>
+                </select>
+                
+                </form>
+            </div>
+            
             <div>
-                <button class="headerbutton" onclick="resetFilters()">Reset</button>
+                <button class="headerbutton" onclick="resetFilters()"><?php echo $translated["reset"] ?></button>
             </div>
             <div class="filterblock">
-                <div>Location Type:</div>
+                <div><?php echo $translated["location_type"] ?>:</div>
                 <select id="locationType" onchange="applyFilters()">
                     <option></option>
-                    <option>Education</option>
-                    <option>Business</option>
+                    <option><?php echo $translated["education"] ?></option>
+                    <option><?php echo $translated["business"] ?></option>
                 </select>
             </div>
 
             <div class="filterblock">
-                <div>Project Type:</div>
+                <div><?php echo $translated["project_type"] ?>:</div>
                 <select id="projectType" onchange="applyFilters()">
                     <option></option>
-                    <option>Minor</option>
-                    <option>Eps</option>
-                    <option>Graduation</option>
-                    <option>Internship</option>
+                    <option><?php echo $translated["minor"] ?></option>
+                    <option><?php echo $translated["eps"] ?></option>
+                    <option><?php echo $translated["graduation"] ?></option>
+                    <option><?php echo $translated["internship"] ?></option>
                 </select>
             </div>
 
             <div class="filterblock">
-                <div>Country:</div>
+                <div><?php echo $translated["country"] ?>:</div>
                 <select id="country" onchange="applyFilters()">
                     <option></option>
                     <?php

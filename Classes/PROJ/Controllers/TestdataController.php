@@ -25,6 +25,7 @@ use PROJ\Entities\RightGroup;
 use PROJ\Entities\Recht;
 use PROJ\Entities\Clippy;
 use PROJ\DBAL\ApprovalStateType as Status;
+use PROJ\Entities\Translation;
 
 class TestdataController extends BaseController
 {
@@ -274,6 +275,24 @@ class TestdataController extends BaseController
 
         ob_flush();
         return $clippy;
+    }
+
+    private function createTranslation($em, $key, $language, $translation)
+    {
+        $translator = new Translation();
+        $translator->setSentenceKey($key);
+        $translator->setLanguage($language);
+        $translator->setTranslation($translation);
+
+        $em->persist($translator);
+
+        echo "New Translation with the following data has been succesfully added to the database:"
+        . "<br />Key: " . $key
+        . "<br />Language: " . $language
+        . "<br />Translation: " . $translation
+        . "<br /><br />";
+
+        ob_flush();
     }
 
     public function IndexAction()
@@ -911,6 +930,103 @@ class TestdataController extends BaseController
                 "Many fun activities to do here!");
         $review2 = $this->createReview($em, $projectZ, 4, 4, 1,
                 "Just do your job and they're happy.");
+
+        //Engels
+        $this->createTranslation($em, "worldmap", "english", "Worldmap");
+        $this->createTranslation($em, "logout", "english", "Logout");
+        $this->createTranslation($em, "welcome", "english", "Welcome");
+        $this->createTranslation($em, "login", "english", "Login");
+        $this->createTranslation($em, "register", "english", "Register");
+        $this->createTranslation($em, "location_type", "english",
+                "Location Type");
+        $this->createTranslation($em, "education", "english", "Education");
+        $this->createTranslation($em, "business", "english", "Business");
+        $this->createTranslation($em, "project_type", "english", "Project Type");
+        $this->createTranslation($em, "minor", "english", "Minor");
+        $this->createTranslation($em, "eps", "english", "EPS");
+        $this->createTranslation($em, "graduation", "english", "Graduation");
+        $this->createTranslation($em, "internship", "english", "Internship");
+        $this->createTranslation($em, "country", "english", "Country");
+        $this->createTranslation($em, "contact_form", "english", "Contact Form");
+        $this->createTranslation($em, "to", "english", "To");
+        $this->createTranslation($em, "from", "english", "From");
+        $this->createTranslation($em, "subject", "english", "Subject");
+        $this->createTranslation($em, "message", "english", "Message");
+        $this->createTranslation($em, "fields_marked", "english",
+                "Fields marked with asterisk (*) are required.");
+        $this->createTranslation($em, "send", "english", "Send");
+        $this->createTranslation($em, "successfully", "english",
+                "Your message was sent successfully.");
+        $this->createTranslation($em, "back", "english", "Back");
+        $this->createTranslation($em, "username", "english", "Username");
+        $this->createTranslation($em, "password", "english", "Password");
+        $this->createTranslation($em, "repeat_password", "english",
+                "Repeat Password");
+        $this->createTranslation($em, "email", "english", "E-Mail");
+        $this->createTranslation($em, "first_name", "english", "First name");
+        $this->createTranslation($em, "surname", "english", "Surname");
+        $this->createTranslation($em, "city", "english", "City");
+        $this->createTranslation($em, "zipcode", "english", "Zip code");
+        $this->createTranslation($em, "street", "english", "Street");
+        $this->createTranslation($em, "street_number", "english",
+                "Street number");
+        $this->createTranslation($em, "addition", "english", "Addition");
+        $this->createTranslation($em, "registration_code", "english",
+                "Registration Code");
+        $this->createTranslation($em, "search", "english", "Search");
+        $this->createTranslation($em, "reset", "english", "Reset");
+        $this->createTranslation($em, "language", "english", "Language");
+        $this->createTranslation($em, "dutch", "english", "Dutch");
+        $this->createTranslation($em, "english", "english", "English");
+
+        //Nederlands
+        $this->createTranslation($em, "worldmap", "dutch", "Wereldkaart");
+        $this->createTranslation($em, "logout", "dutch", "Log uit");
+        $this->createTranslation($em, "welcome", "dutch", "Welkom");
+        $this->createTranslation($em, "login", "dutch", "Log in");
+        $this->createTranslation($em, "register", "dutch", "Registreren");
+        $this->createTranslation($em, "location_type", "dutch", "Locatie Type");
+        $this->createTranslation($em, "education", "dutch",
+                "Opleidingsinstituut");
+        $this->createTranslation($em, "business", "dutch", "Bedrijf");
+        $this->createTranslation($em, "project_type", "dutch", "Project Type");
+        $this->createTranslation($em, "minor", "dutch", "Minor");
+        $this->createTranslation($em, "eps", "dutch", "EPS");
+        $this->createTranslation($em, "graduation", "dutch", "Afstudeer stage");
+        $this->createTranslation($em, "internship", "dutch", "Meeloop stage");
+        $this->createTranslation($em, "country", "dutch", "Land");
+        $this->createTranslation($em, "contact_form", "dutch",
+                "Contact Formulier");
+        $this->createTranslation($em, "to", "dutch", "Aan");
+        $this->createTranslation($em, "from", "dutch", "Van");
+        $this->createTranslation($em, "subject", "dutch", "Onderwerp");
+        $this->createTranslation($em, "message", "dutch", "Bericht");
+        $this->createTranslation($em, "fields_marked", "dutch",
+                "Velden met een asterisk (*) zijn verplicht.");
+        $this->createTranslation($em, "send", "dutch", "Stuur");
+        $this->createTranslation($em, "successfully", "dutch",
+                "Jouw bericht is succesvol verstuurd.");
+        $this->createTranslation($em, "back", "dutch", "Terug");
+        $this->createTranslation($em, "username", "dutch", "Gebruikersnaam");
+        $this->createTranslation($em, "password", "dutch", "Wachtwoord");
+        $this->createTranslation($em, "repeat_password", "dutch",
+                "Herhaal Wachtwoord");
+        $this->createTranslation($em, "email", "dutch", "E-Mail");
+        $this->createTranslation($em, "first_name", "dutch", "Voornaam");
+        $this->createTranslation($em, "surname", "dutch", "Achternaam");
+        $this->createTranslation($em, "city", "dutch", "Stad");
+        $this->createTranslation($em, "zipcode", "dutch", "Postcode");
+        $this->createTranslation($em, "street", "dutch", "Straat");
+        $this->createTranslation($em, "street_number", "dutch", "Straat nummer");
+        $this->createTranslation($em, "addition", "dutch", "Toevoeging");
+        $this->createTranslation($em, "registration_code", "dutch",
+                "Registratie Code");
+        $this->createTranslation($em, "search", "dutch", "Zoeken");
+        $this->createTranslation($em, "reset", "dutch", "Reset");
+        $this->createTranslation($em, "language", "dutch", "Taal");
+        $this->createTranslation($em, "dutch", "dutch", "Nederlands");
+        $this->createTranslation($em, "english", "dutch", "Engels");
+
 
         $em->flush();
         ob_end_flush();

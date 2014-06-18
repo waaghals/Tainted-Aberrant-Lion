@@ -1,7 +1,18 @@
 <?php
+
+/*
+ * 21 send
+ * 22 Your message was sent successfully.
+ * 23 back
+ */
+
+$toTranslate = array("contact_form","successfully","back");
+$translator = new PROJ\Services\TranslationService();
+$translated = $translator->translateAll($toTranslate);
+
 use PROJ\Helper\XssHelper;
 $header = new \PROJ\Tools\Template("Partial/Header");
-$header->title = "Contact Formulier";
+$header->title = $translated["contact_form"];
 
 echo $header;
 
@@ -12,13 +23,13 @@ echo $bar;
     <form name='contact' method='post' enctype="multipart/form-data">
         <img src="/images/login_top.png">
         <div id="login_container_tophalf">
-            <p>Your message was sent successfully.</p>
+            <p><?php echo $translated["successfully"] ?></p>
         </div>
         <img src="/images/login_split.png">
         <div id="login_container_bottomhalf">
             <div class="fancy_button" onclick="window.location='/';" style="left: 335px; top: 160px;">
                 <img src="/images/btn_left.png" />
-                <p>Back</p>
+                <p><?php echo $translated["back"] ?></p>
                 <img src="/images/btn_right.png" />
             </div>
         </div>
