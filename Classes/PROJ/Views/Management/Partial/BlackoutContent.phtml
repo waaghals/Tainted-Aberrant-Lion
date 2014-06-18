@@ -2,6 +2,17 @@
 $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
 
 use PROJ\Helper\RightHelper;
+
+$toTranslate = array("enter_details", "type", "select_type", "education", "business", "fields_marked", 
+    "project", "eps", "graduation", "internship", "minor", "first_name", "surname", "username", "email", "company_name", 
+    "company_country", "select_country", "company_city", "company_street", "company_house_number", "company_zip_code", 
+    "company_email", "company_phone", "create_location", "please_review", "create_a_project", "select_project", 
+    "assignment_score", "score", "not_relevant", "guidance_score", "accommodation_score", "overall_score", "review", 
+    "add_project", "please_details", "select_location", "start_date", "year", "month", "end_date", "details_user", 
+    "rml", "name", "location", "process_remove", "are_you_sure", "cancel", "remove", "rmr", "project", "rmp", 
+    "remove_connected", "rmu", "remove_any", "confirm");
+$translator = new PROJ\Services\TranslationService();
+$translated = $translator->translateAll($toTranslate);
 ?>
 <!-- Loading Icon -->
 <img src="/images/loading.gif" class="fullscreen_loading_icon">
@@ -16,109 +27,109 @@ use PROJ\Helper\RightHelper;
                 <div class="alert" id="addLocationError" style="display:none; margin-bottom:20px; padding: 5px; clear:both;">
                     <p></p>
                 </div>
-                <p style="font-weight:bold; margin-bottom:15px;">Please enter the details of the company where you did your Minor/Internship/Etc. :</p>
-                <div style="clear:both;"></div>
+                <p style="font-weight:bold; margin-bottom:15px;"><?php echo $translated['enter_details'] ?> :</p>
+                    <div style="clear:both;"></div>s
 
-                <div class="left_container">
-                    <p style="padding-top:18px;">Type: *</p>
-                </div>
-                <div style="width:5%; float:left;">&nbsp;</div>
-                <div class="right_container">
-                    <select name="type" required autofocus>
-                        <option>-- Select a type --</option>
-                        <option value="education">Education</option>
-                        <option value="business">Business</option>
-                    </select>
-                </div>
-                <div style="clear:both;"></div>
+                    <div class="left_container">
+                        <p style="padding-top:18px;"><?php echo $translated['type'] ?>: *</p>
+                    </div>
+                    <div style="width:5%; float:left;">&nbsp;</div>
+                    <div class="right_container">
+                        <select name="type" required autofocus>
+                            <option>-- <?php echo $translated['select_type'] ?> --</option>
+                            <option value="education"><?php echo $translated['education'] ?></option>
+                            <option value="business"><?php echo $translated['business'] ?></option>
+                        </select>
+                    </div>
+                    <div style="clear:both;"></div>
 
-                <div class="left_container">
-                    <p style="padding-top:18px;">Company's Name: *</p>
-                </div>
-                <div style="width:5%; float:left;">&nbsp;</div>
-                <div class="right_container">
-                    <input name="name" value="" type="text" style="margin-top: 10px;" maxlength="50" />
-                </div>
-                <div style="clear:both;"></div>
+                    <div class="left_container">
+                        <p style="padding-top:18px;"><?php echo $translated['company_name'] ?>: *</p>
+                    </div>
+                    <div style="width:5%; float:left;">&nbsp;</div>
+                    <div class="right_container">
+                        <input name="name" value="" type="text" style="margin-top: 10px;" maxlength="50" />
+                    </div>
+                    <div style="clear:both;"></div>
 
-                <div class="left_container">
-                    <p style="padding-top:18px;">Company's Country: *</p>
-                </div>
-                <div style="width:5%; float:left;">&nbsp;</div>
-                <div class="right_container">
-                    <select name="country" required autofocus>
-                        <option value="">-- Select a country --</option>
-                        <?php
-                        foreach ($em->getRepository('\PROJ\Entities\Country')->findAll() as $res) {
-                            echo('<option value="' . $res->getId() . '">' . $res->getName() . '</option>');
-                        }
-                        ?>
-                    </select>
-                </div>
-                <div style="clear:both;"></div>
+                    <div class="left_container">
+                        <p style="padding-top:18px;"><?php echo $translated['company_country'] ?>: *</p>
+                    </div>
+                    <div style="width:5%; float:left;">&nbsp;</div>
+                    <div class="right_container">
+                        <select name="country" required autofocus>
+                            <option value="">-- <?php echo $translated['select_country'] ?> --</option>
+                            <?php
+                            foreach ($em->getRepository('\PROJ\Entities\Country')->findAll() as $res) {
+                                echo('<option value="' . $res->getId() . '">' . $res->getName() . '</option>');
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div style="clear:both;"></div>
 
-                <div class="left_container">
-                    <p style="padding-top:18px;">Company's City: *</p>
-                </div>
-                <div style="width:5%; float:left;">&nbsp;</div>
-                <div class="right_container">
-                    <input name="city" value="" type="text" style="margin-top: 10px;" maxlength="50" />
-                </div>
-                <div style="clear:both;"></div>
+                    <div class="left_container">
+                        <p style="padding-top:18px;"><?php echo $translated['enter_details'] ?>: *</p>
+                    </div>
+                    <div style="width:5%; float:left;">&nbsp;</div>
+                    <div class="right_container">
+                        <input name="city" value="" type="text" style="margin-top: 10px;" maxlength="50" />
+                    </div>
+                    <div style="clear:both;"></div>
 
-                <div class="left_container">
-                    <p style="padding-top:18px;">Company's Street: *</p>
-                </div>
-                <div style="width:5%; float:left;">&nbsp;</div>
-                <div class="right_container">
-                    <input name="street" value="" type="text" style="margin-top: 10px;" maxlength="50" />
-                </div>
-                <div style="clear:both;"></div>
+                    <div class="left_container">
+                        <p style="padding-top:18px;"><?php echo $translated['company_street'] ?>: *</p>
+                    </div>
+                    <div style="width:5%; float:left;">&nbsp;</div>
+                    <div class="right_container">
+                        <input name="street" value="" type="text" style="margin-top: 10px;" maxlength="50" />
+                    </div>
+                    <div style="clear:both;"></div>
 
-                <div class="left_container">
-                    <p style="padding-top:18px;">Company's House number: *</p>
-                </div>
-                <div style="width:5%; float:left;">&nbsp;</div>
-                <div class="right_container">
-                    <input name="housenumber" value="" type="text" style="margin-top: 10px;" maxlength="50" />
-                </div>
-                <div style="clear:both;"></div>
+                    <div class="left_container">
+                        <p style="padding-top:18px;"><?php echo $translated['company_house_number'] ?>: *</p>
+                    </div>
+                    <div style="width:5%; float:left;">&nbsp;</div>
+                    <div class="right_container">
+                        <input name="housenumber" value="" type="text" style="margin-top: 10px;" maxlength="50" />
+                    </div>
+                    <div style="clear:both;"></div>
 
-                <div class="left_container">
-                    <p style="padding-top:18px;">Company's Postal code: *</p>
-                </div>
-                <div style="width:5%; float:left;">&nbsp;</div>
-                <div class="right_container">
-                    <input name="postalcode" value="" type="text" style="margin-top: 10px;" maxlength="6" />
-                </div>
-                <div style="clear:both;"></div>
+                    <div class="left_container">
+                        <p style="padding-top:18px;"><?php echo $translated['company_zip_code'] ?>: *</p>
+                    </div>
+                    <div style="width:5%; float:left;">&nbsp;</div>
+                    <div class="right_container">
+                        <input name="postalcode" value="" type="text" style="margin-top: 10px;" maxlength="6" />
+                    </div>
+                    <div style="clear:both;"></div>
 
-                <div class="left_container">
-                    <p style="padding-top:18px;">Company's E-mail: *</p>
-                </div>
-                <div style="width:5%; float:left;">&nbsp;</div>
-                <div class="right_container">
-                    <input name="email" value="" type="text" style="margin-top: 10px;" />
-                </div>
-                <div style="clear:both;"></div>
+                    <div class="left_container">
+                        <p style="padding-top:18px;"><?php echo $translated['company_email'] ?>: *</p>
+                    </div>
+                    <div style="width:5%; float:left;">&nbsp;</div>
+                    <div class="right_container">
+                        <input name="email" value="" type="text" style="margin-top: 10px;" />
+                    </div>
+                    <div style="clear:both;"></div>
 
-                <div class="left_container">
-                    <p style="padding-top:18px;">Company's Telephone Number:</p>
-                </div>
-                <div style="width:5%; float:left;">&nbsp;</div>
-                <div class="right_container">
-                    <input name="telephone" value="" type="text" style="margin-top: 10px;" maxlength="50" />
-                </div>
-                <div style="clear:both;"></div>
+                    <div class="left_container">
+                        <p style="padding-top:18px;"><?php echo $translated['company_phone'] ?>:</p>
+                    </div>
+                    <div style="width:5%; float:left;">&nbsp;</div>
+                    <div class="right_container">
+                        <input name="telephone" value="" type="text" style="margin-top: 10px;" maxlength="50" />
+                    </div>
+                    <div style="clear:both;"></div>
 
 
-                <p style="margin-top:25px; font-size:10px; color: #a1a1a1;">Fields marked with asterisk (*) are required.</p>
+                    <p style="margin-top:25px; font-size:10px; color: #a1a1a1;"><?php echo $translated['fields_marked'] ?></p>
             </div>
             <img src="/images/register_split.png">
             <div id="register_container_bottomhalf">
                 <div class="fancy_button" id="location_action" style="left: 335px; top: 160px;">
                     <img src="/images/btn_left.png" />
-                    <p>Create Location</p>
+                    <p><?php echo $translated['create_location'] ?></p>
                     <img src="/images/btn_right.png" />
                 </div>
             </div>
@@ -138,16 +149,16 @@ use PROJ\Helper\RightHelper;
                 <div class="alert" id="addReviewError" style="display:none; margin-bottom:20px; padding: 5px; clear:both;">
                     <p></p>
                 </div>
-                <p style="font-weight:bold; margin-bottom:15px;">Please write a review about your project:</p>
+                <p style="font-weight:bold; margin-bottom:15px;"><?php echo $translated['please_review'] ?>:</p>
                 <div style="clear:both;"></div>
 
                 <div class="left_container">
-                    <p style="padding-top:18px;">Project: <a style="float:none; cursor: pointer; text-decoration: underline" class="myprojects_add">(Create a project)</a>*</p>
+                    <p style="padding-top:18px;"><?php echo $translated['project'] ?>: <a style="float:none; cursor: pointer; text-decoration: underline" class="myprojects_add">(<?php echo $translated['create_a_project'] ?>)</a>*</p>
                 </div>
                 <div style="width:5%; float:left;">&nbsp;</div>
                 <div class="right_container">
                     <select name="project" required>
-                        <option value="">-- Select a project --</option>
+                        <option value="">-- <?php echo $translated['select_project'] ?> --</option>
                         <?php
                         $user = $em->getRepository('\PROJ\Entities\Account')->find($_SESSION['userID']);
                         $qb = $em->createQueryBuilder();
@@ -168,13 +179,13 @@ use PROJ\Helper\RightHelper;
                 <div style="clear:both;"></div>
 
                 <div class="left_container">
-                    <p style="padding-top:18px;">Assignment score: *</p>
+                    <p style="padding-top:18px;"><?php echo $translated['assignment_score'] ?>: *</p>
                 </div>
                 <div style="width:5%; float:left;">&nbsp;</div>
                 <div class="right_container">
                     <select name="assignment_score" required>
-                        <option value="">Score</option>
-                        <option value="0">Not Relevant</option>
+                        <option value=""><?php echo $translated['score'] ?></option>
+                        <option value="0"><?php echo $translated['not_relevant'] ?></option>
                         <?php
                         for ($i = 1; $i < 6; $i++) {
                             echo('<option value="' . $i . '">' . $i . '</option>');
@@ -185,13 +196,13 @@ use PROJ\Helper\RightHelper;
                 <div style="clear:both;"></div>
 
                 <div class="left_container">
-                    <p style="padding-top:18px;">Guidance score: *</p>
+                    <p style="padding-top:18px;"><?php echo $translated['guidance_score'] ?>: *</p>
                 </div>
                 <div style="width:5%; float:left;">&nbsp;</div>
                 <div class="right_container">
                     <select name="guidance_score" required>
-                        <option value="">Score</option>
-                        <option value="0">Not Relevant</option>
+                        <option value=""><?php echo $translated['score'] ?></option>
+                        <option value="0"><?php echo $translated['not_relevant'] ?></option>
                         <?php
                         for ($i = 1; $i < 6; $i++) {
                             echo('<option value="' . $i . '">' . $i . '</option>');
@@ -202,13 +213,13 @@ use PROJ\Helper\RightHelper;
                 <div style="clear:both;"></div>
 
                 <div class="left_container">
-                    <p style="padding-top:18px;">Accommodation score: *</p>
+                    <p style="padding-top:18px;"><?php echo $translated['accommodation_score'] ?>: *</p>
                 </div>
                 <div style="width:5%; float:left;">&nbsp;</div>
                 <div class="right_container">
                     <select name="accomodation_score" required>
-                        <option value="">Score</option>
-                        <option value="0">Not Relevant</option>
+                        <option value=""><?php echo $translated['score'] ?></option>
+                        <option value="0"><?php echo $translated['not_relevant'] ?></option>
                         <?php
                         for ($i = 1; $i < 6; $i++) {
                             echo('<option value="' . $i . '">' . $i . '</option>');
@@ -219,13 +230,13 @@ use PROJ\Helper\RightHelper;
                 <div style="clear:both;"></div>
 
                 <div class="left_container">
-                    <p style="padding-top:18px;">Overall score: *</p>
+                    <p style="padding-top:18px;"><?php echo $translated['overall_score'] ?>: *</p>
                 </div>
                 <div style="width:5%; float:left;">&nbsp;</div>
                 <div class="right_container">
                     <select name="overall_score" required>
-                        <option value="">Score</option>
-                        <option value="0">Not Relevant</option>
+                        <option value=""><?php echo $translated['score'] ?></option>
+                        <option value="0"><?php echo $translated['not_relevant'] ?></option>
                         <?php
                         for ($i = 1; $i < 6; $i++) {
                             echo('<option value="' . $i . '">' . $i . '</option>');
@@ -236,7 +247,7 @@ use PROJ\Helper\RightHelper;
                 <div style="clear:both;"></div>
 
                 <div class="left_container">
-                    <p style="padding-top:18px;">Review: *</p>
+                    <p style="padding-top:18px;"><?php echo $translated['review'] ?>: *</p>
                 </div>
                 <div style="width:5%; float:left;">&nbsp;</div>
                 <div class="right_container">
@@ -245,13 +256,13 @@ use PROJ\Helper\RightHelper;
                 <div style="clear:both;"></div>
 
 
-                <p style="margin-top:25px; font-size:10px; color: #a1a1a1;">Fields marked with asterisk (*) are required.</p>
+                <p style="margin-top:25px; font-size:10px; color: #a1a1a1;"><?php echo $translated['fields_marked'] ?></p>
             </div>
             <img src="/images/register_split.png">
             <div id="register_container_bottomhalf">
                 <div class="fancy_button" id="review_action" style="left: 335px; top: 160px;">
                     <img src="/images/btn_left.png" />
-                    <p>Add Review</p>
+                    <p><?php echo $translated['add_project'] ?></p>
                     <img src="/images/btn_right.png" />
                 </div>
             </div>
@@ -270,31 +281,31 @@ use PROJ\Helper\RightHelper;
                 <div class="alert" id="addProjectError" style="display:none; margin-bottom:20px; padding: 5px; clear:both;">
                     <p></p>
                 </div>
-                <p style="font-weight:bold; margin-bottom:15px;">Please enter the details of your Minor/Internship/Etc. :</p>
+                <p style="font-weight:bold; margin-bottom:15px;"><?php echo $translated['please_details'] ?> :</p>
                 <div style="clear:both;"></div>
 
                 <div class="left_container">
-                    <p style="padding-top:18px;">Type: *</p>
+                    <p style="padding-top:18px;"><?php echo $translated['type'] ?>: *</p>
                 </div>
                 <div style="width:5%; float:left;">&nbsp;</div>
                 <div class="right_container">
                     <select name="type" required autofocus>
-                        <option value="">-- Select a type --</option>
-                        <option value="minor">Minor</option>
-                        <option value="internship">Internship</option>
-                        <option value="graduation">Graduation</option>
-                        <option value="ESP">ESP</option>
+                        <option value="">-- <?php echo $translated['select_type'] ?> --</option>
+                        <option value="minor"><?php echo $translated['minor'] ?></option>
+                        <option value="internship"><?php echo $translated['internship'] ?></option>
+                        <option value="graduation"><?php echo $translated['graduation'] ?></option>
+                        <option value="ESP"><?php echo $translated['eps'] ?></option>
                     </select>
                 </div>
                 <div style="clear:both;"></div>
 
                 <div class="left_container">
-                    <p style="padding-top:18px;">Location: <a style="float:none; cursor: pointer; text-decoration: underline" class="mylocation_add">(Create a location)</a>*</p>
+                    <p style="padding-top:18px;">Location: <a style="float:none; cursor: pointer; text-decoration: underline" class="mylocation_add">(<?php echo $translated['create_location'] ?>)</a>*</p>
                 </div>
                 <div style="width:5%; float:left;">&nbsp;</div>
                 <div class="right_container">
                     <select name="location" required>
-                        <option value="">-- Select a location --</option>
+                        <option value="">-- <?php echo $translated['select_location'] ?> --</option>
                         <?php
                         $user = $em->getRepository('\PROJ\Entities\Account')->find($_SESSION['userID']);
                         $qb = $em->createQueryBuilder();
@@ -316,12 +327,12 @@ use PROJ\Helper\RightHelper;
                 <div style="clear:both;"></div>
 
                 <div class="left_container">
-                    <p style="padding-top:18px;">Start Date: *</p>
+                    <p style="padding-top:18px;"><?php echo $translated['start_date'] ?>: *</p>
                 </div>
                 <div style="width:5%; float:left;">&nbsp;</div>
                 <div class="right_container">
                     <select name="start_year" style="width:45%" required>
-                        <option value="">Year</option>
+                        <option value=""><?php echo $translated['year'] ?></option>
                         <?php
                         for ($i = date("Y"); $i > date("Y") - 10; $i--) {
                             echo('<option value="' . $i . '">' . $i . '</option>');
@@ -329,7 +340,7 @@ use PROJ\Helper\RightHelper;
                         ?>
                     </select>
                     <select name="start_month" style="width:45%; margin-left:10%;" required>
-                        <option value="">Month</option>
+                        <option value=""><?php echo $translated['month'] ?></option>
                         <?php
                         for ($i = 1; $i < 13; $i++) {
                             echo('<option value="' . $i . '">' . date('F', mktime(0, 0, 0, $i, 1, 2000)) . '</option>');
@@ -340,12 +351,12 @@ use PROJ\Helper\RightHelper;
                 <div style="clear:both;"></div>
 
                 <div class="left_container">
-                    <p style="padding-top:18px;">End Date: *</p>
+                    <p style="padding-top:18px;"><?php echo $translated['end_date'] ?>: *</p>
                 </div>
                 <div style="width:5%; float:left;">&nbsp;</div>
                 <div class="right_container">
                     <select name="end_year" style="width:45%" required>
-                        <option value="">Year</option>
+                        <option value=""><?php echo $translated['year'] ?></option>
                         <?php
                         for ($i = date("Y"); $i > date("Y") - 10; $i--) {
                             echo('<option value="' . $i . '">' . $i . '</option>');
@@ -353,7 +364,7 @@ use PROJ\Helper\RightHelper;
                         ?>
                     </select>
                     <select name="end_month" style="width:45%; margin-left:10%;" required>
-                        <option value="">Month</option>
+                        <option value=""><?php echo $translated['month'] ?></option>
                         <?php
                         for ($i = 1; $i < 13; $i++) {
                             echo('<option value="' . $i . '">' . date('F', mktime(0, 0, 0, $i, 1, 2000)) . '</option>');
@@ -364,7 +375,7 @@ use PROJ\Helper\RightHelper;
                 <div style="clear:both;"></div>
 
 
-                <p style="margin-top:25px; font-size:10px; color: #a1a1a1;">Fields marked with asterisk (*) are required.</p>
+                <p style="margin-top:25px; font-size:10px; color: #a1a1a1;"><?php echo $translated['fields_marked'] ?></p>
             </div>
             <img src="/images/register_split.png">
             <div id="register_container_bottomhalf">
@@ -389,11 +400,11 @@ use PROJ\Helper\RightHelper;
                 <div class="alert" id="addUserError" style="display:none; margin-bottom:20px; padding: 5px; clear:both;">
                     <p></p>
                 </div>
-                <p style="font-weight:bold; margin-bottom:15px;">Please enter the details of the selected user:</p>
+                <p style="font-weight:bold; margin-bottom:15px;"><?php echo $translated['details_user'] ?>:</p>
                 <div style="clear:both;"></div>
 
                 <div class="left_container">
-                    <p style="padding-top:18px;">Firstname: *</p>
+                    <p style="padding-top:18px;"><?php echo $translated['first_name'] ?>: *</p>
                 </div>
                 <div style="width:5%; float:left;">&nbsp;</div>
                 <div class="right_container">
@@ -402,7 +413,7 @@ use PROJ\Helper\RightHelper;
                 <div style="clear:both;"></div>
 
                 <div class="left_container">
-                    <p style="padding-top:18px;">Surname: *</p>
+                    <p style="padding-top:18px;"><?php echo $translated['surname'] ?>: *</p>
                 </div>
                 <div style="width:5%; float:left;">&nbsp;</div>
                 <div class="right_container">
@@ -411,7 +422,7 @@ use PROJ\Helper\RightHelper;
                 <div style="clear:both;"></div>
 
                 <div class="left_container">
-                    <p style="padding-top:18px;">Username: *</p>
+                    <p style="padding-top:18px;"><?php echo $translated['username'] ?>: *</p>
                 </div>
                 <div style="width:5%; float:left;">&nbsp;</div>
                 <div class="right_container">
@@ -420,7 +431,7 @@ use PROJ\Helper\RightHelper;
                 <div style="clear:both;"></div>
 
 
-                <p style="margin-top:25px; font-size:10px; color: #a1a1a1;">Fields marked with asterisk (*) are required.</p>
+                <p style="margin-top:25px; font-size:10px; color: #a1a1a1;"><?php echo $translated['fields_marked'] ?></p>
             </div>
             <img src="/images/register_split.png">
             <div id="register_container_bottomhalf">
@@ -445,36 +456,36 @@ use PROJ\Helper\RightHelper;
                 <div class="alert" id="removeLocationError" style="display:none; margin-bottom:20px; padding: 5px; clear:both;">
                     <p></p>
                 </div>
-                <p style="margin-bottom:15px;">You are about to <span style="font-weight: bold;">remove</span> the following Location:</p>
+                <p style="margin-bottom:15px;"><?php echo $translated['rml'] ?>:</p>
                 <div style="clear:both;"></div>
                 <table>
                     <tr>
-                        <td style="padding: 5px 5px 5px 0px;"><p>Name:</p></td>
+                        <td style="padding: 5px 5px 5px 0px;"><p><?php echo $translated['name'] ?>:</p></td>
                         <td style="padding: 5px; font-weight: bold;" id="RemoveLocationName"><p></p></td>
                     </tr>
                     <tr>
-                        <td style="padding: 5px 5px 5px 0px;"><p>Location:</p></td>
+                        <td style="padding: 5px 5px 5px 0px;"><p><?php echo $translated['location'] ?>:</p></td>
                         <td style="padding: 5px; font-weight: bold;" id="RemoveLocationLoc"><p></p></td>
                     </tr>
                     <tr>
-                        <td style="padding: 5px 5px 5px 0px;"><p>Type:</p></td>
+                        <td style="padding: 5px 5px 5px 0px;"><p><?php echo $translated['type'] ?>:</p></td>
                         <td style="padding: 5px; font-weight: bold;" id="RemoveLocationType"><p></p></td>
                     </tr>
                 </table>
                 <div style="clear:both;"></div>
-                <p style="margin:15px inherit;">This process will also remove any Projects and/or Reviews connected to this Location.</p>
-                <p style="margin:15px inherit;">Are you sure you want to continue? This can <span style="font-weight: bold;">NOT</span> be undone.</p>
+                <p style="margin:15px inherit;"><?php echo $translated['process_remove'] ?></p>
+                <p style="margin:15px inherit;"><?php echo $translated['are_you_sure'] ?></p>
             </div>
             <img src="/images/register_split.png">
             <div id="register_container_bottomhalf">
                 <div class="fancy_button blackout_cancel" style="margin-left:10px;">
                     <img src="/images/btn_left.png" />
-                    <p>Cancel</p>
+                    <p><?php echo $translated['cancel'] ?></p>
                     <img src="/images/btn_right.png" />
                 </div>
                 <div class="fancy_button" id="remove_location">
                     <img src="/images/btn_left.png" />
-                    <p>Remove</p>
+                    <p><?php echo $translated['remove'] ?></p>
                     <img src="/images/btn_right.png" />
                 </div>
             </div>
@@ -493,31 +504,31 @@ use PROJ\Helper\RightHelper;
                 <div class="alert" id="removeReviewError" style="display:none; margin-bottom:20px; padding: 5px; clear:both;">
                     <p></p>
                 </div>
-                <p style="margin-bottom:15px;">You are about to <span style="font-weight: bold;">remove</span> the following Review:</p>
+                <p style="margin-bottom:15px;"><?php echo $translated['rmr'] ?>:</p>
                 <div style="clear:both;"></div>
                 <table>
                     <tr>
-                        <td style="padding: 5px 5px 5px 0px;"><p>Project:</p></td>
+                        <td style="padding: 5px 5px 5px 0px;"><p><?php echo $translated['project'] ?>:</p></td>
                         <td style="padding: 5px; font-weight: bold;" id="RemoveProjectProject"><p></p></td>
                     </tr>
                     <tr>
-                        <td style="padding: 5px 5px 5px 0px;"><p>Score:</p></td>
+                        <td style="padding: 5px 5px 5px 0px;"><p><?php echo $translated['score'] ?>:</p></td>
                         <td style="padding: 5px; font-weight: bold;" id="RemoveProjectScore"><p></p></td>
                     </tr>
                 </table>
                 <div style="clear:both;"></div>
-                <p style="margin:15px inherit;">Are you sure you want to continue? This can <span style="font-weight: bold;">NOT</span> be undone.</p>
+                <p style="margin:15px inherit;"><?php echo $translated['are_you_sure'] ?></p>
             </div>
             <img src="/images/register_split.png">
             <div id="register_container_bottomhalf">
                 <div class="fancy_button blackout_cancel" style="margin-left:10px;">
                     <img src="/images/btn_left.png" />
-                    <p>Cancel</p>
+                    <p><?php echo $translated['cancel'] ?></p>
                     <img src="/images/btn_right.png" />
                 </div>
                 <div class="fancy_button" id="remove_review">
                     <img src="/images/btn_left.png" />
-                    <p>Remove</p>
+                    <p><?php echo $translated['remove'] ?></p>
                     <img src="/images/btn_right.png" />
                 </div>
             </div>
@@ -536,40 +547,40 @@ use PROJ\Helper\RightHelper;
                 <div class="alert" id="removeProjectError" style="display:none; margin-bottom:20px; padding: 5px; clear:both;">
                     <p></p>
                 </div>
-                <p style="margin-bottom:15px;">You are about to <span style="font-weight: bold;">remove</span> the following Project:</p>
+                <p style="margin-bottom:15px;"><?php echo $translated['rmp'] ?>:</p>
                 <div style="clear:both;"></div>
                 <table>
                     <tr>
-                        <td style="padding: 5px 5px 5px 0px;"><p>Type:</p></td>
+                        <td style="padding: 5px 5px 5px 0px;"><p><?php echo $translated['type'] ?>:</p></td>
                         <td style="padding: 5px; font-weight: bold;" id="RemoveProjectType"><p></p></td>
                     </tr>
                     <tr>
-                        <td style="padding: 5px 5px 5px 0px;"><p>Location:</p></td>
+                        <td style="padding: 5px 5px 5px 0px;"><p><?php echo $translated['location'] ?>:</p></td>
                         <td style="padding: 5px; font-weight: bold;" id="RemoveProjectnLoc"><p></p></td>
                     </tr>
                     <tr>
-                        <td style="padding: 5px 5px 5px 0px;"><p>Start Date:</p></td>
+                        <td style="padding: 5px 5px 5px 0px;"><p><?php echo $translated['start_date'] ?>:</p></td>
                         <td style="padding: 5px; font-weight: bold;" id="RemoveProjectStartDate"><p></p></td>
                     </tr>
                     <tr>
-                        <td style="padding: 5px 5px 5px 0px;"><p>End Date:</p></td>
+                        <td style="padding: 5px 5px 5px 0px;"><p><?php echo $translated['end_date'] ?>:</p></td>
                         <td style="padding: 5px; font-weight: bold;" id="RemoveProjectEndDate"><p></p></td>
                     </tr>
                 </table>
                 <div style="clear:both;"></div>
-                <p style="margin:15px inherit;">This process will also remove any Reviews connected to this Project.</p>
-                <p style="margin:15px inherit;">Are you sure you want to continue? This can <span style="font-weight: bold;">NOT</span> be undone.</p>
+                <p style="margin:15px inherit;"><?php echo $translated['remove_connected'] ?></p>
+                <p style="margin:15px inherit;"><?php echo $translated['are_you_sure'] ?></p>
             </div>
             <img src="/images/register_split.png">
             <div id="register_container_bottomhalf">
                 <div class="fancy_button blackout_cancel" style="margin-left:10px;">
                     <img src="/images/btn_left.png" />
-                    <p>Cancel</p>
+                    <p><?php echo $translated['cancel'] ?></p>
                     <img src="/images/btn_right.png" />
                 </div>
                 <div class="fancy_button" id="remove_project">
                     <img src="/images/btn_left.png" />
-                    <p>Remove</p>
+                    <p><?php echo $translated['remove'] ?></p>
                     <img src="/images/btn_right.png" />
                 </div>
             </div>
@@ -588,32 +599,32 @@ use PROJ\Helper\RightHelper;
                 <div class="alert" id="removeUserError" style="display:none; margin-bottom:20px; padding: 5px; clear:both;">
                     <p></p>
                 </div>
-                <p style="margin-bottom:15px;">You are about to <span style="font-weight: bold;">remove</span> the following User:</p>
+                <p style="margin-bottom:15px;"><?php echo $translated['rmu'] ?>:</p>
                 <div style="clear:both;"></div>
                 <table>
                     <tr>
-                        <td style="padding: 5px 5px 5px 0px;"><p>Name:</p></td>
+                        <td style="padding: 5px 5px 5px 0px;"><p><?php echo $translated['name'] ?>:</p></td>
                         <td style="padding: 5px; font-weight: bold;" id="RemoveUserName"><p></p></td>
                     </tr>
                     <tr>
-                        <td style="padding: 5px 5px 5px 0px;"><p>Email:</p></td>
+                        <td style="padding: 5px 5px 5px 0px;"><p><?php echo $translated['email'] ?>:</p></td>
                         <td style="padding: 5px; font-weight: bold;" id="RemoveUserEmail"><p></p></td>
                     </tr>
                 </table>
                 <div style="clear:both;"></div>
-                <p style="margin:15px inherit;">This process will also remove any Projects and/or Reviews connected to this User.</p>
-                <p style="margin:15px inherit;">Are you sure you want to continue? This can <span style="font-weight: bold;">NOT</span> be undone.</p>
+                <p style="margin:15px inherit;"><?php echo $translated['remove_any'] ?></p>
+                <p style="margin:15px inherit;"><?php echo $translated['are_you_sure'] ?></p>
             </div>
             <img src="/images/register_split.png">
             <div id="register_container_bottomhalf">
                 <div class="fancy_button blackout_cancel" style="margin-left:10px;">
                     <img src="/images/btn_left.png" />
-                    <p>Cancel</p>
+                    <p><?php echo $translated['cancel'] ?></p>
                     <img src="/images/btn_right.png" />
                 </div>
                 <div class="fancy_button" id="remove_user">
                     <img src="/images/btn_left.png" />
-                    <p>Remove</p>
+                    <p><?php echo $translated['remove'] ?></p>
                     <img src="/images/btn_right.png" />
                 </div>
             </div>
@@ -638,12 +649,12 @@ use PROJ\Helper\RightHelper;
             <div id="register_container_bottomhalf">
                 <div class="fancy_button blackout_cancel" style="margin-left:10px;">
                     <img src="/images/btn_left.png" />
-                    <p>Cancel</p>
+                    <p><?php echo $translated['cancel'] ?></p>
                     <img src="/images/btn_right.png" />
                 </div>
                 <div class="fancy_button" id="with_selected_confirm">
                     <img src="/images/btn_left.png" />
-                    <p>Confirm</p>
+                    <p><?php echo $translated['confirm'] ?></p>
                     <img src="/images/btn_right.png" />
                 </div>
             </div>
