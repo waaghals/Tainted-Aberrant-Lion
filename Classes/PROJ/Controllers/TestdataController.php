@@ -26,6 +26,7 @@ use PROJ\Entities\Recht;
 use PROJ\Entities\Clippy;
 use PROJ\DBAL\ApprovalStateType as Status;
 use PROJ\Entities\Translation;
+use PROJ\DBAL\LanguageType as Language;
 
 class TestdataController extends BaseController
 {
@@ -978,7 +979,82 @@ class TestdataController extends BaseController
         $this->createTranslation($em, "language", "english", "Language");
         $this->createTranslation($em, "dutch", "english", "Dutch");
         $this->createTranslation($em, "english", "english", "English");
-
+        //Clippy
+        $this->createTranslation($em, "klik", Language::ENGLISH,
+                "Click me for help!");
+        $this->createTranslation($em, "homeindex", Language::ENGLISH,
+                "This is the map overview. Click on a marker to view the info.");
+        $this->createTranslation($em, "accountlogin", Language::ENGLISH,
+                "Here you can login to the system.");
+        $this->createTranslation($em, "accountregister", Language::ENGLISH,
+                "Here you can register for the website.");
+        $this->createTranslation($em, "contactshow", Language::ENGLISH,
+                "Here you can contact the person who wrote the review.");
+        $this->createTranslation($em, "managementhome", Language::ENGLISH,
+                "Here you can manage the content of the website.");
+        $this->createTranslation($em, "managementmyreviews", Language::ENGLISH,
+                "Here you can view and edit your reviews.");
+        $this->createTranslation($em, "managementmyprojects", Language::ENGLISH,
+                "Here you can view and edit your projects.");
+        $this->createTranslation($em, "managementmylocations",
+                Language::ENGLISH, "Here you can view and edit your locations.");
+        $this->createTranslation($em, "managementmyaccount", Language::ENGLISH,
+                "Here you can change your personal information.");
+        $this->createTranslation($em, "managementchangepassword",
+                Language::ENGLISH, "Here you can change your password.");
+        $this->createTranslation($em, "managementusers", Language::ENGLISH,
+                "Here you can manage all the users.");
+        $this->createTranslation($em, "managementcreateuser", Language::ENGLISH,
+                "Just type in an email twice and the person will be notified to create an account.");
+        $this->createTranslation($em, "managementlocations", Language::ENGLISH,
+                "Here you can change the status of locations.");
+        $this->createTranslation($em, "managementreviews", Language::ENGLISH,
+                "Here you can change the status of reviews.");
+        $this->createTranslation($em, "managementprojects", Language::ENGLISH,
+                "Here you can change the status of projects.");
+        $this->createTranslation($em, "managementupload", Language::ENGLISH,
+                "Select an Excel file to be imported into the system.");
+        $this->createTranslation($em, "managementuploadfile", Language::ENGLISH,
+                "Here you can view what has been added and what already existed.");
+        //tutorial
+        $this->createTranslation($em, "tut1", Language::ENGLISH,
+                "Hi, and welcome to our website!");
+        $this->createTranslation($em, "tut2", Language::ENGLISH,
+                "Let's start with a quick tutorial.");
+        $this->createTranslation($em, "tut3", Language::ENGLISH,
+                "This is the country filter.");
+        $this->createTranslation($em, "tut4", Language::ENGLISH,
+                "With this filter you can show the projects in a specific country.");
+        $this->createTranslation($em, "tut5", Language::ENGLISH,
+                "This is the projecttype filter");
+        $this->createTranslation($em, "tut6", Language::ENGLISH,
+                "With this filter you can filter the projects by type.");
+        $this->createTranslation($em, "tut7", Language::ENGLISH,
+                "The types are: Minor, EPS, Internship, and Graduation.");
+        $this->createTranslation($em, "tut8", Language::ENGLISH,
+                "This is the locationtype filter");
+        $this->createTranslation($em, "tut9", Language::ENGLISH,
+                "With this filter you can filter the projects by locationtype.");
+        $this->createTranslation($em, "tut10", Language::ENGLISH,
+                "The types are: Education and Business.");
+        $this->createTranslation($em, "tut11", Language::ENGLISH,
+                "This is the search bar.");
+        $this->createTranslation($em, "tut12", Language::ENGLISH,
+                "You can basically search on everything you like.");
+        $this->createTranslation($em, "tut13", Language::ENGLISH,
+                "Such as Student name, Institute name, Review Text, and a lot more.");
+        $this->createTranslation($em, "tut14", Language::ENGLISH,
+                "This is a marker.");
+        $this->createTranslation($em, "tut15", Language::ENGLISH,
+                "If you click on a marker the screen on the left will become visible.");
+        $this->createTranslation($em, "tut16", Language::ENGLISH,
+                "These are all the reviews available for this institute.");
+        $this->createTranslation($em, "tut17", Language::ENGLISH,
+                "You can click on the name to view the full review.");
+        $this->createTranslation($em, "tut18", Language::ENGLISH,
+                "This is the end of the tutorial");
+        $this->createTranslation($em, "tut19", Language::ENGLISH,
+                "Thank you for watching and if you need anything in the future, just click me :)");
         //Nederlands
         $this->createTranslation($em, "worldmap", "dutch", "Wereldkaart");
         $this->createTranslation($em, "logout", "dutch", "Log uit");
@@ -1027,7 +1103,83 @@ class TestdataController extends BaseController
         $this->createTranslation($em, "dutch", "dutch", "Nederlands");
         $this->createTranslation($em, "english", "dutch", "Engels");
 
+        //Clippy
+        $this->createTranslation($em, "klik", Language::DUTCH,
+                "Klik op me voor hulp!");
+        $this->createTranslation($em, "homeindex", Language::DUTCH,
+                "Dit is de kaart, klik op een marker voor meer informatie.");
+        $this->createTranslation($em, "accountlogin", Language::DUTCH,
+                "Dit is het inlogscherm, hier kan je inloggen.");
+        $this->createTranslation($em, "accountregister", Language::DUTCH,
+                "Dit is het registratiescherm, hier kan je registreren.");
+        $this->createTranslation($em, "contactshow", Language::DUTCH,
+                "Hier kun je contact opnemen met de schrijver van de review.");
+        $this->createTranslation($em, "managementhome", Language::DUTCH,
+                "Hier kun je de content van de website aanpassen.");
+        $this->createTranslation($em, "managementmyreviews", Language::DUTCH,
+                "Hier kun je je eigen reviews schrijven en aanpassen.");
+        $this->createTranslation($em, "managementmyprojects", Language::DUTCH,
+                "Hier kun je je eigen projecten maken en aanpassen.");
+        $this->createTranslation($em, "managementmylocations", Language::DUTCH,
+                "Hier kun je je eigen locaties maken en aanpassen.");
+        $this->createTranslation($em, "managementmyaccount", Language::DUTCH,
+                "Hier kun je je persoonlijke informatie aanpassen.");
+        $this->createTranslation($em, "managementchangepassword",
+                Language::DUTCH, "Hier kun je je wachtwoord veranderen.");
+        $this->createTranslation($em, "managementusers", Language::DUTCH,
+                "Hier kun je al de users zien en aanpassen.");
+        $this->createTranslation($em, "managementcreateuser", Language::DUTCH,
+                "Type hier twee keer hetzelde emailadres in en er word een mail gestuurd om deze persoon te laten registreren.");
+        $this->createTranslation($em, "managementlocations", Language::DUTCH,
+                "Hier kun je de status van een locaties aanpassen.");
+        $this->createTranslation($em, "managementreviews", Language::DUTCH,
+                "Hier kun je de status van een reviews aanpassen.");
+        $this->createTranslation($em, "managementprojects", Language::DUTCH,
+                "Hier kun je de status van een project aanpassen.");
+        $this->createTranslation($em, "managementupload", Language::DUTCH,
+                "Selecteer een excel bestand, zodat dit geimporteerd kan worden in het systeem.");
+        $this->createTranslation($em, "managementuploadfile", Language::DUTCH,
+                "Hier kun je het resultaat zien van het net geuploade bestand.");
 
+        //tutorial
+        $this->createTranslation($em, "tut1", Language::DUTCH,
+                "Hallo, en welkom bij onze website!");
+        $this->createTranslation($em, "tut2", Language::DUTCH,
+                "Laten we beginnen met een snelle tutorial.");
+        $this->createTranslation($em, "tut3", Language::DUTCH,
+                "Dit is de landen filter.");
+        $this->createTranslation($em, "tut4", Language::DUTCH,
+                "Met deze filter kan je projecten laten zien in een specifiek land.");
+        $this->createTranslation($em, "tut5", Language::DUTCH,
+                "Dit is de projecttype filter.");
+        $this->createTranslation($em, "tut6", Language::DUTCH,
+                "Met deze filter kan je de projecten filteren op type.");
+        $this->createTranslation($em, "tut7", Language::DUTCH,
+                "De types zijn: Minor, EPS, Meeloop Stage en Afstudeer Stage.");
+        $this->createTranslation($em, "tut8", Language::DUTCH,
+                "Dit is de locatietype filter.");
+        $this->createTranslation($em, "tut9", Language::DUTCH,
+                "Met deze filter kun je projecten filteren op locatietype.");
+        $this->createTranslation($em, "tut10", Language::DUTCH,
+                "De types zijn: Opleidingsinstituut en Bedrijf.");
+        $this->createTranslation($em, "tut11", Language::DUTCH,
+                "Dit is de zoekbalk.");
+        $this->createTranslation($em, "tut12", Language::DUTCH,
+                "Je kan eigenlijk overal op zoeken.");
+        $this->createTranslation($em, "tut13", Language::DUTCH,
+                "Zoals Student naam, Instituut naam, Beoordelings tekst en veel meer.");
+        $this->createTranslation($em, "tut14", Language::DUTCH,
+                "Dit is een marker.");
+        $this->createTranslation($em, "tut15", Language::DUTCH,
+                "Als je op een marker klikt dan komt er aan de linkerkant een scherm te staan.");
+        $this->createTranslation($em, "tut16", Language::DUTCH,
+                "Dit zijn alle beoordelingen die beschikbaar zijn voor dit instituut.");
+        $this->createTranslation($em, "tut17", Language::DUTCH,
+                "Je kan op de naam klikken voor de complete beoordeling.");
+        $this->createTranslation($em, "tut18", Language::DUTCH,
+                "Dit is het einde van de tutorial.");
+        $this->createTranslation($em, "tut19", Language::DUTCH,
+                "Bedankt voor het kijken en onthoud, als je iets nodig hebt klik maar op me :)");
         $em->flush();
         ob_end_flush();
     }

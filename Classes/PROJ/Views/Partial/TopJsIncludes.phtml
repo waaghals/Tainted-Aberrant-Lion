@@ -239,8 +239,9 @@
             })();
 <?php
 //Ophalen van user location
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, 'http://freegeoip.net/json/' . $_SERVER['REMOTE_ADDR']);
+$ch   = curl_init();
+curl_setopt($ch, CURLOPT_URL,
+        'http://freegeoip.net/json/' . $_SERVER['REMOTE_ADDR']);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 $json = strip_tags(trim(curl_exec($ch)));
 curl_close($ch);
@@ -356,7 +357,12 @@ if (strpos($json, 'Bad Request') === false && strpos($json, 'Not Found') === fal
         // do anything with the loaded agent
         agent.show();
         this.agent = agent;
-        agent.speak("Click me for help.");
+        $.ajax({
+            type: "GET",
+            url: "/ajax/getHelp"
+        }).done(function(data) {
+            agent.speak(data);
+        });
     });
 
     setTimeout(addClippOnclick, 500);
@@ -372,7 +378,13 @@ if (strpos($json, 'Bad Request') === false && strpos($json, 'Not Found') === fal
         el = el.pathname.split('/');
 
         if (el[1] == "") {
-            doTutorial();
+            $.ajax({
+                type: "GET",
+                url: "/ajax/getTutorialInformation"
+            }).done(function(data) {
+                doTutorial(data);
+            });
+
         } else {
             $.ajax({
                 type: "POST",
@@ -384,40 +396,41 @@ if (strpos($json, 'Bad Request') === false && strpos($json, 'Not Found') === fal
         }
     }
 
-    function doTutorial()
+    function doTutorial(data)
     {
+        var obj = JSON.parse(data);
         //country filter
         var pos = document.getElementById('country').getBoundingClientRect();
-        agent.speak("Hi, and welcome to our website!");
-        agent.speak("Let's start with a quick tutorial.");
+        agent.speak(obj.tut1);
+        agent.speak(obj.tut2);
         agent.moveTo(pos.left, pos.top + 100);
         agent.play("GestureUp");
-        agent.speak("This is the country filter.");
-        agent.speak("With this filter you can show the projects in a specific country.");
+        agent.speak(obj.tut3);
+        agent.speak(obj.tut4);
 
         //projecttype filter
         pos = document.getElementById('projectType').getBoundingClientRect();
         agent.moveTo(pos.left, pos.top + 100);
         agent.play("GestureUp");
-        agent.speak("This is the projecttype filter");
-        agent.speak("With this filter you can filter the projects by type.");
-        agent.speak("The types are: Minor, EPS, Internship, and Graduation.");
+        agent.speak(obj.tut5);
+        agent.speak(obj.tut6);
+        agent.speak(obj.tut7);
 
         //locationtype filter
         pos = document.getElementById('locationType').getBoundingClientRect();
         agent.moveTo(pos.left, pos.top + 100);
         agent.play("GestureUp");
-        agent.speak("This is the locationtype filter");
-        agent.speak("With this filter you can filter the projects by locationtype.");
-        agent.speak("The types are: Education and Business.");
+        agent.speak(obj.tut8);
+        agent.speak(obj.tut9);
+        agent.speak(obj.tut10);
 
         //searchbar
         pos = document.getElementById('searchbar').getBoundingClientRect();
         agent.moveTo(pos.left, pos.top + 100);
         agent.play("GestureUp");
-        agent.speak("This is the search bar.");
-        agent.speak("You can basically search on everything you like.");
-        agent.speak("Such as Student name, Institute name, Review Text, and a lot more.");
+        agent.speak(obj.tut11);
+        agent.speak(obj.tut12);
+        agent.speak(obj.tut13);
         agent.moveTo(window.screen.availWidth / 2 + 125, window.screen.availHeight / 2 - 100);
 
         //wait till clippy is ready then do fake click
@@ -428,19 +441,19 @@ if (strpos($json, 'Bad Request') === false && strpos($json, 'Not Found') === fal
 
         //explain review view
         agent.play("GestureRight");
-        agent.speak("This is a marker.");
-        agent.speak("If you click on a marker the screen on the left will become visible.");
+        agent.speak(obj.tut14);
+        agent.speak(obj.tut15);
         pos = document.getElementById('country').getBoundingClientRect();
         agent.moveTo(pos.left + 200, pos.top + 150);
         agent.play("GestureRight");
-        agent.speak("These are all the reviews available for this institute.");
-        agent.speak("You can click on the name to view the full review.");
+        agent.speak(obj.tut16);
+        agent.speak(obj.tut17);
 
         //the end
         pos = document.getElementsByClassName('headerbutton')[0].getBoundingClientRect();
         agent.moveTo(pos.left - 100, pos.top + 100);
-        agent.speak("This is the end of the tutorial");
-        agent.speak("Thank you for watching and if you need anything in the future, just click me :)");
+        agent.speak(obj.tut18);
+        agent.speak(obj.tut19);
         agent.play("IdleSnooze");
     }
 

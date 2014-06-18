@@ -12,6 +12,7 @@ use PROJ\Helper\RightHelper;
 use PROJ\DBAL\ApprovalStateType as Status;
 use PROJ\DBAL\InstituteType;
 use PROJ\DBAL\ProjectType;
+use PROJ\DBAL\LanguageType;
 use PROJ\Entities\Clippy;
 
 /**
@@ -27,17 +28,18 @@ class AjaxController extends BaseController
         $mc = new \PROJ\Classes\MarkerCollection();
 
 //Alle Instellingen ophalen
-        $em = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
+        $em      = \PROJ\Helper\DoctrineHelper::instance()->getEntityManager();
         $reviews = $em->getRepository('\PROJ\Entities\Institute')->findAll();
 
         foreach ($reviews as $rev) {
 //Gemiddelde score berekenen
-            $qb = $em->createQueryBuilder();
+            $qb  = $em->createQueryBuilder();
             $qb->select('avg(review.rating) as AVGSCORE, count(review.id) as AANTALREVIEWS')
                     ->from('\PROJ\Entities\Institute', 'institute')
                     ->leftJoin('institute.projects', 'project')
                     ->leftJoin('project.review', 'review')
-                    ->where($qb->expr()->eq('institute.id', $qb->expr()->literal($rev->getId())));
+                    ->where($qb->expr()->eq('institute.id',
+                                    $qb->expr()->literal($rev->getId())));
             $avg = $qb->getQuery()->getResult();
 
 
@@ -52,7 +54,8 @@ class AjaxController extends BaseController
             }
 
             $markerHtml = "<div style='width:400px; height:200px;'><h4>" . $rev->getNaam() . "</h4><br>"
-                    . "Gemiddelde Score: " . number_format($avg[0]['AVGSCORE'], 1);
+                    . "Gemiddelde Score: " . number_format($avg[0]['AVGSCORE'],
+                            1);
             if ($avg[0]['AANTALREVIEWS'] == 0) {
                 $markerHtml .= "<br><br>Er zijn nog geen reviews geschreven voor " . $rev->getNaam() . "</div>";
             } else {
@@ -71,7 +74,7 @@ class AjaxController extends BaseController
     {
         $em = DoctrineHelper::instance()->getEntityManager();
 
-        $qb = $em->createQueryBuilder();
+        $qb  = $em->createQueryBuilder();
         $res = $qb->select(array('i', 'p', 'r', 's', 'c'))
                 ->from('\PROJ\Entities\Institute', 'i')
                 ->leftJoin('i.projects', 'p')
@@ -92,7 +95,7 @@ class AjaxController extends BaseController
             throw new ServerException($msg, ServerException::SERVER_ERROR);
         }
 
-        $em = DoctrineHelper::instance()->getEntityManager();
+        $em        = DoctrineHelper::instance()->getEntityManager();
         $instances = $em->getRepository('\PROJ\Entities\Institute')->find($lid);
 
         echo json_encode($instances);
@@ -102,42 +105,80 @@ class AjaxController extends BaseController
     {
         $returnArray;
         $tag = filter_var($_POST['tag'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        $em = DoctrineHelper::instance()->getEntityManager();
-        $qb = $em->createQueryBuilder();
-        $qb->select(array('student.firstname as studentname', 'student.surname as studentsurname', 'student.email', 'review.text', 'institute.name as institutename', 'review.rating', 'review.id as revid', 'institute.id as instituteid', 'institute.lat', 'institute.lng'))
-                ->from('\PROJ\Entities\Review', 'review')->leftJoin('review.project', 'project')->leftJoin('project.institute', 'institute')->leftJoin('project.student', 'student')
+        $em  = DoctrineHelper::instance()->getEntityManager();
+        $qb  = $em->createQueryBuilder();
+        $qb->select(array('student.firstname as studentname', 'student.surname as studentsurname',
+                    'student.email', 'review.text', 'institute.name as institutename',
+                    'review.rating', 'review.id as revid', 'institute.id as instituteid',
+                    'institute.lat', 'institute.lng'))
+                ->from('\PROJ\Entities\Review', 'review')->leftJoin('review.project',
+                        'project')->leftJoin('project.institute', 'institute')->leftJoin('project.student',
+                        'student')
                 ->where(
-                        $qb->expr()->eq('project.acceptanceStatus', $qb->expr()->literal('approved')), $qb->expr()->eq('review.acceptanceStatus', $qb->expr()->literal('approved')), $qb->expr()->eq('institute.acceptanceStatus', $qb->expr()->literal('approved'))
+                        $qb->expr()->eq('project.acceptanceStatus',
+                                $qb->expr()->literal('approved')),
+                        $qb->expr()->eq('review.acceptanceStatus',
+                                $qb->expr()->literal('approved')),
+                        $qb->expr()->eq('institute.acceptanceStatus',
+                                $qb->expr()->literal('approved'))
                 )
                 ->andWhere(
                         $qb->expr()->orX(
-                                $qb->expr()->like('review.text', $qb->expr()->literal('%' . $tag . '%')), $qb->expr()->like('student.firstname', $qb->expr()->literal('%' . $tag . '%')), $qb->expr()->like('student.surname', $qb->expr()->literal('%' . $tag . '%')), $qb->expr()->like('student.city', $qb->expr()->literal('%' . $tag . '%')), $qb->expr()->like('student.street', $qb->expr()->literal('%' . $tag . '%')), $qb->expr()->like('student.email', $qb->expr()->literal('%' . $tag . '%')), $qb->expr()->like('project.type', $qb->expr()->literal('%' . $tag . '%'))
+                                $qb->expr()->like('review.text',
+                                        $qb->expr()->literal('%' . $tag . '%')),
+                                $qb->expr()->like('student.firstname',
+                                        $qb->expr()->literal('%' . $tag . '%')),
+                                $qb->expr()->like('student.surname',
+                                        $qb->expr()->literal('%' . $tag . '%')),
+                                $qb->expr()->like('student.city',
+                                        $qb->expr()->literal('%' . $tag . '%')),
+                                $qb->expr()->like('student.street',
+                                        $qb->expr()->literal('%' . $tag . '%')),
+                                $qb->expr()->like('student.email',
+                                        $qb->expr()->literal('%' . $tag . '%')),
+                                $qb->expr()->like('project.type',
+                                        $qb->expr()->literal('%' . $tag . '%'))
                         )
         );
 
         $result = $qb->getQuery()->getResult();
         for ($i = 0; $i < count($result); $i++) {
-            $result[$i]["text"] = substr($result[$i]["text"], 0, 50);
+            $result[$i]["text"]      = substr($result[$i]["text"], 0, 50);
             $result[$i]["matchedOn"] = "review";
         }
         $returnArray = $result;
 
 
         $qb = $em->createQueryBuilder();
-        $qb->select(array('student.firstname as studentname', 'student.surname as studentsurname', 'student.email', 'review.text', 'institute.name as institutename', 'institute.place as instituteplace', 'institute.id as instituteid', 'review.rating', 'institute.lat', 'institute.lng'))
-                ->from('\PROJ\Entities\Review', 'review')->leftJoin('review.project', 'project')->leftJoin('project.institute', 'institute')->leftJoin('project.student', 'student')
+        $qb->select(array('student.firstname as studentname', 'student.surname as studentsurname',
+                    'student.email', 'review.text', 'institute.name as institutename',
+                    'institute.place as instituteplace', 'institute.id as instituteid',
+                    'review.rating', 'institute.lat', 'institute.lng'))
+                ->from('\PROJ\Entities\Review', 'review')->leftJoin('review.project',
+                        'project')->leftJoin('project.institute', 'institute')->leftJoin('project.student',
+                        'student')
                 ->where(
-                        $qb->expr()->eq('project.acceptanceStatus', $qb->expr()->literal('approved')), $qb->expr()->eq('review.acceptanceStatus', $qb->expr()->literal('approved')), $qb->expr()->eq('institute.acceptanceStatus', $qb->expr()->literal('approved'))
+                        $qb->expr()->eq('project.acceptanceStatus',
+                                $qb->expr()->literal('approved')),
+                        $qb->expr()->eq('review.acceptanceStatus',
+                                $qb->expr()->literal('approved')),
+                        $qb->expr()->eq('institute.acceptanceStatus',
+                                $qb->expr()->literal('approved'))
                 )
                 ->andWhere(
                         $qb->expr()->orX(
-                                $qb->expr()->like("institute.name", $qb->expr()->literal("%" . $tag . "%")), $qb->expr()->like("institute.type", $qb->expr()->literal("%" . $tag . "%")), $qb->expr()->like("institute.place", $qb->expr()->literal("%" . $tag . "%"))
+                                $qb->expr()->like("institute.name",
+                                        $qb->expr()->literal("%" . $tag . "%")),
+                                $qb->expr()->like("institute.type",
+                                        $qb->expr()->literal("%" . $tag . "%")),
+                                $qb->expr()->like("institute.place",
+                                        $qb->expr()->literal("%" . $tag . "%"))
                         )
         );
 
         $result = $qb->getQuery()->getResult();
         for ($i = 0; $i < count($result); $i++) {
-            $result[$i]["text"] = substr($result[$i]["text"], 0, 50);
+            $result[$i]["text"]      = substr($result[$i]["text"], 0, 50);
             $result[$i]["matchedOn"] = "instname";
         }
         $returnArray = array_merge($returnArray, $result);
@@ -209,8 +250,9 @@ class AjaxController extends BaseController
 
             $country = $em->getRepository('\PROJ\Entities\Country')->find($_POST['country']);
 
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, 'http://maps.googleapis.com/maps/api/geocode/json?address=' . urlencode($_POST['street'] . ' ' . $_POST['housenumber'] . ', ' . $_POST['city'] . ', ' . $country->getName()) . '&sensor=false');
+            $ch       = curl_init();
+            curl_setopt($ch, CURLOPT_URL,
+                    'http://maps.googleapis.com/maps/api/geocode/json?address=' . urlencode($_POST['street'] . ' ' . $_POST['housenumber'] . ', ' . $_POST['city'] . ', ' . $country->getName()) . '&sensor=false');
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             $response = json_decode(curl_exec($ch), true);
 
@@ -219,7 +261,7 @@ class AjaxController extends BaseController
                 return;
             }
 
-            $user = $em->getRepository('\PROJ\Entities\Account')->find($_SESSION['userID']);
+            $user    = $em->getRepository('\PROJ\Entities\Account')->find($_SESSION['userID']);
             $locatie = null;
             if ($_POST['action'] == "create") {
                 $locatie = new \PROJ\Entities\Institute();
@@ -316,7 +358,8 @@ class AjaxController extends BaseController
 
         if ($ac->isLoggedIn() && RightHelper::loggedUserHasRight("UPDATE_USER")) {
             $user = $em->getRepository('\PROJ\Entities\Account')->find($_POST['id']);
-            if (count($em->getRepository('\PROJ\Entities\Account')->findBy(array('username' => $_POST['username']))) > 0 && $user->getUsername() != $_POST['username']) {
+            if (count($em->getRepository('\PROJ\Entities\Account')->findBy(array(
+                                'username' => $_POST['username']))) > 0 && $user->getUsername() != $_POST['username']) {
                 echo("This username isn't unique.");
                 return;
             }
@@ -377,14 +420,16 @@ class AjaxController extends BaseController
     {
         $ac = new \PROJ\Services\AccountService();
         if ($ac->isLoggedIn()) {
-            $em = DoctrineHelper::instance()->getEntityManager();
+            $em   = DoctrineHelper::instance()->getEntityManager();
             $user = $em->getRepository('\PROJ\Entities\Account')->find($_SESSION['userID']);
-            $qb = $em->createQueryBuilder();
+            $qb   = $em->createQueryBuilder();
             $qb->select('i.id')
                     ->from('\PROJ\Entities\Institute', 'i');
             if (!RightHelper::loggedUserHasRight("UPDATE_PROJECT")) {
-                $qb->where($qb->expr()->eq('i.creator', $qb->expr()->literal($user->getStudent()->getId())))
-                        ->orWhere($qb->expr()->eq('i.acceptanceStatus', $qb->expr()->literal('approved')));
+                $qb->where($qb->expr()->eq('i.creator',
+                                        $qb->expr()->literal($user->getStudent()->getId())))
+                        ->orWhere($qb->expr()->eq('i.acceptanceStatus',
+                                        $qb->expr()->literal('approved')));
             }
             $qb->orderBy('i.type', 'ASC');
             $res = $qb->getQuery()->getResult();
@@ -482,14 +527,15 @@ class AjaxController extends BaseController
 
         $ac = new \PROJ\Services\AccountService();
         if ($ac->isLoggedIn()) {
-            $em = DoctrineHelper::instance()->getEntityManager();
+            $em   = DoctrineHelper::instance()->getEntityManager();
             $user = $em->getRepository('\PROJ\Entities\Account')->find($_SESSION['userID']);
 
             $qb = $em->createQueryBuilder();
             $qb->select('p.id')
                     ->from('\PROJ\Entities\Project', 'p');
             if (!RightHelper::loggedUserHasRight("UPDATE_REVIEW")) {
-                $qb->where($qb->expr()->eq('p.student', $qb->expr()->literal($user->getStudent()->getId())));
+                $qb->where($qb->expr()->eq('p.student',
+                                $qb->expr()->literal($user->getStudent()->getId())));
             }
             $res = $qb->getQuery()->getResult();
 
@@ -507,13 +553,14 @@ class AjaxController extends BaseController
 
 
             $project = $em->getRepository('\PROJ\Entities\Project')->find($_POST['project']);
-            $review = $this->getReviewEntitie();
+            $review  = $this->getReviewEntitie();
             if ($review == null) {
                 return;
             }
 
 
-            if (count($em->getRepository('\PROJ\Entities\Review')->findBy(array('project' => $_POST['project']))) > 0 && $_POST['project'] != $review->getProject()->getId()) {
+            if (count($em->getRepository('\PROJ\Entities\Review')->findBy(array(
+                                'project' => $_POST['project']))) > 0 && $_POST['project'] != $review->getProject()->getId()) {
                 echo "You can only create one review per location";
                 return;
             }
@@ -569,7 +616,7 @@ class AjaxController extends BaseController
             return;
         }
         if ($ac->isLoggedIn()) {
-            $rev = $em->getRepository('\PROJ\Entities\Review')->find($_POST['id']);
+            $rev   = $em->getRepository('\PROJ\Entities\Review')->find($_POST['id']);
             $accId = $rev->getProject()->getStudent()->getAccount()->getId();
             if ($accId == $_SESSION['userID'] || RightHelper::loggedUserHasRight("VIEW_REVIEWS")) {
                 echo json_encode($rev->jsonSerialize());
@@ -589,7 +636,7 @@ class AjaxController extends BaseController
             return;
         }
         if ($ac->isLoggedIn()) {
-            $inst = $em->getRepository('\PROJ\Entities\Institute')->find($_POST['id']);
+            $inst  = $em->getRepository('\PROJ\Entities\Institute')->find($_POST['id']);
             $accId = $inst->getCreator()->getAccount()->getId();
             if ($accId == $_SESSION['userID'] || RightHelper::loggedUserHasRight("VIEW_LOCATIONS")) {
                 echo json_encode($inst->jsonSerialize());
@@ -660,7 +707,7 @@ class AjaxController extends BaseController
 
     public function getAllCountriesAction()
     {
-        $em = DoctrineHelper::instance()->getEntityManager();
+        $em   = DoctrineHelper::instance()->getEntityManager();
         $inst = $em->getRepository('\PROJ\Entities\Country')
                 ->createQueryBuilder('e')
                 ->select('e')
@@ -680,7 +727,7 @@ class AjaxController extends BaseController
             return;
         }
         if ($ac->isLoggedIn()) {
-            $rev = $em->getRepository('\PROJ\Entities\Review')->find($_POST['id']);
+            $rev   = $em->getRepository('\PROJ\Entities\Review')->find($_POST['id']);
             $accid = $rev->getProject()->getStudent()->getAccount()->getId();
             if ($accid == $_SESSION['userID'] || RightHelper::loggedUserHasRight("DELETE_REVIEW")) {
                 $em->remove($rev);
@@ -702,7 +749,7 @@ class AjaxController extends BaseController
             return;
         }
         if ($ac->isLoggedIn()) {
-            $proj = $em->getRepository('\PROJ\Entities\Project')->find($_POST['id']);
+            $proj   = $em->getRepository('\PROJ\Entities\Project')->find($_POST['id']);
             $projid = $proj->getStudent()->getAccount()->getId();
             if ($projid == $_SESSION['userID'] || RightHelper::loggedUserHasRight("DELETE_PROJECT")) {
                 if ($proj->getReview() != null) {
@@ -842,23 +889,47 @@ class AjaxController extends BaseController
             echo "succes";
         }
     }
-    
-    public function changeLanguageAction(){
-        $_SESSION['language'] = $_POST['language'];
+
+    public function changeLanguageAction()
+    {
+        if ($_POST['language'] === LanguageType::DUTCH || $_POST['language'] === LanguageType::ENGLISH) {
+            $_SESSION['language'] = $_POST['language'];
+        }
         \PROJ\Helper\HeaderHelper::redirect();
     }
 
     public function getHelpInformationAction()
     {
-        $em = DoctrineHelper::instance()->getEntityManager();
-        $controller = $_POST["controller"];
-        $action = $_POST["action"];
-        $result = $em->getRepository("\PROJ\Entities\Clippy")->findOneBy(array(
-            'controller' => $controller,
-            'action' => $action
-        ));
+        $translator = new \PROJ\Services\TranslationService();
+        $result     = $translator->translate($_POST['controller'] . $_POST["action"]);
         if ($result != null) {
-            echo $result->getDescription();
+            echo $result;
+        } else {
+            echo "Nothing could be found";
+        }
+    }
+
+    public function getHelpAction()
+    {
+        $translator = new \PROJ\Services\TranslationService();
+        $result     = $translator->translate("klik");
+        if ($result != null) {
+            echo $result;
+        } else {
+            echo "Nothing could be found";
+        }
+    }
+
+    public function getTutorialInformationAction()
+    {
+        $array      = array();
+        $translator = new \PROJ\Services\TranslationService();
+        for ($i = 1; $i < 20; $i++) {
+            $array[] = "tut" . $i;
+        }
+        $result = $translator->translateAll($array);
+        if ($result != null) {
+            echo json_encode($result);
         } else {
             echo "Nothing could be found";
         }
