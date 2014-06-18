@@ -28,9 +28,6 @@ use PROJ\DBAL\ApprovalStateType as Status;
 use PROJ\Entities\Translation;
 use PROJ\DBAL\LanguageType as Language;
 use PROJ\Entities\RegistrationCode;
-use PROJ\Entities\Clippy;
-use PROJ\DBAL\ApprovalStateType as Status;
-use PROJ\Entities\Translation;
 
 class TestdataController extends BaseController
 {
