@@ -10,9 +10,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.interactions.Actions;
 
-public class RegisterTest extends TestCase {
+public class ManagementChangePasswordResetTest extends TestCase {
   private WebDriver driver;
   private String baseUrl;
   private boolean acceptNextAlert = true;
@@ -26,32 +28,29 @@ public class RegisterTest extends TestCase {
   }
 
   @Test
-  public void testRegister() throws Exception {
+  public void testManagementChangePassword() throws Exception {
     driver.get(baseUrl + "/");
-    driver.findElement(By.xpath("//button[@onclick='location.href = \"/account/Register\"']")).click();
+    driver.findElement(By.cssSelector("button.headerbutton")).click();
+    driver.findElement(By.name("username")).click();
     driver.findElement(By.name("username")).clear();
-    driver.findElement(By.name("username")).sendKeys("sdijk4");
+    driver.findElement(By.name("username")).sendKeys("hbakker");
     driver.findElement(By.name("password")).clear();
-    driver.findElement(By.name("password")).sendKeys("sdijk4");
-    driver.findElement(By.name("passwordagain")).clear();
-    driver.findElement(By.name("passwordagain")).sendKeys("sdijk4");
-    driver.findElement(By.name("email")).clear();
-    driver.findElement(By.name("email")).sendKeys("samsam_31393@hotmail.com");
-    driver.findElement(By.name("firstname")).clear();
-    driver.findElement(By.name("firstname")).sendKeys("Sam");
-    driver.findElement(By.name("surname")).clear();
-    driver.findElement(By.name("surname")).sendKeys("van Dijk");
-    driver.findElement(By.name("city")).clear();
-    driver.findElement(By.name("city")).sendKeys("Tilburg");
-    driver.findElement(By.name("zipcode")).clear();
-    driver.findElement(By.name("zipcode")).sendKeys("5042GE");
-    driver.findElement(By.name("street")).clear();
-    driver.findElement(By.name("street")).sendKeys("Bokhamerstraat");
-    driver.findElement(By.name("streetnumber")).clear();
-    driver.findElement(By.name("streetnumber")).sendKeys("26");
-    driver.findElement(By.name("registrationcode")).clear();
-    driver.findElement(By.name("registrationcode")).sendKeys("24f38a16d81a5a4662c8efc0a1fc879aaba9b051");
-    driver.findElement(By.id("register_button")).click();
+    driver.findElement(By.name("password")).sendKeys("p@ssword");
+    driver.findElement(By.id("login_button")).click();
+    driver.findElement(By.xpath("//button[@onclick='location.href = \"/Management/Home\"']")).click();
+    driver.findElement(By.linkText("Change Password")).click();
+    driver.findElement(By.name("old_password")).clear();
+    driver.findElement(By.name("old_password")).sendKeys("p@ssword");
+    driver.findElement(By.name("new_password")).clear();
+    driver.findElement(By.name("new_password")).sendKeys("password");
+    driver.findElement(By.name("rep_new_password")).clear();
+    driver.findElement(By.name("rep_new_password")).sendKeys("password");
+
+    WebElement dragElement = driver.findElement(By.className("clippy"));
+    Actions builder = new Actions(driver);
+    builder.dragAndDropBy(dragElement, 100, 0).build().perform();
+
+    driver.findElement(By.id("management_save")).click();
     driver.findElement(By.xpath("//button[@onclick='location.href = \"/Account/Logout\"']")).click();
   }
 
