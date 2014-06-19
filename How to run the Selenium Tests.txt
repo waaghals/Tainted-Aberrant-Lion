@@ -1,0 +1,3 @@
+Je kan de Selenium tests vinden in de map tests/Selenium/JAR files.
+
+Om de Selenium tests uit te voeren, moet je dubbel klikken op de 'Runnable Selenium Tests.jar'.
